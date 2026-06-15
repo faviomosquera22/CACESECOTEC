@@ -32,8 +32,8 @@ export default async function StudentProfilePage({
           </h2>
         </div>
         <p className="mt-4 text-sm leading-6 text-slate-500">
-          Mantén tus datos básicos actualizados para que el docente pueda
-          identificar correctamente tu historial.
+          Mantén tu nombre actualizado. La carrera la asigna el docente para
+          habilitar el simulador correspondiente.
         </p>
       </section>
 

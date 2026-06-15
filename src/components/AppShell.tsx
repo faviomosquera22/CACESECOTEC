@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { GraduationCap } from "lucide-react";
 import type { Profile } from "@/lib/database.types";
+import { ContentProtection } from "@/components/ContentProtection";
 import { LogoutButton } from "@/components/LogoutButton";
 
 export type NavItem = {
@@ -21,7 +22,12 @@ export function AppShell({ profile, navItems, children }: AppShellProps) {
   const roleLabel = profile.role === "teacher" ? "Docente" : "Estudiante";
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-950">
+    <div className="protected-interaction-surface min-h-screen bg-slate-50 text-slate-950">
+      <ContentProtection
+        userId={profile.id}
+        userName={profile.full_name}
+        userEmail={profile.email}
+      />
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-3">

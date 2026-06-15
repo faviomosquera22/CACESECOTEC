@@ -152,7 +152,18 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      assign_student_career: {
+        Args: {
+          target_student_id: string;
+          new_career: string;
+        };
+        Returns: {
+          id: string;
+          career: string | null;
+        }[];
+      };
+    };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;
   };

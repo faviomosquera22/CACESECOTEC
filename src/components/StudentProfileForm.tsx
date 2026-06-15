@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertCircle, CheckCircle2, Save, UserRound } from "lucide-react";
 import type { Profile } from "@/lib/database.types";
+import { getStudentCareerOption } from "@/lib/studentCareer";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 
 type StudentProfileFormProps = {
@@ -16,8 +17,8 @@ export function StudentProfileForm({
   firstTime = false,
 }: StudentProfileFormProps) {
   const router = useRouter();
+  const assignedCareer = getStudentCareerOption(profile.career);
   const [fullName, setFullName] = useState(profile.full_name ?? "");
-  const [career, setCareer] = useState(profile.career ?? "");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -28,10 +29,9 @@ export function StudentProfileForm({
     setSuccess("");
 
     const normalizedFullName = fullName.trim();
-    const normalizedCareer = career.trim();
 
-    if (!normalizedFullName || !normalizedCareer) {
-      setError("Completa tu nombre y carrera para continuar.");
+    if (!normalizedFullName) {
+      setError("Completa tu nombre para continuar.");
       return;
     }
 
@@ -41,20 +41,21 @@ export function StudentProfileForm({
       const supabase = getSupabaseBrowserClient();
       const { error: updateError } = await supabase
         .from("profiles")
-        .update({
-          full_name: normalizedFullName,
-          career: normalizedCareer,
-        })
+        .update({ full_name: normalizedFullName })
         .eq("id", profile.id);
 
       if (updateError) {
         throw new Error(updateError.message);
       }
 
-      setSuccess("Perfil actualizado correctamente.");
+      setSuccess(
+        assignedCareer
+          ? "Perfil actualizado correctamente."
+          : "Nombre guardado. La carrera debe ser asignada por el docente.",
+      );
       router.refresh();
 
-      if (firstTime) {
+      if (firstTime && assignedCareer) {
         router.replace("/student/dashboard");
       }
     } catch (caughtError) {
@@ -116,12 +117,15 @@ export function StudentProfileForm({
           <input
             id="career"
             type="text"
-            value={career}
-            onChange={(event) => setCareer(event.target.value)}
-            required
-            className="mt-2 h-12 w-full rounded-lg border border-slate-200 bg-white px-4 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
-            placeholder="Ej. Medicina"
+            value={assignedCareer?.label ?? "Pendiente de asignación docente"}
+            readOnly
+            className="mt-2 h-12 w-full rounded-lg border border-slate-200 bg-slate-50 px-4 text-slate-500 outline-none"
           />
+          <p className="mt-2 text-xs text-slate-500">
+            {assignedCareer
+              ? "La carrera define tu simulador habilitado. Solicita al docente un cambio si fue asignada por error."
+              : "Cuando el docente asigne tu carrera, se habilitará el simulador correspondiente."}
+          </p>
         </div>
 
         <div className="md:col-span-2">
@@ -163,9 +167,11 @@ export function StudentProfileForm({
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-slate-500">
-          {firstTime
-            ? "Completa estos datos para habilitar tu panel."
-            : "Puedes editar esta información cuando lo necesites."}
+          {firstTime && !assignedCareer
+            ? "Guarda tu nombre y espera la asignación de carrera para habilitar tu panel."
+            : firstTime
+              ? "Completa estos datos para habilitar tu panel."
+              : "Puedes editar tu nombre cuando lo necesites."}
         </p>
         <button
           type="submit"

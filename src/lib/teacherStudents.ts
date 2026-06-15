@@ -1,0 +1,71 @@
+import type { StudentCardData } from "@/components/StudentCard";
+import type { Profile, Simulation } from "@/lib/database.types";
+import { demoStudentProfiles } from "@/lib/demoStudents";
+import { average } from "@/lib/format";
+import { getStudentCareerOption } from "@/lib/studentCareer";
+import type { SupabaseServerClient } from "@/lib/supabaseServer";
+
+function getSimulationDate(simulation: Simulation) {
+  return simulation.finished_at ?? simulation.created_at;
+}
+
+function getBestScore(simulations: Simulation[]) {
+  return Math.max(
+    0,
+    ...simulations.map((simulation) => simulation.score ?? 0),
+  );
+}
+
+export async function getTeacherStudentCards(supabase: SupabaseServerClient) {
+  const { data: studentProfiles } = await supabase
+    .from("profiles")
+    .select("id, full_name, email, role, career, created_at")
+    .eq("role", "student")
+    .order("full_name", { ascending: true })
+    .returns<Profile[]>();
+
+  const students =
+    studentProfiles && studentProfiles.length > 0
+      ? studentProfiles
+      : demoStudentProfiles;
+  const studentIds = students.map((student) => student.id);
+
+  const { data: simulationRows } =
+    studentIds.length > 0
+      ? await supabase
+          .from("simulations")
+          .select("*")
+          .in("student_id", studentIds)
+          .order("created_at", { ascending: false })
+          .returns<Simulation[]>()
+      : { data: [] };
+
+  const simulations = simulationRows ?? [];
+  const simulationsByStudent = new Map<string, Simulation[]>();
+
+  simulations.forEach((simulation) => {
+    const current = simulationsByStudent.get(simulation.student_id) ?? [];
+    current.push(simulation);
+    simulationsByStudent.set(simulation.student_id, current);
+  });
+
+  return students.map((student): StudentCardData => {
+    const studentSimulations = simulationsByStudent.get(student.id) ?? [];
+    const latestSimulation = studentSimulations[0] ?? null;
+    const career = getStudentCareerOption(student.career);
+
+    return {
+      id: student.id,
+      fullName: student.full_name || student.email || "Sin nombre",
+      email: student.email || "Sin correo",
+      careerSlug: career?.slug ?? null,
+      careerLabel: career?.label ?? student.career ?? "Sin carrera",
+      simulationsCount: studentSimulations.length,
+      averageScore: average(
+        studentSimulations.map((simulation) => simulation.score),
+      ),
+      bestScore: getBestScore(studentSimulations),
+      lastActivity: latestSimulation ? getSimulationDate(latestSimulation) : null,
+    };
+  });
+}

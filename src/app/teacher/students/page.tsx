@@ -4,7 +4,7 @@ import { getTeacherStudentCards } from "@/lib/teacherStudents";
 
 export const dynamic = "force-dynamic";
 
-export default async function TeacherDashboardPage() {
+export default async function TeacherStudentsPage() {
   const { supabase } = await requireProfile(["teacher"]);
   const studentCards = await getTeacherStudentCards(supabase);
 
@@ -13,15 +13,18 @@ export default async function TeacherDashboardPage() {
       <section>
         <p className="text-sm font-semibold text-sky-700">Panel docente</p>
         <h2 className="mt-2 text-3xl font-semibold tracking-normal text-slate-950">
-          Seguimiento de estudiantes
+          Estudiantes
         </h2>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-500">
-          Filtra estudiantes por carrera, revisa su actividad y asigna
-          Enfermería o Psicología para habilitar el simulador correspondiente.
+          Gestiona estudiantes, carreras asignadas, accesos e historial desde
+          un listado enfocado.
         </p>
       </section>
 
-      <TeacherDashboardClient students={studentCards} />
+      <TeacherDashboardClient
+        students={studentCards}
+        showSummaryCards={false}
+      />
     </div>
   );
 }

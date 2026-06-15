@@ -24,3 +24,37 @@ textarea,
 select {
   font: inherit;
 }
+
+.protected-interaction-surface {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.protected-interaction-surface img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+.protected-interaction-surface input,
+.protected-interaction-surface textarea,
+.protected-interaction-surface select,
+.protected-interaction-surface [contenteditable="true"],
+.protected-interaction-surface [data-allow-selection="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+@media print {
+  .protected-interaction-surface {
+    visibility: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #020617;
+  }
+}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, ClipboardList } from "lucide-react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SimulatorClient } from "@/components/SimulatorClient";
 import { requireCompletedStudentProfile } from "@/lib/auth";
 import type { Question } from "@/lib/database.types";
@@ -11,6 +12,7 @@ import {
   selectQuestionsForExam,
 } from "@/lib/localQuestions";
 import { getSimulatorExam } from "@/lib/simulatorCatalog";
+import { getStudentCareerOption } from "@/lib/studentCareer";
 
 type StudentExamSimulatorPageProps = {
   params: Promise<{
@@ -31,6 +33,12 @@ export default async function StudentExamSimulatorPage({
   }
 
   const { profile, supabase } = await requireCompletedStudentProfile();
+  const career = getStudentCareerOption(profile.career);
+
+  if (career && exam.slug !== career.simulatorSlug) {
+    redirect(`/student/simulator/${career.simulatorSlug}`);
+  }
+
   const examDistribution = examDistributionBySlug[exam.slug] ?? [];
   const categoryFilter = exam.categoryKeywords
     .map((keyword) => `category.ilike.%${keyword}%`)
@@ -89,6 +97,14 @@ export default async function StudentExamSimulatorPage({
 
   return (
     <div className="space-y-6">
+      <Breadcrumbs
+        items={[
+          { label: "Dashboard", href: "/student/dashboard" },
+          { label: "Simulador", href: "/student/simulator" },
+          { label: exam.shortTitle },
+        ]}
+      />
+
       <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-700 ring-1 ring-sky-100">

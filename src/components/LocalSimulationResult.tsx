@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useSyncExternalStore } from "react";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { ResultCategorySummary } from "@/components/ResultCategorySummary";
 import { ResultReviewList } from "@/components/ResultReviewList";
 import { ResultScoreCard } from "@/components/ResultScoreCard";
 import type {
@@ -54,10 +56,19 @@ export function LocalSimulationResult({
 
   return (
     <div className="space-y-8">
+      <Breadcrumbs
+        items={[
+          { label: "Dashboard", href: "/student/dashboard" },
+          { label: "Resultado" },
+        ]}
+      />
+
       <ResultScoreCard
         simulation={simulation}
         note="Resultado guardado en el historial local de este navegador mientras Supabase no tenga las tablas de simulaciones cargadas."
       />
+
+      <ResultCategorySummary answers={answers} />
 
       <ResultReviewList answers={answers} />
     </div>

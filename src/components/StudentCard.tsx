@@ -3,17 +3,21 @@ import {
   CalendarClock,
   ChevronRight,
   ClipboardList,
+  GraduationCap,
   Mail,
   TrendingUp,
   Trophy,
   UserRound,
 } from "lucide-react";
 import { formatDate, formatScore } from "@/lib/format";
+import type { StudentCareerSlug } from "@/lib/studentCareer";
 
 export type StudentCardData = {
   id: string;
   fullName: string;
   email: string;
+  careerSlug: StudentCareerSlug | null;
+  careerLabel: string;
   simulationsCount: number;
   averageScore: number;
   bestScore: number;
@@ -39,6 +43,10 @@ export function StudentCard({ student }: StudentCardProps) {
             <p className="mt-2 flex items-center gap-2 text-sm text-slate-500">
               <Mail className="h-4 w-4" aria-hidden="true" />
               <span className="break-all">{student.email}</span>
+            </p>
+            <p className="mt-2 inline-flex items-center gap-2 rounded-lg bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-600 ring-1 ring-slate-200">
+              <GraduationCap className="h-3.5 w-3.5" aria-hidden="true" />
+              {student.careerLabel}
             </p>
           </div>
         </div>

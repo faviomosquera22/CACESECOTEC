@@ -1,12 +1,18 @@
+import { GraduationCap, ShieldCheck } from "lucide-react";
 import { SimulatorOptionCard } from "@/components/SimulatorOptionCard";
 import { StudentStatsClient } from "@/components/StudentStatsClient";
 import { requireCompletedStudentProfile } from "@/lib/auth";
 import { simulatorExams } from "@/lib/simulatorCatalog";
+import { getStudentCareerOption } from "@/lib/studentCareer";
 
 export const dynamic = "force-dynamic";
 
 export default async function StudentDashboardPage() {
   const { profile, supabase } = await requireCompletedStudentProfile();
+  const career = getStudentCareerOption(profile.career);
+  const availableExams = simulatorExams.filter(
+    (exam) => exam.slug === career?.simulatorSlug,
+  );
 
   const { data } = await supabase
     .from("simulations")
@@ -36,18 +42,37 @@ export default async function StudentDashboardPage() {
         serverSimulations={simulations}
       />
 
+      <section className="rounded-lg border border-sky-100 bg-sky-50 p-5 text-sky-900">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-sky-700 ring-1 ring-sky-100">
+              <GraduationCap className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold">Carrera asignada</p>
+              <h3 className="mt-1 text-xl font-semibold tracking-normal">
+                {career?.label}
+              </h3>
+            </div>
+          </div>
+          <div className="inline-flex w-fit items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-semibold text-sky-800 ring-1 ring-sky-100">
+            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+            Simulador CACES {career?.label} habilitado
+          </div>
+        </div>
+      </section>
+
       <section>
         <div className="mb-4">
           <h3 className="text-xl font-semibold tracking-normal text-slate-950">
             Elige tu simulador
           </h3>
           <p className="mt-2 text-sm leading-6 text-slate-500">
-            Selecciona el área para practicar con preguntas alineadas al banco
-            disponible en Supabase.
+            Tu cuenta está habilitada para el simulador de {career?.label}.
           </p>
         </div>
         <div className="grid gap-5 lg:grid-cols-2">
-          {simulatorExams.map((exam) => (
+          {availableExams.map((exam) => (
             <SimulatorOptionCard key={exam.slug} exam={exam} />
           ))}
         </div>

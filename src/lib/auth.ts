@@ -6,6 +6,7 @@ import {
   createSupabaseServerClient,
   type SupabaseServerClient,
 } from "@/lib/supabaseServer";
+import { isSupportedStudentCareer } from "@/lib/studentCareer";
 
 export type AuthContext = {
   supabase: SupabaseServerClient;
@@ -22,7 +23,9 @@ export function isStudentProfileComplete(profile: Profile) {
     return true;
   }
 
-  return Boolean(profile.full_name?.trim() && profile.career?.trim());
+  return Boolean(
+    profile.full_name?.trim() && isSupportedStudentCareer(profile.career),
+  );
 }
 
 export async function getCurrentAuthContext(): Promise<AuthContext | null> {

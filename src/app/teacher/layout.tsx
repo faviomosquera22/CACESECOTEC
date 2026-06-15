@@ -10,7 +10,7 @@ const teacherNavItems: NavItem[] = [
     icon: <LayoutDashboard className="h-4 w-4" aria-hidden="true" />,
   },
   {
-    href: "/teacher/dashboard#estudiantes",
+    href: "/teacher/students",
     label: "Estudiantes",
     icon: <Users className="h-4 w-4" aria-hidden="true" />,
   },

@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { LocalSimulationResult } from "@/components/LocalSimulationResult";
+import { ResultCategorySummary } from "@/components/ResultCategorySummary";
 import { ResultReviewList } from "@/components/ResultReviewList";
 import { ResultScoreCard } from "@/components/ResultScoreCard";
 import { requireCompletedStudentProfile } from "@/lib/auth";
@@ -69,7 +71,16 @@ export default async function StudentResultPage({
 
   return (
     <div className="space-y-8">
+      <Breadcrumbs
+        items={[
+          { label: "Dashboard", href: "/student/dashboard" },
+          { label: "Resultado" },
+        ]}
+      />
+
       <ResultScoreCard simulation={simulation} />
+
+      <ResultCategorySummary answers={answers} />
 
       <section>
         {answers.length === 0 ? (
