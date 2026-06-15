@@ -51,7 +51,7 @@ export default async function StudentExamSimulatorPage({
     )
     .or(categoryFilter)
     .order("created_at", { ascending: false })
-    .limit(examDistribution.length > 0 ? 1000 : 50)
+    .limit(examDistribution.length > 0 ? 1000 : 100)
     .returns<Question[]>();
 
   const supabaseQuestions = data ?? [];

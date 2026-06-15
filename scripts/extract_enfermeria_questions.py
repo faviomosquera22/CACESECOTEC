@@ -38,6 +38,14 @@ PDFS_WITH_EXPLICIT_ANSWER = [
     ),
 ]
 
+REVIEW_ATTEMPT_PDFS = [
+    (
+        Path(f"Base de Caces/PREGUNTAS CACES {index}.pdf"),
+        f"CACES Mayo 2026 intento {index}",
+    )
+    for index in range(1, 14)
+]
+
 GOOGLE_DOCS = [
     (
         "19MCvJw93sah7mEX41X_x1rRrWYtsi8M--PmlTJyz78E",
@@ -67,6 +75,7 @@ def clean_line(line: str) -> str:
 
 def clean_option(option: str) -> str:
     option = clean_line(option)
+    option = option.replace("\uf00c", "").replace("\uf00d", "").strip()
     option = re.sub(r"\s+(?:\d+\.\s*){2,}.*$", "", option).strip()
     option = re.sub(
         r"\s+(?:Complete el enunciado|Seleccione|Identifique|Relacione|Ordene):?.*$",
@@ -79,6 +88,12 @@ def clean_option(option: str) -> str:
 
 def clean_question_text(question_text: str) -> str:
     question_text = clean_line(question_text)
+    question_text = re.sub(
+        r"^\d+\s+horas?\s+\d+\s+minutos?\s+",
+        "",
+        question_text,
+        flags=re.IGNORECASE,
+    )
     question_text = re.sub(
         r"^\d+(?:\.\d+)*\s*[-.)]?\s*[A-Z]{1,8}\s*-\s*",
         "",
@@ -98,7 +113,7 @@ def clean_question_text(question_text: str) -> str:
         flags=re.IGNORECASE,
     )
     question_starts = re.compile(
-        r"(?:\bPaciente|\bUn |\bUna |\bDurante|\bEn una|\bEn un|\bEn el|¿|\bCuál|\bQué|\bSegún|\bDe acuerdo|\bDentro|\bComo parte|\bAnte |\bUsted |\bEl hospital|\bLos problemas)",
+        r"(?:\bPaciente|\bAdolescente|\bMujer|\bHombre|\bNiño|\bNiña|\bUn |\bUna |\bDurante|\bEn una|\bEn un|\bEn el|¿|\bCuál|\bQué|\bSegún|\bDe acuerdo|\bDentro|\bComo parte|\bAnte |\bUsted |\bEl hospital|\bLos problemas)",
         flags=re.IGNORECASE,
     )
     for match in question_starts.finditer(question_text):
@@ -120,6 +135,10 @@ def clean_question_text(question_text: str) -> str:
                 or ";" in prefix
             )
         ):
+            question_text = question_text[match.start() :]
+            break
+
+        if 0 < len(prefix) <= 90 and prefix.rstrip().endswith("."):
             question_text = question_text[match.start() :]
             break
 
@@ -155,6 +174,7 @@ def is_question_usable(question_text: str, options: list[str]) -> bool:
         r"\btabla\b",
         r"\bcuadro\b",
         r"de acuerdo al gráfico",
+        r"\bpregunta\s+\d+\b",
     ]
 
     if any(re.search(pattern, lower) for pattern in blocked_patterns):
@@ -166,12 +186,37 @@ def is_question_usable(question_text: str, options: list[str]) -> bool:
     if question_text.rstrip().endswith(","):
         return False
 
+    if question_text.rstrip().endswith("-"):
+        return False
+
+    if re.search(
+        r"¿(?:qué|cuál|cuáles|cómo|dónde|cuándo|por qué)\s*$",
+        lower,
+        flags=re.IGNORECASE,
+    ):
+        return False
+
+    if (
+        lower.startswith("seleccione la opción de respuesta que complete")
+        and "_" not in question_text
+    ):
+        return False
+
     if re.search(r"(?:\d+\.\s*){2,}", question_text):
         return False
 
     # Many PDF-extracted matching/list questions lose their numbered premises,
     # leaving only answer codes like "1bd, 2ac". Those are not useful in-app.
     if any(is_code_option(option) for option in options):
+        return False
+
+    if any(
+        re.match(r"^(?:\d+|[a-z])\.\s+", clean_option(option), flags=re.IGNORECASE)
+        for option in options
+    ):
+        return False
+
+    if any(re.match(r"^[a-záéíóúñ]", clean_option(option)) for option in options):
         return False
 
     if any(
@@ -919,6 +964,246 @@ def parse_explicit_answer_pdf(path: Path, source: str) -> list[dict[str, object]
     return questions
 
 
+def review_attempt_skip_line(line: str) -> bool:
+    lower = line.lower()
+
+    if skip_line(line):
+        return True
+
+    return bool(
+        lower in {"correcta", "incorrecta", "sin contestar", "finalizado"}
+        or lower.startswith(("comenzado", "estado", "finalizado en", "calificación"))
+        or lower.startswith(("se puntúa", "tiempo", "empleado"))
+        or lower.startswith("2026 mayo simulador enfermeria")
+        or re.fullmatch(r"(?:pregunta\s+\d+\s*)+", lower)
+        or re.fullmatch(r"\d+\s+de\s+\d+\s+.+", lower)
+        or re.fullmatch(r"\d+\s+(?:minutos?|hora|horas)(?:\s+\d+\s+segundos?)?", lower)
+        or re.fullmatch(r"\d+\s+horas?\s+\d+\s+minutos?", lower)
+    )
+
+
+def normalize_review_text(value: str) -> str:
+    return re.sub(
+        r"\W+",
+        "",
+        clean_option(value).lower(),
+    )
+
+
+def collect_review_attempt_lines(path: Path) -> list[str]:
+    reader = PdfReader(str(path))
+    lines: list[str] = []
+
+    def expand_line(line: str) -> list[str]:
+        if not re.search(r"\bPregunta\s+\d+\b", line):
+            return [line]
+
+        expanded: list[str] = []
+        for part in re.split(r"\bPregunta\s+\d+\b", line):
+            part = clean_line(part)
+
+            if part:
+                expanded.append(part)
+
+        return expanded
+
+    for page in reader.pages:
+        for raw_line in (page.extract_text() or "").splitlines():
+            line = clean_line(raw_line)
+
+            if review_attempt_skip_line(line):
+                continue
+
+            for part in expand_line(line):
+                if not review_attempt_skip_line(part):
+                    lines.append(part)
+
+    return lines
+
+
+def split_review_attempt_blocks(lines: list[str]) -> list[tuple[list[str], str]]:
+    blocks: list[tuple[list[str], str]] = []
+    current: list[str] = []
+    index = 0
+
+    while index < len(lines):
+        line = lines[index]
+
+        if line.lower().startswith("la respuesta correcta es:"):
+            answer_parts = [
+                clean_line(line.split(":", 1)[1]),
+            ]
+            index += 1
+
+            while index < len(lines):
+                next_line = lines[index]
+
+                if (
+                    next_line.lower().startswith("la respuesta correcta es:")
+                    or looks_like_new_question(next_line)
+                    or review_attempt_skip_line(next_line)
+                    or "\uf00c" in next_line
+                    or "\uf00d" in next_line
+                ):
+                    break
+
+                # Some answers wrap onto a second PDF line. Avoid swallowing
+                # the next question by only accepting short continuations that
+                # still look like the same answer sentence.
+                if len(next_line) > 160:
+                    break
+
+                answer_parts.append(next_line)
+                index += 1
+
+            answer = clean_option(" ".join(answer_parts))
+            if current and answer:
+                blocks.append((current, answer))
+            current = []
+            continue
+
+        current.append(line)
+        index += 1
+
+    return blocks
+
+
+def review_partition_score(
+    question_lines: list[str],
+    options: list[str],
+    answer: str,
+    correct_index: int,
+    correct_markers: list[bool],
+) -> int:
+    question_text = clean_question_text(" ".join(question_lines))
+    score = 0
+
+    if "?" in question_text:
+        score += 8
+    if question_text.endswith(":"):
+        score += 5
+    if correct_markers[correct_index]:
+        score += 20
+    if sum(correct_markers) == 1:
+        score += 5
+
+    answer_normalized = normalize_review_text(answer)
+    option_normalized = normalize_review_text(options[correct_index])
+
+    if answer_normalized == option_normalized:
+        score += 20
+    elif answer_normalized in option_normalized or option_normalized in answer_normalized:
+        score += 8
+
+    score -= sum(max(0, len(option.split()) - 35) for option in options)
+    score -= abs(len(question_lines) - 2)
+
+    return score
+
+
+def parse_review_attempt_block(
+    block_lines: list[str],
+    answer: str,
+    source: str,
+) -> dict[str, object] | None:
+    lines = [
+        line
+        for line in block_lines
+        if clean_option(line) and clean_option(line) not in {"\uf00c", "\uf00d"}
+    ]
+
+    if len(lines) < 5:
+        return None
+
+    best: tuple[int, list[str], list[str], int] | None = None
+
+    for option_start in range(1, len(lines) - 3):
+        option_line_count = len(lines) - option_start
+
+        if option_line_count > 18:
+            continue
+
+        for first_stop in range(option_start + 1, len(lines) - 2):
+            for second_stop in range(first_stop + 1, len(lines) - 1):
+                for third_stop in range(second_stop + 1, len(lines)):
+                    groups = [
+                        lines[option_start:first_stop],
+                        lines[first_stop:second_stop],
+                        lines[second_stop:third_stop],
+                        lines[third_stop:],
+                    ]
+                    options = [
+                        clean_option(" ".join(group))
+                        for group in groups
+                    ]
+
+                    if (
+                        len(set(normalize_review_text(option) for option in options)) < 4
+                        or not all(0 < len(option) <= 900 for option in options)
+                    ):
+                        continue
+
+                    correct_index = option_index_for_answer(options, answer)
+
+                    if correct_index is None:
+                        continue
+
+                    correct_markers = [
+                        any("\uf00c" in line for line in group)
+                        for group in groups
+                    ]
+                    question_lines = lines[:option_start]
+                    question_text = clean_question_text(" ".join(question_lines))
+
+                    if (
+                        not 12 < len(question_text) <= 2500
+                        or not is_question_usable(question_text, options)
+                    ):
+                        continue
+
+                    score = review_partition_score(
+                        question_lines,
+                        options,
+                        answer,
+                        correct_index,
+                        correct_markers,
+                    )
+
+                    if best is None or score > best[0]:
+                        best = (score, question_lines, options, correct_index)
+
+    if best is None:
+        return None
+
+    _, question_lines, options, correct_index = best
+    question_text = clean_question_text(" ".join(question_lines))
+
+    return {
+        "question_text": question_text,
+        "option_a": options[0],
+        "option_b": options[1],
+        "option_c": options[2],
+        "option_d": options[3],
+        "correct_option": OPTION_LETTERS[correct_index],
+        "explanation": EXPLANATION,
+        "area": classify_nursing_area(question_text),
+        "source": source,
+    }
+
+
+def parse_review_attempt_pdf(path: Path, source: str) -> list[dict[str, object]]:
+    questions: list[dict[str, object]] = []
+    lines = collect_review_attempt_lines(path)
+
+    for block_lines, answer in split_review_attempt_blocks(lines):
+        question = parse_review_attempt_block(block_lines, answer, source)
+
+        if question:
+            questions.append(question)
+
+    return questions
+
+
 def sql_literal(value: str) -> str:
     return "'" + value.replace("'", "''") + "'"
 
@@ -992,6 +1277,11 @@ def load_questions() -> list[dict[str, object]]:
         *(
             (pdf_path, source, parse_explicit_answer_pdf)
             for pdf_path, source in PDFS_WITH_EXPLICIT_ANSWER
+        ),
+        *(
+            (pdf_path, source, parse_review_attempt_pdf)
+            for pdf_path, source in REVIEW_ATTEMPT_PDFS
+            if pdf_path.exists()
         ),
     ]
 

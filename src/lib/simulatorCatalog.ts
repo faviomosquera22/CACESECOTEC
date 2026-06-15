@@ -23,7 +23,7 @@ export const simulatorExams: SimulatorExamConfig[] = [
     structure: [
       "Cuidado del adulto, materno infantil, salud comunitaria y fundamentos profesionales.",
       "Preguntas de opción múltiple con una sola respuesta correcta.",
-      "Hasta 50 preguntas y temporizador de 60 minutos en esta primera versión.",
+      "100 preguntas y temporizador de 60 minutos.",
     ],
     categoryKeywords: ["enfermeria", "enfermería", "nursing"],
     icon: Stethoscope,
@@ -37,7 +37,7 @@ export const simulatorExams: SimulatorExamConfig[] = [
     structure: [
       "Intervenciones clínicas, evaluación, psicopatología, ética y abordaje psicosocial.",
       "Preguntas de opción múltiple con una sola respuesta correcta.",
-      "50 preguntas distribuidas según la ponderación del banco de Psicología Clínica.",
+      "100 preguntas distribuidas según la ponderación del banco de Psicología Clínica.",
     ],
     categoryKeywords: ["psicologia", "psicología", "psychology", "clinica"],
     icon: Brain,
