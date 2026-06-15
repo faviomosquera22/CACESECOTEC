@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Simulador CACES Privado",
+  title: "CACES SIMULADOR",
   description: "Plataforma privada de simulaciones tipo CACES.",
 };
 
