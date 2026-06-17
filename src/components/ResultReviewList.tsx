@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { CheckCircle2, XCircle } from "lucide-react";
 import type {
   OptionLetter,
@@ -36,10 +39,10 @@ function punctuate(sentence: string) {
 
 function ReviewCard({
   answer,
-  index,
+  questionNumber,
 }: {
   answer: SimulationAnswerWithQuestion;
-  index: number;
+  questionNumber: number;
 }) {
   const question = answer.questions;
   const isCorrect = answer.is_correct === true;
@@ -52,7 +55,7 @@ function ReviewCard({
     <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <h4 className="text-base font-semibold leading-7 text-slate-950">
-          {index + 1}. {question?.question_text ?? "Pregunta no disponible"}
+          {questionNumber}. {question?.question_text ?? "Pregunta no disponible"}
         </h4>
         <span
           className={`inline-flex w-fit items-center gap-2 rounded-lg px-3 py-1 text-sm font-semibold ${
@@ -114,51 +117,112 @@ function ReviewCard({
   );
 }
 
-function ReviewSection({
-  title,
-  answers,
-  emptyMessage,
-}: {
-  title: string;
-  answers: SimulationAnswerWithQuestion[];
-  emptyMessage: string;
-}) {
-  return (
-    <section>
-      <h3 className="mb-4 text-xl font-semibold tracking-normal text-slate-950">
-        {title}
-      </h3>
-      {answers.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
-          {emptyMessage}
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {answers.map((answer, index) => (
-            <ReviewCard key={answer.id} answer={answer} index={index} />
-          ))}
-        </div>
-      )}
-    </section>
-  );
-}
+type ReviewFilter = "incorrect" | "correct";
 
 export function ResultReviewList({ answers }: ResultReviewListProps) {
   const incorrectAnswers = answers.filter((answer) => answer.is_correct !== true);
   const correctAnswers = answers.filter((answer) => answer.is_correct === true);
+  const [activeFilter, setActiveFilter] = useState<ReviewFilter>(
+    incorrectAnswers.length > 0 ? "incorrect" : "correct",
+  );
+  const visibleAnswers =
+    activeFilter === "incorrect" ? incorrectAnswers : correctAnswers;
+  const emptyMessage =
+    activeFilter === "incorrect"
+      ? "No tuviste preguntas incorrectas."
+      : "No tuviste preguntas correctas.";
+  const title =
+    activeFilter === "incorrect"
+      ? `Preguntas incorrectas (${incorrectAnswers.length})`
+      : `Preguntas correctas (${correctAnswers.length})`;
+
+  const questionNumbers = new Map(
+    answers.map((answer, index) => [answer.id, index + 1]),
+  );
+
+  const filterOptions: {
+    key: ReviewFilter;
+    label: string;
+    count: number;
+    icon: typeof XCircle;
+    activeClassName: string;
+    inactiveClassName: string;
+  }[] = [
+    {
+      key: "incorrect",
+      label: "Incorrectas",
+      count: incorrectAnswers.length,
+      icon: XCircle,
+      activeClassName: "border-red-200 bg-red-50 text-red-700",
+      inactiveClassName: "border-slate-200 bg-white text-slate-600",
+    },
+    {
+      key: "correct",
+      label: "Correctas",
+      count: correctAnswers.length,
+      icon: CheckCircle2,
+      activeClassName: "border-emerald-200 bg-emerald-50 text-emerald-700",
+      inactiveClassName: "border-slate-200 bg-white text-slate-600",
+    },
+  ];
 
   return (
-    <div className="space-y-8">
-      <ReviewSection
-        title={`Preguntas incorrectas (${incorrectAnswers.length})`}
-        answers={incorrectAnswers}
-        emptyMessage="No tuviste preguntas incorrectas."
-      />
-      <ReviewSection
-        title={`Preguntas correctas (${correctAnswers.length})`}
-        answers={correctAnswers}
-        emptyMessage="No tuviste preguntas correctas."
-      />
-    </div>
+    <section className="space-y-5">
+      <div className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h3 className="text-xl font-semibold tracking-normal text-slate-950">
+            Revisión de respuestas
+          </h3>
+          <p className="mt-1 text-sm text-slate-500">
+            Selecciona un grupo para revisar solo esas preguntas.
+          </p>
+        </div>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {filterOptions.map((option) => {
+            const Icon = option.icon;
+            const isActive = activeFilter === option.key;
+
+            return (
+              <button
+                key={option.key}
+                type="button"
+                onClick={() => setActiveFilter(option.key)}
+                aria-pressed={isActive}
+                className={`inline-flex h-12 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-semibold transition hover:bg-slate-50 ${
+                  isActive ? option.activeClassName : option.inactiveClassName
+                }`}
+              >
+                <Icon className="h-4 w-4" aria-hidden="true" />
+                {option.label}
+                <span className="rounded-lg bg-white/80 px-2 py-0.5 text-base text-slate-950">
+                  {option.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <h4 className="mb-4 text-lg font-semibold tracking-normal text-slate-950">
+          {title}
+        </h4>
+        {visibleAnswers.length === 0 ? (
+          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+            {emptyMessage}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {visibleAnswers.map((answer) => (
+              <ReviewCard
+                key={answer.id}
+                answer={answer}
+                questionNumber={questionNumbers.get(answer.id) ?? 0}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
