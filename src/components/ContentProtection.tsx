@@ -41,7 +41,8 @@ function isCopyShortcut(event: KeyboardEvent) {
 }
 
 function shouldShowWatermark(pathname: string) {
-  return pathname.startsWith("/student/results");
+  void pathname;
+  return false;
 }
 
 function formatWatermarkTime() {
