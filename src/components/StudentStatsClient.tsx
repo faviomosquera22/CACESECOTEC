@@ -1,14 +1,19 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { CalendarClock, ClipboardList, TrendingUp, Trophy } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import type { SimulationHistoryRecord } from "@/components/SimulationHistoryTable";
+import {
+  mergeSimulationRecords,
+  parseCloudSimulationRecords,
+} from "@/lib/cloudSimulationStorage";
 import { average, formatDate, formatScore } from "@/lib/format";
 import {
   getLocalSimulationIndexKey,
   subscribeToLocalSimulationChanges,
 } from "@/lib/localSimulationStorage";
+import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 
 type StudentStatsClientProps = {
   studentId: string;
@@ -41,19 +46,43 @@ export function StudentStatsClient({
   serverSimulations,
 }: StudentStatsClientProps) {
   const localSimulations = useLocalSimulationRows(studentId);
+  const [cloudSimulations, setCloudSimulations] = useState<
+    SimulationHistoryRecord[]
+  >([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    queueMicrotask(async () => {
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (isMounted) {
+          setCloudSimulations(parseCloudSimulationRecords(user?.user_metadata));
+        }
+      } catch {
+        if (isMounted) {
+          setCloudSimulations([]);
+        }
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const simulations = useMemo(
     () =>
-      [...localSimulations, ...serverSimulations].sort((left, right) => {
-        const leftTime = new Date(
-          left.finished_at ?? left.created_at ?? 0,
-        ).getTime();
-        const rightTime = new Date(
-          right.finished_at ?? right.created_at ?? 0,
-        ).getTime();
-
-        return rightTime - leftTime;
-      }),
-    [localSimulations, serverSimulations],
+      mergeSimulationRecords([
+        ...localSimulations,
+        ...cloudSimulations,
+        ...serverSimulations,
+      ]),
+    [cloudSimulations, localSimulations, serverSimulations],
   );
   const scores = simulations.map((simulation) => simulation.score);
   const latestSimulation = simulations[0] ?? null;

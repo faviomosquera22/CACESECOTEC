@@ -14,6 +14,15 @@ import {
   X,
 } from "lucide-react";
 import type { Json, OptionLetter, Question } from "@/lib/database.types";
+import {
+  CLOUD_SIMULATION_RESULTS_METADATA_KEY,
+  CLOUD_SIMULATIONS_METADATA_KEY,
+  mergeSimulationRecords,
+  parseCloudSimulationResults,
+  parseCloudSimulationRecords,
+  type CloudSimulationAnswerRecord,
+  type CloudSimulationResultRecord,
+} from "@/lib/cloudSimulationStorage";
 import { writeLocalSimulationSummary } from "@/lib/localSimulationStorage";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import { SimulationQuestion } from "@/components/SimulationQuestion";
@@ -303,6 +312,44 @@ async function deleteAuthDraft(examSlug: string) {
   }
 }
 
+async function writeAuthSimulationResult(result: CloudSimulationResultRecord) {
+  try {
+    const supabase = getSupabaseBrowserClient();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error || !user) {
+      return false;
+    }
+
+    const existingSummaries = parseCloudSimulationRecords(user.user_metadata);
+    const existingResults = parseCloudSimulationResults(user.user_metadata);
+    const nextSummaries = mergeSimulationRecords([
+      result.simulation,
+      ...existingSummaries,
+    ]).slice(0, 50);
+    const nextResults = [
+      result,
+      ...existingResults.filter(
+        (item) => item.simulation.id !== result.simulation.id,
+      ),
+    ].slice(0, 10);
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: {
+        ...user.user_metadata,
+        [CLOUD_SIMULATIONS_METADATA_KEY]: nextSummaries,
+        [CLOUD_SIMULATION_RESULTS_METADATA_KEY]: nextResults,
+      },
+    });
+
+    return !updateError;
+  } catch {
+    return false;
+  }
+}
+
 async function markLegacyDraftDone(studentId: string, examSlug: string) {
   try {
     const supabase = getSupabaseBrowserClient();
@@ -405,6 +452,16 @@ export function SimulatorClient({
             questions: question,
           };
         });
+        const cloudAnswers: CloudSimulationAnswerRecord[] = localAnswers.map(
+          (answer) => ({
+            id: answer.id,
+            simulation_id: answer.simulation_id,
+            question_id: answer.question_id,
+            selected_option: answer.selected_option,
+            is_correct: answer.is_correct,
+            answered_at: answer.answered_at,
+          }),
+        );
 
         window.localStorage.setItem(
           `local-simulation:${simulationId}`,
@@ -415,6 +472,11 @@ export function SimulatorClient({
           }),
         );
         writeLocalSimulationSummary(studentId, localSimulation);
+        await writeAuthSimulationResult({
+          simulation: localSimulation,
+          answers: cloudAnswers,
+          comments,
+        });
         window.localStorage.removeItem(draftStorageKey);
         await deleteRemoteDraft(studentId, examSlug);
         await deleteAuthDraft(examSlug);
@@ -527,6 +589,35 @@ export function SimulatorClient({
       }
 
       window.localStorage.removeItem(draftStorageKey);
+      const cloudSimulation = {
+        id: simulationId,
+        finished_at: finishedAt.toISOString(),
+        created_at: finishedAt.toISOString(),
+        total_questions: totalQuestions,
+        correct_answers: correctAnswers,
+        incorrect_answers: incorrectAnswers,
+        score,
+        time_used_seconds: timeUsedSeconds,
+      };
+      const cloudAnswers: CloudSimulationAnswerRecord[] = questions.map(
+        (question) => {
+          const selectedOption = answers[question.id] ?? null;
+
+          return {
+            id: `${simulationId}-${question.id}`,
+            simulation_id: simulationId,
+            question_id: question.id,
+            selected_option: selectedOption,
+            is_correct: selectedOption === question.correct_option,
+            answered_at: finishedAt.toISOString(),
+          };
+        },
+      );
+      await writeAuthSimulationResult({
+        simulation: cloudSimulation,
+        answers: cloudAnswers,
+        comments,
+      });
       await deleteRemoteDraft(studentId, examSlug);
       await deleteAuthDraft(examSlug);
       await markLegacyDraftDone(studentId, examSlug);

@@ -1,15 +1,20 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import {
   SimulationHistoryTable,
   type SimulationHistoryRecord,
 } from "@/components/SimulationHistoryTable";
 import { StudentAttemptInsights } from "@/components/StudentAttemptInsights";
 import {
+  mergeSimulationRecords,
+  parseCloudSimulationRecords,
+} from "@/lib/cloudSimulationStorage";
+import {
   getLocalSimulationIndexKey,
   subscribeToLocalSimulationChanges,
 } from "@/lib/localSimulationStorage";
+import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 
 type StudentHistoryClientProps = {
   studentId: string;
@@ -21,6 +26,9 @@ export function StudentHistoryClient({
   serverSimulations,
 }: StudentHistoryClientProps) {
   const storageKey = getLocalSimulationIndexKey(studentId);
+  const [cloudSimulations, setCloudSimulations] = useState<
+    SimulationHistoryRecord[]
+  >([]);
   const rawValue = useSyncExternalStore(
     subscribeToLocalSimulationChanges,
     () => window.localStorage.getItem(storageKey),
@@ -39,19 +47,39 @@ export function StudentHistoryClient({
     }
   }, [rawValue]);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    queueMicrotask(async () => {
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (isMounted) {
+          setCloudSimulations(parseCloudSimulationRecords(user?.user_metadata));
+        }
+      } catch {
+        if (isMounted) {
+          setCloudSimulations([]);
+        }
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const simulations = useMemo(
     () =>
-      [...localSimulations, ...serverSimulations].sort((left, right) => {
-        const leftTime = new Date(
-          left.finished_at ?? left.created_at ?? 0,
-        ).getTime();
-        const rightTime = new Date(
-          right.finished_at ?? right.created_at ?? 0,
-        ).getTime();
-
-        return rightTime - leftTime;
-      }),
-    [localSimulations, serverSimulations],
+      mergeSimulationRecords([
+        ...localSimulations,
+        ...cloudSimulations,
+        ...serverSimulations,
+      ]),
+    [cloudSimulations, localSimulations, serverSimulations],
   );
 
   return (

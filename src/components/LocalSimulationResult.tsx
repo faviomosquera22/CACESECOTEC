@@ -1,16 +1,20 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ResultCategorySummary } from "@/components/ResultCategorySummary";
 import { ResultPerformanceSummary } from "@/components/ResultPerformanceSummary";
 import { ResultReviewList } from "@/components/ResultReviewList";
 import { ResultScoreCard } from "@/components/ResultScoreCard";
 import { SimulationStoredComments } from "@/components/SimulationStoredComments";
+import { parseCloudSimulationResults } from "@/lib/cloudSimulationStorage";
 import type {
+  Question,
   Simulation,
   SimulationAnswerWithQuestion,
 } from "@/lib/database.types";
+import { getLocalQuestionsForExam } from "@/lib/localQuestions";
+import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 
 type LocalSimulationPayload = {
   simulation: Simulation;
@@ -25,6 +29,9 @@ export function LocalSimulationResult({
   simulationId,
 }: LocalSimulationResultProps) {
   const storageKey = `local-simulation:${simulationId}`;
+  const [cloudPayload, setCloudPayload] = useState<LocalSimulationPayload | null>(
+    null,
+  );
   const rawPayload = useSyncExternalStore(
     (onStoreChange) => {
       window.addEventListener("storage", onStoreChange);
@@ -36,15 +43,64 @@ export function LocalSimulationResult({
 
   const payload = useMemo(() => {
     if (!rawPayload) {
-      return null;
+      return cloudPayload;
     }
 
     try {
       return JSON.parse(rawPayload) as LocalSimulationPayload;
     } catch {
-      return null;
+      return cloudPayload;
     }
-  }, [rawPayload]);
+  }, [cloudPayload, rawPayload]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    queueMicrotask(async () => {
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        const result = parseCloudSimulationResults(user?.user_metadata).find(
+          (item) => item.simulation.id === simulationId,
+        );
+
+        if (!result) {
+          return;
+        }
+
+        const questionMap = new Map<string, Question>();
+
+        getLocalQuestionsForExam("enfermeria").forEach((question) => {
+          questionMap.set(question.id, question);
+        });
+        getLocalQuestionsForExam("psicologia").forEach((question) => {
+          questionMap.set(question.id, question);
+        });
+
+        const nextPayload: LocalSimulationPayload = {
+          simulation: result.simulation as Simulation,
+          answers: result.answers.map((answer) => ({
+            ...answer,
+            questions: questionMap.get(answer.question_id) ?? null,
+          })),
+        };
+
+        if (isMounted) {
+          setCloudPayload(nextPayload);
+        }
+      } catch {
+        if (isMounted) {
+          setCloudPayload(null);
+        }
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [simulationId]);
 
   if (!payload) {
     return (
@@ -67,7 +123,7 @@ export function LocalSimulationResult({
 
       <ResultScoreCard
         simulation={simulation}
-        note="Resultado guardado en el historial local de este navegador mientras Supabase no tenga las tablas de simulaciones cargadas."
+        note="Resultado sincronizado con tu cuenta para consultar el historial desde tus dispositivos."
       />
 
       <ResultPerformanceSummary answers={answers} />
