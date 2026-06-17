@@ -44,6 +44,20 @@ REVIEW_ATTEMPT_PDFS = [
         f"CACES Mayo 2026 intento {index}",
     )
     for index in range(1, 14)
+] + [
+    (
+        path,
+        f"CACES Mayo 2026 {path.stem}",
+    )
+    for path in sorted(
+        [
+            *Path("Base de Caces").glob("2026 MAYO SIMULADOR ENFERMERIA_*.pdf"),
+            *Path("Base de Caces").glob("SIMULADOR CACES*.pdf"),
+            *Path("Base de Caces").glob("SIMULADOR DEL CACES*.pdf"),
+            *Path("Base de Caces").glob("SIMLADOR DEL CACES*.pdf"),
+        ],
+        key=lambda value: value.name,
+    )
 ]
 
 GOOGLE_DOCS = [
@@ -95,6 +109,12 @@ def clean_question_text(question_text: str) -> str:
         flags=re.IGNORECASE,
     )
     question_text = re.sub(
+        r"^sobre\s+\d+,\d+\s+",
+        "",
+        question_text,
+        flags=re.IGNORECASE,
+    )
+    question_text = re.sub(
         r"^\d+(?:\.\d+)*\s*[-.)]?\s*[A-Z]{1,8}\s*-\s*",
         "",
         question_text,
@@ -113,7 +133,7 @@ def clean_question_text(question_text: str) -> str:
         flags=re.IGNORECASE,
     )
     question_starts = re.compile(
-        r"(?:\bPaciente|\bAdolescente|\bMujer|\bHombre|\bNiño|\bNiña|\bUn |\bUna |\bDurante|\bEn una|\bEn un|\bEn el|¿|\bCuál|\bQué|\bSegún|\bDe acuerdo|\bDentro|\bComo parte|\bAnte |\bUsted |\bEl hospital|\bLos problemas)",
+        r"(?:\bPaciente|\bAdolescente|\bMujer|\bHombre|\bNiño|\bNiña|\bA un|\bA una|\bUn |\bUna |\bDurante|\bEn una|\bEn un|\bEn el|¿|\bCuál|\bQué|\bSegún|\bDe acuerdo|\bDentro|\bComo parte|\bAnte |\bUsted |\bEl hospital|\bLos problemas)",
         flags=re.IGNORECASE,
     )
     for match in question_starts.finditer(question_text):
@@ -175,6 +195,10 @@ def is_question_usable(question_text: str, options: list[str]) -> bool:
         r"\bcuadro\b",
         r"de acuerdo al gráfico",
         r"\bpregunta\s+\d+\b",
+        r"\d{1,2}/\d{1,2}/\d{2}",
+        r"revisión del intento",
+        r"revision del intento",
+        r"actuar desde perspectivas de promoción",
     ]
 
     if any(re.search(pattern, lower) for pattern in blocked_patterns):
@@ -202,7 +226,20 @@ def is_question_usable(question_text: str, options: list[str]) -> bool:
     ):
         return False
 
+    if lower.startswith("seleccione ") and re.search(
+        r"\.\s+[A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÑáéíóúñ]*$",
+        question_text,
+    ):
+        return False
+
     if re.search(r"(?:\d+\.\s*){2,}", question_text):
+        return False
+
+    numbered_items = set(re.findall(r"\b([1-9])\.\s+", question_text))
+    if {"1", "2"}.issubset(numbered_items):
+        return False
+
+    if re.search(r"\?\s+[A-ZÁÉÍÓÚÑ][\wÁÉÍÓÚÑáéíóúñ]*(?:\s+[A-ZÁÉÍÓÚÑ]?\w*){0,3}$", question_text):
         return False
 
     # Many PDF-extracted matching/list questions lose their numbered premises,
@@ -212,6 +249,17 @@ def is_question_usable(question_text: str, options: list[str]) -> bool:
 
     if any(
         re.match(r"^(?:\d+|[a-z])\.\s+", clean_option(option), flags=re.IGNORECASE)
+        or re.match(r"^\d+\s*,\s*$", clean_option(option))
+        or clean_option(option).startswith(("-", "•"))
+        for option in options
+    ):
+        return False
+
+    if any("¿" in clean_option(option) for option in options):
+        return False
+
+    if any(
+        re.search(r"\d{1,2}/\d{1,2}/\d{2}|revisión del intento|revision del intento", clean_option(option), flags=re.IGNORECASE)
         for option in options
     ):
         return False
@@ -971,10 +1019,18 @@ def review_attempt_skip_line(line: str) -> bool:
         return True
 
     return bool(
-        lower in {"correcta", "incorrecta", "sin contestar", "finalizado"}
+        lower in {
+            "correcta",
+            "incorrecta",
+            "sin contestar",
+            "finalizado",
+            "respuesta correcta",
+            "respuesta incorrecta.",
+        }
         or lower.startswith(("comenzado", "estado", "finalizado en", "calificación"))
         or lower.startswith(("se puntúa", "tiempo", "empleado"))
         or lower.startswith("2026 mayo simulador enfermeria")
+        or re.fullmatch(r"sobre\s+\d+,\d+", lower)
         or re.fullmatch(r"(?:pregunta\s+\d+\s*)+", lower)
         or re.fullmatch(r"\d+\s+de\s+\d+\s+.+", lower)
         or re.fullmatch(r"\d+\s+(?:minutos?|hora|horas)(?:\s+\d+\s+segundos?)?", lower)
@@ -993,6 +1049,31 @@ def normalize_review_text(value: str) -> str:
 def collect_review_attempt_lines(path: Path) -> list[str]:
     reader = PdfReader(str(path))
     lines: list[str] = []
+    skipping_feedback = False
+
+    def split_feedback_marker(line: str) -> tuple[str, bool]:
+        for marker in ("\uf00c", "\uf00d"):
+            if marker in line:
+                before_marker, after_marker = line.split(marker, 1)
+                return clean_line(before_marker), bool(clean_line(after_marker))
+
+        return line, False
+
+    def is_feedback_continuation(line: str) -> bool:
+        lower = line.lower()
+
+        return bool(
+            re.match(r"^[a-záéíóúñ]", line)
+            or lower.startswith(
+                (
+                    "el enunciado",
+                    "foco ",
+                    "para determinar",
+                    "desde este",
+                    "después",
+                )
+            )
+        )
 
     def expand_line(line: str) -> list[str]:
         if not re.search(r"\bPregunta\s+\d+\b", line):
@@ -1011,10 +1092,19 @@ def collect_review_attempt_lines(path: Path) -> list[str]:
         for raw_line in (page.extract_text() or "").splitlines():
             line = clean_line(raw_line)
 
+            if skipping_feedback:
+                if is_feedback_continuation(line):
+                    continue
+
+                skipping_feedback = False
+
             if review_attempt_skip_line(line):
                 continue
 
             for part in expand_line(line):
+                part, has_feedback = split_feedback_marker(part)
+                skipping_feedback = skipping_feedback or has_feedback
+
                 if not review_attempt_skip_line(part):
                     lines.append(part)
 
