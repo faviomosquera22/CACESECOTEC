@@ -25,8 +25,9 @@ type SimulatorClientProps = {
   draftStorageKey?: string;
 };
 
-const SIMULATION_SECONDS = 60 * 60;
-const DRAFT_VERSION = 1;
+const OLD_SIMULATION_SECONDS = 60 * 60;
+const SIMULATION_SECONDS = 120 * 60;
+const DRAFT_VERSION = 2;
 
 type SimulationDraft = {
   version: number;
@@ -34,6 +35,7 @@ type SimulationDraft = {
   comments: Record<string, string>;
   currentIndex: number;
   timeLeft: number;
+  simulationSeconds?: number;
   startedAt: string;
   updatedAt: string;
 };
@@ -271,7 +273,7 @@ export function SimulatorClient({
       try {
         const draft = JSON.parse(rawDraft) as SimulationDraft;
 
-        if (draft.version !== DRAFT_VERSION) {
+        if (![1, DRAFT_VERSION].includes(draft.version)) {
           window.localStorage.removeItem(draftStorageKey);
           setHasHydratedDraft(true);
           return;
@@ -293,12 +295,13 @@ export function SimulatorClient({
         setCurrentIndex(
           Math.min(Math.max(0, draft.currentIndex ?? 0), questions.length - 1),
         );
-        setTimeLeft(
-          Math.min(
-            SIMULATION_SECONDS,
-            Math.max(0, draft.timeLeft ?? SIMULATION_SECONDS),
-          ),
-        );
+        const migratedTimeLeft =
+          draft.version === 1
+            ? (draft.timeLeft ?? OLD_SIMULATION_SECONDS) +
+              (SIMULATION_SECONDS - OLD_SIMULATION_SECONDS)
+            : (draft.timeLeft ?? SIMULATION_SECONDS);
+
+        setTimeLeft(Math.min(SIMULATION_SECONDS, Math.max(0, migratedTimeLeft)));
         if (draft.startedAt) {
           startedAtRef.current = new Date(draft.startedAt);
         }
@@ -322,6 +325,7 @@ export function SimulatorClient({
       comments: questionComments,
       currentIndex,
       timeLeft,
+      simulationSeconds: SIMULATION_SECONDS,
       startedAt: startedAtRef.current.toISOString(),
       updatedAt: new Date().toISOString(),
     };
