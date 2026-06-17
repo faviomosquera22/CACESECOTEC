@@ -29,6 +29,8 @@ type SimulatorClientProps = {
 const OLD_SIMULATION_SECONDS = 60 * 60;
 const SIMULATION_SECONDS = 120 * 60;
 const DRAFT_VERSION = 2;
+const LEGACY_DRAFT_PREFIX = "draft";
+const LEGACY_DRAFT_DONE_PREFIX = "draft_done";
 
 type SimulationDraft = {
   version: number;
@@ -168,6 +170,40 @@ function parseStoredDraft(value: unknown, questionIds: Set<string>) {
   };
 }
 
+function encodeDraftStatus(examSlug: string, draft: SimulationDraft) {
+  try {
+    const json = JSON.stringify(draft);
+    const bytes = new TextEncoder().encode(json);
+    const binary = Array.from(bytes, (byte) => String.fromCharCode(byte)).join("");
+
+    return `${LEGACY_DRAFT_PREFIX}:${examSlug}:${window.btoa(binary)}`;
+  } catch {
+    return null;
+  }
+}
+
+function parseDraftStatus(
+  status: string | null | undefined,
+  examSlug: string,
+  questionIds: Set<string>,
+) {
+  const prefix = `${LEGACY_DRAFT_PREFIX}:${examSlug}:`;
+
+  if (!status?.startsWith(prefix)) {
+    return null;
+  }
+
+  try {
+    const binary = window.atob(status.slice(prefix.length));
+    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    const json = new TextDecoder().decode(bytes);
+
+    return parseStoredDraft(JSON.parse(json), questionIds);
+  } catch {
+    return null;
+  }
+}
+
 async function deleteRemoteDraft(studentId: string, examSlug: string) {
   try {
     const supabase = getSupabaseBrowserClient();
@@ -178,6 +214,19 @@ async function deleteRemoteDraft(studentId: string, examSlug: string) {
       .eq("exam_slug", examSlug);
   } catch {
     // The local fallback still works if the draft table is not installed yet.
+  }
+}
+
+async function markLegacyDraftDone(studentId: string, examSlug: string) {
+  try {
+    const supabase = getSupabaseBrowserClient();
+    await supabase.from("simulations").insert({
+      student_id: studentId,
+      started_at: new Date().toISOString(),
+      status: `${LEGACY_DRAFT_DONE_PREFIX}:${examSlug}`,
+    });
+  } catch {
+    // This marker only prevents old fallback drafts from reopening.
   }
 }
 
@@ -282,6 +331,7 @@ export function SimulatorClient({
         writeLocalSimulationSummary(studentId, localSimulation);
         window.localStorage.removeItem(draftStorageKey);
         await deleteRemoteDraft(studentId, examSlug);
+        await markLegacyDraftDone(studentId, examSlug);
 
         router.push(`/student/results/${simulationId}`);
         return;
@@ -391,6 +441,7 @@ export function SimulatorClient({
 
       window.localStorage.removeItem(draftStorageKey);
       await deleteRemoteDraft(studentId, examSlug);
+      await markLegacyDraftDone(studentId, examSlug);
       activeSimulationIdRef.current = null;
       router.push(`/student/results/${simulationId}`);
       router.refresh();
@@ -471,6 +522,72 @@ export function SimulatorClient({
         }
       } catch {
         // Continue with existing local/in-progress fallbacks.
+      }
+
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const [
+          { data: draftRows },
+          { data: finishedRows },
+          { data: doneRows },
+        ] = await Promise.all([
+          supabase
+            .from("simulations")
+            .select("status, created_at")
+            .eq("student_id", studentId)
+            .like("status", `${LEGACY_DRAFT_PREFIX}:${examSlug}:%`)
+            .order("created_at", { ascending: false })
+            .limit(1),
+          supabase
+            .from("simulations")
+            .select("created_at")
+            .eq("student_id", studentId)
+            .or("status.eq.finished,status.is.null")
+            .order("created_at", { ascending: false })
+            .limit(1),
+          supabase
+            .from("simulations")
+            .select("created_at")
+            .eq("student_id", studentId)
+            .eq("status", `${LEGACY_DRAFT_DONE_PREFIX}:${examSlug}`)
+            .order("created_at", { ascending: false })
+            .limit(1),
+        ]);
+        const legacyDraftRow = draftRows?.[0] ?? null;
+        const latestFinishedRow = finishedRows?.[0] ?? null;
+        const latestDoneRow = doneRows?.[0] ?? null;
+        const draftCreatedAt = legacyDraftRow?.created_at
+          ? new Date(legacyDraftRow.created_at).getTime()
+          : 0;
+        const finishedCreatedAt = Math.max(
+          latestFinishedRow?.created_at
+            ? new Date(latestFinishedRow.created_at).getTime()
+            : 0,
+          latestDoneRow?.created_at
+            ? new Date(latestDoneRow.created_at).getTime()
+            : 0,
+        );
+        const legacyDraft =
+          draftCreatedAt > finishedCreatedAt
+            ? parseDraftStatus(legacyDraftRow?.status, examSlug, questionIds)
+            : null;
+
+        if (legacyDraft) {
+          applyDraft(
+            legacyDraft.answers,
+            legacyDraft.comments,
+            legacyDraft.startedAt,
+            getRemainingSeconds(legacyDraft.startedAt),
+          );
+          setAutoSaveStatus("Progreso sincronizado");
+
+          if (isMounted) {
+            setHasHydratedDraft(true);
+          }
+          return;
+        }
+      } catch {
+        // Continue with the local browser fallback.
       }
 
       if (persistenceMode !== "supabase") {
@@ -691,9 +808,32 @@ export function SimulatorClient({
 
         if (!draftError) {
           setAutoSaveStatus("Progreso sincronizado");
+          return;
         }
       } catch {
-        // Local draft remains available if the remote draft table is unavailable.
+        // Fall back to the existing simulations table below.
+      }
+
+      try {
+        const status = encodeDraftStatus(examSlug, draft);
+
+        if (!status) {
+          return;
+        }
+
+        const supabase = getSupabaseBrowserClient();
+        const { error: fallbackError } = await supabase.from("simulations").insert({
+          student_id: studentId,
+          started_at: draft.startedAt,
+          total_questions: questions.length,
+          status,
+        });
+
+        if (!fallbackError) {
+          setAutoSaveStatus("Progreso sincronizado");
+        }
+      } catch {
+        // Local draft remains available if remote persistence is unavailable.
       }
     }, 500);
 
@@ -704,6 +844,7 @@ export function SimulatorClient({
     examSlug,
     hasHydratedDraft,
     questionComments,
+    questions.length,
     studentId,
   ]);
 
