@@ -78,6 +78,10 @@ const initialCreateStudentForm: CreateStudentForm = {
 };
 
 function readLocalSimulations(studentId: string) {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
   const rawValue = window.localStorage.getItem(
     getLocalSimulationIndexKey(studentId),
   );

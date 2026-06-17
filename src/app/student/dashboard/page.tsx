@@ -1,6 +1,7 @@
 import { GraduationCap, ShieldCheck } from "lucide-react";
 import { SimulatorOptionCard } from "@/components/SimulatorOptionCard";
 import { StudentStatsClient } from "@/components/StudentStatsClient";
+import { StudentTeacherFeedback } from "@/components/StudentTeacherFeedback";
 import { requireCompletedStudentProfile } from "@/lib/auth";
 import { simulatorExams } from "@/lib/simulatorCatalog";
 import { getStudentCareerOption } from "@/lib/studentCareer";
@@ -41,6 +42,8 @@ export default async function StudentDashboardPage() {
         studentId={profile.id}
         serverSimulations={simulations}
       />
+
+      <StudentTeacherFeedback studentId={profile.id} />
 
       <section className="rounded-lg border border-sky-100 bg-sky-50 p-5 text-sky-900">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

@@ -3,8 +3,10 @@
 import { useMemo, useSyncExternalStore } from "react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ResultCategorySummary } from "@/components/ResultCategorySummary";
+import { ResultPerformanceSummary } from "@/components/ResultPerformanceSummary";
 import { ResultReviewList } from "@/components/ResultReviewList";
 import { ResultScoreCard } from "@/components/ResultScoreCard";
+import { SimulationStoredComments } from "@/components/SimulationStoredComments";
 import type {
   Simulation,
   SimulationAnswerWithQuestion,
@@ -67,6 +69,10 @@ export function LocalSimulationResult({
         simulation={simulation}
         note="Resultado guardado en el historial local de este navegador mientras Supabase no tenga las tablas de simulaciones cargadas."
       />
+
+      <ResultPerformanceSummary answers={answers} />
+
+      <SimulationStoredComments simulationId={simulation.id} answers={answers} />
 
       <ResultCategorySummary answers={answers} />
 

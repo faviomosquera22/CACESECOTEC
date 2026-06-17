@@ -23,6 +23,12 @@ export function AppShell({ profile, navItems, children }: AppShellProps) {
 
   return (
     <div className="protected-interaction-surface min-h-screen bg-slate-50 text-slate-950">
+      <a
+        href="#contenido-principal"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-slate-950 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Saltar al contenido principal
+      </a>
       <ContentProtection
         userId={profile.id}
         userName={profile.full_name}
@@ -60,7 +66,7 @@ export function AppShell({ profile, navItems, children }: AppShellProps) {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-7xl px-6 py-8">
+      <main id="contenido-principal" className="mx-auto w-full max-w-7xl px-6 py-8">
         <div className="mb-8 flex flex-col gap-1">
           <p className="text-sm font-medium text-slate-500">Sesión activa</p>
           <h1 className="text-2xl font-semibold tracking-normal text-slate-950">

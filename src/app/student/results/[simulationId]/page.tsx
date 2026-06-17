@@ -2,8 +2,10 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { LocalSimulationResult } from "@/components/LocalSimulationResult";
 import { ResultCategorySummary } from "@/components/ResultCategorySummary";
+import { ResultPerformanceSummary } from "@/components/ResultPerformanceSummary";
 import { ResultReviewList } from "@/components/ResultReviewList";
 import { ResultScoreCard } from "@/components/ResultScoreCard";
+import { SimulationStoredComments } from "@/components/SimulationStoredComments";
 import { requireCompletedStudentProfile } from "@/lib/auth";
 import type { SimulationAnswerWithQuestion } from "@/lib/database.types";
 
@@ -79,6 +81,10 @@ export default async function StudentResultPage({
       />
 
       <ResultScoreCard simulation={simulation} />
+
+      <ResultPerformanceSummary answers={answers} />
+
+      <SimulationStoredComments simulationId={simulation.id} answers={answers} />
 
       <ResultCategorySummary answers={answers} />
 

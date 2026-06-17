@@ -5,6 +5,7 @@ import {
   SimulationHistoryTable,
   type SimulationHistoryRecord,
 } from "@/components/SimulationHistoryTable";
+import { StudentAttemptInsights } from "@/components/StudentAttemptInsights";
 import {
   getLocalSimulationIndexKey,
   subscribeToLocalSimulationChanges,
@@ -54,10 +55,13 @@ export function StudentHistoryClient({
   );
 
   return (
-    <SimulationHistoryTable
-      simulations={simulations}
-      resultBasePath="/student/results"
-      emptyMessage="Aún no tienes simulaciones registradas."
-    />
+    <div className="space-y-6">
+      <StudentAttemptInsights simulations={simulations} />
+      <SimulationHistoryTable
+        simulations={simulations}
+        resultBasePath="/student/results"
+        emptyMessage="Aún no tienes simulaciones registradas."
+      />
+    </div>
   );
 }

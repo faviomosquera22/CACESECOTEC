@@ -150,6 +150,7 @@ export default async function StudentExamSimulatorPage({
         questions={questions}
         studentId={profile.id}
         persistenceMode={persistenceMode}
+        draftStorageKey={`simulation-draft:${profile.id}:${exam.slug}`}
       />
     </div>
   );

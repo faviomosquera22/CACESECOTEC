@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   Clock3,
   ListChecks,
+  MessageSquare,
   X,
 } from "lucide-react";
 import type { OptionLetter, Question } from "@/lib/database.types";
@@ -21,9 +22,21 @@ type SimulatorClientProps = {
   questions: Question[];
   studentId: string;
   persistenceMode?: "supabase" | "local";
+  draftStorageKey?: string;
 };
 
 const SIMULATION_SECONDS = 60 * 60;
+const DRAFT_VERSION = 1;
+
+type SimulationDraft = {
+  version: number;
+  answers: Partial<Record<string, OptionLetter>>;
+  comments: Record<string, string>;
+  currentIndex: number;
+  timeLeft: number;
+  startedAt: string;
+  updatedAt: string;
+};
 
 function formatTimer(seconds: number) {
   const minutes = Math.floor(seconds / 60);
@@ -62,18 +75,24 @@ export function SimulatorClient({
   questions,
   studentId,
   persistenceMode = "supabase",
+  draftStorageKey = `simulation-draft:${studentId}`,
 }: SimulatorClientProps) {
   const router = useRouter();
   const startedAtRef = useRef(new Date());
   const finishedRef = useRef(false);
+  const [hasHydratedDraft, setHasHydratedDraft] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Partial<Record<string, OptionLetter>>>(
     {},
   );
+  const [questionComments, setQuestionComments] = useState<
+    Record<string, string>
+  >({});
   const [timeLeft, setTimeLeft] = useState(SIMULATION_SECONDS);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [showFinishDialog, setShowFinishDialog] = useState(false);
+  const [autoSaveStatus, setAutoSaveStatus] = useState("Autoguardado listo");
 
   const currentQuestion = questions[currentIndex];
   const selectedCount = questions.filter((question) => answers[question.id])
@@ -107,6 +126,11 @@ export function SimulatorClient({
 
       if (persistenceMode === "local") {
         const simulationId = `local-${Date.now()}`;
+        const comments = Object.fromEntries(
+          Object.entries(questionComments)
+            .map(([questionId, comment]) => [questionId, comment.trim()])
+            .filter(([, comment]) => comment.length > 0),
+        );
         const localSimulation = {
           id: simulationId,
           student_id: studentId,
@@ -139,9 +163,11 @@ export function SimulatorClient({
           JSON.stringify({
             simulation: localSimulation,
             answers: localAnswers,
+            comments,
           }),
         );
         writeLocalSimulationSummary(studentId, localSimulation);
+        window.localStorage.removeItem(draftStorageKey);
 
         router.push(`/student/results/${simulationId}`);
         return;
@@ -189,6 +215,25 @@ export function SimulatorClient({
         throw new Error("No se pudieron guardar las respuestas.");
       }
 
+      const comments = Object.fromEntries(
+        Object.entries(questionComments)
+          .map(([questionId, comment]) => [questionId, comment.trim()])
+          .filter(([, comment]) => comment.length > 0),
+      );
+
+      if (Object.keys(comments).length > 0) {
+        window.localStorage.setItem(
+          `simulation-question-comments:${simulation.id}`,
+          JSON.stringify({
+            studentId,
+            simulationId: simulation.id,
+            comments,
+            updatedAt: finishedAt.toISOString(),
+          }),
+        );
+      }
+
+      window.localStorage.removeItem(draftStorageKey);
       router.push(`/student/results/${simulation.id}`);
       router.refresh();
     } catch (caughtError) {
@@ -205,9 +250,90 @@ export function SimulatorClient({
     answers,
     isSubmitting,
     persistenceMode,
+    questionComments,
     questions,
     router,
+    draftStorageKey,
     studentId,
+    timeLeft,
+  ]);
+
+  useEffect(() => {
+    queueMicrotask(() => {
+      const rawDraft = window.localStorage.getItem(draftStorageKey);
+      const questionIds = new Set(questions.map((question) => question.id));
+
+      if (!rawDraft) {
+        setHasHydratedDraft(true);
+        return;
+      }
+
+      try {
+        const draft = JSON.parse(rawDraft) as SimulationDraft;
+
+        if (draft.version !== DRAFT_VERSION) {
+          window.localStorage.removeItem(draftStorageKey);
+          setHasHydratedDraft(true);
+          return;
+        }
+
+        const restoredAnswers = Object.fromEntries(
+          Object.entries(draft.answers ?? {}).filter(([questionId]) =>
+            questionIds.has(questionId),
+          ),
+        ) as Partial<Record<string, OptionLetter>>;
+        const restoredComments = Object.fromEntries(
+          Object.entries(draft.comments ?? {}).filter(([questionId]) =>
+            questionIds.has(questionId),
+          ),
+        );
+
+        setAnswers(restoredAnswers);
+        setQuestionComments(restoredComments);
+        setCurrentIndex(
+          Math.min(Math.max(0, draft.currentIndex ?? 0), questions.length - 1),
+        );
+        setTimeLeft(
+          Math.min(
+            SIMULATION_SECONDS,
+            Math.max(0, draft.timeLeft ?? SIMULATION_SECONDS),
+          ),
+        );
+        if (draft.startedAt) {
+          startedAtRef.current = new Date(draft.startedAt);
+        }
+        setAutoSaveStatus("Borrador recuperado");
+      } catch {
+        window.localStorage.removeItem(draftStorageKey);
+      } finally {
+        setHasHydratedDraft(true);
+      }
+    });
+  }, [draftStorageKey, questions]);
+
+  useEffect(() => {
+    if (!hasHydratedDraft || finishedRef.current) {
+      return;
+    }
+
+    const draft: SimulationDraft = {
+      version: DRAFT_VERSION,
+      answers,
+      comments: questionComments,
+      currentIndex,
+      timeLeft,
+      startedAt: startedAtRef.current.toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    window.localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+    setAutoSaveStatus("Guardado automáticamente");
+  }, [
+    answers,
+    currentIndex,
+    draftStorageKey,
+    hasHydratedDraft,
+    questionComments,
     timeLeft,
   ]);
 
@@ -237,6 +363,13 @@ export function SimulatorClient({
     }));
   }
 
+  function updateQuestionComment(comment: string) {
+    setQuestionComments((currentComments) => ({
+      ...currentComments,
+      [currentQuestion.id]: comment,
+    }));
+  }
+
   function goToPrevious() {
     setCurrentIndex((index) => Math.max(0, index - 1));
   }
@@ -263,6 +396,9 @@ export function SimulatorClient({
               Pregunta {currentIndex + 1} de {questions.length}
             </p>
             <p className="mt-2 text-sm text-slate-600">{answeredLabel}</p>
+            <p className="mt-1 text-xs font-medium text-emerald-700">
+              {autoSaveStatus}
+            </p>
           </div>
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-slate-950 px-4 py-2 text-lg font-semibold tabular-nums text-white">
@@ -382,6 +518,24 @@ export function SimulatorClient({
               <dd className="mt-1 text-xl font-semibold">{unansweredCount}</dd>
             </div>
           </dl>
+          <div className="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <label
+              htmlFor={`question-comment-${currentQuestion.id}`}
+              className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+            >
+              <MessageSquare className="h-4 w-4 text-sky-700" aria-hidden="true" />
+              Duda o comentario
+            </label>
+            <textarea
+              id={`question-comment-${currentQuestion.id}`}
+              value={questionComments[currentQuestion.id] ?? ""}
+              onChange={(event) => updateQuestionComment(event.target.value)}
+              rows={4}
+              data-allow-selection="true"
+              placeholder="Marca una duda para revisarla después."
+              className="mt-3 w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm leading-6 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+            />
+          </div>
         </aside>
       </div>
 
