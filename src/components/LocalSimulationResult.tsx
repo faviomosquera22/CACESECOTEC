@@ -14,7 +14,7 @@ import type {
   SimulationAnswerWithQuestion,
 } from "@/lib/database.types";
 import { getLocalQuestionsForExam } from "@/lib/localQuestions";
-import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
+import { getFreshSupabaseUser } from "@/lib/supabaseAuthMetadata";
 
 type LocalSimulationPayload = {
   simulation: Simulation;
@@ -58,10 +58,7 @@ export function LocalSimulationResult({
 
     queueMicrotask(async () => {
       try {
-        const supabase = getSupabaseBrowserClient();
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
+        const user = await getFreshSupabaseUser();
         const result = parseCloudSimulationResults(user?.user_metadata).find(
           (item) => item.simulation.id === simulationId,
         );

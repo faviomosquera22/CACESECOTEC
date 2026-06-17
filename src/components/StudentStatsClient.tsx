@@ -13,7 +13,7 @@ import {
   getLocalSimulationIndexKey,
   subscribeToLocalSimulationChanges,
 } from "@/lib/localSimulationStorage";
-import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
+import { getFreshSupabaseUser } from "@/lib/supabaseAuthMetadata";
 
 type StudentStatsClientProps = {
   studentId: string;
@@ -55,10 +55,7 @@ export function StudentStatsClient({
 
     queueMicrotask(async () => {
       try {
-        const supabase = getSupabaseBrowserClient();
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
+        const user = await getFreshSupabaseUser();
 
         if (isMounted) {
           setCloudSimulations(parseCloudSimulationRecords(user?.user_metadata));

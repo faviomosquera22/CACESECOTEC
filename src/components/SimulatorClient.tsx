@@ -24,6 +24,7 @@ import {
   type CloudSimulationResultRecord,
 } from "@/lib/cloudSimulationStorage";
 import { writeLocalSimulationSummary } from "@/lib/localSimulationStorage";
+import { getFreshSupabaseUser } from "@/lib/supabaseAuthMetadata";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import { SimulationQuestion } from "@/components/SimulationQuestion";
 
@@ -238,13 +239,9 @@ function getAuthDrafts(metadata: Record<string, unknown> | null | undefined) {
 
 async function readAuthDraft(examSlug: string, questionIds: Set<string>) {
   try {
-    const supabase = getSupabaseBrowserClient();
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
+    const user = await getFreshSupabaseUser();
 
-    if (error || !user) {
+    if (!user) {
       return null;
     }
 
@@ -259,12 +256,9 @@ async function readAuthDraft(examSlug: string, questionIds: Set<string>) {
 async function writeAuthDraft(examSlug: string, draft: SimulationDraft) {
   try {
     const supabase = getSupabaseBrowserClient();
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
+    const user = await getFreshSupabaseUser();
 
-    if (error || !user) {
+    if (!user) {
       return false;
     }
 
@@ -288,12 +282,9 @@ async function writeAuthDraft(examSlug: string, draft: SimulationDraft) {
 async function deleteAuthDraft(examSlug: string) {
   try {
     const supabase = getSupabaseBrowserClient();
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
+    const user = await getFreshSupabaseUser();
 
-    if (error || !user) {
+    if (!user) {
       return;
     }
 
@@ -315,12 +306,9 @@ async function deleteAuthDraft(examSlug: string) {
 async function writeAuthSimulationResult(result: CloudSimulationResultRecord) {
   try {
     const supabase = getSupabaseBrowserClient();
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
+    const user = await getFreshSupabaseUser();
 
-    if (error || !user) {
+    if (!user) {
       return false;
     }
 
