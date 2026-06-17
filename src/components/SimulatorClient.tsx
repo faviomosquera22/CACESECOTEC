@@ -21,6 +21,7 @@ import { SimulationQuestion } from "@/components/SimulationQuestion";
 type SimulatorClientProps = {
   questions: Question[];
   studentId: string;
+  examSlug: string;
   persistenceMode?: "supabase" | "local";
   draftStorageKey?: string;
 };
@@ -73,15 +74,78 @@ function getTimeAlert(seconds: number) {
   return null;
 }
 
+function getFirstUnansweredIndex(
+  questions: Question[],
+  answers: Partial<Record<string, OptionLetter>>,
+) {
+  const firstUnansweredIndex = questions.findIndex(
+    (question) => !answers[question.id],
+  );
+
+  return firstUnansweredIndex === -1
+    ? Math.max(0, questions.length - 1)
+    : firstUnansweredIndex;
+}
+
+function getRemainingSeconds(startedAt: Date) {
+  const elapsedSeconds = Math.floor((Date.now() - startedAt.getTime()) / 1000);
+
+  return Math.min(
+    SIMULATION_SECONDS,
+    Math.max(0, SIMULATION_SECONDS - elapsedSeconds),
+  );
+}
+
+function parseLocalDraft(rawDraft: string | null, questionIds: Set<string>) {
+  if (!rawDraft) {
+    return null;
+  }
+
+  try {
+    const draft = JSON.parse(rawDraft) as SimulationDraft;
+
+    if (![1, DRAFT_VERSION].includes(draft.version)) {
+      return null;
+    }
+
+    const answers = Object.fromEntries(
+      Object.entries(draft.answers ?? {}).filter(([questionId]) =>
+        questionIds.has(questionId),
+      ),
+    ) as Partial<Record<string, OptionLetter>>;
+    const comments = Object.fromEntries(
+      Object.entries(draft.comments ?? {}).filter(([questionId]) =>
+        questionIds.has(questionId),
+      ),
+    );
+    const timeLeft =
+      draft.version === 1
+        ? (draft.timeLeft ?? OLD_SIMULATION_SECONDS) +
+          (SIMULATION_SECONDS - OLD_SIMULATION_SECONDS)
+        : (draft.timeLeft ?? SIMULATION_SECONDS);
+
+    return {
+      answers,
+      comments,
+      startedAt: draft.startedAt ? new Date(draft.startedAt) : new Date(),
+      timeLeft: Math.min(SIMULATION_SECONDS, Math.max(0, timeLeft)),
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function SimulatorClient({
   questions,
   studentId,
+  examSlug,
   persistenceMode = "supabase",
   draftStorageKey = `simulation-draft:${studentId}`,
 }: SimulatorClientProps) {
   const router = useRouter();
   const startedAtRef = useRef(new Date());
   const finishedRef = useRef(false);
+  const activeSimulationIdRef = useRef<string | null>(null);
   const [hasHydratedDraft, setHasHydratedDraft] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Partial<Record<string, OptionLetter>>>(
@@ -103,6 +167,7 @@ export function SimulatorClient({
   const allAnswered = selectedCount === questions.length;
   const progressPercentage = ((currentIndex + 1) / questions.length) * 100;
   const timeAlert = getTimeAlert(timeLeft);
+  const remoteDraftStatus = `in_progress:${examSlug}`;
 
   const finishSimulation = useCallback(async () => {
     if (finishedRef.current || isSubmitting) {
@@ -176,45 +241,87 @@ export function SimulatorClient({
       }
 
       const supabase = getSupabaseBrowserClient();
+      const activeSimulationId = activeSimulationIdRef.current;
 
-      const { data: simulation, error: simulationError } = await supabase
-        .from("simulations")
-        .insert({
-          student_id: studentId,
-          started_at: startedAtRef.current.toISOString(),
-          finished_at: finishedAt.toISOString(),
-          total_questions: totalQuestions,
-          correct_answers: correctAnswers,
-          incorrect_answers: incorrectAnswers,
-          score,
-          time_used_seconds: timeUsedSeconds,
-          status: "finished",
-        })
-        .select("id")
-        .single();
+      let simulationId: string | null = activeSimulationId;
 
-      if (simulationError || !simulation) {
-        throw new Error("No se pudo guardar la simulación.");
+      if (!simulationId) {
+        const { data: simulation, error: simulationError } = await supabase
+          .from("simulations")
+          .insert({
+            student_id: studentId,
+            started_at: startedAtRef.current.toISOString(),
+            finished_at: finishedAt.toISOString(),
+            total_questions: totalQuestions,
+            correct_answers: correctAnswers,
+            incorrect_answers: incorrectAnswers,
+            score,
+            time_used_seconds: timeUsedSeconds,
+            status: "finished",
+          })
+          .select("id")
+          .single();
+
+        if (simulationError || !simulation) {
+          throw new Error("No se pudo guardar la simulación.");
+        }
+
+        simulationId = simulation.id;
       }
 
-      const answerRows = questions.map((question) => {
-        const selectedOption = answers[question.id] ?? null;
+      if (!simulationId) {
+        throw new Error("No se pudo preparar la simulación.");
+      }
 
-        return {
-          simulation_id: simulation.id,
-          question_id: question.id,
-          selected_option: selectedOption,
-          is_correct: selectedOption === question.correct_option,
-          answered_at: finishedAt.toISOString(),
-        };
-      });
-
-      const { error: answersError } = await supabase
+      const { data: existingAnswerRows } = await supabase
         .from("simulation_answers")
-        .insert(answerRows);
+        .select("question_id")
+        .eq("simulation_id", simulationId);
+      const existingQuestionIds = new Set(
+        (existingAnswerRows ?? []).map((answer) => answer.question_id),
+      );
+      const answerRows = questions
+        .filter((question) => !existingQuestionIds.has(question.id))
+        .map((question) => {
+          const selectedOption = answers[question.id] ?? null;
 
-      if (answersError) {
-        throw new Error("No se pudieron guardar las respuestas.");
+          return {
+            simulation_id: simulationId,
+            question_id: question.id,
+            selected_option: selectedOption,
+            is_correct: selectedOption === question.correct_option,
+            answered_at: finishedAt.toISOString(),
+          };
+        });
+
+      if (answerRows.length > 0) {
+        const { error: answersError } = await supabase
+          .from("simulation_answers")
+          .insert(answerRows);
+
+        if (answersError) {
+          throw new Error("No se pudieron guardar las respuestas.");
+        }
+      }
+
+      if (activeSimulationId) {
+        const { error: simulationError } = await supabase
+          .from("simulations")
+          .update({
+            finished_at: finishedAt.toISOString(),
+            total_questions: totalQuestions,
+            correct_answers: correctAnswers,
+            incorrect_answers: incorrectAnswers,
+            score,
+            time_used_seconds: timeUsedSeconds,
+            status: "finished",
+          })
+          .eq("id", activeSimulationId)
+          .eq("student_id", studentId);
+
+        if (simulationError) {
+          throw new Error("No se pudo finalizar la simulación.");
+        }
       }
 
       const comments = Object.fromEntries(
@@ -225,10 +332,10 @@ export function SimulatorClient({
 
       if (Object.keys(comments).length > 0) {
         window.localStorage.setItem(
-          `simulation-question-comments:${simulation.id}`,
+          `simulation-question-comments:${simulationId}`,
           JSON.stringify({
             studentId,
-            simulationId: simulation.id,
+            simulationId,
             comments,
             updatedAt: finishedAt.toISOString(),
           }),
@@ -236,7 +343,8 @@ export function SimulatorClient({
       }
 
       window.localStorage.removeItem(draftStorageKey);
-      router.push(`/student/results/${simulation.id}`);
+      activeSimulationIdRef.current = null;
+      router.push(`/student/results/${simulationId}`);
       router.refresh();
     } catch (caughtError) {
       finishedRef.current = false;
@@ -261,63 +369,173 @@ export function SimulatorClient({
   ]);
 
   useEffect(() => {
-    queueMicrotask(() => {
-      const rawDraft = window.localStorage.getItem(draftStorageKey);
-      const questionIds = new Set(questions.map((question) => question.id));
+    let isMounted = true;
 
-      if (!rawDraft) {
-        setHasHydratedDraft(true);
+    queueMicrotask(async () => {
+      const questionIds = new Set(questions.map((question) => question.id));
+      const rawDraft = window.localStorage.getItem(draftStorageKey);
+      const localDraft = parseLocalDraft(rawDraft, questionIds);
+
+      function applyDraft(
+        restoredAnswers: Partial<Record<string, OptionLetter>>,
+        restoredComments: Record<string, string>,
+        restoredStartedAt: Date,
+        restoredTimeLeft: number,
+      ) {
+        if (!isMounted) {
+          return;
+        }
+
+        setAnswers(restoredAnswers);
+        setQuestionComments(restoredComments);
+        setCurrentIndex(getFirstUnansweredIndex(questions, restoredAnswers));
+        setTimeLeft(restoredTimeLeft);
+        startedAtRef.current = restoredStartedAt;
+      }
+
+      if (persistenceMode !== "supabase") {
+        if (localDraft) {
+          applyDraft(
+            localDraft.answers,
+            localDraft.comments,
+            localDraft.startedAt,
+            localDraft.timeLeft,
+          );
+          setAutoSaveStatus("Borrador recuperado");
+        } else if (rawDraft) {
+          window.localStorage.removeItem(draftStorageKey);
+        }
+
+        if (isMounted) {
+          setHasHydratedDraft(true);
+        }
         return;
       }
 
       try {
-        const draft = JSON.parse(rawDraft) as SimulationDraft;
+        const supabase = getSupabaseBrowserClient();
+        const { data: activeSimulation, error: activeSimulationError } =
+          await supabase
+            .from("simulations")
+            .select("id, started_at, created_at")
+            .eq("student_id", studentId)
+            .eq("status", remoteDraftStatus)
+            .order("created_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
 
-        if (![1, DRAFT_VERSION].includes(draft.version)) {
-          window.localStorage.removeItem(draftStorageKey);
-          setHasHydratedDraft(true);
+        if (activeSimulationError) {
+          throw activeSimulationError;
+        }
+
+        if (activeSimulation) {
+          activeSimulationIdRef.current = activeSimulation.id;
+          const startedAt = new Date(
+            activeSimulation.started_at ??
+              activeSimulation.created_at ??
+              new Date().toISOString(),
+          );
+          const { data: answerRows, error: answerRowsError } = await supabase
+            .from("simulation_answers")
+            .select("question_id, selected_option")
+            .eq("simulation_id", activeSimulation.id);
+
+          if (answerRowsError) {
+            throw answerRowsError;
+          }
+
+          const restoredAnswers = Object.fromEntries(
+            (answerRows ?? [])
+              .filter(
+                (answer) =>
+                  questionIds.has(answer.question_id) && answer.selected_option,
+              )
+              .map((answer) => [answer.question_id, answer.selected_option]),
+          ) as Partial<Record<string, OptionLetter>>;
+
+          applyDraft(
+            restoredAnswers,
+            localDraft?.comments ?? {},
+            startedAt,
+            getRemainingSeconds(startedAt),
+          );
+          setAutoSaveStatus("Progreso sincronizado");
           return;
         }
 
-        const restoredAnswers = Object.fromEntries(
-          Object.entries(draft.answers ?? {}).filter(([questionId]) =>
-            questionIds.has(questionId),
-          ),
-        ) as Partial<Record<string, OptionLetter>>;
-        const restoredComments = Object.fromEntries(
-          Object.entries(draft.comments ?? {}).filter(([questionId]) =>
-            questionIds.has(questionId),
-          ),
+        const migratedAnswers = localDraft?.answers ?? {};
+        const migratedTimeLeft = localDraft?.timeLeft ?? SIMULATION_SECONDS;
+        const migratedStartedAt = new Date(
+          Date.now() - (SIMULATION_SECONDS - migratedTimeLeft) * 1000,
         );
+        const { data: newSimulation, error: newSimulationError } =
+          await supabase
+            .from("simulations")
+            .insert({
+              student_id: studentId,
+              started_at: migratedStartedAt.toISOString(),
+              total_questions: questions.length,
+              status: remoteDraftStatus,
+            })
+            .select("id")
+            .single();
 
-        setAnswers(restoredAnswers);
-        setQuestionComments(restoredComments);
-        const firstUnansweredIndex = questions.findIndex(
-          (question) => !restoredAnswers[question.id],
-        );
-        setCurrentIndex(
-          firstUnansweredIndex === -1
-            ? questions.length - 1
-            : firstUnansweredIndex,
-        );
-        const migratedTimeLeft =
-          draft.version === 1
-            ? (draft.timeLeft ?? OLD_SIMULATION_SECONDS) +
-              (SIMULATION_SECONDS - OLD_SIMULATION_SECONDS)
-            : (draft.timeLeft ?? SIMULATION_SECONDS);
-
-        setTimeLeft(Math.min(SIMULATION_SECONDS, Math.max(0, migratedTimeLeft)));
-        if (draft.startedAt) {
-          startedAtRef.current = new Date(draft.startedAt);
+        if (newSimulationError || !newSimulation) {
+          throw new Error("No se pudo crear el intento sincronizado.");
         }
-        setAutoSaveStatus("Borrador recuperado");
+
+        activeSimulationIdRef.current = newSimulation.id;
+
+        const migratedAnswerRows = questions
+          .filter((question) => migratedAnswers[question.id])
+          .map((question) => {
+            const selectedOption = migratedAnswers[question.id] ?? null;
+
+            return {
+              simulation_id: newSimulation.id,
+              question_id: question.id,
+              selected_option: selectedOption,
+              is_correct: selectedOption === question.correct_option,
+              answered_at: new Date().toISOString(),
+            };
+          });
+
+        if (migratedAnswerRows.length > 0) {
+          await supabase.from("simulation_answers").insert(migratedAnswerRows);
+        }
+
+        applyDraft(
+          migratedAnswers,
+          localDraft?.comments ?? {},
+          migratedStartedAt,
+          migratedTimeLeft,
+        );
+        setAutoSaveStatus(
+          localDraft ? "Borrador sincronizado" : "Progreso sincronizado",
+        );
       } catch {
-        window.localStorage.removeItem(draftStorageKey);
+        if (localDraft) {
+          applyDraft(
+            localDraft.answers,
+            localDraft.comments,
+            localDraft.startedAt,
+            localDraft.timeLeft,
+          );
+          setAutoSaveStatus("Borrador local recuperado");
+        } else if (rawDraft) {
+          window.localStorage.removeItem(draftStorageKey);
+        }
       } finally {
-        setHasHydratedDraft(true);
+        if (isMounted) {
+          setHasHydratedDraft(true);
+        }
       }
     });
-  }, [draftStorageKey, questions]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [draftStorageKey, persistenceMode, questions, remoteDraftStatus, studentId]);
 
   useEffect(() => {
     if (!hasHydratedDraft || finishedRef.current) {
@@ -336,7 +554,6 @@ export function SimulatorClient({
     };
 
     window.localStorage.setItem(draftStorageKey, JSON.stringify(draft));
-    setAutoSaveStatus("Guardado automáticamente");
   }, [
     answers,
     currentIndex,
@@ -347,12 +564,16 @@ export function SimulatorClient({
   ]);
 
   useEffect(() => {
+    if (!hasHydratedDraft || finishedRef.current) {
+      return;
+    }
+
     const timer = window.setInterval(() => {
       setTimeLeft((currentTime) => Math.max(0, currentTime - 1));
     }, 1000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [hasHydratedDraft]);
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -365,6 +586,58 @@ export function SimulatorClient({
     [questions.length, selectedCount],
   );
 
+  async function syncRemoteAnswer(question: Question, option: OptionLetter) {
+    if (persistenceMode !== "supabase") {
+      return;
+    }
+
+    const simulationId = activeSimulationIdRef.current;
+
+    if (!simulationId) {
+      setAutoSaveStatus("Guardado localmente; sincronización pendiente");
+      return;
+    }
+
+    setAutoSaveStatus("Sincronizando progreso...");
+
+    try {
+      const supabase = getSupabaseBrowserClient();
+      const { data: existingRows, error: existingRowsError } = await supabase
+        .from("simulation_answers")
+        .select("id")
+        .eq("simulation_id", simulationId)
+        .eq("question_id", question.id)
+        .limit(1);
+
+      if (existingRowsError) {
+        throw existingRowsError;
+      }
+
+      if ((existingRows ?? []).length > 0) {
+        setAutoSaveStatus("Progreso sincronizado");
+        return;
+      }
+
+      const { error: answerError } = await supabase
+        .from("simulation_answers")
+        .insert({
+          simulation_id: simulationId,
+          question_id: question.id,
+          selected_option: option,
+          is_correct: option === question.correct_option,
+          answered_at: new Date().toISOString(),
+        });
+
+      if (answerError) {
+        throw answerError;
+      }
+
+      setAutoSaveStatus("Progreso sincronizado");
+    } catch {
+      setAutoSaveStatus("Guardado localmente; sincronización pendiente");
+    }
+  }
+
   function selectAnswer(option: OptionLetter) {
     if (isSubmitting || answers[currentQuestion.id]) {
       return;
@@ -375,6 +648,7 @@ export function SimulatorClient({
       [currentQuestion.id]: option,
     }));
     setCurrentIndex((index) => Math.min(questions.length - 1, index + 1));
+    void syncRemoteAnswer(currentQuestion, option);
   }
 
   function updateQuestionComment(comment: string) {
@@ -399,6 +673,14 @@ export function SimulatorClient({
   function confirmFinishSimulation() {
     setShowFinishDialog(false);
     void finishSimulation();
+  }
+
+  if (!hasHydratedDraft) {
+    return (
+      <section className="rounded-lg border border-slate-200 bg-white p-6 text-sm font-semibold text-slate-600 shadow-sm">
+        Preparando progreso sincronizado...
+      </section>
+    );
   }
 
   return (

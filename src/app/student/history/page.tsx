@@ -14,6 +14,7 @@ export default async function StudentHistoryPage() {
       "id, finished_at, created_at, total_questions, correct_answers, incorrect_answers, score, time_used_seconds",
     )
     .eq("student_id", profile.id)
+    .or("status.eq.finished,status.is.null")
     .order("created_at", { ascending: false });
 
   const simulations = data ?? [];

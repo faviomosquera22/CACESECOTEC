@@ -149,6 +149,7 @@ export default async function StudentExamSimulatorPage({
       <SimulatorClient
         questions={questions}
         studentId={profile.id}
+        examSlug={exam.slug}
         persistenceMode={persistenceMode}
         draftStorageKey={`simulation-draft:${profile.id}:${exam.slug}`}
       />

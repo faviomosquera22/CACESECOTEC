@@ -34,6 +34,7 @@ export default async function StudentResultPage({
     .select("*")
     .eq("id", simulationId)
     .eq("student_id", profile.id)
+    .or("status.eq.finished,status.is.null")
     .maybeSingle();
 
   if (!simulation) {

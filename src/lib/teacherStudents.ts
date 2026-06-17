@@ -36,6 +36,7 @@ export async function getTeacherStudentCards(supabase: SupabaseServerClient) {
           .from("simulations")
           .select("*")
           .in("student_id", studentIds)
+          .or("status.eq.finished,status.is.null")
           .order("created_at", { ascending: false })
           .returns<Simulation[]>()
       : { data: [] };

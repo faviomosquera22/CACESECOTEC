@@ -36,6 +36,7 @@ export default async function TeacherStudentPage({
     .from("simulations")
     .select("*")
     .eq("student_id", student.id)
+    .or("status.eq.finished,status.is.null")
     .order("created_at", { ascending: false })
     .returns<Simulation[]>();
 
