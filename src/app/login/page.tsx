@@ -22,6 +22,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const initialError =
     resolvedSearchParams.error === "missing-profile"
       ? "Tu cuenta no tiene un perfil asignado. Contacta al administrador."
+      : resolvedSearchParams.error === "session-too-large"
+        ? "La sesión anterior estaba demasiado pesada. Vuelve a iniciar sesión."
       : undefined;
 
   return (

@@ -10,6 +10,22 @@ type LoginFormProps = {
   initialError?: string;
 };
 
+function compactAuthMetadata({
+  fullName,
+  role,
+}: {
+  fullName: string | null;
+  role: string;
+}) {
+  return {
+    full_name: fullName,
+    role,
+    simulationDrafts: null,
+    simulationSummaries: null,
+    simulationResults: null,
+  };
+}
+
 export function LoginForm({ initialError }: LoginFormProps) {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -55,6 +71,14 @@ export function LoginForm({ initialError }: LoginFormProps) {
         await supabase.auth.signOut();
         throw new Error("El perfil no tiene un rol válido.");
       }
+
+      await supabase.auth.updateUser({
+        data: compactAuthMetadata({
+          fullName: profile.full_name,
+          role: profile.role,
+        }),
+      });
+      await supabase.auth.refreshSession();
 
       router.replace(getRoleHomePath(profile.role));
       router.refresh();

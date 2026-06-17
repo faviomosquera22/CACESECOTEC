@@ -3,6 +3,8 @@ import { createServerClient } from "@supabase/ssr";
 import type { Database } from "@/lib/database.types";
 import { getSupabaseConfig } from "@/lib/supabaseConfig";
 
+const MAX_SAFE_COOKIE_HEADER_LENGTH = 12_000;
+
 function isInvalidRefreshTokenError(error: unknown) {
   if (!error || typeof error !== "object") {
     return false;
@@ -35,6 +37,16 @@ export async function middleware(request: NextRequest) {
 
   if (!config) {
     return NextResponse.next({ request });
+  }
+
+  const cookieHeader = request.headers.get("cookie") ?? "";
+
+  if (cookieHeader.length > MAX_SAFE_COOKIE_HEADER_LENGTH) {
+    const redirectResponse = NextResponse.redirect(
+      new URL("/login?error=session-too-large", request.url),
+    );
+    clearSupabaseAuthCookies(request, redirectResponse);
+    return redirectResponse;
   }
 
   let response = NextResponse.next({ request });
