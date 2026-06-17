@@ -292,8 +292,13 @@ export function SimulatorClient({
 
         setAnswers(restoredAnswers);
         setQuestionComments(restoredComments);
+        const firstUnansweredIndex = questions.findIndex(
+          (question) => !restoredAnswers[question.id],
+        );
         setCurrentIndex(
-          Math.min(Math.max(0, draft.currentIndex ?? 0), questions.length - 1),
+          firstUnansweredIndex === -1
+            ? questions.length - 1
+            : firstUnansweredIndex,
         );
         const migratedTimeLeft =
           draft.version === 1
@@ -361,10 +366,15 @@ export function SimulatorClient({
   );
 
   function selectAnswer(option: OptionLetter) {
+    if (isSubmitting || answers[currentQuestion.id]) {
+      return;
+    }
+
     setAnswers((currentAnswers) => ({
       ...currentAnswers,
       [currentQuestion.id]: option,
     }));
+    setCurrentIndex((index) => Math.min(questions.length - 1, index + 1));
   }
 
   function updateQuestionComment(comment: string) {
@@ -374,11 +384,11 @@ export function SimulatorClient({
     }));
   }
 
-  function goToPrevious() {
-    setCurrentIndex((index) => Math.max(0, index - 1));
-  }
-
   function goToNext() {
+    if (!answers[currentQuestion.id]) {
+      return;
+    }
+
     setCurrentIndex((index) => Math.min(questions.length - 1, index + 1));
   }
 
@@ -461,8 +471,7 @@ export function SimulatorClient({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <button
               type="button"
-              onClick={goToPrevious}
-              disabled={currentIndex === 0 || isSubmitting}
+              disabled
               className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -471,7 +480,11 @@ export function SimulatorClient({
             <button
               type="button"
               onClick={goToNext}
-              disabled={currentIndex === questions.length - 1 || isSubmitting}
+              disabled={
+                !answers[currentQuestion.id] ||
+                currentIndex === questions.length - 1 ||
+                isSubmitting
+              }
               className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Siguiente
@@ -493,22 +506,20 @@ export function SimulatorClient({
               const isAnswered = Boolean(answers[question.id]);
 
               return (
-                <button
+                <div
                   key={question.id}
-                  type="button"
-                  onClick={() => setCurrentIndex(index)}
-                  disabled={isSubmitting}
-                  aria-label={`Ir a la pregunta ${index + 1}`}
-                  className={`flex aspect-square min-h-10 items-center justify-center rounded-lg border text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${
+                  aria-current={isCurrent ? "step" : undefined}
+                  aria-label={`Pregunta ${index + 1}`}
+                  className={`flex aspect-square min-h-10 items-center justify-center rounded-lg border text-sm font-semibold ${
                     isCurrent
                       ? "border-slate-950 bg-slate-950 text-white"
                       : isAnswered
-                        ? "border-emerald-200 bg-emerald-50 text-emerald-700 hover:border-emerald-300"
-                        : "border-slate-200 bg-white text-slate-500 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
+                        ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                        : "border-slate-200 bg-white text-slate-500"
                   }`}
                 >
                   {index + 1}
-                </button>
+                </div>
               );
             })}
           </div>
