@@ -1,20 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ResultCategorySummary } from "@/components/ResultCategorySummary";
 import { ResultPerformanceSummary } from "@/components/ResultPerformanceSummary";
 import { ResultReviewList } from "@/components/ResultReviewList";
 import { ResultScoreCard } from "@/components/ResultScoreCard";
 import { SimulationStoredComments } from "@/components/SimulationStoredComments";
-import { parseCloudSimulationResults } from "@/lib/cloudSimulationStorage";
 import type {
-  Question,
   Simulation,
   SimulationAnswerWithQuestion,
 } from "@/lib/database.types";
-import { getLocalQuestionsForExam } from "@/lib/localQuestions";
-import { getFreshSupabaseUser } from "@/lib/supabaseAuthMetadata";
 
 type LocalSimulationPayload = {
   simulation: Simulation;
@@ -29,9 +25,6 @@ export function LocalSimulationResult({
   simulationId,
 }: LocalSimulationResultProps) {
   const storageKey = `local-simulation:${simulationId}`;
-  const [cloudPayload, setCloudPayload] = useState<LocalSimulationPayload | null>(
-    null,
-  );
   const rawPayload = useSyncExternalStore(
     (onStoreChange) => {
       window.addEventListener("storage", onStoreChange);
@@ -43,61 +36,15 @@ export function LocalSimulationResult({
 
   const payload = useMemo(() => {
     if (!rawPayload) {
-      return cloudPayload;
+      return null;
     }
 
     try {
       return JSON.parse(rawPayload) as LocalSimulationPayload;
     } catch {
-      return cloudPayload;
+      return null;
     }
-  }, [cloudPayload, rawPayload]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    queueMicrotask(async () => {
-      try {
-        const user = await getFreshSupabaseUser();
-        const result = parseCloudSimulationResults(user?.user_metadata).find(
-          (item) => item.simulation.id === simulationId,
-        );
-
-        if (!result) {
-          return;
-        }
-
-        const questionMap = new Map<string, Question>();
-
-        (await getLocalQuestionsForExam("enfermeria")).forEach((question) => {
-          questionMap.set(question.id, question);
-        });
-        (await getLocalQuestionsForExam("psicologia")).forEach((question) => {
-          questionMap.set(question.id, question);
-        });
-
-        const nextPayload: LocalSimulationPayload = {
-          simulation: result.simulation as Simulation,
-          answers: result.answers.map((answer) => ({
-            ...answer,
-            questions: questionMap.get(answer.question_id) ?? null,
-          })),
-        };
-
-        if (isMounted) {
-          setCloudPayload(nextPayload);
-        }
-      } catch {
-        if (isMounted) {
-          setCloudPayload(null);
-        }
-      }
-    });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [simulationId]);
+  }, [rawPayload]);
 
   if (!payload) {
     return (
