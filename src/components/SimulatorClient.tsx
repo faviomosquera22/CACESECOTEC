@@ -217,6 +217,92 @@ async function deleteRemoteDraft(studentId: string, examSlug: string) {
   }
 }
 
+function getAuthDrafts(metadata: Record<string, unknown> | null | undefined) {
+  const drafts = metadata?.simulationDrafts;
+
+  if (!drafts || typeof drafts !== "object" || Array.isArray(drafts)) {
+    return {};
+  }
+
+  return drafts as Record<string, unknown>;
+}
+
+async function readAuthDraft(examSlug: string, questionIds: Set<string>) {
+  try {
+    const supabase = getSupabaseBrowserClient();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error || !user) {
+      return null;
+    }
+
+    const drafts = getAuthDrafts(user.user_metadata);
+
+    return parseStoredDraft(drafts[examSlug], questionIds);
+  } catch {
+    return null;
+  }
+}
+
+async function writeAuthDraft(examSlug: string, draft: SimulationDraft) {
+  try {
+    const supabase = getSupabaseBrowserClient();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error || !user) {
+      return false;
+    }
+
+    const drafts = getAuthDrafts(user.user_metadata);
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: {
+        ...user.user_metadata,
+        simulationDrafts: {
+          ...drafts,
+          [examSlug]: draft,
+        },
+      },
+    });
+
+    return !updateError;
+  } catch {
+    return false;
+  }
+}
+
+async function deleteAuthDraft(examSlug: string) {
+  try {
+    const supabase = getSupabaseBrowserClient();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error || !user) {
+      return;
+    }
+
+    const drafts = getAuthDrafts(user.user_metadata);
+    const nextDrafts = { ...drafts };
+    delete nextDrafts[examSlug];
+
+    await supabase.auth.updateUser({
+      data: {
+        ...user.user_metadata,
+        simulationDrafts: nextDrafts,
+      },
+    });
+  } catch {
+    // Auth metadata is a fallback sync channel.
+  }
+}
+
 async function markLegacyDraftDone(studentId: string, examSlug: string) {
   try {
     const supabase = getSupabaseBrowserClient();
@@ -331,6 +417,7 @@ export function SimulatorClient({
         writeLocalSimulationSummary(studentId, localSimulation);
         window.localStorage.removeItem(draftStorageKey);
         await deleteRemoteDraft(studentId, examSlug);
+        await deleteAuthDraft(examSlug);
         await markLegacyDraftDone(studentId, examSlug);
 
         router.push(`/student/results/${simulationId}`);
@@ -441,6 +528,7 @@ export function SimulatorClient({
 
       window.localStorage.removeItem(draftStorageKey);
       await deleteRemoteDraft(studentId, examSlug);
+      await deleteAuthDraft(examSlug);
       await markLegacyDraftDone(studentId, examSlug);
       activeSimulationIdRef.current = null;
       router.push(`/student/results/${simulationId}`);
@@ -522,6 +610,23 @@ export function SimulatorClient({
         }
       } catch {
         // Continue with existing local/in-progress fallbacks.
+      }
+
+      const authDraft = await readAuthDraft(examSlug, questionIds);
+
+      if (authDraft) {
+        applyDraft(
+          authDraft.answers,
+          authDraft.comments,
+          authDraft.startedAt,
+          getRemainingSeconds(authDraft.startedAt),
+        );
+        setAutoSaveStatus("Progreso sincronizado");
+
+        if (isMounted) {
+          setHasHydratedDraft(true);
+        }
+        return;
       }
 
       try {
@@ -812,6 +917,11 @@ export function SimulatorClient({
         }
       } catch {
         // Fall back to the existing simulations table below.
+      }
+
+      if (await writeAuthDraft(examSlug, draft)) {
+        setAutoSaveStatus("Progreso sincronizado");
+        return;
       }
 
       try {
