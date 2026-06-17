@@ -150,6 +150,33 @@ export interface Database {
         };
         Relationships: [];
       };
+      simulation_drafts: {
+        Row: {
+          id: string;
+          student_id: string;
+          exam_slug: string;
+          draft: Json;
+          updated_at: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          student_id: string;
+          exam_slug: string;
+          draft?: Json;
+          updated_at?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          student_id?: string;
+          exam_slug?: string;
+          draft?: Json;
+          updated_at?: string | null;
+          created_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -179,6 +206,7 @@ export type Profile = Tables<"profiles">;
 export type Question = Tables<"questions">;
 export type Simulation = Tables<"simulations">;
 export type SimulationAnswer = Tables<"simulation_answers">;
+export type SimulationDraftRow = Tables<"simulation_drafts">;
 
 export type SimulationAnswerWithQuestion = SimulationAnswer & {
   questions: Question | null;

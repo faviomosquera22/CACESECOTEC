@@ -2,7 +2,11 @@ import { notFound } from "next/navigation";
 import { Mail, UserRound } from "lucide-react";
 import { TeacherStudentHistoryClient } from "@/components/TeacherStudentHistoryClient";
 import { requireProfile } from "@/lib/auth";
-import type { Profile, Simulation } from "@/lib/database.types";
+import type {
+  Profile,
+  Simulation,
+  SimulationAnswerWithQuestion,
+} from "@/lib/database.types";
 import { getDemoStudentProfile } from "@/lib/demoStudents";
 
 type TeacherStudentPageProps = {
@@ -41,6 +45,38 @@ export default async function TeacherStudentPage({
     .returns<Simulation[]>();
 
   const simulations = data ?? [];
+  const simulationIds = simulations.map((simulation) => simulation.id);
+  const { data: answerData } =
+    simulationIds.length > 0
+      ? await supabase
+          .from("simulation_answers")
+          .select(
+            `
+            id,
+            simulation_id,
+            question_id,
+            selected_option,
+            is_correct,
+            answered_at,
+            questions (
+              id,
+              question_text,
+              option_a,
+              option_b,
+              option_c,
+              option_d,
+              correct_option,
+              explanation,
+              category,
+              difficulty,
+              created_at
+            )
+          `,
+          )
+          .in("simulation_id", simulationIds)
+          .order("answered_at", { ascending: true })
+          .returns<SimulationAnswerWithQuestion[]>()
+      : { data: [] };
 
   return (
     <div className="space-y-8">
@@ -70,6 +106,7 @@ export default async function TeacherStudentPage({
       <TeacherStudentHistoryClient
         studentId={student.id}
         serverSimulations={simulations}
+        serverAnswers={answerData ?? []}
       />
     </div>
   );

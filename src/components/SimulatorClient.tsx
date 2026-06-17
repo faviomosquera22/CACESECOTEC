@@ -13,7 +13,7 @@ import {
   MessageSquare,
   X,
 } from "lucide-react";
-import type { OptionLetter, Question } from "@/lib/database.types";
+import type { Json, OptionLetter, Question } from "@/lib/database.types";
 import { writeLocalSimulationSummary } from "@/lib/localSimulationStorage";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import { SimulationQuestion } from "@/components/SimulationQuestion";
@@ -135,6 +135,52 @@ function parseLocalDraft(rawDraft: string | null, questionIds: Set<string>) {
   }
 }
 
+function parseStoredDraft(value: unknown, questionIds: Set<string>) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+
+  const draft = value as Partial<SimulationDraft>;
+  const answers = Object.fromEntries(
+    Object.entries(draft.answers ?? {}).filter(
+      ([questionId, option]) =>
+        questionIds.has(questionId) &&
+        ["A", "B", "C", "D"].includes(String(option)),
+    ),
+  ) as Partial<Record<string, OptionLetter>>;
+  const comments = Object.fromEntries(
+    Object.entries(draft.comments ?? {}).filter(([questionId]) =>
+      questionIds.has(questionId),
+    ),
+  );
+  const startedAt =
+    typeof draft.startedAt === "string" ? new Date(draft.startedAt) : new Date();
+  const timeLeft =
+    typeof draft.timeLeft === "number"
+      ? Math.min(SIMULATION_SECONDS, Math.max(0, draft.timeLeft))
+      : getRemainingSeconds(startedAt);
+
+  return {
+    answers,
+    comments,
+    startedAt,
+    timeLeft,
+  };
+}
+
+async function deleteRemoteDraft(studentId: string, examSlug: string) {
+  try {
+    const supabase = getSupabaseBrowserClient();
+    await supabase
+      .from("simulation_drafts")
+      .delete()
+      .eq("student_id", studentId)
+      .eq("exam_slug", examSlug);
+  } catch {
+    // The local fallback still works if the draft table is not installed yet.
+  }
+}
+
 export function SimulatorClient({
   questions,
   studentId,
@@ -235,6 +281,7 @@ export function SimulatorClient({
         );
         writeLocalSimulationSummary(studentId, localSimulation);
         window.localStorage.removeItem(draftStorageKey);
+        await deleteRemoteDraft(studentId, examSlug);
 
         router.push(`/student/results/${simulationId}`);
         return;
@@ -343,6 +390,7 @@ export function SimulatorClient({
       }
 
       window.localStorage.removeItem(draftStorageKey);
+      await deleteRemoteDraft(studentId, examSlug);
       activeSimulationIdRef.current = null;
       router.push(`/student/results/${simulationId}`);
       router.refresh();
@@ -364,6 +412,7 @@ export function SimulatorClient({
     questions,
     router,
     draftStorageKey,
+    examSlug,
     studentId,
     timeLeft,
   ]);
@@ -391,6 +440,37 @@ export function SimulatorClient({
         setCurrentIndex(getFirstUnansweredIndex(questions, restoredAnswers));
         setTimeLeft(restoredTimeLeft);
         startedAtRef.current = restoredStartedAt;
+      }
+
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const { data: remoteDraft } = await supabase
+          .from("simulation_drafts")
+          .select("draft")
+          .eq("student_id", studentId)
+          .eq("exam_slug", examSlug)
+          .maybeSingle();
+        const parsedRemoteDraft = parseStoredDraft(
+          remoteDraft?.draft,
+          questionIds,
+        );
+
+        if (parsedRemoteDraft) {
+          applyDraft(
+            parsedRemoteDraft.answers,
+            parsedRemoteDraft.comments,
+            parsedRemoteDraft.startedAt,
+            getRemainingSeconds(parsedRemoteDraft.startedAt),
+          );
+          setAutoSaveStatus("Progreso sincronizado");
+
+          if (isMounted) {
+            setHasHydratedDraft(true);
+          }
+          return;
+        }
+      } catch {
+        // Continue with existing local/in-progress fallbacks.
       }
 
       if (persistenceMode !== "supabase") {
@@ -535,7 +615,14 @@ export function SimulatorClient({
     return () => {
       isMounted = false;
     };
-  }, [draftStorageKey, persistenceMode, questions, remoteDraftStatus, studentId]);
+  }, [
+    draftStorageKey,
+    examSlug,
+    persistenceMode,
+    questions,
+    remoteDraftStatus,
+    studentId,
+  ]);
 
   useEffect(() => {
     if (!hasHydratedDraft || finishedRef.current) {
@@ -561,6 +648,63 @@ export function SimulatorClient({
     hasHydratedDraft,
     questionComments,
     timeLeft,
+  ]);
+
+  useEffect(() => {
+    if (!hasHydratedDraft || finishedRef.current) {
+      return;
+    }
+
+    const timer = window.setTimeout(async () => {
+      const persistedAnswers = Object.fromEntries(
+        Object.entries(answers).filter(([, option]) => Boolean(option)),
+      );
+      const persistedComments = Object.fromEntries(
+        Object.entries(questionComments)
+          .map(([questionId, comment]) => [questionId, comment.trim()])
+          .filter(([, comment]) => comment.length > 0),
+      );
+      const draft: SimulationDraft = {
+        version: DRAFT_VERSION,
+        answers: persistedAnswers,
+        comments: persistedComments,
+        currentIndex,
+        timeLeft: getRemainingSeconds(startedAtRef.current),
+        simulationSeconds: SIMULATION_SECONDS,
+        startedAt: startedAtRef.current.toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const { error: draftError } = await supabase
+          .from("simulation_drafts")
+          .upsert(
+            {
+              student_id: studentId,
+              exam_slug: examSlug,
+              draft: draft as unknown as Json,
+              updated_at: draft.updatedAt,
+            },
+            { onConflict: "student_id,exam_slug" },
+          );
+
+        if (!draftError) {
+          setAutoSaveStatus("Progreso sincronizado");
+        }
+      } catch {
+        // Local draft remains available if the remote draft table is unavailable.
+      }
+    }, 500);
+
+    return () => window.clearTimeout(timer);
+  }, [
+    answers,
+    currentIndex,
+    examSlug,
+    hasHydratedDraft,
+    questionComments,
+    studentId,
   ]);
 
   useEffect(() => {

@@ -9,11 +9,13 @@ import {
   TrendingUp,
   Trophy,
 } from "lucide-react";
+import { ResultReviewList } from "@/components/ResultReviewList";
 import {
   SimulationHistoryTable,
   type SimulationHistoryRecord,
 } from "@/components/SimulationHistoryTable";
 import { StatCard } from "@/components/StatCard";
+import type { SimulationAnswerWithQuestion } from "@/lib/database.types";
 import { average, formatDate, formatScore } from "@/lib/format";
 import {
   getLocalSimulationIndexKey,
@@ -23,16 +25,21 @@ import {
 type TeacherStudentHistoryClientProps = {
   studentId: string;
   serverSimulations: SimulationHistoryRecord[];
+  serverAnswers: SimulationAnswerWithQuestion[];
 };
 
 export function TeacherStudentHistoryClient({
   studentId,
   serverSimulations,
+  serverAnswers,
 }: TeacherStudentHistoryClientProps) {
   const storageKey = getLocalSimulationIndexKey(studentId);
   const feedbackStorageKey = `teacher-feedback:${studentId}`;
   const [feedback, setFeedback] = useState("");
   const [feedbackStatus, setFeedbackStatus] = useState("");
+  const [selectedSimulationId, setSelectedSimulationId] = useState(
+    serverSimulations[0]?.id ?? "",
+  );
   const rawValue = useSyncExternalStore(
     subscribeToLocalSimulationChanges,
     () => window.localStorage.getItem(storageKey),
@@ -77,6 +84,34 @@ export function TeacherStudentHistoryClient({
       setFeedback(window.localStorage.getItem(feedbackStorageKey) ?? "");
     });
   }, [feedbackStorageKey]);
+
+  useEffect(() => {
+    if (
+      selectedSimulationId &&
+      simulations.some((simulation) => simulation.id === selectedSimulationId)
+    ) {
+      return;
+    }
+
+    queueMicrotask(() => {
+      setSelectedSimulationId(simulations[0]?.id ?? "");
+    });
+  }, [selectedSimulationId, simulations]);
+
+  const answersBySimulation = useMemo(() => {
+    const groupedAnswers = new Map<string, SimulationAnswerWithQuestion[]>();
+
+    serverAnswers.forEach((answer) => {
+      const currentAnswers = groupedAnswers.get(answer.simulation_id) ?? [];
+      currentAnswers.push(answer);
+      groupedAnswers.set(answer.simulation_id, currentAnswers);
+    });
+
+    return groupedAnswers;
+  }, [serverAnswers]);
+  const selectedAnswers = selectedSimulationId
+    ? (answersBySimulation.get(selectedSimulationId) ?? [])
+    : [];
 
   function saveFeedback() {
     window.localStorage.setItem(feedbackStorageKey, feedback);
@@ -164,6 +199,65 @@ export function TeacherStudentHistoryClient({
           emptyMessage="Este estudiante aún no tiene simulaciones registradas."
         />
       </section>
+
+      {simulations.length > 0 ? (
+        <section className="space-y-4">
+          <div>
+            <h3 className="text-xl font-semibold tracking-normal text-slate-950">
+              Preguntas correctas e incorrectas
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-slate-500">
+              Selecciona un intento para revisar las respuestas del estudiante.
+            </p>
+          </div>
+
+          <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+            {simulations.map((simulation) => {
+              const isSelected = simulation.id === selectedSimulationId;
+
+              return (
+                <button
+                  key={simulation.id}
+                  type="button"
+                  onClick={() => setSelectedSimulationId(simulation.id)}
+                  className={`rounded-lg border p-4 text-left transition ${
+                    isSelected
+                      ? "border-slate-950 bg-slate-950 text-white"
+                      : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                  }`}
+                >
+                  <p className="text-sm font-semibold">
+                    {formatDate(simulation.finished_at ?? simulation.created_at)}
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
+                    <span
+                      className={
+                        isSelected ? "text-emerald-200" : "text-emerald-700"
+                      }
+                    >
+                      Correctas: {simulation.correct_answers ?? 0}
+                    </span>
+                    <span className={isSelected ? "text-red-200" : "text-red-600"}>
+                      Incorrectas: {simulation.incorrect_answers ?? 0}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm font-semibold">
+                    Puntaje: {formatScore(simulation.score)}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+
+          {selectedAnswers.length > 0 ? (
+            <ResultReviewList answers={selectedAnswers} />
+          ) : (
+            <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+              No hay respuestas registradas para este intento.
+            </div>
+          )}
+        </section>
+      ) : null}
     </>
   );
 }
