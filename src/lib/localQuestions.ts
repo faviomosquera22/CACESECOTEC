@@ -88,6 +88,20 @@ function dedupeQuestions(questions: Question[]) {
   return result;
 }
 
+function shuffleQuestions(questions: Question[]) {
+  const shuffled = [...questions];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [
+      shuffled[randomIndex],
+      shuffled[index],
+    ];
+  }
+
+  return shuffled;
+}
+
 function selectDistributedExamQuestions(
   questions: Question[],
   distribution: ExamDistribution,
@@ -97,22 +111,25 @@ function selectDistributedExamQuestions(
 
   distribution.forEach(({ area, count }) => {
     selected.push(
-      ...questions
-        .filter((question) => getQuestionArea(question, distribution) === area)
+      ...shuffleQuestions(
+        questions.filter(
+          (question) => getQuestionArea(question, distribution) === area,
+        ),
+      )
         .slice(0, count),
     );
   });
 
   if (selected.length < targetCount) {
     const selectedIds = new Set(selected.map((question) => question.id));
-    const fillQuestions = questions.filter(
-      (question) => !selectedIds.has(question.id),
+    const fillQuestions = shuffleQuestions(
+      questions.filter((question) => !selectedIds.has(question.id)),
     );
 
     selected.push(...fillQuestions.slice(0, targetCount - selected.length));
   }
 
-  return dedupeQuestions(selected).slice(0, targetCount);
+  return shuffleQuestions(dedupeQuestions(selected)).slice(0, targetCount);
 }
 
 export function selectNursingExamQuestions(questions: Question[]) {
@@ -132,7 +149,7 @@ export function selectQuestionsForExam(examType: string, questions: Question[]) 
     return selectPsychologyExamQuestions(questions);
   }
 
-  return questions.slice(0, 100);
+  return shuffleQuestions(questions).slice(0, 100);
 }
 
 export async function getLocalQuestionsForExam(examType: string) {
