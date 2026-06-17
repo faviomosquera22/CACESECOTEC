@@ -6,13 +6,12 @@ import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
 import type {
   Profile,
   Simulation,
-  SimulationAnswerWithQuestion,
-  SimulationAttempt,
 } from "@/lib/database.types";
 import { getDemoStudentProfile } from "@/lib/demoStudents";
 import {
-  simulationAttemptToAnswers,
+  simulationAttemptHistorySelect,
   simulationAttemptToHistoryRecord,
+  type SimulationAttemptHistoryRow,
 } from "@/lib/supabaseSimulationAttempts";
 
 type TeacherStudentPageProps = {
@@ -52,50 +51,17 @@ export default async function TeacherStudentPage({
 
   const { data: attemptData } = await supabase
     .from("simulation_attempts")
-    .select("*")
+    .select(simulationAttemptHistorySelect)
     .eq("student_id", student.id)
     .eq("status", "finished")
     .order("created_at", { ascending: false })
-    .returns<SimulationAttempt[]>();
+    .returns<SimulationAttemptHistoryRow[]>();
 
   const storedAttempts = attemptData ?? [];
   const simulations = mergeSimulationRecords([
     ...storedAttempts.map(simulationAttemptToHistoryRecord),
     ...(data ?? []),
   ]);
-  const legacySimulationIds = (data ?? []).map((simulation) => simulation.id);
-  const { data: answerData } =
-    legacySimulationIds.length > 0
-      ? await supabase
-          .from("simulation_answers")
-          .select(
-            `
-            id,
-            simulation_id,
-            question_id,
-            selected_option,
-            is_correct,
-            answered_at,
-            questions (
-              id,
-              question_text,
-              option_a,
-              option_b,
-              option_c,
-              option_d,
-              correct_option,
-              explanation,
-              category,
-              difficulty,
-              created_at
-            )
-          `,
-          )
-          .in("simulation_id", legacySimulationIds)
-          .order("answered_at", { ascending: true })
-          .returns<SimulationAnswerWithQuestion[]>()
-      : { data: [] };
-  const storedAttemptAnswers = storedAttempts.flatMap(simulationAttemptToAnswers);
 
   return (
     <div className="space-y-8">
@@ -125,7 +91,7 @@ export default async function TeacherStudentPage({
       <TeacherStudentHistoryClient
         studentId={student.id}
         serverSimulations={simulations}
-        serverAnswers={[...storedAttemptAnswers, ...(answerData ?? [])]}
+        serverAnswers={[]}
       />
     </div>
   );

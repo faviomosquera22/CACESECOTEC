@@ -69,10 +69,10 @@ export function LocalSimulationResult({
 
         const questionMap = new Map<string, Question>();
 
-        getLocalQuestionsForExam("enfermeria").forEach((question) => {
+        (await getLocalQuestionsForExam("enfermeria")).forEach((question) => {
           questionMap.set(question.id, question);
         });
-        getLocalQuestionsForExam("psicologia").forEach((question) => {
+        (await getLocalQuestionsForExam("psicologia")).forEach((question) => {
           questionMap.set(question.id, question);
         });
 

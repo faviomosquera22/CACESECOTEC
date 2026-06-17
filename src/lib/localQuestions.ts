@@ -1,6 +1,4 @@
 import type { Question } from "@/lib/database.types";
-import enfermeriaQuestions from "@/data/enfermeriaQuestions.json";
-import psicologiaQuestions from "@/data/psicologiaQuestions.json";
 
 export const nursingExamDistribution = [
   {
@@ -137,12 +135,20 @@ export function selectQuestionsForExam(examType: string, questions: Question[]) 
   return questions.slice(0, 100);
 }
 
-export function getLocalQuestionsForExam(examType: string) {
+export async function getLocalQuestionsForExam(examType: string) {
   if (examType === "enfermeria") {
+    const { default: enfermeriaQuestions } = await import(
+      "@/data/enfermeriaQuestions.json"
+    );
+
     return selectNursingExamQuestions(enfermeriaQuestions as Question[]);
   }
 
   if (examType === "psicologia") {
+    const { default: psicologiaQuestions } = await import(
+      "@/data/psicologiaQuestions.json"
+    );
+
     return selectPsychologyExamQuestions(psicologiaQuestions as Question[]);
   }
 

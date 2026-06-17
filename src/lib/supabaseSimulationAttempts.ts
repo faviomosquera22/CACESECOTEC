@@ -23,6 +23,21 @@ export type LocalSimulationPayload = {
   comments?: Record<string, string>;
 };
 
+export type SimulationAttemptHistoryRow = Pick<
+  SimulationAttempt,
+  | "id"
+  | "finished_at"
+  | "created_at"
+  | "total_questions"
+  | "correct_answers"
+  | "incorrect_answers"
+  | "score"
+  | "time_used_seconds"
+>;
+
+export const simulationAttemptHistorySelect =
+  "id, finished_at, created_at, total_questions, correct_answers, incorrect_answers, score, time_used_seconds";
+
 function isOptionLetter(value: unknown): value is OptionLetter {
   return ["A", "B", "C", "D"].includes(String(value));
 }
@@ -91,7 +106,7 @@ function parseAnswerSnapshots(value: Json): AttemptAnswerSnapshot[] {
 }
 
 export function simulationAttemptToHistoryRecord(
-  attempt: SimulationAttempt,
+  attempt: SimulationAttemptHistoryRow,
 ): SimulationHistoryRecord {
   return {
     id: attempt.id,
@@ -124,7 +139,7 @@ export function simulationAttemptToSimulation(
 }
 
 export function simulationAttemptToAnswers(
-  attempt: SimulationAttempt,
+  attempt: Pick<SimulationAttempt, "id" | "answers">,
 ): SimulationAnswerWithQuestion[] {
   return parseAnswerSnapshots(attempt.answers).map((answer, index) => ({
     id: `${attempt.id}-${index + 1}`,

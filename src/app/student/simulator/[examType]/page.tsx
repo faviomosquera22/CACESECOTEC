@@ -51,14 +51,13 @@ export default async function StudentExamSimulatorPage({
     )
     .or(categoryFilter)
     .order("created_at", { ascending: false })
-    .limit(examDistribution.length > 0 ? 1000 : 100)
+    .limit(examDistribution.length > 0 ? 300 : 100)
     .returns<Question[]>();
 
   const supabaseQuestions = data ?? [];
-  const localQuestions = getLocalQuestionsForExam(exam.slug);
   const questions =
     error || supabaseQuestions.length === 0
-      ? localQuestions
+      ? await getLocalQuestionsForExam(exam.slug)
       : selectQuestionsForExam(exam.slug, supabaseQuestions);
   const persistenceMode = isLocalQuestionSet(questions) ? "local" : "supabase";
   const Icon = exam.icon;

@@ -15,12 +15,17 @@ import {
   type SimulationHistoryRecord,
 } from "@/components/SimulationHistoryTable";
 import { StatCard } from "@/components/StatCard";
-import type { SimulationAnswerWithQuestion } from "@/lib/database.types";
+import type {
+  SimulationAnswerWithQuestion,
+  SimulationAttempt,
+} from "@/lib/database.types";
 import { average, formatDate, formatScore } from "@/lib/format";
 import {
   getLocalSimulationIndexKey,
   subscribeToLocalSimulationChanges,
 } from "@/lib/localSimulationStorage";
+import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
+import { simulationAttemptToAnswers } from "@/lib/supabaseSimulationAttempts";
 
 type TeacherStudentHistoryClientProps = {
   studentId: string;
@@ -40,6 +45,10 @@ export function TeacherStudentHistoryClient({
   const [selectedSimulationId, setSelectedSimulationId] = useState(
     serverSimulations[0]?.id ?? "",
   );
+  const [loadedAnswers, setLoadedAnswers] = useState<
+    SimulationAnswerWithQuestion[]
+  >(serverAnswers);
+  const [isLoadingAnswers, setIsLoadingAnswers] = useState(false);
   const rawValue = useSyncExternalStore(
     subscribeToLocalSimulationChanges,
     () => window.localStorage.getItem(storageKey),
@@ -101,17 +110,99 @@ export function TeacherStudentHistoryClient({
   const answersBySimulation = useMemo(() => {
     const groupedAnswers = new Map<string, SimulationAnswerWithQuestion[]>();
 
-    serverAnswers.forEach((answer) => {
+    loadedAnswers.forEach((answer) => {
       const currentAnswers = groupedAnswers.get(answer.simulation_id) ?? [];
       currentAnswers.push(answer);
       groupedAnswers.set(answer.simulation_id, currentAnswers);
     });
 
     return groupedAnswers;
-  }, [serverAnswers]);
+  }, [loadedAnswers]);
   const selectedAnswers = selectedSimulationId
     ? (answersBySimulation.get(selectedSimulationId) ?? [])
     : [];
+
+  useEffect(() => {
+    if (!selectedSimulationId || answersBySimulation.has(selectedSimulationId)) {
+      return;
+    }
+
+    let isMounted = true;
+
+    queueMicrotask(async () => {
+      setIsLoadingAnswers(true);
+
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const { data: storedAttempt } = await supabase
+          .from("simulation_attempts")
+          .select("id, answers")
+          .eq("id", selectedSimulationId)
+          .maybeSingle()
+          .returns<Pick<SimulationAttempt, "id" | "answers"> | null>();
+
+        if (storedAttempt) {
+          const nextAnswers = simulationAttemptToAnswers(storedAttempt);
+
+          if (isMounted) {
+            setLoadedAnswers((currentAnswers) => [
+              ...currentAnswers.filter(
+                (answer) => answer.simulation_id !== selectedSimulationId,
+              ),
+              ...nextAnswers,
+            ]);
+          }
+          return;
+        }
+
+        const { data: legacyAnswers } = await supabase
+          .from("simulation_answers")
+          .select(
+            `
+            id,
+            simulation_id,
+            question_id,
+            selected_option,
+            is_correct,
+            answered_at,
+            questions (
+              id,
+              question_text,
+              option_a,
+              option_b,
+              option_c,
+              option_d,
+              correct_option,
+              explanation,
+              category,
+              difficulty,
+              created_at
+            )
+          `,
+          )
+          .eq("simulation_id", selectedSimulationId)
+          .order("answered_at", { ascending: true })
+          .returns<SimulationAnswerWithQuestion[]>();
+
+        if (isMounted) {
+          setLoadedAnswers((currentAnswers) => [
+            ...currentAnswers.filter(
+              (answer) => answer.simulation_id !== selectedSimulationId,
+            ),
+            ...(legacyAnswers ?? []),
+          ]);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoadingAnswers(false);
+        }
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [answersBySimulation, selectedSimulationId]);
 
   function saveFeedback() {
     window.localStorage.setItem(feedbackStorageKey, feedback);
@@ -249,7 +340,11 @@ export function TeacherStudentHistoryClient({
             })}
           </div>
 
-          {selectedAnswers.length > 0 ? (
+          {isLoadingAnswers ? (
+            <div className="rounded-lg border border-slate-200 bg-white p-8 text-center text-slate-500">
+              Cargando respuestas del intento...
+            </div>
+          ) : selectedAnswers.length > 0 ? (
             <ResultReviewList answers={selectedAnswers} />
           ) : (
             <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">

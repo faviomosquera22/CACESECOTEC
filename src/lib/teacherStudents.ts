@@ -1,12 +1,16 @@
 import type { StudentCardData } from "@/components/StudentCard";
 import type { SimulationHistoryRecord } from "@/components/SimulationHistoryTable";
 import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
-import type { Profile, Simulation, SimulationAttempt } from "@/lib/database.types";
+import type { Profile, Simulation } from "@/lib/database.types";
 import { demoStudentProfiles } from "@/lib/demoStudents";
 import { average } from "@/lib/format";
 import { getStudentCareerOption } from "@/lib/studentCareer";
 import type { SupabaseServerClient } from "@/lib/supabaseServer";
-import { simulationAttemptToHistoryRecord } from "@/lib/supabaseSimulationAttempts";
+import {
+  simulationAttemptHistorySelect,
+  simulationAttemptToHistoryRecord,
+  type SimulationAttemptHistoryRow,
+} from "@/lib/supabaseSimulationAttempts";
 
 function getSimulationDate(simulation: SimulationHistoryRecord) {
   return simulation.finished_at ?? simulation.created_at;
@@ -49,13 +53,16 @@ export async function getTeacherStudentCards(supabase: SupabaseServerClient) {
     studentIds.length > 0
       ? await supabase
           .from("simulation_attempts")
-          .select("*")
+          .select(`student_id, ${simulationAttemptHistorySelect}`)
           .in("student_id", studentIds)
           .eq("status", "finished")
           .order("created_at", { ascending: false })
-          .returns<SimulationAttempt[]>()
+          .returns<(SimulationAttemptHistoryRow & { student_id: string })[]>()
       : { data: [] };
-  const attemptsByStudent = new Map<string, SimulationAttempt[]>();
+  const attemptsByStudent = new Map<
+    string,
+    (SimulationAttemptHistoryRow & { student_id: string })[]
+  >();
 
   (attemptRows ?? []).forEach((attempt) => {
     const current = attemptsByStudent.get(attempt.student_id) ?? [];

@@ -16,6 +16,10 @@ type StudentSupabaseSyncClientProps = {
   studentId: string;
 };
 
+function getMigratedAttemptsKey(studentId: string) {
+  return `supabase-migrated-simulations:${studentId}`;
+}
+
 export function StudentSupabaseSyncClient({
   studentId,
 }: StudentSupabaseSyncClientProps) {
@@ -47,9 +51,29 @@ export function StudentSupabaseSyncClient({
       }
 
       const supabase = getSupabaseBrowserClient();
+      const migratedAttemptsKey = getMigratedAttemptsKey(studentId);
+      let migratedIds = new Set<string>();
+
+      try {
+        const parsedMigratedIds = JSON.parse(
+          window.localStorage.getItem(migratedAttemptsKey) ?? "[]",
+        );
+
+        if (Array.isArray(parsedMigratedIds)) {
+          migratedIds = new Set(
+            parsedMigratedIds.filter(
+              (item): item is string => typeof item === "string",
+            ),
+          );
+        }
+      } catch {
+        migratedIds = new Set<string>();
+      }
       let migratedCount = 0;
 
-      for (const summary of summaries) {
+      for (const summary of summaries
+        .filter((item) => !migratedIds.has(item.id))
+        .slice(0, 5)) {
         const rawPayload = window.localStorage.getItem(
           `local-simulation:${summary.id}`,
         );
@@ -62,12 +86,16 @@ export function StudentSupabaseSyncClient({
           const payload = JSON.parse(rawPayload) as LocalSimulationPayload;
           const { error } = await supabase
             .from("simulation_attempts")
-            .upsert(buildSimulationAttemptInsertFromLocalPayload(studentId, payload), {
-              onConflict: "student_id,client_attempt_id",
-              ignoreDuplicates: true,
-            });
+            .upsert(
+              buildSimulationAttemptInsertFromLocalPayload(studentId, payload),
+              {
+                onConflict: "student_id,client_attempt_id",
+                ignoreDuplicates: true,
+              },
+            );
 
           if (!error) {
+            migratedIds.add(summary.id);
             migratedCount += 1;
           }
         } catch {
@@ -76,6 +104,10 @@ export function StudentSupabaseSyncClient({
       }
 
       if (migratedCount > 0) {
+        window.localStorage.setItem(
+          migratedAttemptsKey,
+          JSON.stringify(Array.from(migratedIds)),
+        );
         router.refresh();
       }
     });
