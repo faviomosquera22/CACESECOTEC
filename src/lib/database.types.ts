@@ -177,6 +177,60 @@ export interface Database {
         };
         Relationships: [];
       };
+      simulation_attempts: {
+        Row: {
+          id: string;
+          student_id: string;
+          exam_slug: string;
+          client_attempt_id: string | null;
+          started_at: string | null;
+          finished_at: string | null;
+          total_questions: number | null;
+          correct_answers: number | null;
+          incorrect_answers: number | null;
+          score: number | null;
+          time_used_seconds: number | null;
+          answers: Json;
+          comments: Json;
+          status: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          student_id: string;
+          exam_slug: string;
+          client_attempt_id?: string | null;
+          started_at?: string | null;
+          finished_at?: string | null;
+          total_questions?: number | null;
+          correct_answers?: number | null;
+          incorrect_answers?: number | null;
+          score?: number | null;
+          time_used_seconds?: number | null;
+          answers?: Json;
+          comments?: Json;
+          status?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          student_id?: string;
+          exam_slug?: string;
+          client_attempt_id?: string | null;
+          started_at?: string | null;
+          finished_at?: string | null;
+          total_questions?: number | null;
+          correct_answers?: number | null;
+          incorrect_answers?: number | null;
+          score?: number | null;
+          time_used_seconds?: number | null;
+          answers?: Json;
+          comments?: Json;
+          status?: string | null;
+          created_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -207,6 +261,7 @@ export type Question = Tables<"questions">;
 export type Simulation = Tables<"simulations">;
 export type SimulationAnswer = Tables<"simulation_answers">;
 export type SimulationDraftRow = Tables<"simulation_drafts">;
+export type SimulationAttempt = Tables<"simulation_attempts">;
 
 export type SimulationAnswerWithQuestion = SimulationAnswer & {
   questions: Question | null;

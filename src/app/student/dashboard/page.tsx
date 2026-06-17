@@ -3,8 +3,11 @@ import { SimulatorOptionCard } from "@/components/SimulatorOptionCard";
 import { StudentStatsClient } from "@/components/StudentStatsClient";
 import { StudentTeacherFeedback } from "@/components/StudentTeacherFeedback";
 import { requireCompletedStudentProfile } from "@/lib/auth";
+import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
+import type { SimulationAttempt } from "@/lib/database.types";
 import { simulatorExams } from "@/lib/simulatorCatalog";
 import { getStudentCareerOption } from "@/lib/studentCareer";
+import { simulationAttemptToHistoryRecord } from "@/lib/supabaseSimulationAttempts";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +27,18 @@ export default async function StudentDashboardPage() {
     .or("status.eq.finished,status.is.null")
     .order("created_at", { ascending: false });
 
-  const simulations = data ?? [];
+  const { data: attemptData } = await supabase
+    .from("simulation_attempts")
+    .select("*")
+    .eq("student_id", profile.id)
+    .eq("status", "finished")
+    .order("created_at", { ascending: false })
+    .returns<SimulationAttempt[]>();
+
+  const simulations = mergeSimulationRecords([
+    ...(attemptData ?? []).map(simulationAttemptToHistoryRecord),
+    ...(data ?? []),
+  ]);
 
   return (
     <div className="space-y-8">

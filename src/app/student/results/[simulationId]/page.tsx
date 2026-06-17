@@ -7,7 +7,14 @@ import { ResultReviewList } from "@/components/ResultReviewList";
 import { ResultScoreCard } from "@/components/ResultScoreCard";
 import { SimulationStoredComments } from "@/components/SimulationStoredComments";
 import { requireCompletedStudentProfile } from "@/lib/auth";
-import type { SimulationAnswerWithQuestion } from "@/lib/database.types";
+import type {
+  SimulationAnswerWithQuestion,
+  SimulationAttempt,
+} from "@/lib/database.types";
+import {
+  simulationAttemptToAnswers,
+  simulationAttemptToSimulation,
+} from "@/lib/supabaseSimulationAttempts";
 
 type StudentResultPageProps = {
   params: Promise<{
@@ -28,6 +35,44 @@ export default async function StudentResultPage({
   }
 
   const { profile, supabase } = await requireCompletedStudentProfile();
+
+  const { data: storedAttempt } = await supabase
+    .from("simulation_attempts")
+    .select("*")
+    .eq("id", simulationId)
+    .eq("student_id", profile.id)
+    .eq("status", "finished")
+    .maybeSingle()
+    .returns<SimulationAttempt | null>();
+
+  if (storedAttempt) {
+    const simulation = simulationAttemptToSimulation(storedAttempt);
+    const answers = simulationAttemptToAnswers(storedAttempt);
+
+    return (
+      <div className="space-y-8">
+        <Breadcrumbs
+          items={[
+            { label: "Dashboard", href: "/student/dashboard" },
+            { label: "Resultado" },
+          ]}
+        />
+
+        <ResultScoreCard simulation={simulation} />
+
+        <ResultPerformanceSummary answers={answers} />
+
+        <SimulationStoredComments
+          simulationId={simulation.id}
+          answers={answers}
+        />
+
+        <ResultCategorySummary answers={answers} />
+
+        <ResultReviewList answers={answers} />
+      </div>
+    );
+  }
 
   const { data: simulation } = await supabase
     .from("simulations")

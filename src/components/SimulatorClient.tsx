@@ -26,6 +26,7 @@ import {
 import { writeLocalSimulationSummary } from "@/lib/localSimulationStorage";
 import { getFreshSupabaseUser } from "@/lib/supabaseAuthMetadata";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
+import { buildSimulationAttemptInsert } from "@/lib/supabaseSimulationAttempts";
 import { SimulationQuestion } from "@/components/SimulationQuestion";
 
 type SimulatorClientProps = {
@@ -406,14 +407,50 @@ export function SimulatorClient({
           ? Math.round((correctAnswers / totalQuestions) * 10000) / 100
           : 0;
       const timeUsedSeconds = Math.max(0, SIMULATION_SECONDS - timeLeft);
+      const comments = Object.fromEntries(
+        Object.entries(questionComments)
+          .map(([questionId, comment]) => [questionId, comment.trim()])
+          .filter(([, comment]) => comment.length > 0),
+      );
+
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const { data: storedAttempt, error: storedAttemptError } = await supabase
+          .from("simulation_attempts")
+          .insert(
+            buildSimulationAttemptInsert({
+              studentId,
+              examSlug,
+              startedAt: startedAtRef.current.toISOString(),
+              finishedAt: finishedAt.toISOString(),
+              totalQuestions,
+              correctAnswers,
+              incorrectAnswers,
+              score,
+              timeUsedSeconds,
+              questions,
+              selectedAnswers: answers,
+              comments,
+            }),
+          )
+          .select("id")
+          .single();
+
+        if (!storedAttemptError && storedAttempt) {
+          window.localStorage.removeItem(draftStorageKey);
+          await deleteRemoteDraft(studentId, examSlug);
+          await deleteAuthDraft(examSlug);
+          activeSimulationIdRef.current = null;
+          router.push(`/student/results/${storedAttempt.id}`);
+          router.refresh();
+          return;
+        }
+      } catch {
+        // Continue with the legacy/local fallback if the storage table is pending.
+      }
 
       if (persistenceMode === "local") {
         const simulationId = `local-${Date.now()}`;
-        const comments = Object.fromEntries(
-          Object.entries(questionComments)
-            .map(([questionId, comment]) => [questionId, comment.trim()])
-            .filter(([, comment]) => comment.length > 0),
-        );
         const localSimulation = {
           id: simulationId,
           student_id: studentId,
@@ -557,12 +594,6 @@ export function SimulatorClient({
           throw new Error("No se pudo finalizar la simulación.");
         }
       }
-
-      const comments = Object.fromEntries(
-        Object.entries(questionComments)
-          .map(([questionId, comment]) => [questionId, comment.trim()])
-          .filter(([, comment]) => comment.length > 0),
-      );
 
       if (Object.keys(comments).length > 0) {
         window.localStorage.setItem(

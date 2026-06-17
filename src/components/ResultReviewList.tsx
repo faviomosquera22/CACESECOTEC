@@ -50,6 +50,7 @@ function ReviewCard({
   const correctOption = question?.correct_option ?? null;
   const selectedText = getOptionText(question, selectedOption);
   const correctText = getOptionText(question, correctOption);
+  const explanation = question?.explanation?.trim();
 
   return (
     <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
@@ -109,9 +110,16 @@ function ReviewCard({
                   `No seleccionaste respuesta. La opción correcta marcada por el banco es ${correctText}`,
                 )}
         </p>
-        {question?.explanation ? (
-          <p className="mt-2 text-slate-700">{question.explanation}</p>
-        ) : null}
+        <div className="mt-3 rounded-lg bg-white/75 p-3 text-slate-800">
+          <p className="font-semibold">Por qué esta respuesta es correcta</p>
+          <p className="mt-1">
+            {explanation
+              ? explanation
+              : punctuate(
+                  `El banco marca ${correctText} como respuesta correcta para esta pregunta`,
+                )}
+          </p>
+        </div>
       </div>
     </article>
   );

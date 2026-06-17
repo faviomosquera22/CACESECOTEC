@@ -1,15 +1,18 @@
 import type { StudentCardData } from "@/components/StudentCard";
-import type { Profile, Simulation } from "@/lib/database.types";
+import type { SimulationHistoryRecord } from "@/components/SimulationHistoryTable";
+import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
+import type { Profile, Simulation, SimulationAttempt } from "@/lib/database.types";
 import { demoStudentProfiles } from "@/lib/demoStudents";
 import { average } from "@/lib/format";
 import { getStudentCareerOption } from "@/lib/studentCareer";
 import type { SupabaseServerClient } from "@/lib/supabaseServer";
+import { simulationAttemptToHistoryRecord } from "@/lib/supabaseSimulationAttempts";
 
-function getSimulationDate(simulation: Simulation) {
+function getSimulationDate(simulation: SimulationHistoryRecord) {
   return simulation.finished_at ?? simulation.created_at;
 }
 
-function getBestScore(simulations: Simulation[]) {
+function getBestScore(simulations: SimulationHistoryRecord[]) {
   return Math.max(
     0,
     ...simulations.map((simulation) => simulation.score ?? 0),
@@ -42,7 +45,24 @@ export async function getTeacherStudentCards(supabase: SupabaseServerClient) {
       : { data: [] };
 
   const simulations = simulationRows ?? [];
-  const simulationsByStudent = new Map<string, Simulation[]>();
+  const { data: attemptRows } =
+    studentIds.length > 0
+      ? await supabase
+          .from("simulation_attempts")
+          .select("*")
+          .in("student_id", studentIds)
+          .eq("status", "finished")
+          .order("created_at", { ascending: false })
+          .returns<SimulationAttempt[]>()
+      : { data: [] };
+  const attemptsByStudent = new Map<string, SimulationAttempt[]>();
+
+  (attemptRows ?? []).forEach((attempt) => {
+    const current = attemptsByStudent.get(attempt.student_id) ?? [];
+    current.push(attempt);
+    attemptsByStudent.set(attempt.student_id, current);
+  });
+  const simulationsByStudent = new Map<string, SimulationHistoryRecord[]>();
 
   simulations.forEach((simulation) => {
     const current = simulationsByStudent.get(simulation.student_id) ?? [];
@@ -51,7 +71,12 @@ export async function getTeacherStudentCards(supabase: SupabaseServerClient) {
   });
 
   return students.map((student): StudentCardData => {
-    const studentSimulations = simulationsByStudent.get(student.id) ?? [];
+    const studentSimulations = mergeSimulationRecords([
+      ...(attemptsByStudent.get(student.id) ?? []).map(
+        simulationAttemptToHistoryRecord,
+      ),
+      ...(simulationsByStudent.get(student.id) ?? []),
+    ]);
     const latestSimulation = studentSimulations[0] ?? null;
     const career = getStudentCareerOption(student.career);
 
