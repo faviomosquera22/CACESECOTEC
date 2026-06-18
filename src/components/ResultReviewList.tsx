@@ -37,6 +37,107 @@ function punctuate(sentence: string) {
   return `${trimmedSentence}.`;
 }
 
+function isGenericImportedExplanation(explanation?: string | null) {
+  if (!explanation) {
+    return true;
+  }
+
+  return /respuesta importada del banco caces/i.test(explanation);
+}
+
+function getLogicalReason(question: Question | null, correctText: string) {
+  const questionText = question?.question_text ?? "";
+  const normalizedQuestion = questionText.toLowerCase();
+
+  if (
+    /\b(excepto|incorrecta|incorrecto|no debería|no corresponde)\b/.test(
+      normalizedQuestion,
+    )
+  ) {
+    return `La opción ${correctText} es correcta porque el enunciado pide identificar la excepción o la alternativa que no corresponde al criterio evaluado`;
+  }
+
+  if (/\bprioritari[oa]\b/.test(normalizedQuestion)) {
+    return `La opción ${correctText} es correcta porque atiende primero el problema de mayor riesgo o la necesidad más urgente descrita en el caso`;
+  }
+
+  if (/\bdiagn[oó]stico\b/.test(normalizedQuestion)) {
+    return `La opción ${correctText} es correcta porque coincide con los signos, síntomas y datos clínicos descritos en el enunciado`;
+  }
+
+  if (
+    /\b(intervenci[oó]n|cuidado|actividad|acci[oó]n|procedimiento)\b/.test(
+      normalizedQuestion,
+    )
+  ) {
+    return `La opción ${correctText} es correcta porque es la acción que responde de forma directa a la necesidad, fase o procedimiento solicitado en el caso`;
+  }
+
+  if (/\b(complete|completa|llenado|enunciado)\b/.test(normalizedQuestion)) {
+    return `La opción ${correctText} es correcta porque completa el enunciado de manera coherente con el concepto evaluado`;
+  }
+
+  if (
+    /\b(dispositivo|ox[ií]geno|litros|fio2|saturaci[oó]n)\b/.test(
+      normalizedQuestion,
+    )
+  ) {
+    return `La opción ${correctText} es correcta porque corresponde al criterio técnico solicitado por los datos respiratorios del caso`;
+  }
+
+  if (
+    /\b(concepto|definici[oó]n|m[eé]todo|clasificaci[oó]n)\b/.test(
+      normalizedQuestion,
+    )
+  ) {
+    return `La opción ${correctText} es correcta porque corresponde al concepto específico que el enunciado pide identificar`;
+  }
+
+  return `La opción ${correctText} es correcta porque responde directamente al criterio central planteado en el enunciado`;
+}
+
+function getSelectedContrast(
+  question: Question | null,
+  selectedOption: OptionLetter | null,
+  correctOption: OptionLetter | null,
+) {
+  if (!selectedOption) {
+    return "Al no marcar una alternativa, la pregunta queda como incorrecta.";
+  }
+
+  if (selectedOption === correctOption) {
+    return "";
+  }
+
+  const selectedText = getOptionText(question, selectedOption);
+
+  return `Tu selección (${selectedText}) no cumple ese mismo criterio del enunciado.`;
+}
+
+function getAnswerExplanation(
+  question: Question | null,
+  selectedOption: OptionLetter | null,
+  correctOption: OptionLetter | null,
+) {
+  const explanation = question?.explanation?.trim();
+
+  if (explanation && !isGenericImportedExplanation(explanation)) {
+    return punctuate(explanation);
+  }
+
+  const correctText = getOptionText(question, correctOption);
+  const logicalReason = punctuate(getLogicalReason(question, correctText));
+  const selectedContrast = getSelectedContrast(
+    question,
+    selectedOption,
+    correctOption,
+  );
+
+  return selectedContrast
+    ? `${logicalReason} ${punctuate(selectedContrast)}`
+    : logicalReason;
+}
+
 function ReviewCard({
   answer,
   questionNumber,
@@ -50,7 +151,11 @@ function ReviewCard({
   const correctOption = question?.correct_option ?? null;
   const selectedText = getOptionText(question, selectedOption);
   const correctText = getOptionText(question, correctOption);
-  const explanation = question?.explanation?.trim();
+  const explanation = getAnswerExplanation(
+    question,
+    selectedOption,
+    correctOption,
+  );
 
   return (
     <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
@@ -111,14 +216,10 @@ function ReviewCard({
                 )}
         </p>
         <div className="mt-3 rounded-lg bg-white/75 p-3 text-slate-800">
-          <p className="font-semibold">Por qué esta respuesta es correcta</p>
-          <p className="mt-1">
-            {explanation
-              ? explanation
-              : punctuate(
-                  `El banco marca ${correctText} como respuesta correcta para esta pregunta`,
-                )}
+          <p className="font-semibold">
+            {isCorrect ? "Fundamento" : "Por qué la correcta sí aplica"}
           </p>
+          <p className="mt-1">{explanation}</p>
         </div>
       </div>
     </article>
