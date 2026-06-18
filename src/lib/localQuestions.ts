@@ -63,6 +63,65 @@ export const examDistributionBySlug = {
 
 type ExamDistribution = typeof nursingExamDistribution;
 
+const brokenOptionTexts = new Set([
+  "abstenerse de",
+  "alinear las",
+  "de las",
+  "es aquel en que se debe mantener una abstención de",
+  "mejorar las",
+]);
+
+const brokenQuestionTexts = new Set([
+  "lograr el conocimiento sobre el procedimiento y desarrollar su memoria",
+  "orientar hacia la calidad de la atención y seguridad del paciente",
+]);
+
+function normalizeOptionText(value: string) {
+  return value.trim().replace(/\.$/, "").toLowerCase();
+}
+
+export function isUsableQuestion(question: Question) {
+  const questionText = question.question_text?.trim() ?? "";
+  const options = [
+    question.option_a,
+    question.option_b,
+    question.option_c,
+    question.option_d,
+  ].map((option) => option?.trim() ?? "");
+
+  if (!questionText || options.some((option) => !option)) {
+    return false;
+  }
+
+  if (brokenQuestionTexts.has(questionText.toLowerCase())) {
+    return false;
+  }
+
+  if (/\bRespuestas?:\s*[-–]/i.test(questionText)) {
+    return false;
+  }
+
+  if (/\b\d+\s*-\s*PAE\s*-\s*Paciente/i.test(questionText)) {
+    return false;
+  }
+
+  if (/^(?:\s*[A-ZÁÉÍÓÚÑ]\s*){8,}/.test(questionText)) {
+    return false;
+  }
+
+  if (/víase utiliza para/i.test(questionText)) {
+    return false;
+  }
+
+  const normalizedOptions = options.map(normalizeOptionText);
+
+  if (normalizedOptions.some((option) => brokenOptionTexts.has(option))) {
+    return false;
+  }
+
+  return new Set(normalizedOptions).size === normalizedOptions.length;
+}
+
 function getQuestionArea(question: Question, distribution: ExamDistribution) {
   const category = question.category ?? "";
   const match = distribution.find(({ area }) =>
@@ -106,13 +165,14 @@ function selectDistributedExamQuestions(
   questions: Question[],
   distribution: ExamDistribution,
 ) {
+  const usableQuestions = questions.filter(isUsableQuestion);
   const selected: Question[] = [];
   const targetCount = distribution.reduce((total, item) => total + item.count, 0);
 
   distribution.forEach(({ area, count }) => {
     selected.push(
       ...shuffleQuestions(
-        questions.filter(
+        usableQuestions.filter(
           (question) => getQuestionArea(question, distribution) === area,
         ),
       )
@@ -123,7 +183,7 @@ function selectDistributedExamQuestions(
   if (selected.length < targetCount) {
     const selectedIds = new Set(selected.map((question) => question.id));
     const fillQuestions = shuffleQuestions(
-      questions.filter((question) => !selectedIds.has(question.id)),
+      usableQuestions.filter((question) => !selectedIds.has(question.id)),
     );
 
     selected.push(...fillQuestions.slice(0, targetCount - selected.length));
@@ -149,7 +209,7 @@ export function selectQuestionsForExam(examType: string, questions: Question[]) 
     return selectPsychologyExamQuestions(questions);
   }
 
-  return shuffleQuestions(questions).slice(0, 100);
+  return shuffleQuestions(questions.filter(isUsableQuestion)).slice(0, 100);
 }
 
 export async function getLocalQuestionsForExam(examType: string) {
