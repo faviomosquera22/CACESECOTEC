@@ -3,6 +3,8 @@ import {
   type TeacherQuestionAnswerRecord,
 } from "@/components/TeacherLearningTools";
 import { requireProfile } from "@/lib/auth";
+import type { SimulationAttempt } from "@/lib/database.types";
+import { simulationAttemptToAnswers } from "@/lib/supabaseSimulationAttempts";
 import { getTeacherStudentCards } from "@/lib/teacherStudents";
 
 export const dynamic = "force-dynamic";
@@ -27,6 +29,14 @@ export default async function TeacherAnalyticsPage() {
     `,
     )
     .returns<TeacherQuestionAnswerRecord[]>();
+  const { data: attemptAnalyticsData } = await supabase
+    .from("simulation_attempts")
+    .select("id, answers")
+    .eq("status", "finished")
+    .returns<Pick<SimulationAttempt, "id" | "answers">[]>();
+  const attemptAnswers = (attemptAnalyticsData ?? []).flatMap(
+    simulationAttemptToAnswers,
+  );
 
   return (
     <div className="space-y-8">
@@ -43,7 +53,7 @@ export default async function TeacherAnalyticsPage() {
 
       <TeacherLearningTools
         students={studentCards}
-        serverAnswers={answerAnalyticsData ?? []}
+        serverAnswers={[...(answerAnalyticsData ?? []), ...attemptAnswers]}
       />
     </div>
   );
