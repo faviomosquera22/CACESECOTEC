@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { Mail, UserRound } from "lucide-react";
 import { TeacherStudentHistoryClient } from "@/components/TeacherStudentHistoryClient";
-import { requireProfile } from "@/lib/auth";
+import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
+import { getStudentCareerOption } from "@/lib/studentCareer";
 import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
 import type {
   Profile,
@@ -26,7 +27,7 @@ export default async function TeacherStudentPage({
   params,
 }: TeacherStudentPageProps) {
   const { studentId } = await params;
-  const { supabase } = await requireProfile(["teacher"]);
+  const { supabase, teacherCareerScope } = await requireTeacherCareerScope();
 
   const { data: studentFromSupabase } = await supabase
     .from("profiles")
@@ -37,7 +38,10 @@ export default async function TeacherStudentPage({
     .returns<Profile | null>();
   const student = studentFromSupabase ?? getDemoStudentProfile(studentId);
 
-  if (!student) {
+  if (
+    !student ||
+    getStudentCareerOption(student.career)?.slug !== teacherCareerScope
+  ) {
     notFound();
   }
 

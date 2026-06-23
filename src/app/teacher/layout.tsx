@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { BarChart3, ClipboardList, LayoutDashboard, Users } from "lucide-react";
 import { AppShell, type NavItem } from "@/components/AppShell";
-import { requireProfile } from "@/lib/auth";
+import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
 
 const teacherNavItems: NavItem[] = [
   {
@@ -31,7 +31,7 @@ export default async function TeacherLayout({
 }: {
   children: ReactNode;
 }) {
-  const { profile } = await requireProfile(["teacher"]);
+  const { profile } = await requireTeacherCareerScope();
 
   return (
     <AppShell profile={profile} navItems={teacherNavItems}>

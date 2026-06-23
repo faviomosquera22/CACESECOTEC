@@ -257,7 +257,13 @@ export type Inserts<T extends keyof Database["public"]["Tables"]> =
   Database["public"]["Tables"][T]["Insert"];
 
 export type Profile = Tables<"profiles">;
-export type Question = Tables<"questions">;
+export type Question = Tables<"questions"> & {
+  /**
+   * Argumentos específicos de los distractores del banco local. No forman parte
+   * de la tabla `questions`; viajan en el snapshot de cada intento.
+   */
+  option_explanations?: Partial<Record<OptionLetter, string>>;
+};
 export type Simulation = Tables<"simulations">;
 export type SimulationAnswer = Tables<"simulation_answers">;
 export type SimulationDraftRow = Tables<"simulation_drafts">;

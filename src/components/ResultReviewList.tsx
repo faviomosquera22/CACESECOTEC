@@ -150,6 +150,12 @@ function getIncorrectReason(
     return `No marcaste una alternativa. Los datos del enunciado sustentan ${correctText}, por eso esa era la respuesta que debías seleccionar.`;
   }
 
+  const optionExplanation = question?.option_explanations?.[selectedOption];
+
+  if (optionExplanation?.trim()) {
+    return punctuate(optionExplanation);
+  }
+
   const selectedText = getOptionText(question, selectedOption);
   const evidence = getCaseEvidence(question);
 

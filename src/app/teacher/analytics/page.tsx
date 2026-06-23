@@ -2,7 +2,7 @@ import {
   TeacherLearningTools,
   type TeacherQuestionAnswerRecord,
 } from "@/components/TeacherLearningTools";
-import { requireProfile } from "@/lib/auth";
+import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
 import type { SimulationAttempt } from "@/lib/database.types";
 import { simulationAttemptToAnswers } from "@/lib/supabaseSimulationAttempts";
 import { getTeacherStudentCards } from "@/lib/teacherStudents";
@@ -10,12 +10,28 @@ import { getTeacherStudentCards } from "@/lib/teacherStudents";
 export const dynamic = "force-dynamic";
 
 export default async function TeacherAnalyticsPage() {
-  const { supabase } = await requireProfile(["teacher"]);
-  const studentCards = await getTeacherStudentCards(supabase);
-  const { data: answerAnalyticsData } = await supabase
-    .from("simulation_answers")
-    .select(
-      `
+  const { supabase, teacherCareerScope } = await requireTeacherCareerScope();
+  const studentCards = await getTeacherStudentCards(
+    supabase,
+    teacherCareerScope,
+  );
+  const studentIds = studentCards.map((student) => student.id);
+  const { data: scopedSimulations } =
+    studentIds.length > 0
+      ? await supabase
+          .from("simulations")
+          .select("id")
+          .in("student_id", studentIds)
+      : { data: [] };
+  const simulationIds = (scopedSimulations ?? []).map(
+    (simulation) => simulation.id,
+  );
+  const { data: answerAnalyticsData } =
+    simulationIds.length > 0
+      ? await supabase
+          .from("simulation_answers")
+          .select(
+            `
       question_id,
       selected_option,
       is_correct,
@@ -27,13 +43,19 @@ export default async function TeacherAnalyticsPage() {
         correct_option
       )
     `,
-    )
-    .returns<TeacherQuestionAnswerRecord[]>();
-  const { data: attemptAnalyticsData } = await supabase
-    .from("simulation_attempts")
-    .select("id, answers")
-    .eq("status", "finished")
-    .returns<Pick<SimulationAttempt, "id" | "answers">[]>();
+          )
+          .in("simulation_id", simulationIds)
+          .returns<TeacherQuestionAnswerRecord[]>()
+      : { data: [] };
+  const { data: attemptAnalyticsData } =
+    studentIds.length > 0
+      ? await supabase
+          .from("simulation_attempts")
+          .select("id, answers")
+          .in("student_id", studentIds)
+          .eq("status", "finished")
+          .returns<Pick<SimulationAttempt, "id" | "answers">[]>()
+      : { data: [] };
   const attemptAnswers = (attemptAnalyticsData ?? []).flatMap(
     simulationAttemptToAnswers,
   );

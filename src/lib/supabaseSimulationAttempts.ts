@@ -46,6 +46,20 @@ function asString(value: unknown) {
   return typeof value === "string" ? value : "";
 }
 
+function normalizeOptionExplanations(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return undefined;
+  }
+
+  const entries = Object.entries(value).filter(
+    ([option, explanation]) => isOptionLetter(option) && typeof explanation === "string",
+  );
+
+  return entries.length > 0
+    ? (Object.fromEntries(entries) as Partial<Record<OptionLetter, string>>)
+    : undefined;
+}
+
 function normalizeQuestion(value: unknown): Question | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return null;
@@ -68,6 +82,9 @@ function normalizeQuestion(value: unknown): Question | null {
       ? question.correct_option
       : "A",
     explanation: question.explanation ?? null,
+    option_explanations: normalizeOptionExplanations(
+      question.option_explanations,
+    ),
     category: question.category ?? null,
     difficulty: question.difficulty ?? null,
     created_at: question.created_at ?? null,

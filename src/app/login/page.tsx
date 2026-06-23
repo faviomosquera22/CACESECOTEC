@@ -24,6 +24,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       ? "Tu cuenta no tiene un perfil asignado. Contacta al administrador."
       : resolvedSearchParams.error === "session-too-large"
         ? "La sesión anterior estaba demasiado pesada. Vuelve a iniciar sesión."
+      : resolvedSearchParams.error === "teacher-career-missing"
+        ? "Tu cuenta docente no tiene una carrera asignada. Contacta al administrador."
       : undefined;
 
   return (

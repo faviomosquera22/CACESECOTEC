@@ -30,29 +30,9 @@ export const nursingExamDistribution = [
 
 export const psychologyExamDistribution = [
   {
-    area: "Intervenciones clínicas y fundamentos de psicoterapia",
-    percent: 27,
-    count: 27,
-  },
-  {
-    area: "Evaluación psicológica y psicodiagnóstico",
-    percent: 24,
-    count: 24,
-  },
-  {
-    area: "Fundamentos de psicopatología en la Psicología",
-    percent: 20,
-    count: 20,
-  },
-  {
-    area: "Ética, deontología y marco legal",
-    percent: 19,
-    count: 19,
-  },
-  {
-    area: "Intervenciones psicosociales desde la Psicología",
-    percent: 10,
-    count: 10,
+    area: "Banco de Psiquiatría: preguntas 1 a 80",
+    percent: 100,
+    count: 80,
   },
 ];
 
@@ -90,6 +70,10 @@ export function isUsableQuestion(question: Question) {
   ].map((option) => option?.trim() ?? "");
 
   if (!questionText || options.some((option) => !option)) {
+    return false;
+  }
+
+  if (!['A', 'B', 'C', 'D'].includes(question.correct_option)) {
     return false;
   }
 
@@ -197,7 +181,9 @@ export function selectNursingExamQuestions(questions: Question[]) {
 }
 
 export function selectPsychologyExamQuestions(questions: Question[]) {
-  return selectDistributedExamQuestions(questions, psychologyExamDistribution);
+  // Este simulador está definido por el banco de Psiquiatría: sus primeras
+  // 80 preguntas, en el mismo orden revisado de la fuente.
+  return questions.filter(isUsableQuestion).slice(0, 80);
 }
 
 export function selectQuestionsForExam(examType: string, questions: Question[]) {

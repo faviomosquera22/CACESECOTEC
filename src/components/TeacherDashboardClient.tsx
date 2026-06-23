@@ -37,6 +37,7 @@ import {
 
 type TeacherDashboardClientProps = {
   students: StudentCardData[];
+  teacherCareerScope: StudentCareerSlug;
   showSummaryCards?: boolean;
 };
 
@@ -69,13 +70,17 @@ type DeleteStudentResponse = {
   details?: string;
 };
 
-const initialCreateStudentForm: CreateStudentForm = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  careerSlug: "enfermeria",
-};
+function getInitialCreateStudentForm(
+  careerSlug: StudentCareerSlug,
+): CreateStudentForm {
+  return {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    careerSlug,
+  };
+}
 
 function readLocalSimulations(studentId: string) {
   if (typeof window === "undefined") {
@@ -133,6 +138,7 @@ function getDateTime(value: string | null) {
 
 export function TeacherDashboardClient({
   students,
+  teacherCareerScope,
   showSummaryCards = true,
 }: TeacherDashboardClientProps) {
   const router = useRouter();
@@ -142,7 +148,9 @@ export function TeacherDashboardClient({
   >({});
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [createStudentForm, setCreateStudentForm] =
-    useState<CreateStudentForm>(initialCreateStudentForm);
+    useState<CreateStudentForm>(() =>
+      getInitialCreateStudentForm(teacherCareerScope),
+    );
   const [creatingStudent, setCreatingStudent] = useState(false);
   const [createStudentError, setCreateStudentError] = useState("");
   const [createStudentMessage, setCreateStudentMessage] = useState("");
@@ -155,7 +163,8 @@ export function TeacherDashboardClient({
   const [deleteStudentError, setDeleteStudentError] = useState("");
   const [deleteStudentMessage, setDeleteStudentMessage] = useState("");
   const [query, setQuery] = useState("");
-  const [careerFilter, setCareerFilter] = useState<CareerFilter>("all");
+  const [careerFilter, setCareerFilter] =
+    useState<CareerFilter>(teacherCareerScope);
   const [activityFilter, setActivityFilter] = useState<ActivityFilter>("all");
   const [sortKey, setSortKey] = useState<SortKey>("lastActivity");
   const [savingCareerStudentId, setSavingCareerStudentId] = useState<
@@ -298,22 +307,8 @@ export function TeacherDashboardClient({
     });
   }, [filteredStudents, sortKey]);
 
-  const careerFilterOptions = useMemo(
-    () => [
-      {
-        slug: "all" as const,
-        label: "Todos",
-        count: studentsWithResults.length,
-      },
-      ...studentCareerOptions.map((option) => ({
-        slug: option.slug,
-        label: option.label,
-        count: studentsWithResults.filter(
-          (student) => student.careerSlug === option.slug,
-        ).length,
-      })),
-    ],
-    [studentsWithResults],
+  const teacherCareer = studentCareerOptions.find(
+    (option) => option.slug === teacherCareerScope,
   );
   const activityFilterOptions = useMemo(
     () => [
@@ -376,7 +371,7 @@ export function TeacherDashboardClient({
 
     setShowCreateDialog(false);
     setCreateStudentError("");
-    setCreateStudentForm(initialCreateStudentForm);
+    setCreateStudentForm(getInitialCreateStudentForm(teacherCareerScope));
   }
 
   function closeDeleteDialog() {
@@ -427,11 +422,11 @@ export function TeacherDashboardClient({
         `${createdStudent.fullName} fue creado correctamente.`,
       );
       setDeleteStudentMessage("");
-      setCareerFilter(createdStudent.careerSlug ?? "all");
+      setCareerFilter(teacherCareerScope);
       setActivityFilter("all");
       setQuery("");
       setShowCreateDialog(false);
-      setCreateStudentForm(initialCreateStudentForm);
+      setCreateStudentForm(getInitialCreateStudentForm(teacherCareerScope));
       router.refresh();
     } catch (caughtError) {
       setCreateStudentError(
@@ -604,38 +599,11 @@ export function TeacherDashboardClient({
             </button>
           </div>
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div
-              aria-label="Filtrar estudiantes por carrera"
-              className="flex flex-wrap gap-2"
-              role="group"
-            >
-              {careerFilterOptions.map((option) => {
-                const isActive = careerFilter === option.slug;
-
-                return (
-                  <button
-                    key={option.slug}
-                    type="button"
-                    onClick={() => setCareerFilter(option.slug)}
-                    className={`inline-flex h-10 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-semibold transition ${
-                      isActive
-                        ? "border-slate-950 bg-slate-950 text-white"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-800"
-                    }`}
-                  >
-                    {option.label}
-                    <span
-                      className={`rounded-md px-1.5 py-0.5 text-xs ${
-                        isActive
-                          ? "bg-white/15 text-white"
-                          : "bg-slate-100 text-slate-500"
-                      }`}
-                    >
-                      {option.count}
-                    </span>
-                  </button>
-                );
-              })}
+            <div className="inline-flex h-10 w-fit items-center rounded-lg border border-slate-950 bg-slate-950 px-4 text-sm font-semibold text-white">
+              {teacherCareer?.label ?? "Carrera asignada"}
+              <span className="ml-2 rounded-md bg-white/15 px-1.5 py-0.5 text-xs">
+                {studentsWithResults.length}
+              </span>
             </div>
 
             <div className="flex h-11 w-full items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 shadow-sm focus-within:border-sky-400 focus-within:ring-4 focus-within:ring-sky-100 lg:max-w-sm">
@@ -771,11 +739,11 @@ export function TeacherDashboardClient({
                           <option value="" disabled>
                             Sin carrera
                           </option>
-                          {studentCareerOptions.map((option) => (
-                            <option key={option.slug} value={option.slug}>
-                              {option.label}
+                          {teacherCareer ? (
+                            <option value={teacherCareer.slug}>
+                              {teacherCareer.label}
                             </option>
-                          ))}
+                          ) : null}
                         </select>
                       </td>
                       <td className="px-4 py-4">
@@ -949,11 +917,11 @@ export function TeacherDashboardClient({
                   disabled={creatingStudent}
                   className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100 disabled:cursor-not-allowed disabled:bg-slate-50"
                 >
-                  {studentCareerOptions.map((option) => (
-                    <option key={option.slug} value={option.slug}>
-                      {option.label}
+                  {teacherCareer ? (
+                    <option value={teacherCareer.slug}>
+                      {teacherCareer.label}
                     </option>
-                  ))}
+                  ) : null}
                 </select>
               </label>
             </div>

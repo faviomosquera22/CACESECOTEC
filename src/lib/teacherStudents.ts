@@ -4,7 +4,10 @@ import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
 import type { Profile, Simulation } from "@/lib/database.types";
 import { demoStudentProfiles } from "@/lib/demoStudents";
 import { average } from "@/lib/format";
-import { getStudentCareerOption } from "@/lib/studentCareer";
+import {
+  getStudentCareerOption,
+  type StudentCareerSlug,
+} from "@/lib/studentCareer";
 import type { SupabaseServerClient } from "@/lib/supabaseServer";
 import {
   simulationAttemptHistorySelect,
@@ -23,18 +26,26 @@ function getBestScore(simulations: SimulationHistoryRecord[]) {
   );
 }
 
-export async function getTeacherStudentCards(supabase: SupabaseServerClient) {
+export async function getTeacherStudentCards(
+  supabase: SupabaseServerClient,
+  teacherCareerScope: StudentCareerSlug,
+) {
+  const teacherCareer = getStudentCareerOption(teacherCareerScope);
   const { data: studentProfiles } = await supabase
     .from("profiles")
     .select("id, full_name, email, role, career, created_at")
     .eq("role", "student")
+    .eq("career", teacherCareer?.label ?? teacherCareerScope)
     .order("full_name", { ascending: true })
     .returns<Profile[]>();
 
   const students =
     studentProfiles && studentProfiles.length > 0
       ? studentProfiles
-      : demoStudentProfiles;
+      : demoStudentProfiles.filter(
+          (student) =>
+            getStudentCareerOption(student.career)?.slug === teacherCareerScope,
+        );
   const studentIds = students.map((student) => student.id);
 
   const { data: simulationRows } =

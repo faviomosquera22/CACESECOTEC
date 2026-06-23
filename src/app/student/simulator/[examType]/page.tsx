@@ -40,29 +40,37 @@ export default async function StudentExamSimulatorPage({
   }
 
   const examDistribution = examDistributionBySlug[exam.slug] ?? [];
-  const categoryFilter = exam.categoryKeywords
-    .map((keyword) => `category.ilike.%${keyword}%`)
-    .join(",");
+  const shouldUsePsychiatryBank = exam.slug === "psicologia";
+  let supabaseQuestions: Question[] = [];
+  let questionLoadError = false;
 
-  const { data, error } = await supabase
-    .from("questions")
-    .select(
-      "id, question_text, option_a, option_b, option_c, option_d, correct_option, explanation, category, difficulty, created_at",
-    )
-    .or(categoryFilter)
-    .order("created_at", { ascending: false })
-    .limit(examDistribution.length > 0 ? 300 : 100)
-    .returns<Question[]>();
+  if (!shouldUsePsychiatryBank) {
+    const categoryFilter = exam.categoryKeywords
+      .map((keyword) => `category.ilike.%${keyword}%`)
+      .join(",");
+    const { data, error } = await supabase
+      .from("questions")
+      .select(
+        "id, question_text, option_a, option_b, option_c, option_d, correct_option, explanation, category, difficulty, created_at",
+      )
+      .or(categoryFilter)
+      .order("created_at", { ascending: false })
+      .limit(examDistribution.length > 0 ? 300 : 100)
+      .returns<Question[]>();
 
-  const supabaseQuestions = data ?? [];
-  const questions =
-    error || supabaseQuestions.length === 0
+    supabaseQuestions = data ?? [];
+    questionLoadError = Boolean(error);
+  }
+
+  const questions = shouldUsePsychiatryBank
+    ? await getLocalQuestionsForExam(exam.slug)
+    : questionLoadError || supabaseQuestions.length === 0
       ? await getLocalQuestionsForExam(exam.slug)
       : selectQuestionsForExam(exam.slug, supabaseQuestions);
   const persistenceMode = isLocalQuestionSet(questions) ? "local" : "supabase";
   const Icon = exam.icon;
 
-  if (error && questions.length === 0) {
+  if (questionLoadError && questions.length === 0) {
     return (
       <section className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">
         No se pudieron cargar las preguntas de {exam.shortTitle}.
@@ -140,8 +148,9 @@ export default async function StudentExamSimulatorPage({
 
       {persistenceMode === "local" ? (
         <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-800">
-          Usando banco local de {exam.shortTitle} mientras Supabase no tenga la
-          tabla de preguntas cargada.
+          {shouldUsePsychiatryBank
+            ? "Usando el banco local de Psiquiatría: 80 preguntas revisadas, con sus argumentaciones de respuesta."
+            : `Usando banco local de ${exam.shortTitle} mientras Supabase no tenga la tabla de preguntas cargada.`}
         </div>
       ) : null}
 

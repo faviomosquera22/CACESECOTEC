@@ -1,6 +1,7 @@
 import { getCurrentAuthContext } from "@/lib/auth";
-import { studentCareerOptions } from "@/lib/studentCareer";
+import { getStudentCareerOption, studentCareerOptions } from "@/lib/studentCareer";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
+import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
 
 type AssignStudentCareerResult = {
   id: string;
@@ -34,6 +35,15 @@ export async function PATCH(
     );
   }
 
+  const teacherCareerScope = getTeacherCareerScope(authContext.profile);
+
+  if (!teacherCareerScope) {
+    return Response.json(
+      { error: "Tu cuenta docente no tiene una carrera asignada." },
+      { status: 403 },
+    );
+  }
+
   const { studentId } = await context.params;
   const body = (await request.json().catch(() => ({}))) as AssignCareerRequestBody;
   const career = studentCareerOptions.find(
@@ -42,6 +52,13 @@ export async function PATCH(
 
   if (!career) {
     return Response.json({ error: "Carrera no válida." }, { status: 400 });
+  }
+
+  if (career.slug !== teacherCareerScope) {
+    return Response.json(
+      { error: "Solo puedes asignar tu carrera a estudiantes." },
+      { status: 403 },
+    );
   }
 
   let adminClient: ReturnType<typeof getSupabaseAdminClient>;
@@ -57,6 +74,30 @@ export async function PATCH(
             : "Falta configurar Supabase Admin.",
       },
       { status: 500 },
+    );
+  }
+
+  const { data: studentProfile, error: studentError } = await adminClient
+    .from("profiles")
+    .select("id, career")
+    .eq("id", studentId)
+    .eq("role", "student")
+    .maybeSingle<AssignStudentCareerResult>();
+
+  if (studentError) {
+    return Response.json(
+      { error: "No se pudo verificar la carrera del estudiante." },
+      { status: 500 },
+    );
+  }
+
+  if (
+    !studentProfile ||
+    getStudentCareerOption(studentProfile.career)?.slug !== teacherCareerScope
+  ) {
+    return Response.json(
+      { error: "No puedes modificar estudiantes de otra carrera." },
+      { status: 403 },
     );
   }
 

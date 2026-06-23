@@ -1,8 +1,13 @@
 import { getCurrentAuthContext } from "@/lib/auth";
 import type { Profile } from "@/lib/database.types";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
+import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
+import { getStudentCareerOption } from "@/lib/studentCareer";
 
-type DeleteStudentProfile = Pick<Profile, "id" | "full_name" | "email" | "role">;
+type DeleteStudentProfile = Pick<
+  Profile,
+  "id" | "full_name" | "email" | "role" | "career"
+>;
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +38,15 @@ export async function DELETE(
     );
   }
 
+  const teacherCareerScope = getTeacherCareerScope(authContext.profile);
+
+  if (!teacherCareerScope) {
+    return Response.json(
+      { error: "Tu cuenta docente no tiene una carrera asignada." },
+      { status: 403 },
+    );
+  }
+
   const { studentId } = await context.params;
 
   if (!isUuid(studentId)) {
@@ -57,7 +71,7 @@ export async function DELETE(
 
   const { data: studentProfile, error: profileError } = await adminClient
     .from("profiles")
-    .select("id, full_name, email, role")
+    .select("id, full_name, email, role, career")
     .eq("id", studentId)
     .eq("role", "student")
     .maybeSingle<DeleteStudentProfile>();
@@ -76,6 +90,13 @@ export async function DELETE(
     return Response.json(
       { error: "No se encontró un estudiante para eliminar." },
       { status: 404 },
+    );
+  }
+
+  if (getStudentCareerOption(studentProfile.career)?.slug !== teacherCareerScope) {
+    return Response.json(
+      { error: "No puedes eliminar estudiantes de otra carrera." },
+      { status: 403 },
     );
   }
 

@@ -2,6 +2,7 @@ import { getCurrentAuthContext } from "@/lib/auth";
 import type { Profile } from "@/lib/database.types";
 import { getStudentCareerOption, studentCareerOptions } from "@/lib/studentCareer";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
+import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
 
 type CreateStudentRequestBody = {
   firstName?: string;
@@ -53,6 +54,15 @@ export async function POST(request: Request) {
     );
   }
 
+  const teacherCareerScope = getTeacherCareerScope(authContext.profile);
+
+  if (!teacherCareerScope) {
+    return Response.json(
+      { error: "Tu cuenta docente no tiene una carrera asignada." },
+      { status: 403 },
+    );
+  }
+
   const body = (await request.json().catch(() => ({}))) as CreateStudentRequestBody;
   const firstName = normalizeText(body.firstName);
   const lastName = normalizeText(body.lastName);
@@ -85,6 +95,13 @@ export async function POST(request: Request) {
 
   if (!career) {
     return Response.json({ error: "Carrera no válida." }, { status: 400 });
+  }
+
+  if (career.slug !== teacherCareerScope) {
+    return Response.json(
+      { error: "Solo puedes crear estudiantes de tu carrera asignada." },
+      { status: 403 },
+    );
   }
 
   const fullName = `${firstName} ${lastName}`;

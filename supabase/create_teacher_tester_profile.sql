@@ -1,4 +1,4 @@
--- Ejecutar en Supabase SQL Editor para habilitar el usuario docente tester.
+-- Ejecutar en Supabase SQL Editor para habilitar el usuario docente de Enfermería.
 -- El usuario ya existe en Supabase Auth; esta fila crea su perfil de aplicación.
 
 insert into public.profiles (id, full_name, email, role, career)
@@ -7,7 +7,7 @@ values (
   'Docente Tester',
   'tester.teacher@caces.local',
   'teacher',
-  'Docente'
+  'Enfermería'
 )
 on conflict (id) do update
 set
