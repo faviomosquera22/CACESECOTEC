@@ -42,7 +42,32 @@ function isGenericImportedExplanation(explanation?: string | null) {
     return true;
   }
 
-  return /respuesta importada del banco caces/i.test(explanation);
+  return (
+    /respuesta importada del banco caces/i.test(explanation) ||
+    /los distractores son menos adecuados porque omiten evaluaci[oó]n, encuadre, evidencia, seguridad o pertinencia cl[ií]nica/i.test(
+      explanation,
+    )
+  );
+}
+
+function getCaseEvidence(question: Question | null) {
+  const questionText = question?.question_text
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!questionText) {
+    return null;
+  }
+
+  // En los casos clínicos, la última pregunta suele empezar con "¿". Todo lo
+  // anterior contiene los signos, síntomas o antecedentes que sustentan la respuesta.
+  const lastQuestionStart = questionText.lastIndexOf("¿");
+  const evidence =
+    lastQuestionStart > 0
+      ? questionText.slice(0, lastQuestionStart).trim()
+      : questionText;
+
+  return evidence || null;
 }
 
 function getLogicalReason(question: Question | null, correctText: string) {
@@ -114,6 +139,31 @@ function getSelectedContrast(
   return `Tu selección (${selectedText}) no cumple ese mismo criterio del enunciado.`;
 }
 
+function getIncorrectReason(
+  question: Question | null,
+  selectedOption: OptionLetter | null,
+  correctOption: OptionLetter | null,
+) {
+  const correctText = getOptionText(question, correctOption);
+
+  if (!selectedOption) {
+    return `No marcaste una alternativa. Los datos del enunciado sustentan ${correctText}, por eso esa era la respuesta que debías seleccionar.`;
+  }
+
+  const selectedText = getOptionText(question, selectedOption);
+  const evidence = getCaseEvidence(question);
+
+  return [
+    `La opción ${selectedText} es incorrecta porque no corresponde a los datos que plantea el enunciado.`,
+    evidence
+      ? `El dato que determina la respuesta es: “${evidence}”.`
+      : null,
+    `Esos datos sustentan ${correctText}; por eso no corresponde seleccionar ${selectedText}.`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
 function getAnswerExplanation(
   question: Question | null,
   selectedOption: OptionLetter | null,
@@ -152,6 +202,11 @@ function ReviewCard({
   const selectedText = getOptionText(question, selectedOption);
   const correctText = getOptionText(question, correctOption);
   const explanation = getAnswerExplanation(
+    question,
+    selectedOption,
+    correctOption,
+  );
+  const incorrectReason = getIncorrectReason(
     question,
     selectedOption,
     correctOption,
@@ -215,12 +270,23 @@ function ReviewCard({
                   `No seleccionaste respuesta. La opción correcta marcada por el banco es ${correctText}`,
                 )}
         </p>
-        <div className="mt-3 rounded-lg bg-white/75 p-3 text-slate-800">
-          <p className="font-semibold">
-            {isCorrect ? "Fundamento" : "Por qué la correcta sí aplica"}
-          </p>
-          <p className="mt-1">{explanation}</p>
-        </div>
+        {isCorrect ? (
+          <div className="mt-3 rounded-lg bg-white/75 p-3 text-slate-800">
+            <p className="font-semibold">Fundamento</p>
+            <p className="mt-1">{explanation}</p>
+          </div>
+        ) : (
+          <div className="mt-3 space-y-3">
+            <div className="rounded-lg bg-white/75 p-3 text-slate-800">
+              <p className="font-semibold">Por qué tu respuesta no aplica</p>
+              <p className="mt-1">{incorrectReason}</p>
+            </div>
+            <div className="rounded-lg bg-white/75 p-3 text-slate-800">
+              <p className="font-semibold">Por qué la correcta sí aplica</p>
+              <p className="mt-1">{explanation}</p>
+            </div>
+          </div>
+        )}
       </div>
     </article>
   );
