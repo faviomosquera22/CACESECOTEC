@@ -1,5 +1,8 @@
 import type { Question } from "@/lib/database.types";
 
+export const legacyFixedPsychologyAttemptSeed =
+  "00000000-0000-4000-8000-000000000000";
+
 export const nursingExamDistribution = [
   {
     area: "Cuidado y Procedimientos Clínicos de Enfermería",
@@ -30,7 +33,7 @@ export const nursingExamDistribution = [
 
 export const psychologyExamDistribution = [
   {
-    area: "Banco de Psiquiatría: preguntas 1 a 80",
+    area: "Muestra rotativa del banco de Psicología",
     percent: 100,
     count: 80,
   },
@@ -131,11 +134,35 @@ function dedupeQuestions(questions: Question[]) {
   return result;
 }
 
-function shuffleQuestions(questions: Question[]) {
+function createSeededRandom(seed: string) {
+  let state = 2166136261;
+
+  for (let index = 0; index < seed.length; index += 1) {
+    state ^= seed.charCodeAt(index);
+    state = Math.imul(state, 16777619);
+  }
+
+  return () => {
+    state += 0x6d2b79f5;
+    let value = state;
+    value = Math.imul(value ^ (value >>> 15), value | 1);
+    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function getRandomSource(seed?: string) {
+  return seed ? createSeededRandom(seed) : Math.random;
+}
+
+function shuffleQuestions(
+  questions: Question[],
+  random: () => number = Math.random,
+) {
   const shuffled = [...questions];
 
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
+    const randomIndex = Math.floor(random() * (index + 1));
     [shuffled[index], shuffled[randomIndex]] = [
       shuffled[randomIndex],
       shuffled[index],
@@ -148,6 +175,7 @@ function shuffleQuestions(questions: Question[]) {
 function selectDistributedExamQuestions(
   questions: Question[],
   distribution: ExamDistribution,
+  random: () => number,
 ) {
   const usableQuestions = questions.filter(isUsableQuestion);
   const selected: Question[] = [];
@@ -159,6 +187,7 @@ function selectDistributedExamQuestions(
         usableQuestions.filter(
           (question) => getQuestionArea(question, distribution) === area,
         ),
+        random,
       )
         .slice(0, count),
     );
@@ -168,43 +197,78 @@ function selectDistributedExamQuestions(
     const selectedIds = new Set(selected.map((question) => question.id));
     const fillQuestions = shuffleQuestions(
       usableQuestions.filter((question) => !selectedIds.has(question.id)),
+      random,
     );
 
     selected.push(...fillQuestions.slice(0, targetCount - selected.length));
   }
 
-  return shuffleQuestions(dedupeQuestions(selected)).slice(0, targetCount);
+  return shuffleQuestions(dedupeQuestions(selected), random).slice(
+    0,
+    targetCount,
+  );
 }
 
-export function selectNursingExamQuestions(questions: Question[]) {
-  return selectDistributedExamQuestions(questions, nursingExamDistribution);
+export function selectNursingExamQuestions(
+  questions: Question[],
+  attemptSeed?: string,
+) {
+  return selectDistributedExamQuestions(
+    questions,
+    nursingExamDistribution,
+    getRandomSource(attemptSeed),
+  );
 }
 
-export function selectPsychologyExamQuestions(questions: Question[]) {
-  // Este simulador está definido por el banco de Psiquiatría: sus primeras
-  // 80 preguntas, en el mismo orden revisado de la fuente.
-  return questions.filter(isUsableQuestion).slice(0, 80);
+export function selectPsychologyExamQuestions(
+  questions: Question[],
+  attemptSeed?: string,
+) {
+  if (attemptSeed === legacyFixedPsychologyAttemptSeed) {
+    return questions.filter(isUsableQuestion).slice(0, 80);
+  }
+
+  // Cada intento toma una muestra nueva y cambia también el orden. El banco
+  // completo permanece disponible para que estudiantes simultáneos no reciban
+  // necesariamente el mismo examen.
+  return shuffleQuestions(
+    questions.filter(isUsableQuestion),
+    getRandomSource(attemptSeed),
+  ).slice(0, 80);
 }
 
-export function selectQuestionsForExam(examType: string, questions: Question[]) {
+export function selectQuestionsForExam(
+  examType: string,
+  questions: Question[],
+  attemptSeed?: string,
+) {
   if (examType === "enfermeria") {
-    return selectNursingExamQuestions(questions);
+    return selectNursingExamQuestions(questions, attemptSeed);
   }
 
   if (examType === "psicologia") {
-    return selectPsychologyExamQuestions(questions);
+    return selectPsychologyExamQuestions(questions, attemptSeed);
   }
 
-  return shuffleQuestions(questions.filter(isUsableQuestion)).slice(0, 100);
+  return shuffleQuestions(
+    questions.filter(isUsableQuestion),
+    getRandomSource(attemptSeed),
+  ).slice(0, 100);
 }
 
-export async function getLocalQuestionsForExam(examType: string) {
+export async function getLocalQuestionsForExam(
+  examType: string,
+  attemptSeed?: string,
+) {
   if (examType === "enfermeria") {
     const { default: enfermeriaQuestions } = await import(
       "@/data/enfermeriaQuestions.json"
     );
 
-    return selectNursingExamQuestions(enfermeriaQuestions as Question[]);
+    return selectNursingExamQuestions(
+      enfermeriaQuestions as Question[],
+      attemptSeed,
+    );
   }
 
   if (examType === "psicologia") {
@@ -212,7 +276,10 @@ export async function getLocalQuestionsForExam(examType: string) {
       "@/data/psicologiaQuestions.json"
     );
 
-    return selectPsychologyExamQuestions(psicologiaQuestions as Question[]);
+    return selectPsychologyExamQuestions(
+      psicologiaQuestions as Question[],
+      attemptSeed,
+    );
   }
 
   return [];

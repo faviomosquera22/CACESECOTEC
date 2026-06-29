@@ -9,10 +9,18 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 
-SOURCE = Path("Bases de caces psiquiatria/COMPONENTE 1 - PREGUNTAS.docx")
+SOURCE = Path("Bases de caces psiquiatria/COMPONENTE1_105_Preguntas_Final.docx")
 OUTPUT = Path("src/data/psicologiaQuestions.json")
 LETTERS = ("A", "B", "C", "D")
 NAMESPACE = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+QUESTION_HEADING_PATTERN = re.compile(
+    r"PREGUNTA\s+(\d+)(?:\s+★\s+NUEVA)?",
+    flags=re.IGNORECASE,
+)
+LEAKED_LABEL_PATTERN = re.compile(
+    r"\b(?:RESPUESTA\s+(?:CORRECTA|INCORRECTA)|ARGUMENTACIÓN|BIBLIOGRAFÍA|OPCIÓN\s+[A-D])\b",
+    flags=re.IGNORECASE,
+)
 
 
 def clean(value: str) -> str:
@@ -20,6 +28,35 @@ def clean(value: str) -> str:
         "Intervenir gently", "Intervenir con tacto"
     )
     return re.sub(r"\s+", " ", value).strip()
+
+
+def normalize_for_comparison(value: str) -> str:
+    return re.sub(r"[^a-z0-9áéíóúüñ]+", " ", value.lower()).strip()
+
+
+def validate_question_content(
+    number: int,
+    question_text: str,
+    option_texts: list[str],
+) -> None:
+    if LEAKED_LABEL_PATTERN.search(question_text):
+        raise ValueError(
+            f"La pregunta {number} contiene una etiqueta de respuesta en el enunciado"
+        )
+
+    normalized_question = normalize_for_comparison(question_text)
+    for option_index, option_text in enumerate(option_texts):
+        normalized_option = normalize_for_comparison(option_text)
+        if len(normalized_option) >= 18 and normalized_option in normalized_question:
+            raise ValueError(
+                f"La pregunta {number} contiene el texto de la opción "
+                f"{LETTERS[option_index]} dentro del enunciado"
+            )
+
+    if re.search(r"(?:^|\s)[A-D][.)]?\s*$", question_text, flags=re.IGNORECASE):
+        raise ValueError(
+            f"La pregunta {number} termina con una posible letra de respuesta"
+        )
 
 
 def read_paragraphs(path: Path) -> list[str]:
@@ -142,6 +179,8 @@ def parse_question(number: int, lines: list[str]) -> dict[str, object]:
     if len(set(option_texts)) != len(option_texts):
         raise ValueError(f"La pregunta {number} tiene alternativas repetidas")
 
+    validate_question_content(number, question_text, option_texts)
+
     return {
         "id": f"local-psicologia-psiquiatria-{number:04d}",
         "question_text": question_text,
@@ -165,7 +204,7 @@ def parse_document(path: Path, limit: int) -> list[dict[str, object]]:
     starts = [
         (index, int(match.group(1)))
         for index, line in enumerate(paragraphs)
-        if (match := re.fullmatch(r"PREGUNTA (\d+)", line))
+        if (match := QUESTION_HEADING_PATTERN.fullmatch(line))
     ]
     questions: list[dict[str, object]] = []
     seen_numbers: set[int] = set()
@@ -173,8 +212,8 @@ def parse_document(path: Path, limit: int) -> list[dict[str, object]]:
         if number > limit:
             break
         end = starts[offset + 1][0] if offset + 1 < len(starts) else len(paragraphs)
-        # El documento fuente repite íntegramente el bloque 41-60. Conservamos
-        # la primera versión para que el simulador tenga exactamente 80 reactivos.
+        # El documento fuente anterior repetía íntegramente el bloque 41-60.
+        # Conservamos la primera aparición para soportar ambos formatos.
         if number in seen_numbers:
             continue
         questions.append(parse_question(number, paragraphs[start + 1 : end]))
@@ -188,16 +227,24 @@ def parse_document(path: Path, limit: int) -> list[dict[str, object]]:
         raise ValueError(
             f"Se esperaban las preguntas 1-{limit}; se obtuvieron {parsed_numbers}"
         )
+
+    normalized_questions = [
+        normalize_for_comparison(str(question["question_text"]))
+        for question in questions
+    ]
+    if len(set(normalized_questions)) != len(normalized_questions):
+        raise ValueError("El documento contiene enunciados duplicados")
+
     return questions
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Extrae las primeras preguntas estructuradas del banco de Psiquiatría."
+        description="Extrae las preguntas estructuradas del banco de Psicología."
     )
     parser.add_argument("--source", type=Path, default=SOURCE)
     parser.add_argument("--output", type=Path, default=OUTPUT)
-    parser.add_argument("--limit", type=int, default=80)
+    parser.add_argument("--limit", type=int, default=105)
     args = parser.parse_args()
 
     questions = parse_document(args.source, args.limit)

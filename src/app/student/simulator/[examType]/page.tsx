@@ -1,13 +1,15 @@
+import { randomUUID } from "node:crypto";
 import Link from "next/link";
 import { ArrowLeft, ClipboardList } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SimulatorClient } from "@/components/SimulatorClient";
-import type { Question } from "@/lib/database.types";
+import type { Json, Question } from "@/lib/database.types";
 import {
   examDistributionBySlug,
   getLocalQuestionsForExam,
   isLocalQuestionSet,
+  legacyFixedPsychologyAttemptSeed,
   selectQuestionsForExam,
 } from "@/lib/localQuestions";
 import { getSimulatorExam } from "@/lib/simulatorCatalog";
@@ -18,14 +20,33 @@ type StudentExamSimulatorPageProps = {
   params: Promise<{
     examType: string;
   }>;
+  searchParams: Promise<{
+    attempt?: string | string[];
+  }>;
 };
 
 export const dynamic = "force-dynamic";
 
+const attemptSeedPattern =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+function getStoredAttemptSeed(draft: Json | null | undefined) {
+  if (!draft || typeof draft !== "object" || Array.isArray(draft)) {
+    return null;
+  }
+
+  const attemptSeed = draft.attemptSeed;
+
+  return typeof attemptSeed === "string" && attemptSeedPattern.test(attemptSeed)
+    ? attemptSeed
+    : null;
+}
+
 export default async function StudentExamSimulatorPage({
   params,
+  searchParams,
 }: StudentExamSimulatorPageProps) {
-  const { examType } = await params;
+  const [{ examType }, query] = await Promise.all([params, searchParams]);
   const exam = getSimulatorExam(examType);
 
   if (!exam) {
@@ -37,6 +58,29 @@ export default async function StudentExamSimulatorPage({
 
   if (career && exam.slug !== career.simulatorSlug) {
     redirect(`/student/simulator/${career.simulatorSlug}`);
+  }
+
+  const requestedAttemptSeed =
+    typeof query.attempt === "string" && attemptSeedPattern.test(query.attempt)
+      ? query.attempt
+      : null;
+  const { data: storedDraft } = await supabase
+    .from("simulation_drafts")
+    .select("draft")
+    .eq("student_id", profile.id)
+    .eq("exam_slug", exam.slug)
+    .maybeSingle<{ draft: Json }>();
+  const storedAttemptSeed = getStoredAttemptSeed(storedDraft?.draft);
+  const attemptSeed = storedAttemptSeed
+    ? storedAttemptSeed
+    : storedDraft && exam.slug === "psicologia"
+      ? legacyFixedPsychologyAttemptSeed
+      : requestedAttemptSeed ?? randomUUID();
+
+  if (requestedAttemptSeed !== attemptSeed) {
+    redirect(
+      `/student/simulator/${exam.slug}?attempt=${encodeURIComponent(attemptSeed)}`,
+    );
   }
 
   const examDistribution = examDistributionBySlug[exam.slug] ?? [];
@@ -63,10 +107,10 @@ export default async function StudentExamSimulatorPage({
   }
 
   const questions = shouldUsePsychiatryBank
-    ? await getLocalQuestionsForExam(exam.slug)
+    ? await getLocalQuestionsForExam(exam.slug, attemptSeed)
     : questionLoadError || supabaseQuestions.length === 0
-      ? await getLocalQuestionsForExam(exam.slug)
-      : selectQuestionsForExam(exam.slug, supabaseQuestions);
+      ? await getLocalQuestionsForExam(exam.slug, attemptSeed)
+      : selectQuestionsForExam(exam.slug, supabaseQuestions, attemptSeed);
   const persistenceMode = isLocalQuestionSet(questions) ? "local" : "supabase";
   const Icon = exam.icon;
 
@@ -149,7 +193,7 @@ export default async function StudentExamSimulatorPage({
       {persistenceMode === "local" ? (
         <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-800">
           {shouldUsePsychiatryBank
-            ? "Usando el banco local de Psiquiatría: 80 preguntas revisadas, con sus argumentaciones de respuesta."
+            ? "Usando el banco local de Psicología: 80 preguntas seleccionadas aleatoriamente de 105, con sus argumentaciones de respuesta."
             : `Usando banco local de ${exam.shortTitle} mientras Supabase no tenga la tabla de preguntas cargada.`}
         </div>
       ) : null}
@@ -158,6 +202,7 @@ export default async function StudentExamSimulatorPage({
         questions={questions}
         studentId={profile.id}
         examSlug={exam.slug}
+        attemptSeed={attemptSeed}
         persistenceMode={persistenceMode}
         draftStorageKey={`simulation-draft:${profile.id}:${exam.slug}`}
       />

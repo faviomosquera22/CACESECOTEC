@@ -33,11 +33,11 @@ export const simulatorExams: SimulatorExamConfig[] = [
     title: "Simulador Psicología",
     shortTitle: "Psicología",
     description:
-      "Práctica basada exclusivamente en las primeras 80 preguntas del banco de Psiquiatría para estudiantes de Psicología.",
+      "Práctica con una selección rotativa de 80 preguntas del banco de Psicología para que cada intento sea diferente.",
     structure: [
       "Intervenciones clínicas individuales y grupales, asesoramiento e intervención en crisis.",
       "Preguntas de opción múltiple con una sola respuesta correcta.",
-      "80 preguntas del banco de Psiquiatría, con temporizador de 120 minutos.",
+      "80 preguntas seleccionadas aleatoriamente de un banco de 105, con temporizador de 120 minutos.",
     ],
     categoryKeywords: ["psicologia", "psicología", "psychology", "clinica"],
     icon: Brain,

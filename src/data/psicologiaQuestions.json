@@ -1438,5 +1438,455 @@
     "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.3 Intervención en crisis",
     "difficulty": "Media",
     "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0081",
+    "question_text": "Un terapeuta en sesión 3 con cliente de 33 años con ansiedad social descubre que la cliente trabaja como secretaria en la misma institución donde él ejerce y tiene acceso a su agenda personal. ¿Cuál es la implicación ética más importante?",
+    "option_a": "Existe una doble relación que compromete la neutralidad terapéutica; el terapeuta debe abordar abiertamente la situación y evaluar si puede continuar el tratamiento o debe derivar",
+    "option_b": "Continuar el tratamiento sin comentarlo porque ya hay alianza construida",
+    "option_c": "Ignorar la situación porque la cliente no ha mencionado el vínculo laboral",
+    "option_d": "Solicitar a la dirección que cambie de puesto a la cliente para eliminar el conflicto",
+    "correct_option": "A",
+    "explanation": "Rodríguez Morejón (2019) establece que las dobles relaciones que combinan rol profesional con rol laboral comprometen la objetividad y la seguridad del espacio terapéutico (pp. 30-45).",
+    "option_explanations": {
+      "B": "La alianza no justifica mantener una doble relación con conflictos de interés (p. 32).",
+      "C": "El conocimiento del terapeuta sobre la situación genera el conflicto independientemente de lo que diga el cliente (p. 36).",
+      "D": "Interferir en el ámbito laboral del cliente viola la confidencialidad (p. 35)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0082",
+    "question_text": "Una terapeuta en sesión 6 con cliente que sufrió abandono parental nota que se siente excesivamente protectora, alarga las sesiones y piensa en el cliente los fines de semana. En supervisión, la supervisora señala el patrón. ¿Qué fenómeno ocurre y cuál es la intervención correcta?",
+    "option_a": "Buena alianza terapéutica que predice mejor resultado del tratamiento",
+    "option_b": "Contratransferencia activada por la historia de abandono del cliente; requiere supervisión continuada y, si persiste, psicoterapia personal del terapeuta para no contaminar el proceso",
+    "option_c": "Trastorno de ansiedad del terapeuta no relacionado con el proceso clínico",
+    "option_d": "Estilo terapéutico propio que indica alta empatía y compromiso profesional",
+    "correct_option": "B",
+    "explanation": "Rodríguez Morejón (2019) describe que la contratransferencia no resuelta puede infiltrarse en el proceso generando sobreprotección que daña al cliente (pp. 55-75).",
+    "option_explanations": {
+      "A": "La preocupación extrasesión y extensión de citas son indicadores de contratransferencia no procesada (p. 62).",
+      "C": "El patrón surge específicamente con este cliente, lo que indica contratransferencia (p. 60).",
+      "D": "La empatía terapéutica no incluye preocupación fuera de sesión (p. 58)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0083",
+    "question_text": "Un terapeuta en sesión 9 observa que el cliente de 44 años dejó de colaborar: llega tarde, responde con monosílabos. Recuerda que en sesión 7 hizo una interpretación que el cliente rebatió con incomodidad notoria y no abordó esa reacción. ¿Cuál es la intervención más apropiada?",
+    "option_a": "Continuar el plan de tratamiento asumiendo que la fase difícil pasará sola",
+    "option_b": "Intensificar la frecuencia de sesiones para recuperar el nivel de compromiso anterior",
+    "option_c": "Reconocer y nombrar la posible ruptura de alianza ocurrida en sesión 7, pedir retroalimentación genuina y reparar explícitamente la alianza antes de retomar el contenido clínico",
+    "option_d": "Interpretar la resistencia como inconsciente y profundizar en exploración psicodinámica",
+    "correct_option": "C",
+    "explanation": "Bados López & García-Grau (2009) establecen que cuando el cliente no progresa y hay indicios de deterioro de la relación, el terapeuta debe revisar la alianza antes de ajustar técnicas (pp. 33-36).",
+    "option_explanations": {
+      "A": "Esperar sin intervención permite que la ruptura se consolide y aumente el riesgo de abandono (p. 36).",
+      "B": "Más sesiones sin reparación de alianza reproduce el problema (p. 34).",
+      "D": "Sin alianza reparada, la interpretación profunda aumentará la distancia (p. 35)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0084",
+    "question_text": "Una psicóloga clínica atiende online a un cliente de 38 años en otra ciudad. En sesión 4, el cliente llora intensamente y reporta ideación pasiva. La psicóloga está a 200 km. ¿Cuál es la acción clínica más apropiada?",
+    "option_a": "Llamar inmediatamente al familiar más cercano sin evaluación previa de riesgo",
+    "option_b": "Suspender las sesiones online y exigir que el cliente busque atención presencial",
+    "option_c": "Finalizar la sesión y pedir al cliente que llame mañana para ver cómo se siente",
+    "option_d": "Evaluar el riesgo inmediatamente mediante preguntas directas sobre plan e intención; si el riesgo es bajo, establecer plan de seguridad con contactos locales del cliente; si el riesgo es alto, activar recursos de emergencia locales",
+    "correct_option": "D",
+    "explanation": "Slaikeu (1996) establece que en atención a distancia la evaluación de riesgo no se difiere: se activa la red de emergencia local del cliente si el riesgo lo requiere (pp. 30-40). El formato online no cambia la obligación ética.",
+    "option_explanations": {
+      "A": "La ruptura de confidencialidad sin evaluación es prematura y puede dañar la alianza (p. 35).",
+      "B": "La suspensión sin plan de seguridad activo deja al cliente sin contención (p. 38).",
+      "C": "Diferir la evaluación ante ideación es éticamente incorrecto (p. 32)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0085",
+    "question_text": "Un psicólogo atiende en hospitalización a paciente de 62 años con cáncer avanzado en quimioterapia. El paciente llora frecuentemente, dice 'ya para qué esforzarse', pero niega ideación. Pide que su familia no sepa 'lo mal que está emocionalmente'. ¿Cuál es el enfoque más apropiado?",
+    "option_a": "Psicoterapia de apoyo centrada en el contexto hospitalario: validar sufrimiento, fortalecer recursos de afrontamiento, respetar la confidencialidad, y coordinar con oncología sin revelar contenido específico de sesiones",
+    "option_b": "Psicoterapia de reestructuración cognitiva para modificar la visión catastrófica sobre el tratamiento",
+    "option_c": "Informar al equipo médico de todo el contenido emocional del paciente para optimizar el tratamiento",
+    "option_d": "Derivar exclusivamente a psiquiatría para manejo farmacológico",
+    "correct_option": "A",
+    "explanation": "Rodríguez Morejón (2019) señala que la psicoterapia en hospitalización requiere adaptación: objetivos de apoyo y no de reestructuración profunda, y coordinación con equipo sin vulnerar confidencialidad (pp. 195-210).",
+    "option_explanations": {
+      "B": "La reestructuración profunda es inadecuada en contexto médico agudo (p. 197).",
+      "C": "La coordinación es posible sin revelar contenido específico de sesiones (p. 200).",
+      "D": "La derivación sin psicoterapia de apoyo paralela es insuficiente en contexto hospitalario (p. 202)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0086",
+    "question_text": "Un psicólogo trabaja con una niña de 8 años derivada por su maestra porque 'no habla en clase y parece asustada'. En la primera sesión la niña no habla pero acepta juego, y representa repetidamente a un animal grande amenazando a uno pequeño. ¿Cuál es la función clínica del juego?",
+    "option_a": "Juego espontáneo que indica que la niña está cómoda y el problema no es grave",
+    "option_b": "Medio de comunicación simbólica que permite a la niña expresar experiencias no verbalizables; el psicólogo debe observar, reflejar y eventualmente intervenir con técnica de juego terapéutico respetando el ritmo",
+    "option_c": "Señal de que la niña tiene déficit cognitivo que impide la comunicación verbal",
+    "option_d": "Actividad de tiempo libre sin valor clínico que debe sustituirse por entrevista verbal",
+    "correct_option": "B",
+    "explanation": "Rodríguez Morejón (2019) establece que en psicoterapia infantil el juego es el lenguaje primario y la observación inicial sin interrupción es técnicamente correcta (pp. 220-240).",
+    "option_explanations": {
+      "A": "La temática repetitiva de amenaza/poder tiene valor simbólico que requiere análisis (p. 225).",
+      "C": "La preferencia por el juego sobre el habla en consulta clínica es normal en niños (p. 226).",
+      "D": "En psicoterapia infantil, el juego ES la intervención clínica (p. 222)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0087",
+    "question_text": "Un psicólogo trabaja en terapia breve focalizada (TBF) de 8 sesiones con un cliente con ansiedad de desempeño. En sesión 6 el cliente alcanzó los objetivos pero señala: 'Me doy cuenta de que tengo problemas con mi padre que nunca resolví'. ¿Cuál es la decisión más apropiada?",
+    "option_a": "Ampliar inmediatamente el proceso para abordar el conflicto con el padre sin nuevo contrato",
+    "option_b": "Terminar el proceso inmediatamente porque los objetivos se alcanzaron antes de tiempo",
+    "option_c": "Completar el foco original en las sesiones 7 y 8, y luego hacer una evaluación conjunta sobre si el tema parental requiere un proceso diferente con nuevo contrato",
+    "option_d": "Ignorar el comentario del cliente porque no estaba en el contrato original",
+    "correct_option": "C",
+    "explanation": "Eiroa-Orosa et al. (2021) señalan que la TBF mantiene el foco del contrato original; la apertura de nuevos focos se gestiona como nueva demanda (pp. 120-135).",
+    "option_explanations": {
+      "A": "La apertura sin nuevo contrato diluye el encuadre y puede generar un proceso interminable (p. 122).",
+      "B": "Las sesiones 7 y 8 son parte del contrato y deben usarse para consolidación y cierre (p. 124).",
+      "D": "El comentario tiene valor clínico y merece ser reconocido aunque no sea el foco actual (p. 123)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0088",
+    "question_text": "Un psicólogo trabaja con una mujer de 45 años de origen indígena que describe su malestar como 'susto del alma' y que ya fue con un curandero. El psicólogo aplica protocolo TCC estándar sin incorporar la perspectiva cultural. En sesión 5 la cliente dice 'esto no es para mí'. ¿Cuál fue el error principal?",
+    "option_a": "El terapeuta debió derivar al curandero porque la psicología occidental no aplica",
+    "option_b": "El terapeuta eligió TCC cuando debió usar un enfoque psicodinámico más adecuado",
+    "option_c": "La cliente tiene resistencia patológica a la psicoterapia occidental",
+    "option_d": "El terapeuta omitió incorporar la perspectiva cultural en la formulación; la competencia cultural requiere integrar los sistemas de significado del cliente en la conceptualización del caso",
+    "correct_option": "D",
+    "explanation": "Eiroa-Orosa et al. (2021) establecen que la competencia cultural requiere adaptar la formulación al sistema de significado del cliente, no solo aplicar el protocolo estándar (pp. 75-90).",
+    "option_explanations": {
+      "A": "La integración cultural no implica abandono de la psicoterapia sino adaptación (p. 82).",
+      "B": "El problema no es el enfoque elegido sino la falta de adaptación cultural (p. 78).",
+      "C": "La resistencia es respuesta a falta de ajuste cultural, no patología (p. 80)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0089",
+    "question_text": "En sesión 2 con cliente de 55 años con deterioro cognitivo leve (DCL) diagnosticado, el terapeuta nota que el cliente olvida lo trabajado, no recuerda tareas y repite preguntas. ¿Cuál es la adaptación más apropiada del proceso?",
+    "option_a": "Adaptar el encuadre: sesiones más cortas y frecuentes, resúmenes escritos de cada sesión, tareas simples y concretas con apoyo de familiar si el cliente lo consiente",
+    "option_b": "Derivar exclusivamente a neurología porque la psicoterapia no es útil con DCL",
+    "option_c": "Pedir al familiar que esté presente en todas las sesiones para compensar la memoria del cliente",
+    "option_d": "Continuar con el formato estándar porque el diagnóstico es leve y se puede trabajar igual",
+    "correct_option": "A",
+    "explanation": "Rodríguez Morejón (2019) señala que la psicoterapia con DCL requiere adaptación estructural: sesiones más cortas, apoyos externos de memoria y participación familiar con consentimiento del paciente (pp. 240-255).",
+    "option_explanations": {
+      "B": "La psicoterapia adaptada tiene evidencia en DCL leve para manejo emocional y funcional (p. 242).",
+      "C": "La presencia constante de familiar sin consentimiento del paciente compromete la confidencialidad (p. 246).",
+      "D": "Sin adaptación, el proceso genera frustración y pérdida de alianza (p. 244)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0090",
+    "question_text": "Un terapeuta en supervisión admite que en sesión 5 hizo una interpretación equivocada que generó angustia innecesaria en su cliente, pero no dijo nada: 'Pensé que reconocerlo me haría perder credibilidad'. ¿Cuál es la acción clínicamente correcta que debió haber tomado?",
+    "option_a": "Derivar al cliente a otro terapeuta para evitar que el error afecte el proceso",
+    "option_b": "Reconocer el error al cliente de forma directa y transparente en la siguiente sesión, sin minimizarlo ni sobreexplicarlo, y usar la reparación como intervención terapéutica",
+    "option_c": "Hacer más interpretaciones en sesiones siguientes para demostrar que la de sesión 5 fue válida",
+    "option_d": "Continuar sin mencionar el error porque el cliente no lo señaló directamente",
+    "correct_option": "B",
+    "explanation": "Bados López & García-Grau (2009) señalan que el error terapéutico reconocido abiertamente puede fortalecer la alianza al modelar responsabilidad y honestidad (pp. 4-6).",
+    "option_explanations": {
+      "A": "La derivación sin reparación puede interpretarse como abandono y agravar el daño (p. 63).",
+      "C": "Esto refuerza el error en lugar de repararlo (p. 62).",
+      "D": "El impacto del error persiste aunque el cliente no lo verbalice (p. 5)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0091",
+    "question_text": "Una pareja consulta asesoramiento: llevan 4 años intentando concebir sin éxito y recibieron diagnóstico de infertilidad. En la sesión inicial, ella llora; él dice 'hay que aceptarlo y seguir'. El psicólogo observa que ambos procesan el duelo de formas diferentes. ¿Cuál es la función principal del asesoramiento?",
+    "option_a": "Señalar que el hombre está evitando sus emociones y necesita terapia individual",
+    "option_b": "Recomendar inmediatamente adopción como solución al sufrimiento",
+    "option_c": "Facilitar que ambos miembros expresen y reconozcan sus formas diferentes de procesamiento sin interpretar una como correcta y la otra como incorrecta; proporcionar información sobre respuestas normales al diagnóstico de infertilidad",
+    "option_d": "Explorar dinámicas inconscientes de por qué la pareja eligió no buscar hijos antes",
+    "correct_option": "C",
+    "explanation": "Balarezo (1998) establece que el asesoramiento ante diagnósticos médicos incluye psicoeducación sobre respuestas emocionales normales y facilitación del diálogo entre miembros del sistema (pp. 92-96).",
+    "option_explanations": {
+      "A": "Los estilos de afrontamiento son individuales; categorizar el del hombre como patológico es un error (p. 94).",
+      "B": "La adopción es una opción a evaluar en proceso reflexivo posterior, no solución inmediata (p. 95).",
+      "D": "La exploración psicodinámica de elecciones pasadas no es función del asesoramiento (p. 93)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.2 Asesoramiento",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0092",
+    "question_text": "Una mujer venezolana radicada en Ecuador hace 2 años consulta asesoramiento: 'No sé si quedarme aquí o volver; mi familia está allá pero mi trabajo está acá'. El psicólogo explora duelos migratorios, oportunidades reales y red de apoyo. ¿Cuál es el componente específicamente desafiante de este asesoramiento?",
+    "option_a": "Derivar automáticamente a psicoterapia porque el duelo migratorio siempre lo requiere",
+    "option_b": "Convencer al cliente de que quedarse en Ecuador es la decisión racionalmente correcta",
+    "option_c": "Obtener información estadística sobre salarios comparativos entre Ecuador y Venezuela",
+    "option_d": "El proceso implica simultáneamente duelo por lo perdido y evaluación de oportunidades reales; ambos deben ser atendidos sin que la exploración emocional sustituya el análisis práctico ni viceversa",
+    "correct_option": "D",
+    "explanation": "Balarezo (1998) señala que el asesoramiento migratorio requiere atender la dimensión emocional del duelo y la dimensión pragmática de la decisión de forma paralela (pp. 90-94).",
+    "option_explanations": {
+      "A": "El duelo migratorio en este contexto es objeto del asesoramiento, no indicación automática de psicoterapia (p. 93).",
+      "B": "El asesoramiento no persuade; facilita decisión autónoma (p. 91).",
+      "C": "Aunque útil, es solo un componente técnico; lo desafiante es la integración emocional-práctica (p. 92)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.2 Asesoramiento",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0093",
+    "question_text": "Una mujer de 32 años y su pareja consultan asesoramiento genético: tienen historial familiar de enfermedad de Huntington y la mujer tiene 50% de probabilidad de ser portadora. El médico los derivó para apoyo en la decisión de realizarse o no la prueba predictiva. ¿Cuál es la función central del asesoramiento?",
+    "option_a": "Facilitar que la pareja explore las implicaciones emocionales y existenciales de realizarse o no la prueba, sin dirigir la decisión, proporcionando información sobre consecuencias de cada opción",
+    "option_b": "Proporcionar información médica detallada sobre la enfermedad de Huntington y su tratamiento",
+    "option_c": "Recomendar que se realicen la prueba para tener certeza y poder planificar",
+    "option_d": "Explorar dinámicas inconscientes de miedo a la muerte que impiden decidir racionalmente",
+    "correct_option": "A",
+    "explanation": "Balarezo (1998) define que el asesoramiento ante decisiones de alto impacto personal facilita la exploración de consecuencias sin prescribir la elección (pp. 89-92). La autonomía de la decisión es principio ético central.",
+    "option_explanations": {
+      "B": "La información médica es responsabilidad del genetista; el psicólogo facilita la dimensión emocional-decisional (p. 89).",
+      "C": "El asesoramiento no recomienda la decisión; facilita la reflexión autónoma (p. 91).",
+      "D": "La exploración de dinámicas inconscientes es función de la psicoterapia, no del asesoramiento (p. 90)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.2 Asesoramiento",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0094",
+    "question_text": "Una comunidad rural sufrió inundación severa hace 48 horas con 12 fallecidos. Un equipo de psicólogos llega. El coordinador propone iniciar con grupos de debriefing psicológico estructurado (CISD) inmediatamente. Otro psicólogo objeta. ¿Cuál es la discrepancia clínica relevante?",
+    "option_a": "El desastre natural requiere solo intervención psiquiátrica con medicación para el trauma agudo",
+    "option_b": "El debriefing estructurado en las primeras 48-72 horas no tiene evidencia de eficacia y puede ser contraproducente; la evidencia apoya los Primeros Auxilios Psicológicos (PAP) en esta fase inmediata",
+    "option_c": "La intervención psicológica debe esperar 2 semanas hasta que los afectados estén físicamente estables",
+    "option_d": "El debriefing es correcto pero debe hacerse en grupos separados por edad",
+    "correct_option": "B",
+    "explanation": "Slaikeu (1996) señala que en las primeras 48-72 horas los Primeros Auxilios Psicológicos son preferibles a procesos estructurados de debriefing, cuya eficacia no está establecida en fase aguda (pp. 95-110).",
+    "option_explanations": {
+      "A": "La medicación no es intervención de primera línea en crisis colectiva (p. 100).",
+      "C": "Los PAP sí deben implementarse de forma inmediata; lo que no corresponde es el debriefing estructurado (p. 99).",
+      "D": "La separación por edad no resuelve el problema de la evidencia (p. 97)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.3 Intervención en crisis",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0095",
+    "question_text": "Una empresa de 150 empleados anuncia cierre definitivo. Recursos Humanos contrata a un psicólogo. Muchos muestran rabia y shock. Tres empleados comentan que 'para qué seguir si ya no tienen nada'. ¿Cuál es el orden correcto de intervención?",
+    "option_a": "Comunicar a todos los empleados que busquen apoyo familiar y esperar a que se calmen",
+    "option_b": "Referir los tres empleados con riesgo a psiquiatría y continuar solo con el grupo general",
+    "option_c": "Primero: evaluación individual de los tres empleados con comentarios de riesgo; segundo: establecer plan de contención para ellos; tercero: diseñar intervención grupal de Primeros Auxilios Psicológicos para el colectivo general",
+    "option_d": "Iniciar directamente los grupos de apoyo porque el problema es organizacional, no individual",
+    "correct_option": "C",
+    "explanation": "Slaikeu (1996) establece que en crisis colectiva, la evaluación de riesgo individual de personas con indicadores específicos precede a la intervención grupal general (pp. 100-115).",
+    "option_explanations": {
+      "A": "Sin intervención estructurada el riesgo aumenta (p. 104).",
+      "B": "La referencia sin evaluación previa del riesgo y sin contención inmediata es insuficiente (p. 106).",
+      "D": "El riesgo individual no desaparece por ser contexto laboral (p. 102)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.3 Intervención en crisis",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0096",
+    "question_text": "Una mujer de 42 años acude a urgencias 3 días después de ser liberada tras un secuestro extorsivo de 11 días. Reporta que 'no siente nada', duerme muchas horas, apenas habla. Su familia la presiona para que 'cuente qué pasó'. ¿Cuál es la intervención más apropiada?",
+    "option_a": "Solicitar relato detallado del secuestro para evaluación forense psicológica inmediata",
+    "option_b": "Hospitalizar inmediatamente por probable psicosis disociativa",
+    "option_c": "Indicar a la familia que su presencia es terapéutica y que deben seguir haciendo preguntas",
+    "option_d": "Proporcionar contención y seguridad; explicar a la familia que el entumecimiento es respuesta normal al trauma grave y que presionarla a narrar puede ser retraumatizante; no hacer entrevista de relato del secuestro en las primeras 72 horas",
+    "correct_option": "D",
+    "explanation": "Slaikeu (1996) señala que en trauma de cautiverio el relato no se solicita en fase aguda; la prioridad es seguridad física, contención y normalización (pp. 85-98). La presión familiar a narrar constituye riesgo adicional.",
+    "option_explanations": {
+      "A": "El relato forense no corresponde a la fase aguda (p. 87).",
+      "B": "El entumecimiento es respuesta normal a trauma severo, no psicosis (p. 90).",
+      "C": "Validar la presión familiar re-traumatiza (p. 89)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.3 Intervención en crisis",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0097",
+    "question_text": "Un hombre de 68 años, viudo hace 3 años, acude a urgencias: desde hace 2 meses no quiere salir de casa, no come bien, recuerda a su esposa constantemente y llora todos los días. Dice que 'esta tristeza ya es demasiado'. No tiene ideación activa. ¿Cuál es la distinción clínica más importante?",
+    "option_a": "Distinguir entre duelo complicado que puede requerir psicoterapia especializada y duelo normal tardío; los 3 años de evolución con reactivación reciente sin causa aparente sugieren duelo complicado, no crisis aguda que requiera intervención de urgencias",
+    "option_b": "Depresión mayor que requiere derivación psiquiátrica exclusiva y medicación",
+    "option_c": "Crisis aguda que requiere intervención de emergencia por ideación encubierta",
+    "option_d": "Duelo normal porque 3 años es tiempo adecuado para superar la pérdida",
+    "correct_option": "A",
+    "explanation": "Slaikeu (1996) diferencia que el duelo complicado no es crisis en sentido estricto sino proceso prolongado que requiere evaluación de su naturaleza antes de intervenir como crisis (pp. 70-80).",
+    "option_explanations": {
+      "B": "El diagnóstico diferencial entre duelo complicado y depresión requiere evaluación clínica, no derivación automática (p. 74).",
+      "C": "No hay ideación reportada; la urgencia debe calibrarse a los datos reales (p. 72).",
+      "D": "No existe un tiempo normal universal para el duelo; la funcionalidad y la reactivación son los indicadores clave (p. 76)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.3 Intervención en crisis",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0098",
+    "question_text": "Un adolescente de 16 años con diabetes tipo 1 diagnosticada hace 6 meses ha omitido la insulina en varias ocasiones y dice que prefiere esa omisión a continuar con las restricciones. Sus padres no saben la gravedad. ¿Cuál es la intervención INMEDIATA más apropiada?",
+    "option_a": "Derivar exclusivamente a endocrinología sin intervención psicológica de crisis",
+    "option_b": "Evaluación de riesgo inmediata considerando la omisión de insulina como conducta de riesgo vital; informar a los padres con acompañamiento del adolescente; coordinación urgente con endocrinología",
+    "option_c": "Mantener confidencialidad absoluta y trabajar solo con el adolescente en las próximas semanas",
+    "option_d": "Interpretar el comentario como exageración adolescente y continuar con psicoeducación",
+    "correct_option": "B",
+    "explanation": "Slaikeu (1996) señala que conductas que ponen en riesgo la vida aunque no sean suicidio explícito deben evaluarse como riesgo vital (pp. 35-45). La omisión intencional requiere activación de red de apoyo familiar y médica.",
+    "option_explanations": {
+      "A": "La dimensión psicológica de la crisis es inseparable del manejo médico (p. 41).",
+      "C": "El riesgo vital rompe la confidencialidad ordinaria con menores (p. 37).",
+      "D": "Minimizar una conducta de omisión intencional es error clínico grave (p. 39)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.3 Intervención en crisis",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0099",
+    "question_text": "En la sesión 18 de un grupo, un miembro nuevo relata una historia similar a la de un miembro más antiguo. El miembro antiguo interviene: 'Eso es exactamente lo que me pasó; te voy a decir lo que debes hacer.' ¿Qué está ocurriendo y cuál es la intervención apropiada?",
+    "option_a": "Excluir temporalmente al miembro nuevo del grupo para protegerlo de la proyección",
+    "option_b": "Permitir que el miembro antiguo aconseje porque su experiencia es valiosa para el grupo",
+    "option_c": "El miembro antiguo proyecta su experiencia en el nuevo asumiendo similitud donde puede haber diferencia; el psicólogo debe diferenciar las experiencias y redirigir del consejo directo hacia la exploración de la experiencia del miembro nuevo",
+    "option_d": "Interrumpir al miembro antiguo y pedirle que no hable de su experiencia personal",
+    "correct_option": "C",
+    "explanation": "Ribé Buitrón (2021) describe que la proyección entre miembros y el consejo no solicitado son dinámicas comunes que el psicólogo debe facilitar para mantener espacio individualizado (pp. 70-85).",
+    "option_explanations": {
+      "A": "La exclusión daña la cohesión y no resuelve la dinámica (p. 76).",
+      "B": "El consejo desde la proyección puede dañar al miembro nuevo (p. 72).",
+      "D": "La interrupción directiva sin facilitación es contraproducente (p. 74)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2.1 Rol del psicólogo en grupos",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0100",
+    "question_text": "Un psicólogo facilitador de un grupo de 8 personas con esquizofrenia en remisión comienza a sentir que 'la sesión avanza sola', su participación es mínima y algunos miembros asumen roles de apoyo entre sí. ¿Cuál es la interpretación clínica correcta?",
+    "option_a": "Debe intervenirse urgentemente para retomar el control del grupo",
+    "option_b": "El grupo está evitando el trabajo terapéutico refugiándose en apoyo superficial",
+    "option_c": "El facilitador ya no es necesario y el grupo puede continuar sin él",
+    "option_d": "El grupo ha desarrollado cohesión y recursos de apoyo mutuo, que es un logro terapéutico; el psicólogo mantiene un rol activo de observación y facilitación discreta, no reduce su presencia",
+    "correct_option": "D",
+    "explanation": "Brown (2011) señala que la aparente autonomía del grupo no reduce el rol del facilitador, que requiere observación activa para intervenir cuando emerjan dinámicas disfuncionales (pp. 130-145).",
+    "option_explanations": {
+      "A": "La intervención urgente sin indicadores de disfunción interrumpe el proceso (p. 135).",
+      "B": "El apoyo mutuo puede coexistir con trabajo terapéutico genuino (p. 134).",
+      "C": "Sin facilitación el grupo puede estancarse o desarrollar dinámicas dañinas (p. 132)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2.1 Rol del psicólogo en grupos",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0101",
+    "question_text": "En un grupo de contención para familiares de víctimas de violencia política, un participante relata en detalle las torturas que su familiar sufrió. Tres miembros muestran señales de re-traumatización aguda. ¿Cuál es el balance más difícil de mantener?",
+    "option_a": "Honrar el relato del participante como necesidad legítima de ser escuchado, mientras se protege al grupo de re-traumatización colectiva, modulando el nivel de detalle sin silenciar la experiencia",
+    "option_b": "Dividir el grupo: los más afectados salen y el participante continúa con los que toleran mejor",
+    "option_c": "Detener completamente al participante porque el grupo ya no puede tolerar su relato",
+    "option_d": "Permitir el relato completo sin intervención porque el testimonio tiene valor terapéutico propio",
+    "correct_option": "A",
+    "explanation": "Brown (2011) establece que en grupos de trauma colectivo el facilitador enfrenta la tensión entre testimonio legítimo y protección del grupo (pp. 120-135).",
+    "option_explanations": {
+      "B": "La división del grupo en función de tolerancia al dolor fragmenta la cohesión (p. 126).",
+      "C": "Detener sin modulación transmite que su experiencia es demasiado y daña al narrador (p. 122).",
+      "D": "Sin facilitación el grupo sufre daño colectivo (p. 124)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2.2 Grupos de contención emocional",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0102",
+    "question_text": "En un grupo psicoeducativo de prevención de recaída en trastorno bipolar, un participante pregunta: '¿El litio causa daño renal a largo plazo? Estoy pensando en dejarlo.' El grupo escucha expectante. ¿Cuál es la intervención apropiada del psicólogo?",
+    "option_a": "Señalar que querer dejar el litio es síntoma de falta de conciencia de enfermedad",
+    "option_b": "Reconocer la pregunta como legítima, aclarar que la información farmacológica específica corresponde al psiquiatra tratante, y explorar grupalmente las preocupaciones sobre medicación como tema psicoeducativo",
+    "option_c": "Ignorar la pregunta y continuar con el tema programado",
+    "option_d": "Responder con información sobre los efectos renales del litio para satisfacer la pregunta",
+    "correct_option": "B",
+    "explanation": "Brown (2011) señala que en grupos psicoeducativos el psicólogo distingue su rol del médico: facilita exploración emocional de preocupaciones sobre medicación sin dar información farmacológica (pp. 50-60).",
+    "option_explanations": {
+      "A": "Patologizar una preocupación legítima daña la alianza grupal (p. 56).",
+      "C": "Ignorar una pregunta sobre abandono de medicación en un grupo de trastorno bipolar es clínicamente riesgoso (p. 54).",
+      "D": "Proporcionar información farmacológica especializada excede el rol del psicólogo (p. 52)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2.3 Grupos psicoeducativos",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0103",
+    "question_text": "Un grupo psicoterapéutico mixto de 7 miembros con 6 meses de trabajo tiene a un miembro que llega tarde sistemáticamente. El grupo lo señala directamente en sesión. El miembro se pone a la defensiva: 'el grupo me persigue'. ¿Cuál es la intervención más apropiada?",
+    "option_a": "Validar al grupo porque la tardanza sistemática sí es un problema objetivo",
+    "option_b": "Ignorar el conflicto y continuar con el tema de la sesión para no intensificar la tensión",
+    "option_c": "Facilitar que el miembro tardío exprese lo que experimenta sin validar ni invalidar su percepción de persecución; luego invitar al grupo a explorar qué activa esta dinámica en el espacio grupal",
+    "option_d": "Pedirle al miembro tardío que se retire del grupo si no puede cumplir con el horario",
+    "correct_option": "C",
+    "explanation": "Ribé Buitrón (2021) señala que cuando un miembro percibe al grupo como hostil, el psicólogo trabaja primero con la experiencia del miembro y luego con la dinámica grupal, evitando tomar partido (pp. 85-100).",
+    "option_explanations": {
+      "A": "Tomar partido daña la seguridad del espacio (p. 87).",
+      "B": "El conflicto no abordado se consolida y daña la cohesión (p. 91).",
+      "D": "La exclusión ante conflicto es contraproducente (p. 89)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2.4 Grupos psicoterapéuticos",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0104",
+    "question_text": "Un grupo de 8 hombres sobrevivientes de abuso sexual infantil (10 meses de trabajo) llega a una sesión donde todos están en silencio durante 15 minutos. El psicólogo observa que el silencio tiene peso emocional pero no sabe con certeza qué significa. ¿Cuál es la intervención más apropiada?",
+    "option_a": "Interpretar el silencio como señal de que el grupo no está listo y proponer una pausa del proceso",
+    "option_b": "Mantener el silencio sin ninguna intervención por el resto de la sesión como técnica de presión",
+    "option_c": "Romper el silencio introduciendo material nuevo para rescatar al grupo",
+    "option_d": "Nombrar el silencio como dato clínico grupal y explorar qué está ocurriendo con una pregunta abierta no directiva, sin apresurar la verbalización ni asumir el contenido",
+    "correct_option": "D",
+    "explanation": "Ribé Buitrón (2021) señala que el silencio en grupos de trauma tiene múltiples significados posibles y el terapeuta lo nombra sin interpretarlo unívocamente (pp. 100-115).",
+    "option_explanations": {
+      "A": "Interpretar sin explorar puede ser proyección del terapeuta (p. 102).",
+      "B": "El silencio indefinido sin nominación puede aumentar ansiedad sin elaboración (p. 106).",
+      "C": "Interrumpir el silencio sin nominarlo puede suprimir una experiencia grupal significativa (p. 104)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2.4 Grupos psicoterapéuticos",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-psiquiatria-0105",
+    "question_text": "Un psicólogo ha atendido a un cliente durante 14 sesiones con buenos resultados. Al terminar el proceso, el cliente le pide que firme un documento laboral como 'testigo de su buen estado de salud mental' para un proceso de adopción. ¿Cuál es la acción éticamente correcta?",
+    "option_a": "Declinar firmarlo como testigo, explicar que puede redactar un informe clínico objetivo sobre el proceso terapéutico cumpliendo los requisitos del formato oficial, y aclarar la diferencia entre testimonio personal e informe psicológico formal",
+    "option_b": "Firmar el documento porque conoce bien al cliente y puede garantizar su buen estado",
+    "option_c": "Derivar al cliente a psiquiatra para que este firme como especialista médico",
+    "option_d": "Negarse completamente a participar en el proceso de adopción del cliente",
+    "correct_option": "A",
+    "explanation": "Bados López & García-Grau (2009) señalan que el psicólogo puede redactar informes clínicos dentro de sus competencias pero no puede actuar como testigo personal ni emitir certificaciones que excedan sus funciones (pp. 47-49).",
+    "option_explanations": {
+      "B": "El psicólogo clínico no puede garantizar estados futuros ni actuar como testigo legal (p. 48).",
+      "C": "La derivación no resuelve la cuestión de competencias; el informe psicológico es el instrumento correcto (p. 49).",
+      "D": "Puede y debe apoyar con un informe técnico adecuado dentro de sus competencias (p. 47)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
   }
 ]

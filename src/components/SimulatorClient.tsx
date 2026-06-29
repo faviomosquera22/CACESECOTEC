@@ -23,6 +23,7 @@ type SimulatorClientProps = {
   questions: Question[];
   studentId: string;
   examSlug: string;
+  attemptSeed: string;
   persistenceMode?: "supabase" | "local";
   draftStorageKey?: string;
 };
@@ -42,6 +43,7 @@ type SimulationDraft = {
   simulationSeconds?: number;
   startedAt: string;
   updatedAt: string;
+  attemptSeed?: string;
 };
 
 function formatTimer(seconds: number) {
@@ -99,7 +101,11 @@ function getRemainingSeconds(startedAt: Date) {
   );
 }
 
-function parseLocalDraft(rawDraft: string | null, questionIds: Set<string>) {
+function parseLocalDraft(
+  rawDraft: string | null,
+  questionIds: Set<string>,
+  expectedAttemptSeed: string,
+) {
   if (!rawDraft) {
     return null;
   }
@@ -108,6 +114,10 @@ function parseLocalDraft(rawDraft: string | null, questionIds: Set<string>) {
     const draft = JSON.parse(rawDraft) as SimulationDraft;
 
     if (![1, DRAFT_VERSION].includes(draft.version)) {
+      return null;
+    }
+
+    if (draft.attemptSeed && draft.attemptSeed !== expectedAttemptSeed) {
       return null;
     }
 
@@ -138,12 +148,21 @@ function parseLocalDraft(rawDraft: string | null, questionIds: Set<string>) {
   }
 }
 
-function parseStoredDraft(value: unknown, questionIds: Set<string>) {
+function parseStoredDraft(
+  value: unknown,
+  questionIds: Set<string>,
+  expectedAttemptSeed: string,
+) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return null;
   }
 
   const draft = value as Partial<SimulationDraft>;
+
+  if (draft.attemptSeed && draft.attemptSeed !== expectedAttemptSeed) {
+    return null;
+  }
+
   const answers = Object.fromEntries(
     Object.entries(draft.answers ?? {}).filter(
       ([questionId, option]) =>
@@ -187,6 +206,7 @@ function parseDraftStatus(
   status: string | null | undefined,
   examSlug: string,
   questionIds: Set<string>,
+  expectedAttemptSeed: string,
 ) {
   const prefix = `${LEGACY_DRAFT_PREFIX}:${examSlug}:`;
 
@@ -199,7 +219,7 @@ function parseDraftStatus(
     const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
     const json = new TextDecoder().decode(bytes);
 
-    return parseStoredDraft(JSON.parse(json), questionIds);
+    return parseStoredDraft(JSON.parse(json), questionIds, expectedAttemptSeed);
   } catch {
     return null;
   }
@@ -235,6 +255,7 @@ export function SimulatorClient({
   questions,
   studentId,
   examSlug,
+  attemptSeed,
   persistenceMode = "supabase",
   draftStorageKey = `simulation-draft:${studentId}`,
 }: SimulatorClientProps) {
@@ -545,7 +566,7 @@ export function SimulatorClient({
     queueMicrotask(async () => {
       const questionIds = new Set(questions.map((question) => question.id));
       const rawDraft = window.localStorage.getItem(draftStorageKey);
-      const localDraft = parseLocalDraft(rawDraft, questionIds);
+      const localDraft = parseLocalDraft(rawDraft, questionIds, attemptSeed);
 
       function applyDraft(
         restoredAnswers: Partial<Record<string, OptionLetter>>,
@@ -575,6 +596,7 @@ export function SimulatorClient({
         const parsedRemoteDraft = parseStoredDraft(
           remoteDraft?.draft,
           questionIds,
+          attemptSeed,
         );
 
         if (parsedRemoteDraft) {
@@ -640,7 +662,12 @@ export function SimulatorClient({
         );
         const legacyDraft =
           draftCreatedAt > finishedCreatedAt
-            ? parseDraftStatus(legacyDraftRow?.status, examSlug, questionIds)
+            ? parseDraftStatus(
+                legacyDraftRow?.status,
+                examSlug,
+                questionIds,
+                attemptSeed,
+              )
             : null;
 
         if (legacyDraft) {
@@ -804,6 +831,7 @@ export function SimulatorClient({
       isMounted = false;
     };
   }, [
+    attemptSeed,
     draftStorageKey,
     examSlug,
     persistenceMode,
@@ -826,11 +854,13 @@ export function SimulatorClient({
       simulationSeconds: SIMULATION_SECONDS,
       startedAt: startedAtRef.current.toISOString(),
       updatedAt: new Date().toISOString(),
+      attemptSeed,
     };
 
     window.localStorage.setItem(draftStorageKey, JSON.stringify(draft));
   }, [
     answers,
+    attemptSeed,
     currentIndex,
     draftStorageKey,
     hasHydratedDraft,
@@ -861,6 +891,7 @@ export function SimulatorClient({
         simulationSeconds: SIMULATION_SECONDS,
         startedAt: startedAtRef.current.toISOString(),
         updatedAt: new Date().toISOString(),
+        attemptSeed,
       };
 
       try {
@@ -911,6 +942,7 @@ export function SimulatorClient({
     return () => window.clearTimeout(timer);
   }, [
     answers,
+    attemptSeed,
     currentIndex,
     examSlug,
     hasHydratedDraft,
