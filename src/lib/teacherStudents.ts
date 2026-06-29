@@ -48,6 +48,18 @@ export async function getTeacherStudentCards(
         );
   const studentIds = students.map((student) => student.id);
 
+  const { data: accessRows } =
+    studentIds.length > 0
+      ? await supabase
+          .from("student_simulator_access")
+          .select("student_id, enabled")
+          .in("student_id", studentIds)
+          .returns<{ student_id: string; enabled: boolean }[]>()
+      : { data: [] };
+  const accessByStudent = new Map(
+    (accessRows ?? []).map((access) => [access.student_id, access.enabled]),
+  );
+
   const { data: simulationRows } =
     studentIds.length > 0
       ? await supabase
@@ -110,6 +122,7 @@ export async function getTeacherStudentCards(
       ),
       bestScore: getBestScore(studentSimulations),
       lastActivity: latestSimulation ? getSimulationDate(latestSimulation) : null,
+      simulatorAccessEnabled: accessByStudent.get(student.id) ?? false,
     };
   });
 }

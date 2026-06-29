@@ -22,6 +22,7 @@ export type StudentCardData = {
   averageScore: number;
   bestScore: number;
   lastActivity: string | null;
+  simulatorAccessEnabled: boolean;
 };
 
 type StudentCardProps = {

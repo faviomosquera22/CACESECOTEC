@@ -1,13 +1,13 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SimulatorOptionCard } from "@/components/SimulatorOptionCard";
-import { requireCompletedStudentProfile } from "@/lib/auth";
 import { simulatorExams } from "@/lib/simulatorCatalog";
 import { getStudentCareerOption } from "@/lib/studentCareer";
+import { requireStudentSimulatorAccess } from "@/lib/studentSimulatorAccess";
 
 export const dynamic = "force-dynamic";
 
 export default async function StudentSimulatorPage() {
-  const { profile } = await requireCompletedStudentProfile();
+  const { profile } = await requireStudentSimulatorAccess();
   const career = getStudentCareerOption(profile.career);
   const availableExams = simulatorExams.filter(
     (exam) => exam.slug === career?.simulatorSlug,

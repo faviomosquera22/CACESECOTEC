@@ -174,6 +174,29 @@ export async function POST(request: Request) {
     );
   }
 
+  const { error: accessError } = await adminClient
+    .from("student_simulator_access")
+    .upsert(
+      {
+        student_id: profile.id,
+        enabled: false,
+        updated_by: authContext.profile.id,
+      },
+      { onConflict: "student_id" },
+    );
+
+  if (accessError) {
+    await adminClient.auth.admin.deleteUser(authUser.id).catch(() => null);
+
+    return Response.json(
+      {
+        error: "No se pudo configurar el acceso inicial al simulador.",
+        details: accessError.message,
+      },
+      { status: 500 },
+    );
+  }
+
   const profileCareer = getStudentCareerOption(profile.career);
 
   return Response.json(
@@ -188,6 +211,7 @@ export async function POST(request: Request) {
         averageScore: 0,
         bestScore: 0,
         lastActivity: null,
+        simulatorAccessEnabled: false,
       },
     },
     { status: 201 },

@@ -3,7 +3,6 @@ import { ArrowLeft, ClipboardList } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SimulatorClient } from "@/components/SimulatorClient";
-import { requireCompletedStudentProfile } from "@/lib/auth";
 import type { Question } from "@/lib/database.types";
 import {
   examDistributionBySlug,
@@ -13,6 +12,7 @@ import {
 } from "@/lib/localQuestions";
 import { getSimulatorExam } from "@/lib/simulatorCatalog";
 import { getStudentCareerOption } from "@/lib/studentCareer";
+import { requireStudentSimulatorAccess } from "@/lib/studentSimulatorAccess";
 
 type StudentExamSimulatorPageProps = {
   params: Promise<{
@@ -32,7 +32,7 @@ export default async function StudentExamSimulatorPage({
     notFound();
   }
 
-  const { profile, supabase } = await requireCompletedStudentProfile();
+  const { profile, supabase } = await requireStudentSimulatorAccess();
   const career = getStudentCareerOption(profile.career);
 
   if (career && exam.slug !== career.simulatorSlug) {

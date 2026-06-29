@@ -39,6 +39,27 @@ export interface Database {
         };
         Relationships: [];
       };
+      student_simulator_access: {
+        Row: {
+          student_id: string;
+          enabled: boolean;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          student_id: string;
+          enabled?: boolean;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          student_id?: string;
+          enabled?: boolean;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [];
+      };
       questions: {
         Row: {
           id: string;
@@ -257,6 +278,7 @@ export type Inserts<T extends keyof Database["public"]["Tables"]> =
   Database["public"]["Tables"][T]["Insert"];
 
 export type Profile = Tables<"profiles">;
+export type StudentSimulatorAccess = Tables<"student_simulator_access">;
 export type Question = Tables<"questions"> & {
   /**
    * Argumentos específicos de los distractores del banco local. No forman parte

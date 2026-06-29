@@ -265,6 +265,48 @@ export function SimulatorClient({
   const timeAlert = getTimeAlert(timeLeft);
   const remoteDraftStatus = `in_progress:${examSlug}`;
 
+  useEffect(() => {
+    let isMounted = true;
+
+    async function verifyAccess() {
+      try {
+        const response = await fetch("/api/student/simulator-access", {
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const payload = (await response.json()) as { enabled?: boolean };
+
+        if (isMounted && payload.enabled === false) {
+          router.replace("/student/dashboard?simulator=blocked");
+          router.refresh();
+        }
+      } catch {
+        // A temporary network error must not interrupt an active class session.
+      }
+    }
+
+    void verifyAccess();
+    const interval = window.setInterval(() => void verifyAccess(), 30_000);
+
+    function verifyWhenVisible() {
+      if (document.visibilityState === "visible") {
+        void verifyAccess();
+      }
+    }
+
+    document.addEventListener("visibilitychange", verifyWhenVisible);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", verifyWhenVisible);
+    };
+  }, [router]);
+
   const finishSimulation = useCallback(async () => {
     if (finishedRef.current || isSubmitting) {
       return;

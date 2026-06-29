@@ -14,12 +14,14 @@ import {
   ArrowDownUp,
   CalendarClock,
   ClipboardList,
+  LockKeyhole,
   Loader2,
   Search,
   Trash2,
   TrendingUp,
   UserPlus,
   Users,
+  UnlockKeyhole,
   X,
 } from "lucide-react";
 import type { StudentCardData } from "@/components/StudentCard";
@@ -146,6 +148,9 @@ export function TeacherDashboardClient({
   const [careerOverrides, setCareerOverrides] = useState<
     Record<string, CareerOverride>
   >({});
+  const [accessOverrides, setAccessOverrides] = useState<Record<string, boolean>>(
+    {},
+  );
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [createStudentForm, setCreateStudentForm] =
     useState<CreateStudentForm>(() =>
@@ -171,6 +176,12 @@ export function TeacherDashboardClient({
     string | null
   >(null);
   const [careerError, setCareerError] = useState("");
+  const [savingAccessStudentId, setSavingAccessStudentId] = useState<
+    string | null
+  >(null);
+  const [savingClassAccess, setSavingClassAccess] = useState(false);
+  const [accessError, setAccessError] = useState("");
+  const [accessMessage, setAccessMessage] = useState("");
 
   const studentsState = useMemo(() => {
     const studentsById = new Map<string, StudentCardData>();
@@ -184,11 +195,19 @@ export function TeacherDashboardClient({
       studentsById.set(student.id, {
         ...student,
         ...(careerOverrides[student.id] ?? {}),
+        simulatorAccessEnabled:
+          accessOverrides[student.id] ?? student.simulatorAccessEnabled,
       });
     });
 
     return Array.from(studentsById.values());
-  }, [careerOverrides, createdStudents, deletedStudentIds, students]);
+  }, [
+    accessOverrides,
+    careerOverrides,
+    createdStudents,
+    deletedStudentIds,
+    students,
+  ]);
 
   const localStorageSnapshot = useSyncExternalStore(
     subscribeToLocalSimulationChanges,
@@ -472,6 +491,11 @@ export function TeacherDashboardClient({
         delete nextOverrides[studentId];
         return nextOverrides;
       });
+      setAccessOverrides((currentOverrides) => {
+        const nextOverrides = { ...currentOverrides };
+        delete nextOverrides[studentId];
+        return nextOverrides;
+      });
       window.localStorage.removeItem(getLocalSimulationIndexKey(studentId));
       setDeleteStudentMessage(
         `${studentToDelete.fullName} fue eliminado correctamente.`,
@@ -547,6 +571,99 @@ export function TeacherDashboardClient({
     }
   }
 
+  async function updateStudentSimulatorAccess(
+    student: StudentCardData,
+    enabled: boolean,
+  ) {
+    setAccessError("");
+    setAccessMessage("");
+    setSavingAccessStudentId(student.id);
+
+    try {
+      const response = await fetch(
+        `/api/teacher/students/${student.id}/simulator-access`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ enabled }),
+        },
+      );
+      const payload = (await response.json().catch(() => null)) as {
+        error?: string;
+        details?: string;
+      } | null;
+
+      if (!response.ok) {
+        throw new Error(payload?.error ?? "No se pudo cambiar el acceso.");
+      }
+
+      setAccessOverrides((currentOverrides) => ({
+        ...currentOverrides,
+        [student.id]: enabled,
+      }));
+      setAccessMessage(
+        `${student.fullName} ahora tiene el simulador ${
+          enabled ? "habilitado" : "bloqueado"
+        }.`,
+      );
+      router.refresh();
+    } catch (caughtError) {
+      setAccessError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudo cambiar el acceso al simulador.",
+      );
+    } finally {
+      setSavingAccessStudentId(null);
+    }
+  }
+
+  async function updateClassSimulatorAccess(enabled: boolean) {
+    setAccessError("");
+    setAccessMessage("");
+    setSavingClassAccess(true);
+
+    try {
+      const response = await fetch("/api/teacher/students/simulator-access", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled }),
+      });
+      const payload = (await response.json().catch(() => null)) as {
+        error?: string;
+        updatedCount?: number;
+      } | null;
+
+      if (!response.ok) {
+        throw new Error(
+          payload?.error ?? "No se pudo cambiar el acceso de la clase.",
+        );
+      }
+
+      setAccessOverrides((currentOverrides) => {
+        const nextOverrides = { ...currentOverrides };
+        studentsState.forEach((student) => {
+          nextOverrides[student.id] = enabled;
+        });
+        return nextOverrides;
+      });
+      setAccessMessage(
+        `Simulador ${enabled ? "habilitado" : "bloqueado"} para ${
+          payload?.updatedCount ?? studentsState.length
+        } estudiante(s) de ${teacherCareer?.label ?? "tu carrera"}.`,
+      );
+      router.refresh();
+    } catch (caughtError) {
+      setAccessError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudo cambiar el acceso de la clase.",
+      );
+    } finally {
+      setSavingClassAccess(false);
+    }
+  }
+
   return (
     <div className="space-y-8">
       {showSummaryCards ? (
@@ -599,11 +716,35 @@ export function TeacherDashboardClient({
             </button>
           </div>
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="inline-flex h-10 w-fit items-center rounded-lg border border-slate-950 bg-slate-950 px-4 text-sm font-semibold text-white">
-              {teacherCareer?.label ?? "Carrera asignada"}
-              <span className="ml-2 rounded-md bg-white/15 px-1.5 py-0.5 text-xs">
-                {studentsWithResults.length}
-              </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex h-10 w-fit items-center rounded-lg border border-slate-950 bg-slate-950 px-4 text-sm font-semibold text-white">
+                {teacherCareer?.label ?? "Carrera asignada"}
+                <span className="ml-2 rounded-md bg-white/15 px-1.5 py-0.5 text-xs">
+                  {studentsWithResults.length}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => void updateClassSimulatorAccess(true)}
+                disabled={savingClassAccess || studentsState.length === 0}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {savingClassAccess ? (
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                ) : (
+                  <UnlockKeyhole className="h-4 w-4" aria-hidden="true" />
+                )}
+                Habilitar a todos
+              </button>
+              <button
+                type="button"
+                onClick={() => void updateClassSimulatorAccess(false)}
+                disabled={savingClassAccess || studentsState.length === 0}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 text-sm font-semibold text-amber-800 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <LockKeyhole className="h-4 w-4" aria-hidden="true" />
+                Bloquear a todos
+              </button>
             </div>
 
             <div className="flex h-11 w-full items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 shadow-sm focus-within:border-sky-400 focus-within:ring-4 focus-within:ring-sky-100 lg:max-w-sm">
@@ -690,6 +831,18 @@ export function TeacherDashboardClient({
           </div>
         ) : null}
 
+        {accessMessage ? (
+          <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
+            {accessMessage}
+          </div>
+        ) : null}
+
+        {accessError ? (
+          <div className="mt-5 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            {accessError}
+          </div>
+        ) : null}
+
         {sortedStudents.length === 0 ? (
           <div className="mt-5 rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
             No hay estudiantes para mostrar con los filtros actuales. Revisa la
@@ -697,12 +850,13 @@ export function TeacherDashboardClient({
           </div>
         ) : (
           <div className="mt-5 overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
-            <table className="w-full min-w-[980px] border-collapse text-sm">
+            <table className="w-full min-w-[1120px] border-collapse text-sm">
               <thead className="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
                 <tr>
                   <th className="px-4 py-3">Estudiante</th>
                   <th className="px-4 py-3">Carrera</th>
                   <th className="px-4 py-3">Estado</th>
+                  <th className="px-4 py-3">Acceso simulador</th>
                   <th className="px-4 py-3 text-right">Simulaciones</th>
                   <th className="px-4 py-3 text-right">Promedio</th>
                   <th className="px-4 py-3 text-right">Mejor</th>
@@ -752,6 +906,42 @@ export function TeacherDashboardClient({
                         >
                           {status.label}
                         </span>
+                      </td>
+                      <td className="px-4 py-4">
+                        <button
+                          type="button"
+                          role="switch"
+                          aria-checked={student.simulatorAccessEnabled}
+                          onClick={() =>
+                            void updateStudentSimulatorAccess(
+                              student,
+                              !student.simulatorAccessEnabled,
+                            )
+                          }
+                          disabled={
+                            savingAccessStudentId === student.id ||
+                            savingClassAccess
+                          }
+                          className={`inline-flex h-9 min-w-28 items-center justify-center gap-2 rounded-lg border px-3 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 ${
+                            student.simulatorAccessEnabled
+                              ? "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+                              : "border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100"
+                          }`}
+                        >
+                          {savingAccessStudentId === student.id ? (
+                            <Loader2
+                              className="h-4 w-4 animate-spin"
+                              aria-hidden="true"
+                            />
+                          ) : student.simulatorAccessEnabled ? (
+                            <UnlockKeyhole className="h-4 w-4" aria-hidden="true" />
+                          ) : (
+                            <LockKeyhole className="h-4 w-4" aria-hidden="true" />
+                          )}
+                          {student.simulatorAccessEnabled
+                            ? "Habilitado"
+                            : "Bloqueado"}
+                        </button>
                       </td>
                       <td className="px-4 py-4 text-right font-semibold text-slate-950">
                         {student.simulationsCount}
