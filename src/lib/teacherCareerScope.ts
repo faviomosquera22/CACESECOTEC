@@ -1,23 +1,30 @@
+import "server-only";
+
 import { redirect } from "next/navigation";
 import type { Profile } from "@/lib/database.types";
 import { requireProfile } from "@/lib/auth";
-import type { StudentCareerSlug } from "@/lib/studentCareer";
+import {
+  getExactStudentCareerOption,
+  type StudentCareerSlug,
+} from "@/lib/studentCareer";
 
 export type TeacherCareerScope = StudentCareerSlug;
 
-const teacherScopeByEmail: Record<string, TeacherCareerScope> = {
-  "tester.teacher@caces.local": "enfermeria",
-  "tester.psicologia@caces.local": "psicologia",
-};
-
 export function getTeacherCareerScope(
-  profile: Pick<Profile, "email" | "role">,
+  profile: Pick<Profile, "career" | "role">,
 ): TeacherCareerScope | null {
   if (profile.role !== "teacher") {
     return null;
   }
 
-  return teacherScopeByEmail[profile.email?.trim().toLowerCase() ?? ""] ?? null;
+  return getExactStudentCareerOption(profile.career)?.slug ?? null;
+}
+
+export function isStudentInTeacherCareerScope(
+  studentCareer: string | null | undefined,
+  teacherCareerScope: TeacherCareerScope,
+) {
+  return getExactStudentCareerOption(studentCareer)?.slug === teacherCareerScope;
 }
 
 export async function requireTeacherCareerScope() {

@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import {
   BarChart3,
   Download,
   FileSpreadsheet,
   FileText,
+  Loader2,
 } from "lucide-react";
 import type { StudentCardData } from "@/components/StudentCard";
 import { formatScore } from "@/lib/format";
@@ -14,6 +15,10 @@ import {
   subscribeToLocalSimulationChanges,
 } from "@/lib/localSimulationStorage";
 import type { OptionLetter, Question } from "@/lib/database.types";
+import {
+  buildTeacherAnalyticsReportPdf,
+  getTeacherAnalyticsReportFilename,
+} from "@/lib/teacherAnalyticsReport";
 
 export type TeacherQuestionAnswerRecord = {
   question_id: string;
@@ -102,6 +107,8 @@ export function TeacherLearningTools({
   students,
   serverAnswers,
 }: TeacherLearningToolsProps) {
+  const [isExportingPdf, setIsExportingPdf] = useState(false);
+  const [pdfError, setPdfError] = useState("");
   const localStorageSnapshot = useSyncExternalStore(
     subscribeToLocalSimulationChanges,
     () =>
@@ -272,45 +279,36 @@ export function TeacherLearningTools({
     );
   }
 
-  function exportPdf() {
-    const reportWindow = window.open("", "_blank", "noopener,noreferrer");
+  async function exportPdf() {
+    setIsExportingPdf(true);
+    setPdfError("");
 
-    if (!reportWindow) {
-      return;
+    try {
+      const generatedAt = new Date();
+      const report = await buildTeacherAnalyticsReportPdf({
+        students,
+        modules: moduleAnalytics,
+        questions: questionAnalytics,
+        generatedAt,
+      });
+      const blob = new Blob([report], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = getTeacherAnalyticsReportFilename(generatedAt);
+      link.hidden = true;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
+    } catch {
+      setPdfError(
+        "No se pudo generar el reporte PDF. Intenta nuevamente.",
+      );
+    } finally {
+      setIsExportingPdf(false);
     }
-
-    reportWindow.document.write(`
-      <html>
-        <head>
-          <title>Reporte docente CACES</title>
-          <style>
-            body { font-family: Arial, sans-serif; color: #0f172a; padding: 24px; }
-            table { border-collapse: collapse; width: 100%; margin-top: 16px; }
-            th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; font-size: 12px; }
-            th { background: #0f172a; color: white; }
-            h1, h2 { margin-bottom: 8px; }
-          </style>
-        </head>
-        <body>
-          <h1>Reporte docente CACES</h1>
-          <p>Total de estudiantes: ${students.length}</p>
-          <h2>Módulos con mayor error</h2>
-          <table>
-            <tr><th>Módulo</th><th>Respuestas</th><th>Incorrectas</th><th>Tasa de error</th></tr>
-            ${moduleAnalytics
-              .map(
-                (item) =>
-                  `<tr><td>${escapeHtml(item.category)}</td><td>${item.total}</td><td>${item.incorrect}</td><td>${escapeHtml(
-                    formatScore(item.errorRate),
-                  )}</td></tr>`,
-              )
-              .join("")}
-          </table>
-        </body>
-      </html>
-    `);
-    reportWindow.document.close();
-    reportWindow.print();
   }
 
   return (
@@ -343,14 +341,25 @@ export function TeacherLearningTools({
           </button>
           <button
             type="button"
-            onClick={exportPdf}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+            onClick={() => void exportPdf()}
+            disabled={isExportingPdf}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <FileText className="h-4 w-4" aria-hidden="true" />
-            PDF
+            {isExportingPdf ? (
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+            ) : (
+              <FileText className="h-4 w-4" aria-hidden="true" />
+            )}
+            {isExportingPdf ? "Generando..." : "PDF"}
           </button>
         </div>
       </div>
+
+      {pdfError ? (
+        <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {pdfError}
+        </p>
+      ) : null}
 
       <div className="grid gap-5 xl:grid-cols-2">
         <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm xl:col-span-2">

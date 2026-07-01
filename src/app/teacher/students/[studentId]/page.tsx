@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import { Mail, UserRound } from "lucide-react";
 import { TeacherStudentHistoryClient } from "@/components/TeacherStudentHistoryClient";
-import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
-import { getStudentCareerOption } from "@/lib/studentCareer";
+import {
+  isStudentInTeacherCareerScope,
+  requireTeacherCareerScope,
+} from "@/lib/teacherCareerScope";
 import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
 import type {
   Profile,
@@ -40,7 +42,7 @@ export default async function TeacherStudentPage({
 
   if (
     !student ||
-    getStudentCareerOption(student.career)?.slug !== teacherCareerScope
+    !isStudentInTeacherCareerScope(student.career, teacherCareerScope)
   ) {
     notFound();
   }

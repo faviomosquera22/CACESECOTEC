@@ -1,5 +1,5 @@
 -- Ejecutar después de las tablas y políticas base.
--- Restringe cada docente a una carrera según su correo institucional de prueba.
+-- Restringe cada docente a la carrera guardada en su perfil.
 
 create or replace function public.current_teacher_career_scope()
 returns text
@@ -8,9 +8,11 @@ stable
 security definer
 set search_path = public
 as $$
-  select case lower(coalesce(email, ''))
-    when 'tester.teacher@caces.local' then 'enfermeria'
-    when 'tester.psicologia@caces.local' then 'psicologia'
+  select case
+    when lower(trim(coalesce(career, ''))) in ('enfermeria', 'enfermería')
+      then 'enfermeria'
+    when lower(trim(coalesce(career, ''))) in ('psicologia', 'psicología')
+      then 'psicologia'
     else null
   end
   from public.profiles

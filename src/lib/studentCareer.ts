@@ -30,7 +30,7 @@ function normalizeCareer(value: string) {
     .trim();
 }
 
-export function getStudentCareerOption(career?: string | null) {
+export function getExactStudentCareerOption(career?: string | null) {
   const normalizedCareer = normalizeCareer(career ?? "");
 
   if (!normalizedCareer) {
@@ -39,13 +39,27 @@ export function getStudentCareerOption(career?: string | null) {
 
   return (
     studentCareerOptions.find((option) =>
+      [option.slug, option.label, ...option.aliases].some(
+        (alias) => normalizeCareer(alias) === normalizedCareer,
+      ),
+    ) ?? null
+  );
+}
+
+export function getStudentCareerOption(career?: string | null) {
+  const normalizedCareer = normalizeCareer(career ?? "");
+
+  if (!normalizedCareer) {
+    return null;
+  }
+
+  return (
+    getExactStudentCareerOption(career) ??
+    studentCareerOptions.find((option) =>
       [option.slug, option.label, ...option.aliases].some((alias) => {
         const normalizedAlias = normalizeCareer(alias);
 
-        return (
-          normalizedCareer === normalizedAlias ||
-          normalizedCareer.includes(normalizedAlias)
-        );
+        return normalizedCareer.includes(normalizedAlias);
       }),
     ) ?? null
   );

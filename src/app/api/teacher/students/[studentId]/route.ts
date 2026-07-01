@@ -1,8 +1,10 @@
 import { getCurrentAuthContext } from "@/lib/auth";
 import type { Profile } from "@/lib/database.types";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
-import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
-import { getStudentCareerOption } from "@/lib/studentCareer";
+import {
+  getTeacherCareerScope,
+  isStudentInTeacherCareerScope,
+} from "@/lib/teacherCareerScope";
 
 type DeleteStudentProfile = Pick<
   Profile,
@@ -93,7 +95,7 @@ export async function DELETE(
     );
   }
 
-  if (getStudentCareerOption(studentProfile.career)?.slug !== teacherCareerScope) {
+  if (!isStudentInTeacherCareerScope(studentProfile.career, teacherCareerScope)) {
     return Response.json(
       { error: "No puedes eliminar estudiantes de otra carrera." },
       { status: 403 },

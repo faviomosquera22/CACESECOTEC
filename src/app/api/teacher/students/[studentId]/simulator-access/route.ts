@@ -1,8 +1,10 @@
 import { getCurrentAuthContext } from "@/lib/auth";
 import type { Profile } from "@/lib/database.types";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
-import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
-import { getStudentCareerOption } from "@/lib/studentCareer";
+import {
+  getTeacherCareerScope,
+  isStudentInTeacherCareerScope,
+} from "@/lib/teacherCareerScope";
 
 type UpdateAccessBody = {
   enabled?: unknown;
@@ -98,7 +100,7 @@ export async function PATCH(
     );
   }
 
-  if (getStudentCareerOption(student.career)?.slug !== teacherCareerScope) {
+  if (!isStudentInTeacherCareerScope(student.career, teacherCareerScope)) {
     return Response.json(
       { error: "No puedes cambiar el acceso de estudiantes de otra carrera." },
       { status: 403 },

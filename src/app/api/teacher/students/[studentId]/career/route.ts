@@ -1,7 +1,10 @@
 import { getCurrentAuthContext } from "@/lib/auth";
-import { getStudentCareerOption, studentCareerOptions } from "@/lib/studentCareer";
+import { studentCareerOptions } from "@/lib/studentCareer";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
-import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
+import {
+  getTeacherCareerScope,
+  isStudentInTeacherCareerScope,
+} from "@/lib/teacherCareerScope";
 
 type AssignStudentCareerResult = {
   id: string;
@@ -93,7 +96,7 @@ export async function PATCH(
 
   if (
     !studentProfile ||
-    getStudentCareerOption(studentProfile.career)?.slug !== teacherCareerScope
+    !isStudentInTeacherCareerScope(studentProfile.career, teacherCareerScope)
   ) {
     return Response.json(
       { error: "No puedes modificar estudiantes de otra carrera." },

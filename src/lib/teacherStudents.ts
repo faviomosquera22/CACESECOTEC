@@ -5,6 +5,7 @@ import type { Profile, Simulation } from "@/lib/database.types";
 import { demoStudentProfiles } from "@/lib/demoStudents";
 import { average } from "@/lib/format";
 import {
+  getExactStudentCareerOption,
   getStudentCareerOption,
   type StudentCareerSlug,
 } from "@/lib/studentCareer";
@@ -44,7 +45,8 @@ export async function getTeacherStudentCards(
       ? studentProfiles
       : demoStudentProfiles.filter(
           (student) =>
-            getStudentCareerOption(student.career)?.slug === teacherCareerScope,
+            getExactStudentCareerOption(student.career)?.slug ===
+            teacherCareerScope,
         );
   const studentIds = students.map((student) => student.id);
 
