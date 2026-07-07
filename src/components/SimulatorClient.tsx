@@ -363,7 +363,14 @@ export function SimulatorClient({
       const correctAnswers = questions.reduce((total, question) => {
         return total + (answers[question.id] === question.correct_option ? 1 : 0);
       }, 0);
-      const incorrectAnswers = totalQuestions - correctAnswers;
+      const incorrectAnswers = questions.reduce((total, question) => {
+        const selectedOption = answers[question.id] ?? null;
+
+        return (
+          total +
+          (selectedOption && selectedOption !== question.correct_option ? 1 : 0)
+        );
+      }, 0);
       const score =
         totalQuestions > 0
           ? Math.round((correctAnswers / totalQuestions) * 10000) / 100
@@ -433,7 +440,9 @@ export function SimulatorClient({
             simulation_id: simulationId,
             question_id: question.id,
             selected_option: selectedOption,
-            is_correct: selectedOption === question.correct_option,
+            is_correct: selectedOption
+              ? selectedOption === question.correct_option
+              : null,
             answered_at: finishedAt.toISOString(),
             questions: question,
           };
@@ -504,7 +513,9 @@ export function SimulatorClient({
             simulation_id: simulationId,
             question_id: question.id,
             selected_option: selectedOption,
-            is_correct: selectedOption === question.correct_option,
+            is_correct: selectedOption
+              ? selectedOption === question.correct_option
+              : null,
             answered_at: finishedAt.toISOString(),
           };
         });
@@ -810,7 +821,9 @@ export function SimulatorClient({
               simulation_id: newSimulation.id,
               question_id: question.id,
               selected_option: selectedOption,
-              is_correct: selectedOption === question.correct_option,
+              is_correct: selectedOption
+                ? selectedOption === question.correct_option
+                : null,
               answered_at: new Date().toISOString(),
             };
           });

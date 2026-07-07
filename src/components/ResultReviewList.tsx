@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, CircleMinus, XCircle } from "lucide-react";
 import type {
   OptionLetter,
   Question,
@@ -204,6 +204,7 @@ function ReviewCard({
   const question = answer.questions;
   const isCorrect = answer.is_correct === true;
   const selectedOption = answer.selected_option;
+  const isUnanswered = !selectedOption;
   const correctOption = question?.correct_option ?? null;
   const selectedText = getOptionText(question, selectedOption);
   const correctText = getOptionText(question, correctOption);
@@ -228,15 +229,19 @@ function ReviewCard({
           className={`inline-flex w-fit items-center gap-2 rounded-lg px-3 py-1 text-sm font-semibold ${
             isCorrect
               ? "bg-emerald-50 text-emerald-700"
+              : isUnanswered
+                ? "bg-amber-50 text-amber-700"
               : "bg-red-50 text-red-700"
           }`}
         >
           {isCorrect ? (
             <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+          ) : isUnanswered ? (
+            <CircleMinus className="h-4 w-4" aria-hidden="true" />
           ) : (
             <XCircle className="h-4 w-4" aria-hidden="true" />
           )}
-          {isCorrect ? "Correcta" : "Incorrecta"}
+          {isCorrect ? "Correcta" : isUnanswered ? "No respondida" : "Incorrecta"}
         </span>
       </div>
 
@@ -257,11 +262,17 @@ function ReviewCard({
         className={`mt-4 rounded-lg border p-4 text-sm leading-6 ${
           isCorrect
             ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+            : isUnanswered
+              ? "border-amber-200 bg-amber-50 text-amber-800"
             : "border-red-200 bg-red-50 text-red-800"
         }`}
       >
         <p className="font-semibold">
-          {isCorrect ? "Feedback" : "Por qué estuvo incorrecta"}
+          {isCorrect
+            ? "Feedback"
+            : isUnanswered
+              ? "Pregunta no respondida"
+              : "Por qué estuvo incorrecta"}
         </p>
         <p className="mt-2">
           {isCorrect
@@ -298,23 +309,38 @@ function ReviewCard({
   );
 }
 
-type ReviewFilter = "incorrect" | "correct";
+type ReviewFilter = "incorrect" | "unanswered" | "correct";
 
 export function ResultReviewList({ answers }: ResultReviewListProps) {
-  const incorrectAnswers = answers.filter((answer) => answer.is_correct !== true);
+  const incorrectAnswers = answers.filter(
+    (answer) => answer.selected_option && answer.is_correct !== true,
+  );
+  const unansweredAnswers = answers.filter((answer) => !answer.selected_option);
   const correctAnswers = answers.filter((answer) => answer.is_correct === true);
   const [activeFilter, setActiveFilter] = useState<ReviewFilter>(
-    incorrectAnswers.length > 0 ? "incorrect" : "correct",
+    incorrectAnswers.length > 0
+      ? "incorrect"
+      : unansweredAnswers.length > 0
+        ? "unanswered"
+        : "correct",
   );
   const visibleAnswers =
-    activeFilter === "incorrect" ? incorrectAnswers : correctAnswers;
+    activeFilter === "incorrect"
+      ? incorrectAnswers
+      : activeFilter === "unanswered"
+        ? unansweredAnswers
+        : correctAnswers;
   const emptyMessage =
     activeFilter === "incorrect"
       ? "No tuviste preguntas incorrectas."
+      : activeFilter === "unanswered"
+        ? "No dejaste preguntas sin responder."
       : "No tuviste preguntas correctas.";
   const title =
     activeFilter === "incorrect"
       ? `Preguntas incorrectas (${incorrectAnswers.length})`
+      : activeFilter === "unanswered"
+        ? `Preguntas no respondidas (${unansweredAnswers.length})`
       : `Preguntas correctas (${correctAnswers.length})`;
 
   const questionNumbers = new Map(
@@ -338,6 +364,14 @@ export function ResultReviewList({ answers }: ResultReviewListProps) {
       inactiveClassName: "border-slate-200 bg-white text-slate-600",
     },
     {
+      key: "unanswered",
+      label: "No respondidas",
+      count: unansweredAnswers.length,
+      icon: CircleMinus,
+      activeClassName: "border-amber-200 bg-amber-50 text-amber-700",
+      inactiveClassName: "border-slate-200 bg-white text-slate-600",
+    },
+    {
       key: "correct",
       label: "Correctas",
       count: correctAnswers.length,
@@ -358,7 +392,7 @@ export function ResultReviewList({ answers }: ResultReviewListProps) {
             Selecciona un grupo para revisar solo esas preguntas.
           </p>
         </div>
-        <div className="grid gap-2 sm:grid-cols-2">
+        <div className="grid gap-2 sm:grid-cols-3">
           {filterOptions.map((option) => {
             const Icon = option.icon;
             const isActive = activeFilter === option.key;

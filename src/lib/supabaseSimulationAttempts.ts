@@ -218,7 +218,9 @@ export function buildSimulationAttemptInsert({
       return {
         question_id: question.id,
         selected_option: selectedOption,
-        is_correct: selectedOption === question.correct_option,
+        is_correct: selectedOption
+          ? selectedOption === question.correct_option
+          : null,
         answered_at: finishedAt,
         question,
       };
@@ -258,7 +260,9 @@ export function buildSimulationAttemptInsertFromLocalPayload(
       payload.answers.filter((answer) => answer.is_correct === true).length,
     incorrectAnswers:
       simulation.incorrect_answers ??
-      payload.answers.filter((answer) => answer.is_correct !== true).length,
+      payload.answers.filter(
+        (answer) => answer.selected_option && answer.is_correct !== true,
+      ).length,
     score: simulation.score ?? 0,
     timeUsedSeconds: simulation.time_used_seconds ?? 0,
     questions,

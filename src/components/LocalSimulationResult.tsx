@@ -67,6 +67,7 @@ export function LocalSimulationResult({
 
       <ResultScoreCard
         simulation={simulation}
+        answers={answers}
         note="Resultado sincronizado con tu cuenta para consultar el historial desde tus dispositivos."
       />
 

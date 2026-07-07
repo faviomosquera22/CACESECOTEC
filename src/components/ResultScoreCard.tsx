@@ -1,9 +1,13 @@
-import { CheckCircle2, Clock3, Trophy, XCircle } from "lucide-react";
-import type { Simulation } from "@/lib/database.types";
+import { CheckCircle2, CircleMinus, Clock3, Trophy, XCircle } from "lucide-react";
+import type {
+  Simulation,
+  SimulationAnswerWithQuestion,
+} from "@/lib/database.types";
 import { formatDate, formatDuration, formatScore } from "@/lib/format";
 
 type ResultScoreCardProps = {
   simulation: Simulation;
+  answers?: SimulationAnswerWithQuestion[];
   note?: string;
 };
 
@@ -31,8 +35,38 @@ function getScoreTone(score: number) {
   };
 }
 
-export function ResultScoreCard({ simulation, note }: ResultScoreCardProps) {
+function getAnswerCounts(
+  simulation: Simulation,
+  answers?: SimulationAnswerWithQuestion[],
+) {
+  const total = simulation.total_questions ?? answers?.length ?? 0;
+
+  if (answers && answers.length > 0) {
+    const correct = answers.filter((answer) => answer.is_correct === true)
+      .length;
+    const unanswered = answers.filter((answer) => !answer.selected_option)
+      .length;
+    const incorrect = answers.filter(
+      (answer) => answer.selected_option && answer.is_correct !== true,
+    ).length;
+
+    return { correct, incorrect, unanswered, total };
+  }
+
+  const correct = simulation.correct_answers ?? 0;
+  const incorrect = simulation.incorrect_answers ?? 0;
+  const unanswered = Math.max(0, total - correct - incorrect);
+
+  return { correct, incorrect, unanswered, total };
+}
+
+export function ResultScoreCard({
+  simulation,
+  answers,
+  note,
+}: ResultScoreCardProps) {
   const score = simulation.score ?? 0;
+  const counts = getAnswerCounts(simulation, answers);
   const scoreTone = getScoreTone(score);
   const progressWidth = Math.min(100, Math.max(0, score));
 
@@ -70,7 +104,7 @@ export function ResultScoreCard({ simulation, note }: ResultScoreCardProps) {
         />
       </div>
 
-      <dl className="mt-6 grid gap-5 border-t border-slate-100 pt-5 sm:grid-cols-2 lg:grid-cols-4">
+      <dl className="mt-6 grid gap-5 border-t border-slate-100 pt-5 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <dt className="flex items-center gap-2 text-sm font-semibold text-slate-500">
             <CheckCircle2
@@ -80,7 +114,7 @@ export function ResultScoreCard({ simulation, note }: ResultScoreCardProps) {
             Correctas
           </dt>
           <dd className="mt-2 text-2xl font-semibold text-slate-950">
-            {simulation.correct_answers ?? 0}
+            {counts.correct}
           </dd>
         </div>
         <div>
@@ -89,7 +123,16 @@ export function ResultScoreCard({ simulation, note }: ResultScoreCardProps) {
             Incorrectas
           </dt>
           <dd className="mt-2 text-2xl font-semibold text-slate-950">
-            {simulation.incorrect_answers ?? 0}
+            {counts.incorrect}
+          </dd>
+        </div>
+        <div>
+          <dt className="flex items-center gap-2 text-sm font-semibold text-slate-500">
+            <CircleMinus className="h-4 w-4 text-amber-600" aria-hidden="true" />
+            No respondidas
+          </dt>
+          <dd className="mt-2 text-2xl font-semibold text-slate-950">
+            {counts.unanswered}
           </dd>
         </div>
         <div>
@@ -97,7 +140,7 @@ export function ResultScoreCard({ simulation, note }: ResultScoreCardProps) {
             Total de preguntas
           </dt>
           <dd className="mt-2 text-2xl font-semibold text-slate-950">
-            {simulation.total_questions ?? 0}
+            {counts.total}
           </dd>
         </div>
         <div>

@@ -15,7 +15,7 @@ export function ResultPerformanceSummary({
 }: ResultPerformanceSummaryProps) {
   const insights = buildPerformanceCategoryInsights(answers);
   const frequentErrors = insights
-    .filter((insight) => insight.incorrect > 0)
+    .filter((insight) => insight.incorrect > 0 || insight.unanswered > 0)
     .slice(0, 3);
   const strengths = [...insights]
     .filter((insight) => insight.total >= 3 && insight.score >= 70)
@@ -79,8 +79,8 @@ export function ResultPerformanceSummary({
                   <p className="mt-2 text-xs leading-5 text-slate-600">
                     {insight.correct}/{insight.total} correctas ·{" "}
                     {insight.incorrect} error
-                    {insight.incorrect === 1 ? "" : "es"}. Repasa{" "}
-                    {insight.focus}.
+                    {insight.incorrect === 1 ? "" : "es"} ·{" "}
+                    {insight.unanswered} sin responder. Repasa {insight.focus}.
                   </p>
                 </li>
               ))}

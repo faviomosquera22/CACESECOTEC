@@ -7,6 +7,7 @@ export type PerformanceCategoryInsight = {
   total: number;
   correct: number;
   incorrect: number;
+  unanswered: number;
   score: number;
 };
 
@@ -218,11 +219,14 @@ export function buildPerformanceCategoryInsights(
       total: 0,
       correct: 0,
       incorrect: 0,
+      unanswered: 0,
     };
 
     current.total += 1;
     if (answer.is_correct === true) {
       current.correct += 1;
+    } else if (!answer.selected_option) {
+      current.unanswered += 1;
     } else {
       current.incorrect += 1;
     }
@@ -252,15 +256,20 @@ export function buildPerformanceRecommendations(
 ) {
   const categoryInsights = buildPerformanceCategoryInsights(answers);
   const weakCategories = categoryInsights
-    .filter((insight) => insight.incorrect > 0)
+    .filter((insight) => insight.incorrect > 0 || insight.unanswered > 0)
     .slice(0, 3);
   const unansweredCount = answers.filter((answer) => !answer.selected_option)
     .length;
   const recommendations: string[] = [];
 
   weakCategories.forEach((insight) => {
+    const pendingText =
+      insight.unanswered > 0
+        ? `, con ${insight.unanswered} sin responder`
+        : "";
+
     recommendations.push(
-      `Prioriza ${insight.category}: tuviste ${insight.correct}/${insight.total} correctas. Repasa ${insight.focus}.`,
+      `Prioriza ${insight.category}: tuviste ${insight.correct}/${insight.total} correctas${pendingText}. Repasa ${insight.focus}.`,
     );
   });
 

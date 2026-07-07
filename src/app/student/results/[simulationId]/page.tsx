@@ -58,7 +58,7 @@ export default async function StudentResultPage({
           ]}
         />
 
-        <ResultScoreCard simulation={simulation} />
+        <ResultScoreCard simulation={simulation} answers={answers} />
 
         <ResultPerformanceSummary answers={answers} />
 
@@ -126,7 +126,7 @@ export default async function StudentResultPage({
         ]}
       />
 
-      <ResultScoreCard simulation={simulation} />
+      <ResultScoreCard simulation={simulation} answers={answers} />
 
       <ResultPerformanceSummary answers={answers} />
 

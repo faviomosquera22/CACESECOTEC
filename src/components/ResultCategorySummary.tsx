@@ -81,6 +81,10 @@ export function ResultCategorySummary({ answers }: ResultCategorySummaryProps) {
                   <p className="mt-1 text-xs leading-5 text-slate-500">
                     {summary.description}
                   </p>
+                  <p className="mt-2 text-xs font-semibold text-slate-600">
+                    {summary.total} pregunta{summary.total === 1 ? "" : "s"} en
+                    esta área
+                  </p>
                 </div>
                 <div className="shrink-0 text-right">
                   <p className="text-lg font-semibold text-slate-950">
@@ -108,9 +112,9 @@ export function ResultCategorySummary({ answers }: ResultCategorySummaryProps) {
                   </p>
                 </div>
                 <div className="rounded-md bg-white px-2 py-2">
-                  <p className="text-slate-500">Total</p>
+                  <p className="text-slate-500">No respondidas</p>
                   <p className="mt-1 font-semibold text-slate-950">
-                    {summary.total}
+                    {summary.unanswered}
                   </p>
                 </div>
               </div>
