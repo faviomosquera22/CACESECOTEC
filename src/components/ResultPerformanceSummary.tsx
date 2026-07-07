@@ -1,5 +1,6 @@
 import { ClipboardCheck, Lightbulb, Target } from "lucide-react";
 import type { SimulationAnswerWithQuestion } from "@/lib/database.types";
+import { formatScore } from "@/lib/format";
 import {
   buildPerformanceCategoryInsights,
   buildPerformanceRecommendations,
@@ -12,9 +13,14 @@ type ResultPerformanceSummaryProps = {
 export function ResultPerformanceSummary({
   answers,
 }: ResultPerformanceSummaryProps) {
-  const frequentErrors = buildPerformanceCategoryInsights(answers)
+  const insights = buildPerformanceCategoryInsights(answers);
+  const frequentErrors = insights
     .filter((insight) => insight.incorrect > 0)
-    .slice(0, 4);
+    .slice(0, 3);
+  const strengths = [...insights]
+    .filter((insight) => insight.total >= 3 && insight.score >= 70)
+    .sort((left, right) => right.score - left.score || right.total - left.total)
+    .slice(0, 2);
   const recommendations = buildPerformanceRecommendations(answers);
 
   if (answers.length === 0) {
@@ -32,8 +38,8 @@ export function ResultPerformanceSummary({
             Resumen final del desempeño
           </h3>
           <p className="mt-1 text-sm leading-6 text-slate-500">
-            Revisa tus errores frecuentes y las recomendaciones para el
-            siguiente intento.
+            Lectura rápida por áreas clínicas: primero aparecen los temas que
+            más conviene reforzar para subir el puntaje.
           </p>
         </div>
       </div>
@@ -43,7 +49,7 @@ export function ResultPerformanceSummary({
           <div className="flex items-center gap-2">
             <Target className="h-4 w-4 text-red-600" aria-hidden="true" />
             <h4 className="text-sm font-semibold text-slate-950">
-              Errores frecuentes
+              Prioridades de refuerzo
             </h4>
           </div>
           {frequentErrors.length === 0 ? (
@@ -57,10 +63,25 @@ export function ResultPerformanceSummary({
                   key={insight.category}
                   className="rounded-lg bg-white px-3 py-2"
                 >
-                  <span className="font-semibold text-slate-950">
-                    {insight.category}
-                  </span>
-                  : {insight.incorrect} de {insight.total} incorrectas
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-semibold text-slate-950">
+                        {insight.category}
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-slate-500">
+                        {insight.description}
+                      </p>
+                    </div>
+                    <p className="shrink-0 font-semibold text-red-600">
+                      {formatScore(insight.score)}
+                    </p>
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-slate-600">
+                    {insight.correct}/{insight.total} correctas ·{" "}
+                    {insight.incorrect} error
+                    {insight.incorrect === 1 ? "" : "es"}. Repasa{" "}
+                    {insight.focus}.
+                  </p>
                 </li>
               ))}
             </ul>
@@ -71,7 +92,7 @@ export function ResultPerformanceSummary({
           <div className="flex items-center gap-2">
             <Lightbulb className="h-4 w-4 text-sky-700" aria-hidden="true" />
             <h4 className="text-sm font-semibold text-slate-950">
-              Recomendaciones
+              Plan para el siguiente intento
             </h4>
           </div>
           <ul className="mt-3 space-y-2 text-sm text-slate-700">
@@ -84,6 +105,22 @@ export function ResultPerformanceSummary({
               </li>
             ))}
           </ul>
+
+          {strengths.length > 0 ? (
+            <div className="mt-4 rounded-lg bg-white px-3 py-2">
+              <p className="text-xs font-semibold uppercase tracking-normal text-emerald-700">
+                Áreas fuertes
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-700">
+                {strengths
+                  .map(
+                    (insight) =>
+                      `${insight.category} (${formatScore(insight.score)})`,
+                  )
+                  .join(" · ")}
+              </p>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

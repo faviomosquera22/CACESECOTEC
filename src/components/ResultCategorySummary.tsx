@@ -1,50 +1,11 @@
 import { BarChart3 } from "lucide-react";
 import type { SimulationAnswerWithQuestion } from "@/lib/database.types";
 import { formatScore } from "@/lib/format";
+import { buildPerformanceCategoryInsights } from "@/lib/performanceInsights";
 
 type ResultCategorySummaryProps = {
   answers: SimulationAnswerWithQuestion[];
 };
-
-type CategorySummary = {
-  category: string;
-  total: number;
-  correct: number;
-  score: number;
-};
-
-function getCategoryName(answer: SimulationAnswerWithQuestion) {
-  return answer.questions?.category?.trim() || "Sin categoría";
-}
-
-function buildCategorySummaries(
-  answers: SimulationAnswerWithQuestion[],
-): CategorySummary[] {
-  const summaries = new Map<string, Omit<CategorySummary, "score">>();
-
-  answers.forEach((answer) => {
-    const category = getCategoryName(answer);
-    const current = summaries.get(category) ?? {
-      category,
-      total: 0,
-      correct: 0,
-    };
-
-    current.total += 1;
-    current.correct += answer.is_correct === true ? 1 : 0;
-    summaries.set(category, current);
-  });
-
-  return Array.from(summaries.values())
-    .map((summary) => ({
-      ...summary,
-      score:
-        summary.total > 0
-          ? Math.round((summary.correct / summary.total) * 10000) / 100
-          : 0,
-    }))
-    .sort((left, right) => right.total - left.total || left.category.localeCompare(right.category));
-}
 
 function getBarColor(score: number) {
   if (score >= 70) {
@@ -58,8 +19,29 @@ function getBarColor(score: number) {
   return "bg-red-500";
 }
 
+function getStatus(score: number) {
+  if (score >= 70) {
+    return {
+      label: "Dominio adecuado",
+      className: "bg-emerald-50 text-emerald-700 ring-emerald-100",
+    };
+  }
+
+  if (score >= 50) {
+    return {
+      label: "En progreso",
+      className: "bg-sky-50 text-sky-700 ring-sky-100",
+    };
+  }
+
+  return {
+    label: "Reforzar primero",
+    className: "bg-red-50 text-red-700 ring-red-100",
+  };
+}
+
 export function ResultCategorySummary({ answers }: ResultCategorySummaryProps) {
-  const summaries = buildCategorySummaries(answers);
+  const summaries = buildPerformanceCategoryInsights(answers);
 
   if (summaries.length === 0) {
     return null;
@@ -76,7 +58,8 @@ export function ResultCategorySummary({ answers }: ResultCategorySummaryProps) {
             Desempeño por categoría
           </h3>
           <p className="mt-1 text-sm text-slate-500">
-            Identifica las áreas con mejor rendimiento y las que requieren refuerzo.
+            Las preguntas se agrupan por área clínica para que veas dónde
+            reforzar primero y qué contenido repasar.
           </p>
         </div>
       </div>
@@ -91,24 +74,56 @@ export function ResultCategorySummary({ answers }: ResultCategorySummaryProps) {
               className="rounded-lg border border-slate-100 bg-slate-50 p-4"
             >
               <div className="flex items-start justify-between gap-4">
-                <div>
+                <div className="min-w-0">
                   <h4 className="text-sm font-semibold text-slate-950">
                     {summary.category}
                   </h4>
-                  <p className="mt-1 text-xs text-slate-500">
-                    {summary.correct} de {summary.total} correctas
+                  <p className="mt-1 text-xs leading-5 text-slate-500">
+                    {summary.description}
                   </p>
                 </div>
-                <p className="text-lg font-semibold text-slate-950">
-                  {formatScore(summary.score)}
-                </p>
+                <div className="shrink-0 text-right">
+                  <p className="text-lg font-semibold text-slate-950">
+                    {formatScore(summary.score)}
+                  </p>
+                  <span
+                    className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ring-1 ${getStatus(summary.score).className}`}
+                  >
+                    {getStatus(summary.score).label}
+                  </span>
+                </div>
               </div>
+
+              <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
+                <div className="rounded-md bg-white px-2 py-2">
+                  <p className="text-slate-500">Correctas</p>
+                  <p className="mt-1 font-semibold text-slate-950">
+                    {summary.correct}
+                  </p>
+                </div>
+                <div className="rounded-md bg-white px-2 py-2">
+                  <p className="text-slate-500">Incorrectas</p>
+                  <p className="mt-1 font-semibold text-slate-950">
+                    {summary.incorrect}
+                  </p>
+                </div>
+                <div className="rounded-md bg-white px-2 py-2">
+                  <p className="text-slate-500">Total</p>
+                  <p className="mt-1 font-semibold text-slate-950">
+                    {summary.total}
+                  </p>
+                </div>
+              </div>
+
               <div className="mt-3 h-2 overflow-hidden rounded-lg bg-white">
                 <div
                   className={`h-full rounded-lg ${getBarColor(summary.score)}`}
                   style={{ width: `${safeScore}%` }}
                 />
               </div>
+              <p className="mt-3 text-xs leading-5 text-slate-600">
+                Repasar: {summary.focus}.
+              </p>
             </article>
           );
         })}
