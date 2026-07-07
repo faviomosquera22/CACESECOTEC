@@ -29,8 +29,9 @@ type SimulatorClientProps = {
 };
 
 const LEGACY_SIMULATION_SECONDS = 120 * 60;
-const SIMULATION_SECONDS = 60 * 60;
-const DRAFT_VERSION = 3;
+const INITIAL_SIMULATION_SECONDS = 60 * 60;
+const SIMULATION_SECONDS = 90 * 60;
+const DRAFT_VERSION = 4;
 const LEGACY_DRAFT_PREFIX = "draft";
 const LEGACY_DRAFT_DONE_PREFIX = "draft_done";
 
@@ -107,6 +108,8 @@ function normalizeDraftTimeLeft(draft: Partial<SimulationDraft>) {
       ? draft.simulationSeconds
       : draft.version === 2
         ? LEGACY_SIMULATION_SECONDS
+        : draft.version === 1 || draft.version === 3
+          ? INITIAL_SIMULATION_SECONDS
         : SIMULATION_SECONDS;
   const previousTimeLeft =
     typeof draft.timeLeft === "number"
@@ -135,7 +138,7 @@ function parseLocalDraft(
   try {
     const draft = JSON.parse(rawDraft) as SimulationDraft;
 
-    if (![1, 2, DRAFT_VERSION].includes(draft.version)) {
+    if (![1, 2, 3, DRAFT_VERSION].includes(draft.version)) {
       return null;
     }
 
