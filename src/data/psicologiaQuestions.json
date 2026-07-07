@@ -1888,5 +1888,1595 @@
     "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1.1 Psicoterapia",
     "difficulty": "Media",
     "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0001",
+    "question_text": "Un hombre de 39 años consulta por primera vez. En la evaluación inicial refiere: conflictos frecuentes con su pareja, un consumo de alcohol los fines de semana que ha aumentado en el último año, y dificultad para dormir desde hace tres meses. Dice sentirse \"abrumado por todo a la vez\" y pregunta por dónde empezar. ¿Cuál es el criterio MÁS adecuado para decidir con qué problema iniciar el trabajo terapéutico?",
+    "option_a": "Iniciar por el problema que el terapeuta considere de mayor gravedad clínica, dado que la formación profesional aporta el criterio más objetivo disponible.",
+    "option_b": "Iniciar por el problema del sueño, ya que suele ser la vía más rápida para lograr una mejoría inicial que motive al cliente a continuar.",
+    "option_c": "Iniciar considerando conjuntamente la gravedad, la relación de dependencia entre los problemas y las preferencias del cliente sobre cuál abordar primero.",
+    "option_d": "Iniciar por el problema que el cliente mencionó en primer lugar durante el relato, respetando el orden natural en que fue expuesto.",
+    "correct_option": "C",
+    "explanation": "Bados López & García Grau (2009) establecen varios criterios orientativos para priorizar problemas cuando hay varios a tratar: valores y preferencias del cliente, gravedad del problema, malestar asociado, relación de dependencia entre problemas, probabilidad de éxito y coste del tratamiento (p. 27). Ninguno se aplica de forma aislada; la decisión resulta de considerarlos conjuntamente. Referencia: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona, p. 27.",
+    "option_explanations": {
+      "A": "Los autores señalan explícitamente que las preferencias del cliente también deben tomarse en cuenta, no solo el criterio del terapeuta sobre gravedad (p. 27); basarse únicamente en el juicio profesional ignora un criterio central del modelo.",
+      "B": "La rapidez de mejora percibida no es, por sí sola, un criterio de priorización de los que exponen los autores; el coste del tratamiento sí se considera, pero junto a otros factores, no como criterio único (p. 27).",
+      "D": "El orden en que el cliente expone los problemas durante el relato no es un criterio de priorización; los autores diferencian entre la recolección de información y el proceso posterior y deliberado de establecer prioridades (p. 27)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Psicoterapia — priorización de problemas múltiples",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0002",
+    "question_text": "Un terapeuta trabaja con un cliente de 27 años en sesión 4, con el objetivo ya acordado de reducir su ansiedad social. El cliente cumple con las tareas de exposición asignadas y asiste puntualmente, pero comenta: \"sé que quiero superar el miedo a hablar en público, pero no entiendo bien cómo estas actividades específicas de esta semana me ayudan a lograrlo; aun así, confío en usted\". Según el modelo de alianza terapéutica de Bordin, ¿cuál de sus tres componentes aparece MÁS débil en este caso?",
+    "option_a": "El acuerdo sobre las tareas, ya que el cliente participa en las actividades sin comprender cómo se relacionan con el objetivo que ambos ya acordaron.",
+    "option_b": "El vínculo afectivo, ya que la confianza expresada por el cliente no logra compensar la falta de comprensión sobre el sentido del trabajo asignado.",
+    "option_c": "El acuerdo sobre los objetivos, ya que la meta de reducir la ansiedad social no ha sido consensuada con suficiente claridad entre ambos.",
+    "option_d": "La autenticidad del terapeuta, ya que la confusión del cliente sugiere una explicación insuficientemente sincera sobre el tratamiento propuesto.",
+    "correct_option": "A",
+    "explanation": "Bordin (1979, citado en Eiroa-Orosa et al., 2021) define la alianza terapéutica como una relación de colaboración compuesta por tres elementos: acuerdo en los objetivos, acuerdo en las tareas y vínculo positivo (p. 81). En este caso el objetivo está compartido y el vínculo parece sólido, pero el cliente no comprende la conexión entre las tareas concretas y la meta acordada, lo que señala una debilidad específica en el componente de las tareas. Referencia: Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI (2.ª ed.). Editorial UOC, pp. 80-81.",
+    "option_explanations": {
+      "B": "El vínculo, según lo descrito, se muestra sólido (\"confío en usted\"); la dificultad señalada no se refiere al componente afectivo de la alianza sino a la comprensión de las actividades asignadas (p. 81).",
+      "C": "El caso indica explícitamente que el cliente tiene claridad sobre el objetivo general acordado; lo que falta es la comprensión de cómo las tareas específicas se conectan con ese objetivo, un componente distinto dentro del modelo de Bordin (p. 81).",
+      "D": "La autenticidad del terapeuta corresponde a las condiciones descritas por Rogers (1957), un concepto relacionado pero distinto de los tres componentes de la alianza de Bordin (pp. 80-81); el caso no aporta información sobre la congruencia del terapeuta."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Psicoterapia — componentes de la alianza terapéutica",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0003",
+    "question_text": "Una mujer de 24 años consulta porque debe decidir entre dos ofertas laborales en un plazo de una semana. No refiere historia de malestar psicológico previo ni síntomas clínicos; busca claridad para tomar una decisión puntual. El psicólogo dedica dos sesiones a explorar sus prioridades, analizar ventajas y desventajas de cada oferta, y acompañarla en la decisión. ¿Cuál opción describe MEJOR el tipo de intervención que corresponde a este caso?",
+    "option_a": "Una intervención psicoterapéutica breve, dado que un proceso de toma de decisiones de este tipo suele implicar trabajar con los conflictos internos que subyacen a la elección.",
+    "option_b": "Una intervención de consejería vocacional especializada, que requeriría una evaluación psicométrica exhaustiva antes de poder ofrecer una orientación adecuada a la consultante.",
+    "option_c": "Una intervención de contención emocional, ya que la premura del plazo genera en la consultante un nivel de ansiedad que debería abordarse como prioridad frente al proceso de decisión.",
+    "option_d": "Una intervención de asesoramiento, centrada en un problema puntual del presente, sin que se busque explorar conflictos psicológicos profundos ni modificar la estructura de personalidad.",
+    "correct_option": "D",
+    "explanation": "Balarezo Chiriboga (1998) diferencia el asesoramiento de la psicoterapia señalando que el primero se orienta a problemas específicos y puntuales del presente, sin implicar necesariamente una exploración profunda de conflictos psicológicos ni una modificación de la estructura de personalidad del consultante. El caso descrito —una decisión concreta, sin antecedentes clínicos— se ajusta a este tipo de intervención. Referencia: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Quito: Pontificia Universidad Católica del Ecuador. [NOTA: Cita a nivel conceptual/general. El archivo cargado con este nombre corresponde en realidad a Balarezo Ch., L. (2016) *Psicoterapia* (2.ª ed.), una obra distinta del mismo autor que no trata asesoramiento; no fue posible verificar número de página exacto en el texto original de 1998 por no estar disponible en los documentos cargados. Ver nota metodológica.]",
+    "option_explanations": {
+      "A": "Encuadrar toda decisión como necesariamente ligada a conflictos internos no se sostiene en la distinción entre asesoramiento y psicoterapia; el asesoramiento existe precisamente porque no todo problema de decisión requiere ese nivel de exploración.",
+      "B": "El caso no describe un problema estrictamente vocacional que requiera evaluación psicométrica; forzar ese encuadre añade un requisito no planteado por la consultante ni sugerido por el caso.",
+      "C": "El caso no aporta evidencia de un nivel de ansiedad que amerite priorizar la contención emocional por sobre el proceso de decisión; encuadrar así el caso sobredimensiona un dato no descrito."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Asesoramiento psicológico — diferenciación con psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0004",
+    "question_text": "Un hombre de 45 años acude a un servicio de atención inmediata dos horas después de un accidente de tránsito en el que resultó ileso pero perdió su vehículo, su principal herramienta de trabajo. Se muestra desorganizado, con dificultad para tomar decisiones simples y repite \"no sé qué hacer ahora\". No presenta lesiones físicas ni riesgo médico inmediato. Según el modelo de primera ayuda psicológica en crisis, ¿cuál debería ser el ÉNFASIS inicial de la intervención?",
+    "option_a": "Realizar una evaluación exhaustiva de su historia personal para identificar si existen crisis previas no resueltas que expliquen su reacción actual.",
+    "option_b": "Ayudarlo a definir las dimensiones concretas del problema actual y a identificar un primer paso de acción manejable, antes de abordar otros aspectos.",
+    "option_c": "Proponer de inmediato una reestructuración cognitiva de sus pensamientos catastróficos sobre la pérdida del vehículo y su impacto laboral.",
+    "option_d": "Derivarlo a valoración psiquiátrica para descartar un cuadro de estrés agudo antes de ofrecer un apoyo psicológico más específico a su situación.",
+    "correct_option": "B",
+    "explanation": "Slaikeu (1996) describe la primera ayuda psicológica en crisis como una intervención breve centrada en el momento presente, cuyo propósito es restablecer el afrontamiento inmediato: esto incluye ayudar a la persona a delimitar las dimensiones concretas del problema y a identificar un primer paso de acción concreto y manejable, más que resolver la crisis en su totalidad. Referencia: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación (2.ª ed.). Manual Moderno. [NOTA: El archivo PDF cargado de esta obra presenta errores sistemáticos de reconocimiento óptico de caracteres (OCR) que impiden verificar citas literales o números de página con precisión. El contenido conceptual aquí referido corresponde al modelo de primeros auxilios psicológicos ampliamente documentado en la obra, no a una cita textual verificada línea por línea.]",
+    "option_explanations": {
+      "A": "Una evaluación histórica exhaustiva no corresponde al momento inmediato posterior a una crisis; el modelo prioriza la estabilización presente sobre la exploración retrospectiva extensa.",
+      "C": "Una reestructuración cognitiva formal es una técnica de mayor profundidad que excede el alcance de la primera ayuda psicológica inmediata, cuyo objetivo es más limitado y orientado a la acción concreta.",
+      "D": "No hay en el caso indicios de riesgo que justifiquen una derivación psiquiátrica inmediata; anteponerla retrasa la función de apoyo directo que corresponde a este primer momento."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Intervención en crisis — primera ayuda psicológica",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0005",
+    "question_text": "Una mujer de 33 años acude a consulta de urgencia tras la ruptura de una relación de 6 años. Refiere tristeza profunda y pensamientos de \"no querer seguir así\", pero no describe un plan concreto ni fecha para llevarlo a cabo. Tiene una hermana con quien vive y con quien mantiene una relación cercana. No registra intentos previos. Desde el modelo de evaluación de riesgo en intervención en crisis, ¿cuál es la interpretación MÁS adecuada de este cuadro?",
+    "option_a": "Riesgo bajo, dado que la presencia de la hermana como figura de apoyo cercano sería, por sí sola, suficiente para descartar una preocupación mayor.",
+    "option_b": "Riesgo alto, ya que la intensidad emocional de la tristeza descrita durante el relato de la ruptura reciente sería suficiente por sí sola para definir ese nivel.",
+    "option_c": "Riesgo que debe estimarse considerando conjuntamente la ideación presente, la ausencia de plan, la ausencia de antecedentes y el apoyo social disponible, en lugar de un solo dato aislado.",
+    "option_d": "Riesgo que no puede estimarse en esta sesión porque la consultante no ha verbalizado explícitamente su intención de hacerse daño.",
+    "correct_option": "C",
+    "explanation": "Slaikeu (1996) sostiene que la evaluación del riesgo suicida debe integrar múltiples factores de forma conjunta —ideación, especificidad del plan, antecedentes previos y red de apoyo disponible— en lugar de basarse en un único indicador aislado. En este caso, la combinación de ideación pasiva, ausencia de plan, ausencia de antecedentes y apoyo social cercano configura un cuadro que debe evaluarse de manera integral. Referencia: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación (2.ª ed.). Manual Moderno. [NOTA: Ver advertencia sobre calidad de OCR del archivo cargado (misma nota que pregunta 4).]",
+    "option_explanations": {
+      "A": "El apoyo social es un factor protector relevante, pero considerarlo de forma aislada como determinante único del nivel de riesgo ignora la necesidad de integrar los demás factores presentes en el caso.",
+      "B": "La intensidad emocional expresada es un dato relevante, pero no es, por sí sola, suficiente para clasificar el riesgo como alto sin considerar la ausencia de plan y de antecedentes.",
+      "D": "La ideación fue expresada, aunque de forma pasiva (\"no querer seguir así\"); la evaluación de riesgo no depende de que la persona verbalice una intención explícita y específica para iniciarse, sino que debe explorarse activamente ante cualquier indicio."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Intervención en crisis — evaluación de riesgo suicida",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0006",
+    "question_text": "En un grupo de psicodrama, un integrante está representando un conflicto con su jefe mediante una escena dramatizada con la ayuda de otros miembros del grupo. El terapeuta, en su rol de director, observa que la escena se ha estancado y que el protagonista no logra encontrar una salida a la situación representada. ¿Cuál es la función MÁS adecuada del terapeuta en este momento?",
+    "option_a": "Introducir cambios en la dramatización, como proponer nuevas técnicas o modificar personajes, para que la escena resulte más productiva para el protagonista.",
+    "option_b": "Ofrecer directamente su propia interpretación de la situación del protagonista, de modo que el grupo cuente con una lectura experta del conflicto representado.",
+    "option_c": "Detener la dramatización y proponer que el grupo continúe la sesión mediante una conversación verbal abierta sobre el conflicto laboral.",
+    "option_d": "Permitir que la escena continúe sin intervención, confiando en que el protagonista encontrará por sí mismo una resolución con el paso del tiempo.",
+    "correct_option": "A",
+    "explanation": "Rodríguez Morejón (2019) describe que el terapeuta, como director de la escena, tiene la función de introducir cambios en la dramatización —proponer técnicas, introducir o cambiar personajes— cuando esto puede hacer que la escena resulte más productiva, en lugar de limitarse a observar o de ofrecer directamente su propia interpretación (p. 230). Referencia: Rodríguez Morejón, A. (2019). Manual de psicoterapias: Teoría y técnicas. Herder, pp. 229-230.",
+    "option_explanations": {
+      "B": "El propio autor señala que ofrecer directamente las interpretaciones del terapeuta es una opción menos adecuada que generar intervenciones que ayuden a que sea el propio grupo el que aporte puntos de vista y alternativas nuevas (p. 230).",
+      "C": "Interrumpir la dramatización para pasar a una conversación verbal no corresponde a la función descrita del director, que consiste en ajustar la escena dramática misma, no en sustituirla por otro formato.",
+      "D": "El estancamiento observado es precisamente la señal que indica al director la necesidad de intervenir introduciendo cambios en la escena; permanecer sin intervención no se corresponde con la función activa descrita para este rol."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Rol del psicólogo clínico en grupos — función del terapeuta como director de psicodrama",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0007",
+    "question_text": "Un psicólogo va a coordinar por primera vez un grupo en un centro de salud mental. Antes de la primera sesión, se pregunta qué funciones son comunes a su rol como facilitador, independientemente de si el grupo será de tipo psicoeducativo, de apoyo o psicoterapéutico. Según los estándares de formación en trabajo grupal, ¿cuál es una función TRANSVERSAL del psicólogo facilitador en cualquiera de estos formatos?",
+    "option_a": "Aplicar un protocolo estructurado de sesiones definido de antemano, priorizando el cumplimiento del formato por sobre las particularidades del grupo y su momento de desarrollo.",
+    "option_b": "Delegar en los miembros con más experiencia previa la responsabilidad de mantener el orden y la seguridad dentro del espacio grupal.",
+    "option_c": "Evitar intervenir directamente en la dinámica del grupo para no interferir con los procesos espontáneos que puedan surgir entre los miembros.",
+    "option_d": "Adaptar sus conocimientos, habilidades y técnicas al tipo específico de grupo y a la etapa de desarrollo en que este se encuentre.",
+    "correct_option": "D",
+    "explanation": "Los estándares profesionales para la formación de facilitadores de grupo (ASGW) establecen que estos deben aplicar y modificar sus conocimientos, habilidades y técnicas según el tipo específico de grupo (de tarea, psicoeducativo, de consejería o psicoterapéutico) y la etapa de desarrollo del grupo, en lugar de aplicar un enfoque único. Referencia: Association for Specialists in Group Work (ASGW). (2000). Professional Standards for the Training of Group Workers. [NOTA: Fuente no incluida en los documentos cargados. Se trata de un marco de referencia ampliamente reconocido y estandarizado en la literatura internacional sobre trabajo grupal, utilizado aquí porque ninguno de los libros proporcionados desarrolla este subcomponente (ver nota metodológica).]",
+    "option_explanations": {
+      "A": "Priorizar el cumplimiento de un protocolo fijo por sobre las particularidades del grupo y su etapa de desarrollo se aparta del principio de adaptación que caracteriza a la facilitación grupal competente.",
+      "B": "La responsabilidad de mantener la seguridad del espacio grupal corresponde al facilitador profesional; no puede delegarse en miembros del grupo sin formación específica para esa función.",
+      "C": "Los estándares describen un rol de observación activa y de intervención cuando es necesario, no de ausencia total de intervención; evitar intervenir por completo no corresponde a la función descrita."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Rol del psicólogo clínico en grupos — funciones transversales de facilitación",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0008",
+    "question_text": "Un centro de salud organiza un grupo dirigido a personas que recientemente perdieron a un familiar por causas naturales. El objetivo declarado es que los participantes compartan su experiencia de duelo, se sientan acompañados y desarrollen recursos personales de afrontamiento, sin que se busque impartir contenidos teóricos estructurados ni trabajar sobre patrones de conducta disfuncionales específicos. ¿Con cuál tipo de grupo se corresponde MEJOR esta descripción?",
+    "option_a": "Un grupo psicoeducativo, dado que el acompañamiento del duelo en este formato requiere la transmisión de contenidos teóricos estructurados sobre el proceso de duelo.",
+    "option_b": "Un grupo de contención emocional, orientado a acompañar el proceso de duelo y fortalecer recursos personales, sin un componente instructivo estructurado.",
+    "option_c": "Un grupo psicoterapéutico, ya que compartir experiencias emocionales dentro de un grupo conlleva, por definición, trabajar sobre patrones de conducta disfuncionales.",
+    "option_d": "Un grupo de tarea, dado que el objetivo declarado del espacio consiste en alcanzar una meta concreta y medible entre los participantes.",
+    "correct_option": "B",
+    "explanation": "Los marcos de clasificación de grupos de ayuda (ASGW) distinguen los grupos de contención (o de consejería) por su función de acompañamiento y fortalecimiento de recursos de afrontamiento ante problemas vitales del presente, sin el componente instructivo estructurado propio de los grupos psicoeducativos ni el objetivo de modificar patrones disfuncionales específicos propio de los grupos psicoterapéuticos. El caso descrito corresponde a este formato. Referencia: Association for Specialists in Group Work (ASGW). (2000). Professional Standards for the Training of Group Workers. [NOTA: Fuente no incluida en los documentos cargados (ver nota metodológica).]",
+    "option_explanations": {
+      "A": "El propio caso indica explícitamente que no se busca impartir contenidos teóricos estructurados, lo cual descarta el formato psicoeducativo tal como está definido.",
+      "C": "El caso no describe un foco en modificar patrones de conducta disfuncionales, que es lo que distingue a los grupos psicoterapéuticos de los grupos de contención según esta clasificación.",
+      "D": "Los grupos de tarea se orientan a objetivos externos medibles (por ejemplo, un plan o un proyecto), no al acompañamiento emocional de un proceso personal como el duelo descrito en el caso."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos de contención emocional — función diferencial frente a otros formatos grupales",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0009",
+    "question_text": "Un psicólogo diseña un grupo de 8 sesiones para padres de adolescentes, con el objetivo de enseñar estrategias de comunicación familiar y manejo de límites. Cada sesión incluye una breve exposición de contenido, ejercicios prácticos y espacio para preguntas, pero no está diseñado para trabajar conflictos personales profundos de los participantes. ¿Qué característica distingue a este grupo psicoeducativo de un grupo psicoterapéutico?",
+    "option_a": "La cantidad de sesiones programadas, ya que la duración es el criterio que define y distingue a los grupos psicoeducativos frente a los grupos psicoterapéuticos.",
+    "option_b": "La interacción limitada entre los participantes, dado que este formato prioriza la transmisión de información por parte del facilitador por sobre el intercambio entre los miembros.",
+    "option_c": "La combinación de contenido estructurado y ejercicios prácticos orientados a desarrollar habilidades específicas, sin un foco en la reestructuración de conflictos personales profundos.",
+    "option_d": "El tamaño del grupo, dado que los grupos psicoeducativos únicamente pueden implementarse con un número reducido de participantes por sesión.",
+    "correct_option": "C",
+    "explanation": "Brown (2011) describe los grupos psicoeducativos como formatos que combinan la transmisión de contenido estructurado con actividades prácticas orientadas al desarrollo de habilidades concretas, diferenciándose de los grupos psicoterapéuticos en que no tienen como objetivo central la reestructuración de conflictos personales profundos de los participantes. Referencia: Brown, N. W. (2011). Psychoeducational Groups: Process and Practice (3.ª ed.). Routledge. [NOTA: Fuente no incluida en los documentos cargados (ver nota metodológica).]",
+    "option_explanations": {
+      "A": "La duración no es el criterio definitorio que distingue ambos formatos; puede haber grupos psicoeducativos y psicoterapéuticos de duraciones variables según el objetivo y la población.",
+      "B": "Los grupos psicoeducativos incluyen espacio para preguntas e interacción entre participantes, como muestra el propio caso; no se limitan a una transmisión unidireccional de información.",
+      "D": "El tamaño del grupo no es, según este marco, un criterio que distinga categóricamente a los grupos psicoeducativos de otros formatos grupales."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos psicoeducativos — función y estructura",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0010",
+    "question_text": "En un grupo psicoterapéutico de personas con ansiedad social, un miembro comenta después de escuchar el relato de otro integrante: \"pensé que era el único al que le pasaba esto; ahora me doy cuenta de que no estoy tan solo en esto\". El terapeuta identifica que este comentario refleja un cambio relevante en la experiencia del participante dentro del proceso grupal. ¿Cuál factor terapéutico grupal describe MEJOR lo que está experimentando este participante?",
+    "option_a": "La universalidad, entendida como el reconocimiento de que las propias dificultades son compartidas por otros y no constituyen una experiencia aislada.",
+    "option_b": "El altruismo, entendido como el beneficio que obtiene una persona al ofrecer ayuda genuina y apoyo activo a otros miembros del grupo.",
+    "option_c": "La catarsis, entendida como el alivio emocional que se produce al expresar abiertamente sentimientos previamente contenidos frente al grupo.",
+    "option_d": "La cohesión grupal, entendida como el grado de pertenencia y aceptación mutua que los miembros del grupo desarrollan entre sí con el tiempo.",
+    "correct_option": "A",
+    "explanation": "Yalom & Leszcz (2005) describen la universalidad como uno de los factores terapéuticos centrales de los grupos psicoterapéuticos: el reconocimiento, al escuchar a otros, de que las propias dificultades no son únicas ni aisladas, lo cual reduce la sensación de aislamiento del participante. El comentario descrito en el caso corresponde directamente a este factor. Referencia: Yalom, I. D., & Leszcz, M. (2005). The Theory and Practice of Group Psychotherapy (5.ª ed.). Basic Books. [NOTA: Fuente no incluida en los documentos cargados; factor ampliamente documentado en la literatura de psicoterapia de grupo (ver nota metodológica).]",
+    "option_explanations": {
+      "B": "El altruismo se refiere al beneficio derivado de ayudar activamente a otro miembro, no al reconocimiento de compartir una dificultad común, que es lo que expresa el participante en este caso.",
+      "C": "La catarsis se refiere al alivio derivado de la expresión emocional abierta, mientras que el comentario del caso refleja específicamente un cambio en la percepción de estar solo, no una descarga emocional.",
+      "D": "La cohesión describe el sentido de pertenencia grupal en general, mientras que el comentario del participante apunta específicamente al reconocimiento de una experiencia compartida, que es la definición particular de universalidad."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos psicoterapéuticos — factores terapéuticos grupales",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0011",
+    "question_text": "En la primera sesión, un cliente relata extensamente su problema principal. Antes de continuar indagando en detalle sobre ese primer problema mencionado, el terapeuta le pregunta: \"aparte de esto que me cuenta, ¿hay algún otro asunto que también le esté preocupando?\". ¿Qué objetivo persigue esta pregunta dentro de la fase de contacto inicial y análisis del problema?",
+    "option_a": "Confirmar si el cliente está dispuesto a comprometerse con un número mínimo de sesiones antes de iniciar la evaluación del problema principal.",
+    "option_b": "Evaluar si el cliente cumple con los criterios diagnósticos necesarios para justificar el inicio de un proceso de tratamiento formal.",
+    "option_c": "Determinar si el motivo de consulta expresado corresponde realmente a una urgencia clínica que amerite una intervención en crisis.",
+    "option_d": "Detectar la posible existencia de otros problemas relevantes antes de centrarse únicamente en el primero que el cliente mencionó de forma espontánea.",
+    "correct_option": "D",
+    "explanation": "Bados López & García Grau (2009) recomiendan que, tras escuchar el problema inicial, el terapeuta pregunte por la posible existencia de otros problemas antes de centrarse exclusivamente en el primero, ya que centrarse de entrada solo en el problema presentado puede hacer que no se detecten otros problemas igual o más importantes (p. 4). Referencia: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona, p. 4.",
+    "option_explanations": {
+      "A": "El compromiso con un número de sesiones no es el objetivo de esta pregunta específica; ese aspecto se aborda en un momento distinto del proceso, vinculado a la explicación del tratamiento.",
+      "B": "La pregunta no busca establecer criterios diagnósticos formales, sino identificar la posible existencia de problemas adicionales relevantes para la evaluación.",
+      "C": "No hay elementos en la descripción de la pregunta que indiquen que su función sea evaluar una urgencia; corresponde a la exploración estándar de problemas en la fase de contacto inicial, no a un procedimiento de intervención en crisis."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Fase inicial — contacto inicial y análisis del problema",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0012",
+    "question_text": "En la primera entrevista, un terapeuta recibe con cordialidad a su cliente, evita hacerlo esperar, dedica los primeros minutos a una conversación informal antes de abordar el motivo de consulta, y mantiene una actitud atenta tanto en su comunicación verbal como no verbal a lo largo de la sesión. ¿Qué función cumplen principalmente estas conductas del terapeuta en la fase inicial del proceso?",
+    "option_a": "Determinar con precisión el diagnóstico clínico del cliente a partir de la observación de su comportamiento durante los primeros minutos.",
+    "option_b": "Establecer las condiciones de confianza y comodidad necesarias para que se desarrolle el rapport entre el cliente y el terapeuta.",
+    "option_c": "Reducir el número de sesiones que serán necesarias para completar el proceso de evaluación y tratamiento del cliente.",
+    "option_d": "Sustituir la necesidad de explicar posteriormente los aspectos relacionados con la confidencialidad y el encuadre del tratamiento.",
+    "correct_option": "B",
+    "explanation": "Balarezo Ch. (2016) señala que el rapport se forma a partir del interés demostrado por el terapeuta, la capacidad de respuesta emocional y una actitud amistosa que debe comunicarse desde el primer contacto; conductas como la cordialidad, evitar esperas largas y el tono de voz amable son tácticas que se emplean para establecer esa condición de confianza (pp. 16-17). Referencia: Balarezo Ch., L. (2016). Psicoterapia (2.ª ed.). Quito: Centro de Publicaciones PUCE, pp. 16-19.",
+    "option_explanations": {
+      "A": "La aproximación diagnóstica es una función distinta y posterior dentro de la primera entrevista, que el propio autor separa del establecimiento del rapport (p. 17); estas conductas no tienen como función determinar un diagnóstico.",
+      "C": "El establecimiento del rapport no tiene como función reducir el número de sesiones necesarias; esa cuestión depende de otros factores relacionados con la planificación del tratamiento.",
+      "D": "La estructuración de la relación terapéutica —donde se explicitan aspectos como confidencialidad y encuadre— es un paso posterior y distinto del establecimiento del rapport, no un aspecto que estas conductas sustituyan (p. 19)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Fase inicial — establecimiento del rapport",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0013",
+    "question_text": "En sesión 6, un cliente llega mencionando un conflicto reciente con un compañero de trabajo que no estaba contemplado en el plan de la sesión. El terapeuta había previsto trabajar una técnica de reestructuración cognitiva ya acordada previamente. Según la lógica del establecimiento del orden del día en la fase de aplicación del tratamiento, ¿cuál es la decisión MÁS adecuada?",
+    "option_a": "Mantener rígidamente el plan original de la sesión, dado que el orden del día se define antes de la sesión y no debería modificarse una vez establecido.",
+    "option_b": "Orientar la sesión hacia el conflicto laboral mencionado sin discutir con el cliente si esto implica dejar de lado la técnica que ya había sido acordada previamente.",
+    "option_c": "Discutir con el cliente si el nuevo conflicto amerita atención en esta sesión, manteniendo la posibilidad de ajustar el orden del día de común acuerdo.",
+    "option_d": "Posponer la decisión sobre el orden del día hasta consultar con un supervisor antes de continuar con el desarrollo de la sesión.",
+    "correct_option": "C",
+    "explanation": "Bados López & García Grau (2009) señalan que el orden del día, aunque pensado previamente por el terapeuta, se termina de establecer de común acuerdo con el paciente, precisamente para proporcionar la flexibilidad necesaria de trabajar con otros problemas cuando surgen y se consideran importantes (p. 32). Referencia: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona, p. 32.",
+    "option_explanations": {
+      "A": "Los autores señalan explícitamente que el orden del día debe tener flexibilidad para incorporar problemas emergentes relevantes; mantenerlo de forma rígida contradice ese principio.",
+      "B": "Reorientar la sesión sin discutir el cambio con el cliente se aparta del acuerdo mutuo que, según los autores, debe regir el orden del día; el tema nuevo no debería desplazar lo planificado sin ese paso previo de conversación conjunta.",
+      "D": "Esta es una decisión que corresponde al proceso ordinario de la sesión entre terapeuta y cliente; no se plantea en el modelo como una decisión que deba postergarse hasta contar con supervisión externa."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Fase media — estructura de la sesión de tratamiento",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0014",
+    "question_text": "Tras 10 sesiones de tratamiento para un trastorno de ansiedad, un terapeuta revisa los datos recogidos y concluye que no ha habido ningún progreso. Antes de decidir cambiar de técnica o modificar el tratamiento, revisa cuidadosamente si el plan terapéutico se ha aplicado exactamente como se había diseñado originalmente. Según el procedimiento sugerido ante la falta de progreso terapéutico, ¿qué representa esta revisión que realiza el terapeuta?",
+    "option_a": "Un paso necesario para descartar que la falta de progreso se deba a una aplicación del tratamiento distinta de la planeada, antes de modificar la técnica empleada.",
+    "option_b": "Un paso innecesario, dado que la falta de progreso después de 10 sesiones justifica por sí sola cambiar de inmediato hacia una técnica diferente.",
+    "option_c": "Un procedimiento que solo tiene sentido si el propio cliente expresa directamente su insatisfacción con el tratamiento recibido hasta el momento.",
+    "option_d": "Una acción que debería haberse realizado antes de iniciar el tratamiento, por lo que en esta etapa del proceso ya no aporta ninguna información útil.",
+    "correct_option": "A",
+    "explanation": "Bados López & García Grau (2009) proponen que, ante resultados parciales que indican poca o nula eficacia del tratamiento, antes de modificarlo hay que preguntarse si el tratamiento está siendo aplicado según se había planeado, ya que el terapeuta, el cliente u otras personas colaboradoras pueden haberse apartado de las pautas establecidas (p. 33). Referencia: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona, p. 33.",
+    "option_explanations": {
+      "B": "Los autores plantean explícitamente una secuencia de pasos antes de decidir modificar el tratamiento; cambiar de técnica de inmediato sin esta revisión omite un paso que el modelo considera necesario.",
+      "C": "Esta revisión es un procedimiento que corresponde al terapeuta realizar de forma sistemática, independientemente de que el cliente haya expresado o no directamente su insatisfacción.",
+      "D": "Esta revisión tiene sentido específicamente cuando ya se cuenta con datos de evolución del tratamiento en curso; no es una acción que se realice antes de iniciarlo, sino ante evidencia de estancamiento durante su aplicación."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Fase media — evaluación de la falta de progreso terapéutico",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0015",
+    "question_text": "Un cliente ha mostrado una mejoría notable en sus síntomas depresivos tras 12 sesiones, aunque el terapeuta considera que aún podría trabajarse algún aspecto adicional. En la sesión 13, el cliente comenta que se siente capaz de continuar por su cuenta y que prefiere finalizar el proceso. Según los criterios sobre finalización del tratamiento, ¿cuál es la consideración MÁS ajustada a este caso?",
+    "option_a": "El terapeuta debe insistir en continuar el tratamiento, dado que su criterio profesional sobre lo que falta por trabajar debe prevalecer sobre la percepción del cliente.",
+    "option_b": "La finalización solo puede considerarse apropiada cuando se ha alcanzado el cien por ciento de los objetivos planteados originalmente al inicio del tratamiento.",
+    "option_c": "El deseo del cliente de finalizar debe interpretarse como una posible resistencia inconsciente al proceso que requeriría explorarse antes de aceptar el cierre.",
+    "option_d": "La decisión última sobre continuar o finalizar corresponde generalmente al cliente, por lo que su valoración de sentirse capaz de continuar solo es un criterio legítimo de cierre.",
+    "correct_option": "D",
+    "explanation": "Bados López & García Grau (2009) señalan que, generalmente, es el cliente quien en último término decide si le conviene continuar con el tratamiento o si ha logrado ya un progreso suficiente; la consecución total de los objetivos propuestos no es la única razón válida de finalización (p. 35). Referencia: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona, p. 35.",
+    "option_explanations": {
+      "A": "Los autores señalan que la decisión última corresponde generalmente al cliente; que el terapeuta valore que aún queda trabajo pendiente no significa que deba imponer la continuación por sobre la decisión del cliente.",
+      "B": "El propio texto indica explícitamente que la consecución de los objetivos propuestos no es la única razón de finalización del tratamiento; exigir el cumplimiento total como único criterio contradice esa afirmación.",
+      "C": "Interpretar automáticamente el deseo de finalizar como resistencia inconsciente no se sostiene en el modelo descrito, que reconoce la satisfacción con lo ya conseguido como una razón legítima y frecuente para el cierre del tratamiento (p. 35)."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Fase final — terminación del tratamiento",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0016",
+    "question_text": "Un adolescente de 15 años es llevado a consulta por su madre, quien refiere que \"ha estado muy retraído últimamente\" en casa. El adolescente, durante la primera sesión, dice no percibir ningún problema propio y afirma que \"todo está bien\" desde su punto de vista. Según el análisis del demandante de ayuda, ¿cómo debe entenderse esta situación inicial?",
+    "option_a": "La discrepancia entre madre y adolescente indica que la madre probablemente está exagerando o malinterpretando el comportamiento observado en el hogar.",
+    "option_b": "El motivo de consulta surge de una tercera persona que ha detectado dificultades, mientras que el adolescente no ha generado aún una demanda propia sobre su situación.",
+    "option_c": "La ausencia de una demanda propia por parte del adolescente vuelve poco viable continuar el proceso mientras él no solicite ayuda de forma directa.",
+    "option_d": "El motivo de consulta debe descartarse como válido, ya que solo los reportes del propio consultante pueden considerarse una base legítima para iniciar la evaluación.",
+    "correct_option": "B",
+    "explanation": "Eiroa-Orosa et al. (2021) describen que una situación frecuente en el análisis de la demanda es que un tercero —un familiar, en este caso— genere el motivo de consulta al detectar dificultades en otra persona, mientras que esta última puede no haber generado todavía una demanda propia sobre su situación (p. 70). Referencia: Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI (2.ª ed.). Editorial UOC, p. 70.",
+    "option_explanations": {
+      "A": "El modelo no asume que la discrepancia entre quien consulta y quien es señalado como afectado implique necesariamente una exageración; simplemente describe distintos orígenes posibles del motivo de consulta.",
+      "C": "Los autores señalan que, en estos casos, el trabajo puede dirigirse inicialmente a quien formula la demanda, buscando promover mejorías de manera indirecta o generar progresivamente una demanda propia en la persona identificada, no que la intervención sea inviable.",
+      "D": "El modelo reconoce explícitamente que el motivo de consulta puede originarse en terceros y sigue siendo un punto de partida válido para el trabajo clínico, no un criterio de exclusión de la consulta."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Motivo de consulta-demanda — tipos de demandante de ayuda",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0017",
+    "question_text": "Un hombre de 30 años acude a consulta porque un juzgado se lo ha exigido como alternativa a una sanción legal derivada de un problema de consumo de sustancias. Durante la sesión, muestra escasa disposición a hablar y responde con evasivas a la mayoría de las preguntas. Según el análisis de la demanda terapéutica, ¿cuál es la consideración MÁS relevante que debe guiar el trabajo inicial del psicólogo en este caso?",
+    "option_a": "Confrontar directamente al consultante señalándole que su actitud evasiva confirma que no tiene ninguna intención real de modificar su consumo de sustancias.",
+    "option_b": "Suspender el proceso hasta que el consultante manifieste espontáneamente una motivación genuina y verbalmente explícita para iniciar el tratamiento.",
+    "option_c": "Priorizar el trabajo orientado a que el consultante genere, en la medida de lo posible, una demanda propia sobre su situación, dado el contexto de imperativo legal.",
+    "option_d": "Informar al juzgado que el proceso terapéutico no puede continuar debido a la falta de motivación observada durante esta primera sesión.",
+    "correct_option": "C",
+    "explanation": "Eiroa-Orosa et al. (2021) señalan que cuando una persona llega a consulta por imperativo legal, probablemente tendrá un nivel de motivación e implicación inferior al de alguien que consulta por iniciativa propia, por lo que en estas situaciones cobra especial importancia generar una demanda terapéutica propia en la persona que recibirá la ayuda (p. 70). Referencia: Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI (2.ª ed.). Editorial UOC, p. 70.",
+    "option_explanations": {
+      "A": "Confrontar la actitud evasiva como prueba definitiva de falta de intención de cambio no se corresponde con el enfoque descrito, que plantea trabajar activamente en la generación de motivación, no en confirmar prematuramente su ausencia.",
+      "B": "El modelo no plantea suspender el proceso a la espera de una motivación espontánea; por el contrario, señala la importancia de trabajar activamente para generar esa demanda propia dentro del proceso.",
+      "D": "La baja motivación inicial observada en una primera sesión no es, según este marco, un criterio para interrumpir el proceso; de hecho, es precisamente la situación que el modelo identifica como relevante para trabajar de forma activa."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Motivo de consulta-demanda — consulta por mandato externo",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0018",
+    "question_text": "Al final de la primera entrevista, un terapeuta explica a su cliente la frecuencia y duración aproximada de las sesiones, los honorarios, y una visión general de en qué consiste el tratamiento propuesto, incluyendo sus limitaciones. El cliente pregunta por qué se aborda esto recién en este momento y no desde el inicio de la sesión. Según el criterio sobre el momento de la estructuración de la relación terapéutica, ¿cuál es la explicación MÁS adecuada?",
+    "option_a": "Suele recomendarse realizar la estructuración después de recoger la información inicial, cuando los criterios diagnósticos y de planificación están más ajustados.",
+    "option_b": "La estructuración conviene realizarla en los primeros minutos de la primera sesión, priorizándola sobre la recolección inicial de información del cliente.",
+    "option_c": "La estructuración es un paso opcional que solo se justifica cuando el cliente pregunta explícitamente por los aspectos prácticos del tratamiento.",
+    "option_d": "La estructuración debe posponerse hasta la última sesión del tratamiento, momento en el que corresponde revisar los acuerdos alcanzados durante el proceso.",
+    "correct_option": "A",
+    "explanation": "Balarezo Ch. (2016) señala que, aunque el momento de la estructuración puede variar según la experiencia del terapeuta, se aconseja realizarla luego de la recolección de los datos informativos o al final de la sesión, y luego de la etapa de planificación, cuando los criterios diagnósticos están más ajustados (p. 20). Referencia: Balarezo Ch., L. (2016). Psicoterapia (2.ª ed.). Quito: Centro de Publicaciones PUCE, pp. 20-21.",
+    "option_explanations": {
+      "B": "El propio autor recomienda realizar la estructuración después de la recolección de información y de la etapa de planificación, no antes de esta, cuando los criterios diagnósticos ya están más ajustados (p. 20).",
+      "C": "La estructuración de la relación terapéutica se describe como un paso necesario del proceso, no como un elemento opcional que dependa de que el cliente pregunte explícitamente por él.",
+      "D": "La estructuración corresponde a la fase inicial del proceso, no a la fase final; posponerla hasta la última sesión contradice su función de establecer expectativas y acuerdos desde el comienzo del tratamiento."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Encuadre psicoterapéutico — estructuración de la relación terapéutica",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0019",
+    "question_text": "Antes de iniciar un tratamiento, un terapeuta informa a su cliente sobre los objetivos de la intervención propuesta, su duración estimada, las alternativas de tratamiento disponibles, y las ventajas y desventajas de cada una, incluyendo posibles efectos adversos. ¿Qué principio del encuadre psicoterapéutico está aplicando el terapeuta con esta explicación?",
+    "option_a": "El principio de confidencialidad, que exige explicar al cliente los límites legales bajo los cuales se protegerá la información que comparta.",
+    "option_b": "El principio de neutralidad terapéutica, que requiere que el terapeuta se abstenga de ofrecer información que pueda influir en la decisión del cliente.",
+    "option_c": "El principio de la alianza de trabajo, que se refiere específicamente al vínculo afectivo que debe desarrollarse entre el cliente y el terapeuta a lo largo del proceso.",
+    "option_d": "El consentimiento informado, que requiere que el cliente sea informado de forma comprensible sobre el tratamiento, sus alternativas y sus posibles ventajas y desventajas.",
+    "correct_option": "D",
+    "explanation": "Bados López & García Grau (2009) señalan que el consentimiento informado implica que el cliente debe ser informado de forma comprensible del tratamiento que se le va a aplicar, de sus objetivos, de la duración estimada, de otros posibles tratamientos alternativos y de las ventajas y desventajas de cada uno, incluyendo resultados probables y posibles efectos adversos (p. 29). Referencia: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona, p. 29.",
+    "option_explanations": {
+      "A": "La confidencialidad es un elemento distinto del encuadre, relacionado con los límites de la información compartida, no con la explicación de objetivos, duración y alternativas de tratamiento descrita en el caso.",
+      "B": "El consentimiento informado no implica neutralidad ni abstenerse de brindar información; por el contrario, requiere una explicación activa y completa por parte del terapeuta.",
+      "C": "La alianza de trabajo se refiere al vínculo y la colaboración entre cliente y terapeuta, un concepto distinto de la explicación formal de objetivos y alternativas de tratamiento que constituye el consentimiento informado."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Encuadre psicoterapéutico — consentimiento informado",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-nuevas-0020",
+    "question_text": "Un terapeuta y su cliente, tras varias sesiones de evaluación, formulan el siguiente objetivo: \"el cliente logrará viajar en transporte público durante al menos 20 minutos seguidos, sin necesidad de acompañante, con un nivel de ansiedad de 4 o menos en una escala de 0 a 10, de forma sostenida durante cuatro semanas\". Antes de este acuerdo, el cliente había propuesto como objetivo inicial \"sentirme mejor con los viajes\". ¿Por qué el objetivo finalmente acordado representa una mejora respecto a la propuesta inicial del cliente?",
+    "option_a": "Porque reduce la necesidad de que el cliente participe en la definición de los criterios de éxito del tratamiento a lo largo del proceso.",
+    "option_b": "Porque es específico y medible, describe la conducta, la situación, la frecuencia y el nivel de malestar esperado, en lugar de plantear una meta general y difícil de evaluar.",
+    "option_c": "Porque permite anticipar con certeza que el cliente alcanzará una mejora sustancial en el plazo establecido, más allá de otros factores que puedan influir en el proceso.",
+    "option_d": "Porque se centra en eliminar la ansiedad del cliente durante el uso del transporte público, en lugar de reducirla a un nivel manejable.",
+    "correct_option": "B",
+    "explanation": "Bados López & García Grau (2009) señalan que los objetivos deben ser específicos, describiendo qué conductas deben instaurarse o modificarse, en qué situaciones y con qué frecuencia, duración o intensidad (p. 28); Eiroa-Orosa et al. (2021) añaden que conviene que los objetivos cumplan características SMART, entre ellas ser medibles y realistas (p. 107). El objetivo acordado cumple estas condiciones, a diferencia de la propuesta inicial, formulada en términos generales y difíciles de evaluar. Referencia: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona, p. 28; Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI (2.ª ed.). Editorial UOC, p. 107.",
+    "option_explanations": {
+      "A": "Ambas fuentes coinciden en que los objetivos deben acordarse con el cliente, no imponerse ni definirse eliminando su participación; la mejora del objetivo no radica en excluir al cliente del proceso.",
+      "C": "Ninguna de las fuentes sostiene que un objetivo bien formulado garantice el resultado; los objetivos realistas orientan el proceso, pero no aseguran por sí mismos su consecución.",
+      "D": "El objetivo acordado no plantea eliminar por completo la ansiedad, sino reducirla a un nivel manejable (4 o menos en la escala descrita); un objetivo de eliminación total del malestar no correspondería al criterio de realismo señalado por ambas fuentes."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Objetivos de intervención — características de un objetivo terapéutico bien formulado",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0001",
+    "question_text": "Una mujer acude porque “necesita hablar con alguien” después de varios conflictos laborales. Durante la entrevista relata síntomas de tensión, dificultades relacionales y expectativas de “salir distinta de esto”. ¿Qué respuesta inicial se ajusta mejor a una intervención psicoterapéutica?",
+    "option_a": "Explorar el problema, establecer relación terapéutica y comenzar una comprensión clínica del caso.",
+    "option_b": "Dar recomendaciones laborales directas y limitar la sesión a estrategias de afrontamiento inmediato.",
+    "option_c": "Centrar la entrevista en tranquilizarla y evitar profundizar para disminuir tensión inicial.",
+    "option_d": "Derivar a un grupo abierto antes de formular el problema y sus objetivos clínicos.",
+    "correct_option": "A",
+    "explanation": "Según Balarezo, la psicoterapia no se reduce a conversación, consejo ni alivio circunstancial; implica una relación terapéutica orientada a transformaciones psicológicas. Bados y García Grau señalan que en el contacto inicial se establece la relación y se explora el problema; por eso la mejor respuesta es iniciar comprensión clínica y vínculo terapéutico. Referencia: Balarezo Chiriboga, L. (1998/2015). Psicoterapia, cap. 1, pp. 5-9; Bados López, A., & García Grau, E. (2009), pp. 2-5.",
+    "option_explanations": {
+      "B": "Desde Balarezo y Bados, B se queda en consejo directivo, C prioriza alivio sin formular el problema y D elige modalidad antes de analizar la demanda inicial.",
+      "C": "Desde Balarezo y Bados, B se queda en consejo directivo, C prioriza alivio sin formular el problema y D elige modalidad antes de analizar la demanda inicial.",
+      "D": "Desde Balarezo y Bados, B se queda en consejo directivo, C prioriza alivio sin formular el problema y D elige modalidad antes de analizar la demanda inicial."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0002",
+    "question_text": "Un estudiante solicita ayuda porque debe decidir si cambia de carrera. No refiere malestar clínico intenso, pero se muestra confundido por presión familiar y dudas personales. ¿Qué intervención se ajusta mejor al asesoramiento psicológico?",
+    "option_a": "Iniciar un tratamiento prolongado centrado en rasgos de personalidad y conflictos tempranos.",
+    "option_b": "Aplicar técnicas de modificación conductual antes de comprender la situación vocacional.",
+    "option_c": "Clarificar la demanda, explorar alternativas y favorecer una decisión razonada del estudiante.",
+    "option_d": "Cerrar la consulta indicando que el problema pertenece solo al ámbito académico.",
+    "correct_option": "C",
+    "explanation": "Según Balarezo, el asesoramiento se diferencia de la psicoterapia cuando el foco es orientar, clarificar y apoyar decisiones sin convertir la consulta en un proceso profundo de modificación de personalidad. En el caso, la demanda vocacional exige análisis de alternativas y decisión razonada, no tratamiento prolongado. Referencia: Balarezo Chiriboga, L. (1998/2015). Psicoterapia, aproximación y asesoramiento, pp. 5-7; Estructura Psicología Clínica CACES, Componente 1.1.2.",
+    "option_explanations": {
+      "A": "Desde Balarezo, A sobredimensiona una demanda de orientación, B aplica técnica sin formulación previa y D excluye una consulta que puede trabajarse mediante asesoramiento.",
+      "B": "Desde Balarezo, A sobredimensiona una demanda de orientación, B aplica técnica sin formulación previa y D excluye una consulta que puede trabajarse mediante asesoramiento.",
+      "D": "Desde Balarezo, A sobredimensiona una demanda de orientación, B aplica técnica sin formulación previa y D excluye una consulta que puede trabajarse mediante asesoramiento."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Asesoramiento",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0003",
+    "question_text": "Un joven llega a consulta una hora después de presenciar un accidente grave. Está desorganizado, llora, repite que “no sabe qué hacer” y no ha avisado a su familia. ¿Cuál es la primera intervención más pertinente?",
+    "option_a": "Formular objetivos terapéuticos de mediano plazo y programar evaluación clínica completa.",
+    "option_b": "Establecer contacto psicológico, valorar seguridad, ordenar necesidades y activar apoyos inmediatos.",
+    "option_c": "Explorar antecedentes infantiles para comprender su forma de responder ante pérdidas.",
+    "option_d": "Explicar el modelo de crisis y pedirle que escriba un resumen del evento.",
+    "correct_option": "B",
+    "explanation": "Según Slaikeu, la intervención de primera instancia en crisis corresponde a primeros auxilios psicológicos: contacto, valoración de seguridad, análisis breve del problema, alternativas, acción concreta y seguimiento. En el caso, la desorganización inmediata exige contener, ordenar necesidades y activar apoyos antes de planificar terapia. Referencia: Slaikeu, K. A. (1996). Intervención en crisis, cap. 6, pp. 113-138.",
+    "option_explanations": {
+      "A": "Desde Slaikeu, A pertenece a planificación posterior, C desplaza la atención de la urgencia actual y D informa sobre crisis sin resolver necesidades inmediatas.",
+      "C": "Desde Slaikeu, A pertenece a planificación posterior, C desplaza la atención de la urgencia actual y D informa sobre crisis sin resolver necesidades inmediatas.",
+      "D": "Desde Slaikeu, A pertenece a planificación posterior, C desplaza la atención de la urgencia actual y D informa sobre crisis sin resolver necesidades inmediatas."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Intervención en crisis",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0004",
+    "question_text": "Un consultante pide “solo consejos” para que su pareja cambie. En la entrevista evita responsabilizarse de sus respuestas, atribuye el problema a terceros y espera una solución externa. ¿Qué acción clínica es más adecuada?",
+    "option_a": "Aceptar la demanda literal y centrar las sesiones en pautas para modificar a la pareja.",
+    "option_b": "Evitar discutir expectativas para no afectar la alianza durante la entrevista inicial.",
+    "option_c": "Confirmar que no hay indicación clínica porque el consultante no formula malestar propio.",
+    "option_d": "Analizar la demanda, revisar expectativas y valorar disposición para el trabajo terapéutico.",
+    "correct_option": "D",
+    "explanation": "Según Eiroa-Orosa, Fernández y Nieto, el análisis de la demanda incluye identificar quién pide ayuda, qué espera, cómo entiende el problema y qué soluciones ha intentado. Por eso, ante una petición de 'consejos' para cambiar a otra persona, conviene revisar expectativas y valorar una demanda terapéutica trabajable. Referencia: Eiroa-Orosa, F. J., Fernández Gómez, M. J., & Nieto, R. (2021). Cap. I, análisis de la demanda, pp. 69-80.",
+    "option_explanations": {
+      "A": "Desde Eiroa-Orosa et al., A acepta la demanda literal sin analizarla, B omite expectativas relevantes y C descarta una demanda implícita que aún debe explorarse.",
+      "B": "Desde Eiroa-Orosa et al., A acepta la demanda literal sin analizarla, B omite expectativas relevantes y C descarta una demanda implícita que aún debe explorarse.",
+      "C": "Desde Eiroa-Orosa et al., A acepta la demanda literal sin analizarla, B omite expectativas relevantes y C descarta una demanda implícita que aún debe explorarse."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Psicoterapia",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0005",
+    "question_text": "Tras dos entrevistas, una paciente muestra ansiedad ante exposiciones laborales. El psicólogo tiene información sobre antecedentes, respuestas fisiológicas, pensamientos, evitación y apoyo familiar. ¿Qué paso corresponde antes de aplicar técnicas?",
+    "option_a": "Formular hipótesis, acordar objetivos y seleccionar técnicas coherentes con el caso.",
+    "option_b": "Aplicar relajación desde la siguiente sesión porque reduce activación fisiológica.",
+    "option_c": "Continuar entrevistas indefinidamente hasta tener información completa del pasado.",
+    "option_d": "Proponer cierre temporal y observar si mejora sin intervención estructurada.",
+    "correct_option": "A",
+    "explanation": "Según Balarezo, antes de la aplicación técnica se requiere planificación: formulación, descripción clínica, objetivos y técnicas. Bados y García Grau también ubican formulación, objetivos y diseño del tratamiento antes de ejecutar la intervención; por eso la técnica debe derivarse del caso formulado. Referencia: Balarezo Chiriboga, L. (1998/2015). Psicoterapia, planificación y aplicación técnica, pp. 22-28; Bados y García Grau (2009), pp. 27-32.",
+    "option_explanations": {
+      "B": "Desde Balarezo y Bados, B selecciona técnica por un dato parcial, C posterga innecesariamente el proceso y D omite la planificación terapéutica.",
+      "C": "Desde Balarezo y Bados, B selecciona técnica por un dato parcial, C posterga innecesariamente el proceso y D omite la planificación terapéutica.",
+      "D": "Desde Balarezo y Bados, B selecciona técnica por un dato parcial, C posterga innecesariamente el proceso y D omite la planificación terapéutica."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Intervención individual y planificación",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0006",
+    "question_text": "En un grupo de apoyo para personas que atraviesan pérdidas recientes, dos integrantes monopolizan la conversación y otros permanecen callados. El grupo busca orientación sin perder participación. ¿Qué intervención refleja mejor el rol del psicólogo?",
+    "option_a": "Permitir que hablen quienes más necesitan expresarse y reservar el análisis para sesiones posteriores.",
+    "option_b": "Dividir el grupo en parejas para evitar tensiones y reducir la interacción grupal directa.",
+    "option_c": "Convertir la sesión en exposición didáctica para evitar que el grupo se desorganice.",
+    "option_d": "Facilitar turnos, contener emociones y promover participación vinculada al objetivo grupal.",
+    "correct_option": "D",
+    "explanation": "Según Slaikeu, el trabajo grupal en crisis debe facilitar apoyo social, expresión emocional y organización de tareas de recuperación. El rol del psicólogo no es monopolizar ni dejar al grupo sin dirección, sino regular la participación, contener emociones y mantener el objetivo grupal. Referencia: Slaikeu, K. A. (1996). Apéndice A, grupos de terapia para crisis, pp. 449-456.",
+    "option_explanations": {
+      "A": "Desde Slaikeu, A deja al grupo con baja regulación, B reduce la interacción grupal y C convierte la sesión en exposición, perdiendo función clínica.",
+      "B": "Desde Slaikeu, A deja al grupo con baja regulación, B reduce la interacción grupal y C convierte la sesión en exposición, perdiendo función clínica.",
+      "C": "Desde Slaikeu, A deja al grupo con baja regulación, B reduce la interacción grupal y C convierte la sesión en exposición, perdiendo función clínica."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Rol del psicólogo clínico en grupos",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0007",
+    "question_text": "En un grupo de contención para cuidadores, una participante llora al decir que se siente agotada y culpable. Otros miembros asienten, pero uno intenta aconsejarle rápidamente. ¿Qué intervención es más adecuada?",
+    "option_a": "Interrumpir el llanto para evitar que el grupo se sobrecargue emocionalmente.",
+    "option_b": "Validar la emoción, ordenar el intercambio y favorecer apoyo sin apresurar soluciones.",
+    "option_c": "Pedir al grupo que formule consejos concretos para resolver la culpa expresada.",
+    "option_d": "Cambiar a una actividad escrita para disminuir la intensidad afectiva del momento.",
+    "correct_option": "B",
+    "explanation": "Según Slaikeu, una tarea central en la resolución de crisis es el manejo de sentimientos, junto con la supervivencia física, el dominio cognitivo y las adaptaciones conductuales. En un grupo de contención, el psicólogo debe validar la emoción, ordenar el intercambio y evitar que el apoyo se reduzca a consejos apresurados. Referencia: Slaikeu, K. A. (1996). Terapia para crisis, cuatro tareas, pp. 177-182; Apéndice A, pp. 449-456.",
+    "option_explanations": {
+      "A": "Desde Slaikeu, A corta la expresión emocional, C apresura soluciones y D evita un momento grupal útil para contención y elaboración.",
+      "C": "Desde Slaikeu, A corta la expresión emocional, C apresura soluciones y D evita un momento grupal útil para contención y elaboración.",
+      "D": "Desde Slaikeu, A corta la expresión emocional, C apresura soluciones y D evita un momento grupal útil para contención y elaboración."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos de contención emocional",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0008",
+    "question_text": "En un taller grupal sobre ansiedad, varios participantes piden “la causa exacta” de sus síntomas. El psicólogo debe explicar sin culpabilizar ni simplificar en exceso. ¿Qué respuesta se ajusta mejor a un grupo psicoeducativo?",
+    "option_a": "Explicar una causa principal y pedir que identifiquen cuál aplica a cada caso.",
+    "option_b": "Evitar explicaciones clínicas porque podrían aumentar preocupación en el grupo.",
+    "option_c": "Presentar información comprensible, multidimensional y conectada con experiencias personales.",
+    "option_d": "Sustituir la explicación por ejercicios para que cada persona descubra su causa.",
+    "correct_option": "C",
+    "explanation": "Según Eiroa-Orosa, Fernández y Nieto, la psicoeducación debe ofrecer información comprensible, útil y conectada con la autogestión del bienestar, evitando simplificaciones culpabilizadoras. En el caso, la explicación debe ser multidimensional y vinculada con experiencias del grupo. Referencia: Eiroa-Orosa, F. J., Fernández Gómez, M. J., & Nieto, R. (2021). Psicoeducación y autogestión del bienestar, pp. 131-135.",
+    "option_explanations": {
+      "A": "Desde Eiroa-Orosa et al., A simplifica causalmente, B abandona el objetivo psicoeducativo y D reemplaza información clínica necesaria por descubrimiento individual.",
+      "B": "Desde Eiroa-Orosa et al., A simplifica causalmente, B abandona el objetivo psicoeducativo y D reemplaza información clínica necesaria por descubrimiento individual.",
+      "D": "Desde Eiroa-Orosa et al., A simplifica causalmente, B abandona el objetivo psicoeducativo y D reemplaza información clínica necesaria por descubrimiento individual."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos psicoeducativos",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0009",
+    "question_text": "En un grupo psicoterapéutico breve, una integrante expresa enojo hacia otra porque “siempre habla de lo mismo”. El clima se tensa y varias personas miran al psicólogo esperando que decida quién tiene razón. ¿Qué intervención es más pertinente?",
+    "option_a": "Señalar a la integrante molesta que su reacción interfiere con el avance grupal.",
+    "option_b": "Defender a quien habló primero para preservar su seguridad emocional en la sesión.",
+    "option_c": "Explorar la interacción grupal, contener la tensión y vincularla con el proceso terapéutico.",
+    "option_d": "Suspender el tema conflictivo y volver al contenido previsto de la sesión.",
+    "correct_option": "C",
+    "explanation": "Según Balarezo, la psicoterapia grupal trabaja procesos de relación y comunicación que emergen entre participantes. Slaikeu también plantea que el grupo puede facilitar elaboración emocional y adaptación; por eso el conflicto debe explorarse clínicamente, no resolverse tomando partido. Referencia: Balarezo Chiriboga, L. (1998/2015). Psicoterapia grupal, pp. 221-238; Slaikeu (1996), Apéndice A, pp. 449-456.",
+    "option_explanations": {
+      "A": "Desde Balarezo y Slaikeu, A individualiza el conflicto, B toma partido y D evita material relacional que puede trabajarse terapéuticamente.",
+      "B": "Desde Balarezo y Slaikeu, A individualiza el conflicto, B toma partido y D evita material relacional que puede trabajarse terapéuticamente.",
+      "D": "Desde Balarezo y Slaikeu, A individualiza el conflicto, B toma partido y D evita material relacional que puede trabajarse terapéuticamente."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos psicoterapéuticos",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0010",
+    "question_text": "Después de una inundación, un centro comunitario organiza un grupo de diez sesiones para personas afectadas. En la primera sesión varios quieren contar detalles, otros piden pautas prácticas para los próximos días. ¿Qué estructura es más adecuada?",
+    "option_a": "Combinar apoyo grupal, información breve, discusión guiada y tareas de recuperación progresiva.",
+    "option_b": "Permitir relatos extensos sin estructura para que cada participante descargue a su ritmo.",
+    "option_c": "Dedicar la primera sesión solo a explicar teoría de la crisis y sus fases generales.",
+    "option_d": "Evaluar individualmente a todos y posponer la interacción grupal hasta la cuarta sesión.",
+    "correct_option": "A",
+    "explanation": "Según Slaikeu, los grupos de terapia para crisis integran apoyo social, componentes didácticos y tareas orientadas a supervivencia, manejo emocional, dominio cognitivo y adaptación conductual. En el caso, la sesión requiere estructura, información breve y apoyo grupal progresivo. Referencia: Slaikeu, K. A. (1996). Terapia multimodal para crisis, pp. 177-190; Apéndice A, pp. 449-456.",
+    "option_explanations": {
+      "B": "Desde Slaikeu, B puede desorganizar el grupo, C resulta demasiado académico y D retrasa el apoyo grupal cuando la crisis requiere estructura e interacción.",
+      "C": "Desde Slaikeu, B puede desorganizar el grupo, C resulta demasiado académico y D retrasa el apoyo grupal cuando la crisis requiere estructura e interacción.",
+      "D": "Desde Slaikeu, B puede desorganizar el grupo, C resulta demasiado académico y D retrasa el apoyo grupal cuando la crisis requiere estructura e interacción."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos de terapia para crisis",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0011",
+    "question_text": "En la primera sesión, una paciente empieza a narrar su problema con mucho detalle. El psicólogo aún no ha explicado confidencialidad, duración de la entrevista ni modo de trabajo. ¿Qué acción corresponde a esta fase?",
+    "option_a": "Aplicar una técnica de exposición para observar reacción emocional inicial.",
+    "option_b": "Pedirle que relate sin interrupción toda su historia antes de cualquier encuadre.",
+    "option_c": "Posponer toda explicación hasta tener una hipótesis diagnóstica definitiva.",
+    "option_d": "Presentarse, explicar condiciones básicas y organizar la exploración del motivo de consulta.",
+    "correct_option": "D",
+    "explanation": "Según Bados y García Grau, en el contacto inicial se explican la confidencialidad y sus límites, el tiempo disponible, el procedimiento de entrevista y el modo de trabajo. Por eso, antes de profundizar, corresponde presentar el encuadre básico y organizar la exploración del motivo de consulta. Referencia: Bados López, A., & García Grau, E. (2009). Contacto inicial y análisis del problema, pp. 2-5.",
+    "option_explanations": {
+      "A": "Desde Bados y García Grau, A adelanta técnica, B omite condiciones iniciales y C retrasa información necesaria para la alianza y el consentimiento clínico.",
+      "B": "Desde Bados y García Grau, A adelanta técnica, B omite condiciones iniciales y C retrasa información necesaria para la alianza y el consentimiento clínico.",
+      "C": "Desde Bados y García Grau, A adelanta técnica, B omite condiciones iniciales y C retrasa información necesaria para la alianza y el consentimiento clínico."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Fase inicial",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0012",
+    "question_text": "Un paciente lleva seis sesiones trabajando evitación social. Cumple tareas, pero aparecen nuevos datos: evita reuniones por temor a síntomas físicos y también por conflictos laborales. ¿Qué decisión corresponde a la fase media?",
+    "option_a": "Mantener el plan inicial sin cambios para conservar estabilidad del tratamiento.",
+    "option_b": "Revisar hipótesis y ajustar intervención según nuevos datos y respuesta al tratamiento.",
+    "option_c": "Suspender las tareas porque el surgimiento de datos nuevos invalida la intervención.",
+    "option_d": "Cerrar el proceso y derivar porque aparecieron elementos no previstos inicialmente.",
+    "correct_option": "B",
+    "explanation": "Según Bados y García Grau, las fases del proceso son didácticas y flexibles: la formulación puede continuar durante la intervención y las hipótesis pueden modificarse con nueva información. Por eso, en fase media corresponde revisar hipótesis y ajustar el plan según respuesta y datos nuevos. Referencia: Bados López, A., & García Grau, E. (2009). Introducción al proceso y aplicación durante tratamiento, pp. 2-3, 32-36.",
+    "option_explanations": {
+      "A": "Desde Bados y García Grau, A rigidiza fases flexibles, C descarta avances sin análisis y D deriva prematuramente sin valorar ajuste del tratamiento.",
+      "C": "Desde Bados y García Grau, A rigidiza fases flexibles, C descarta avances sin análisis y D deriva prematuramente sin valorar ajuste del tratamiento.",
+      "D": "Desde Bados y García Grau, A rigidiza fases flexibles, C descarta avances sin análisis y D deriva prematuramente sin valorar ajuste del tratamiento."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Fase media",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0013",
+    "question_text": "Una paciente alcanzó los objetivos acordados: redujo evitación, retomó actividades y maneja recaídas leves. En la sesión 14 expresa temor a “depender menos” del terapeuta. ¿Qué intervención corresponde al cierre?",
+    "option_a": "Extender el tratamiento hasta que desaparezca toda ansiedad ante la separación terapéutica.",
+    "option_b": "Cambiar de objetivos para mantener continuidad y prevenir cualquier recaída posible.",
+    "option_c": "Revisar logros, preparar terminación, acordar señales de alerta y plan de seguimiento.",
+    "option_d": "Finalizar de inmediato para reforzar autonomía y evitar dependencia del espacio clínico.",
+    "correct_option": "C",
+    "explanation": "Según Bados y García Grau, la finalización incluye evaluación de resultados, terminación del tratamiento y seguimiento. Balarezo también contempla evaluación de la psicoterapia. En el caso, el cierre debe revisar logros, preparar autonomía, prever señales de alerta y acordar seguimiento. Referencia: Bados López, A., & García Grau, E. (2009). Terminación y seguimiento, pp. 36-47; Balarezo, evaluación, pp. 29-30.",
+    "option_explanations": {
+      "A": "Desde Bados y Balarezo, A prolonga sin criterio claro, B cambia metas sin necesidad clínica y D finaliza sin elaboración ni seguimiento.",
+      "B": "Desde Bados y Balarezo, A prolonga sin criterio claro, B cambia metas sin necesidad clínica y D finaliza sin elaboración ni seguimiento.",
+      "D": "Desde Bados y Balarezo, A prolonga sin criterio claro, B cambia metas sin necesidad clínica y D finaliza sin elaboración ni seguimiento."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Fase final",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0014",
+    "question_text": "Un adolescente llega por insistencia de su madre. Él dice que “no tiene problema”, mientras la madre pide que el psicólogo “lo arregle”. ¿Qué acción inicial es más adecuada?",
+    "option_a": "Aceptar la demanda materna porque ella es quien solicita la atención.",
+    "option_b": "Diferenciar demandantes, expectativas y disposición del adolescente para el proceso.",
+    "option_c": "Iniciar técnicas motivacionales sin explorar el motivo de consulta familiar.",
+    "option_d": "Trabajar solo con la madre y excluir al adolescente de la formulación inicial.",
+    "correct_option": "B",
+    "explanation": "Según Eiroa-Orosa, Fernández y Nieto, el análisis de la demanda debe considerar al demandante de ayuda, expectativas de familiares o instituciones y disposición de la persona atendida. En el caso, se debe diferenciar la demanda materna de la posición del adolescente. Referencia: Eiroa-Orosa, F. J., Fernández Gómez, M. J., & Nieto, R. (2021). Análisis de la demanda, pp. 69-80.",
+    "option_explanations": {
+      "A": "Desde Eiroa-Orosa et al., A confunde solicitante con paciente, C adelanta técnica sin demanda clara y D excluye información central del adolescente.",
+      "C": "Desde Eiroa-Orosa et al., A confunde solicitante con paciente, C adelanta técnica sin demanda clara y D excluye información central del adolescente.",
+      "D": "Desde Eiroa-Orosa et al., A confunde solicitante con paciente, C adelanta técnica sin demanda clara y D excluye información central del adolescente."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Sesiones preliminares",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0015",
+    "question_text": "Durante la fase media, una paciente reporta mejoría subjetiva, pero su familia observa que continúa evitando actividades clave. El terapeuta duda si el avance es suficiente. ¿Qué decisión es más consistente con el proceso terapéutico?",
+    "option_a": "Integrar criterio del paciente, observaciones externas y registros para evaluar el avance.",
+    "option_b": "Priorizar la impresión del terapeuta porque es quien conduce técnicamente el proceso.",
+    "option_c": "Considerar la opinión familiar como medida principal del resultado terapéutico.",
+    "option_d": "Ignorar discrepancias para no afectar la motivación alcanzada por la paciente.",
+    "correct_option": "A",
+    "explanation": "Según Balarezo, la evaluación de la psicoterapia puede considerar criterio del terapeuta, paciente, familiares, registros y otros indicadores. Por eso, ante discrepancias sobre mejoría, conviene integrar varias fuentes para valorar avances y ajustar el tratamiento. Referencia: Balarezo Chiriboga, L. (1998/2015). Evaluación de la psicoterapia, pp. 29-30.",
+    "option_explanations": {
+      "B": "Desde Balarezo, B usa una sola fuente, C privilegia una mirada externa parcial y D pierde información relevante para evaluar el proceso.",
+      "C": "Desde Balarezo, B usa una sola fuente, C privilegia una mirada externa parcial y D pierde información relevante para evaluar el proceso.",
+      "D": "Desde Balarezo, B usa una sola fuente, C privilegia una mirada externa parcial y D pierde información relevante para evaluar el proceso."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Evaluación durante el tratamiento",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0016",
+    "question_text": "Una paciente dice que consulta por insomnio, pero al avanzar la entrevista se observa que su mayor preocupación es no poder poner límites en casa. El insomnio aparece ligado a discusiones familiares. ¿Qué formulación inicial es más adecuada?",
+    "option_a": "Mantener el insomnio como único foco porque fue el motivo declarado.",
+    "option_b": "Cambiar el foco a familia y dejar de explorar la queja inicial de sueño.",
+    "option_c": "Proponer tratamiento grupal porque el problema involucra relaciones familiares.",
+    "option_d": "Diferenciar motivo expresado, demanda implícita y variables que mantienen el problema.",
+    "correct_option": "D",
+    "explanation": "Según Bados y García Grau, el motivo expresado al solicitar consulta puede no coincidir con lo que aparece durante la sesión. Eiroa-Orosa, Fernández y Nieto recomiendan analizar demanda explícita, demanda implícita y variables del problema; por eso no basta tomar el insomnio literalmente. Referencia: Bados López, A., & García Grau, E. (2009). Motivo de consulta, pp. 3-5; Eiroa-Orosa et al. (2021), pp. 69-80.",
+    "option_explanations": {
+      "A": "Desde Bados y Eiroa-Orosa et al., A toma la queja literalmente, B descuida el síntoma presentado y C decide modalidad antes de formular el caso.",
+      "B": "Desde Bados y Eiroa-Orosa et al., A toma la queja literalmente, B descuida el síntoma presentado y C decide modalidad antes de formular el caso.",
+      "C": "Desde Bados y Eiroa-Orosa et al., A toma la queja literalmente, B descuida el síntoma presentado y C decide modalidad antes de formular el caso."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Motivo de consulta-demanda",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0017",
+    "question_text": "En la segunda sesión, un paciente pregunta si puede escribir al psicólogo de madrugada cuando se sienta ansioso. También pide sesiones “cuando se pueda” porque su horario cambia. ¿Qué respuesta protege mejor el encuadre?",
+    "option_a": "Aceptar mensajes nocturnos para sostener la alianza durante el inicio del tratamiento.",
+    "option_b": "Clarificar horarios, canales de contacto, manejo de urgencias y frecuencia de sesiones.",
+    "option_c": "Evitar hablar de límites para no generar rechazo durante la fase inicial.",
+    "option_d": "Indicar que el encuadre se definirá cuando el paciente esté más estable.",
+    "correct_option": "B",
+    "explanation": "Según Balarezo, la estructuración de la relación terapéutica implica aclarar condiciones del proceso, roles, frecuencia, duración, límites y expectativas. En el caso, definir horarios, canales de contacto y manejo de urgencias protege el encuadre y evita ambigüedad clínica. Referencia: Balarezo Chiriboga, L. (1998/2015). Estructuración de la relación terapéutica, pp. 19-20.",
+    "option_explanations": {
+      "A": "Desde Balarezo, A confunde disponibilidad con encuadre, C evita aclarar límites y D posterga condiciones necesarias para iniciar el proceso.",
+      "C": "Desde Balarezo, A confunde disponibilidad con encuadre, C evita aclarar límites y D posterga condiciones necesarias para iniciar el proceso.",
+      "D": "Desde Balarezo, A confunde disponibilidad con encuadre, C evita aclarar límites y D posterga condiciones necesarias para iniciar el proceso."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Encuadre psicoterapéutico",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0018",
+    "question_text": "Una consultante plantea como objetivo: “quiero ser feliz y que todo me deje de afectar”. El terapeuta busca transformar esa meta en un objetivo clínicamente trabajable. ¿Cuál formulación es más adecuada?",
+    "option_a": "Lograr bienestar completo y ausencia de malestar en todas las áreas de vida.",
+    "option_b": "Evitar emociones negativas mediante control de pensamientos durante el tratamiento.",
+    "option_c": "Conseguir que otros reduzcan conductas que le generan malestar cotidiano.",
+    "option_d": "Identificar situaciones activadoras y practicar respuestas reguladas durante ocho semanas.",
+    "correct_option": "D",
+    "explanation": "Según Eiroa-Orosa, Fernández y Nieto, los objetivos deben formularse de manera concreta, relevante, realista y evaluable. Balarezo señala que la formulación de objetivos forma parte de la planificación. Por eso, una meta amplia debe traducirse a conductas observables y temporalmente delimitadas. Referencia: Eiroa-Orosa, F. J., Fernández Gómez, M. J., & Nieto, R. (2021). Devolución y objetivos, pp. 106-108; Balarezo, p. 27.",
+    "option_explanations": {
+      "A": "Desde Eiroa-Orosa et al. y Balarezo, A es amplia y poco evaluable, B promueve evitación emocional y C ubica el cambio fuera del margen del paciente.",
+      "B": "Desde Eiroa-Orosa et al. y Balarezo, A es amplia y poco evaluable, B promueve evitación emocional y C ubica el cambio fuera del margen del paciente.",
+      "C": "Desde Eiroa-Orosa et al. y Balarezo, A es amplia y poco evaluable, B promueve evitación emocional y C ubica el cambio fuera del margen del paciente."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Objetivos de intervención",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0019",
+    "question_text": "Un paciente con conflictos de pareja pide como objetivo “que mi esposa vuelva conmigo”. El psicólogo reconoce sufrimiento genuino, pero el objetivo depende de la decisión de otra persona. ¿Qué reformulación es más adecuada?",
+    "option_a": "Mantener el objetivo porque expresa claramente lo que el paciente desea conseguir.",
+    "option_b": "Sustituirlo por aceptación de la ruptura, aunque el paciente aún no esté preparado.",
+    "option_c": "Trabajar afrontamiento, comunicación y toma de decisiones dentro de su margen de acción.",
+    "option_d": "Indicar que el caso no es psicoterapéutico porque el objetivo involucra a otra persona.",
+    "correct_option": "C",
+    "explanation": "Según Balarezo, los objetivos terapéuticos deben formularse dentro de las posibilidades reales del proceso y discutirse con el paciente. Eiroa-Orosa, Fernández y Nieto recomiendan metas alcanzables y evaluables; por eso se reformula hacia afrontamiento, comunicación y decisiones propias. Referencia: Balarezo Chiriboga, L. (1998/2015). Formulación de objetivos, p. 27; Eiroa-Orosa et al. (2021), pp. 106-108.",
+    "option_explanations": {
+      "A": "Desde Balarezo y Eiroa-Orosa et al., A deja la meta fuera del control terapéutico, B impone una salida y D descarta una demanda reformulable.",
+      "B": "Desde Balarezo y Eiroa-Orosa et al., A deja la meta fuera del control terapéutico, B impone una salida y D descarta una demanda reformulable.",
+      "D": "Desde Balarezo y Eiroa-Orosa et al., A deja la meta fuera del control terapéutico, B impone una salida y D descarta una demanda reformulable."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Objetivos de intervención",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-ehep-0020",
+    "question_text": "Una institución solicita atención para un empleado “problemático” y pide al psicólogo reportes detallados de cada sesión. El empleado acepta asistir, pero teme que todo sea informado a su jefe. ¿Qué acción inicial es más adecuada?",
+    "option_a": "Aclarar confidencialidad, límites de información, roles institucionales y condiciones del proceso.",
+    "option_b": "Enviar reportes completos porque la institución solicitó y financia la intervención.",
+    "option_c": "Atender sin explicar condiciones para no incrementar resistencia del empleado.",
+    "option_d": "Rechazar la intervención porque toda solicitud institucional altera el proceso clínico.",
+    "correct_option": "A",
+    "explanation": "Según Bados y García Grau, al inicio del proceso se explican confidencialidad y límites. Eiroa-Orosa, Fernández y Nieto subrayan que la demanda puede provenir de instituciones y debe analizarse cuidadosamente. Por eso, la intervención requiere delimitar roles, información compartible y condiciones del encuadre. Referencia: Bados López, A., & García Grau, E. (2009). Contacto inicial y confidencialidad, pp. 3-4; Eiroa-Orosa et al. (2021), pp. 69-80.",
+    "option_explanations": {
+      "B": "Desde Bados y Eiroa-Orosa et al., B vulnera el encuadre, C deja ambigüedad clínica y D rechaza una intervención posible si se delimitan condiciones.",
+      "C": "Desde Bados y Eiroa-Orosa et al., B vulnera el encuadre, C deja ambigüedad clínica y D rechaza una intervención posible si se delimitan condiciones.",
+      "D": "Desde Bados y Eiroa-Orosa et al., B vulnera el encuadre, C deja ambigüedad clínica y D rechaza una intervención posible si se delimitan condiciones."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Encuadre y demanda",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0001",
+    "question_text": "Un psicólogo clínico recibe por primera vez a un hombre de 28 años que consulta por ansiedad persistente. El paciente comenta que suele callar lo que siente y que rara vez ha podido hablar sin sentirse juzgado. Durante la sesión, el terapeuta mantiene contacto visual, escucha sin interrumpir, usa señales breves de seguimiento y permite que el paciente complete su relato antes de formular nuevas preguntas. Al finalizar, el paciente expresa sentirse comprendido y acepta continuar el proceso. ¿Cuál es el principal efecto clínico de esta intervención inicial?",
+    "option_a": "Favorece una comunicación menos inhibida y fortalece el rapport terapéutico inicial.",
+    "option_b": "Permite completar la evaluación diagnóstica desde la primera entrevista clínica.",
+    "option_c": "Reduce la necesidad de formular objetivos terapéuticos durante el proceso.",
+    "option_d": "Facilita que el terapeuta dirija el relato hacia los síntomas que considera prioritarios.",
+    "correct_option": "A",
+    "explanation": "La escucha sin interrupciones prematuras evita sesgar la información y favorece que el paciente comunique con mayor libertad. Esto facilita el rapport terapéutico y aumenta la disposición inicial hacia el proceso. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 3-5.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0002",
+    "question_text": "Un terapeuta evalúa a un adulto de 35 años con síntomas depresivos persistentes. Identifica anhedonia, insomnio, fatiga, baja autoestima, dependencia afectiva, dificultades para establecer límites familiares y estrés asociado al cuidado de un familiar enfermo. El paciente refiere sentirse abrumado porque “todo parece estar conectado”. Antes de definir el plan inicial, el profesional necesita organizar la información clínica. ¿Cuál es el criterio más adecuado para seleccionar el foco inicial de trabajo?",
+    "option_a": "Iniciar por el síntoma que el paciente menciona con mayor frecuencia durante la entrevista.",
+    "option_b": "Aplicar primero las estrategias que suelen utilizarse con mayor frecuencia en cuadros depresivos.",
+    "option_c": "Construir una formulación compartida sobre el problema principal y sus factores de mantenimiento.",
+    "option_d": "Priorizar el área que resulte más sencilla de modificar para obtener avance rápido.",
+    "correct_option": "C",
+    "explanation": "La selección del foco terapéutico debe surgir de una formulación colaborativa, no de una elección automática. Esta formulación permite identificar el problema principal y los factores específicos que lo mantienen. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 15-20. Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI. Editorial UOC. pp. 83-90.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0003",
+    "question_text": "Un paciente de 32 años con ansiedad generalizada refiere palpitaciones, preocupación constante por su salud, evitación de reuniones familiares, vergüenza intensa, ausencias a actividades importantes y conflictos con su pareja. Describe su situación como “caótica” y pregunta por dónde debería empezar. El terapeuta necesita jerarquizar los problemas antes de iniciar la intervención. ¿Qué criterio debe guiar esta priorización?",
+    "option_a": "Abordar primero los síntomas fisiológicos porque son más observables y medibles.",
+    "option_b": "Trabajar todos los problemas al mismo tiempo para evitar que alguno quede pendiente.",
+    "option_c": "Iniciar por los pensamientos de amenaza porque parecen explicar todo el malestar.",
+    "option_d": "Priorizar el área con mayor impacto funcional y acordar con el paciente la secuencia de trabajo.",
+    "correct_option": "D",
+    "explanation": "Cuando existen múltiples problemas, la jerarquización debe considerar el impacto funcional y realizarse de forma colaborativa. Esto evita dispersión y permite organizar objetivos terapéuticos claros. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 6-7.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0004",
+    "question_text": "En la octava sesión, un paciente de 42 años con trastorno de pánico muestra avances medibles: disminución de crisis, mayor participación social y mejor funcionamiento en casa. Sin embargo, comenta: “Siento que he mejorado, pero no sé si realmente entiendes lo que vivo cuando aparece el ataque”. El terapeuta identifica una diferencia entre mejoría sintomática y percepción de comprensión emocional. ¿Cuál es la interpretación clínica más adecuada?",
+    "option_a": "El avance sintomático indica que la duda no requiere exploración adicional.",
+    "option_b": "La duda debe abordarse para fortalecer la alianza y aclarar expectativas compartidas.",
+    "option_c": "El comentario muestra que el paciente no está reconociendo objetivamente sus avances.",
+    "option_d": "La discrepancia confirma que el tratamiento debe intensificarse de forma inmediata.",
+    "correct_option": "B",
+    "explanation": "La alianza terapéutica requiere atención continua, incluso cuando existen avances sintomáticos. Las dudas sobre sentirse comprendido deben explorarse, porque pueden afectar adherencia y colaboración. Bibliografía: Brown, N. (2011). Psychoeducational groups: Process and practice (3ª ed.). Routledge. pp. 148-158. Rodríguez Morejón, A. (2019). Manual de psicoterapias: Teoría y técnicas. Herder. pp. 88-95.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0005",
+    "question_text": "Una mujer de 38 años consulta porque repite relaciones de pareja en las que termina cediendo decisiones importantes. Ha tenido tres relaciones con patrones similares y afirma: “creo que tengo mala suerte con las parejas”. En la evaluación aparecen baja autoestima, apego ansioso, antecedentes de abuso emocional y vínculos dependientes. El terapeuta inicia una formulación conjunta del caso. ¿Cuál es la función principal de esta fase inicial?",
+    "option_a": "Mostrar seguridad profesional para que la paciente acepte con mayor facilidad las indicaciones.",
+    "option_b": "Explicar de inmediato todas las causas posibles del problema para reducir la incertidumbre.",
+    "option_c": "Transformar la narrativa de azar en comprensión de factores modificables y metas realistas.",
+    "option_d": "Señalar que la paciente debe asumir la solución sin depender del acompañamiento clínico.",
+    "correct_option": "C",
+    "explanation": "La formulación colaborativa ayuda a que la paciente comprenda sus patrones como factores modificables, no como simple mala suerte. Esto favorece esperanza realista y objetivos terapéuticos compartidos. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 10-15. Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI. Editorial UOC. pp. 106-112.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0006",
+    "question_text": "Un paciente de 28 años con ansiedad social ha logrado avances en contextos familiares: mantiene conversaciones breves y participa en reuniones pequeñas. Sin embargo, cuando debe hablar en reuniones ampliadas o presentarse ante personas poco conocidas, la ansiedad se mantiene elevada, evita intervenir y presenta sudoración y temblor. Pregunta por qué no logra aplicar lo aprendido en esos contextos. ¿Cuál sería la intervención más pertinente?",
+    "option_a": "Explorar diferencias entre los contextos exitosos y los difíciles para ajustar la intervención.",
+    "option_b": "Aumentar la frecuencia de sesiones sin revisar las condiciones específicas del problema.",
+    "option_c": "Asumir que el avance parcial indica que el caso requiere empezar nuevamente desde cero.",
+    "option_d": "Concluir que el paciente no está suficientemente comprometido con la práctica.",
+    "correct_option": "A",
+    "explanation": "El monitoreo permite identificar contextos donde la intervención no se generaliza. Explorar diferencias situacionales ayuda a ajustar el trabajo clínico a las condiciones que mantienen la ansiedad. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 32-35.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0007",
+    "question_text": "Un terapeuta atiende a un paciente con síntomas depresivos e identifica cinco problemas interrelacionados: aislamiento, bajo estado de ánimo, pensamientos de inutilidad, conflictos familiares y dificultad para mantener rutinas. En las primeras sesiones introduce varias estrategias, asigna tareas para cada área y aborda todos los temas sin definir un foco principal. En la cuarta sesión, el paciente dice: “no sé cuál es el objetivo ni en qué debería concentrarme”. Poco después abandona el proceso. ¿Qué principio terapéutico fue principalmente descuidado?",
+    "option_a": "Continuidad del proceso, porque las sesiones no fueron suficientes para observar cambios.",
+    "option_b": "Registro clínico, porque faltó documentar cada tarea asignada entre sesiones.",
+    "option_c": "Apoyo emocional, porque el terapeuta no respondió a todas las preocupaciones por igual.",
+    "option_d": "Especificidad y priorización, porque trabajó varias áreas sin jerarquía terapéutica clara.",
+    "correct_option": "D",
+    "explanation": "Trabajar múltiples problemas sin jerarquización puede generar confusión sobre los objetivos y reducir adherencia. La formulación debe definir prioridades y organizar el tratamiento de manera comprensible. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 6-8. Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI. Editorial UOC. pp. 85-90.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0008",
+    "question_text": "Un psicólogo trabaja con un adolescente de 16 años con ansiedad social. En cada sesión revisa avances, registra ansiedad mediante una escala breve, realiza ejercicios prácticos y acuerda tareas para practicar entre sesiones. Esta estructura se mantiene durante el tratamiento activo, después de haber definido los objetivos y la formulación inicial. ¿Qué caracteriza principalmente esta fase del proceso terapéutico?",
+    "option_a": "La evaluación inicial para delimitar el motivo de consulta principal.",
+    "option_b": "La aplicación sistemática de técnicas y tareas orientadas a consolidar cambios.",
+    "option_c": "El cierre progresivo del proceso y la preparación para el automanejo.",
+    "option_d": "La organización administrativa del encuadre y consentimiento informado.",
+    "correct_option": "B",
+    "explanation": "La fase media se caracteriza por la aplicación sistemática de técnicas planificadas a partir de la formulación inicial. Las tareas entre sesiones permiten consolidar los cambios fuera del espacio terapéutico. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 28-32.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0009",
+    "question_text": "En la primera sesión, un paciente con ansiedad generalizada pregunta cuánto durará el tratamiento y cómo sabrá si está mejorando. El terapeuta explica que se estimará un proceso de varios meses, con metas revisables como disminuir síntomas, mejorar la concentración en actividades diarias y fortalecer relaciones familiares. El paciente refiere alivio al comprender el plan. ¿Cuál es el principal beneficio psicológico de esta intervención?",
+    "option_a": "Establece un número de sesiones que no debe modificarse durante el proceso.",
+    "option_b": "Evita que el paciente participe en la revisión posterior de sus objetivos.",
+    "option_c": "Permite omitir ajustes futuros si aparecen cambios en los síntomas.",
+    "option_d": "Disminuye incertidumbre al ofrecer estructura, expectativas realistas y colaboración.",
+    "correct_option": "D",
+    "explanation": "La claridad sobre duración estimada y objetivos reduce incertidumbre y ansiedad. Además, establece una colaboración inicial basada en expectativas compartidas y revisables. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 27-30.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0010",
+    "question_text": "Un paciente con fobia a conducir ha progresado en exposiciones graduales: practicó en espacios controlados, luego en calles residenciales y después en avenidas. Actualmente puede manejar en ciudad con ansiedad tolerable, pero al intentar ingresar a una autopista su ansiedad aumenta intensamente. El terapeuta pregunta qué diferencias percibe entre conducir en ciudad y hacerlo en autopista. ¿Cuál es la función clínica principal de esta pregunta?",
+    "option_a": "Confirmar si el paciente requiere suspender el plan actual por falta de respuesta.",
+    "option_b": "Identificar variables contextuales que mantienen la ansiedad y ajustar la exposición.",
+    "option_c": "Señalar que el paciente no está aplicando correctamente lo aprendido.",
+    "option_d": "Indicar que debe evitar situaciones que superen su capacidad actual.",
+    "correct_option": "B",
+    "explanation": "La pregunta permite identificar factores específicos del contexto de autopista que mantienen la fobia. Esta información orienta ajustes más precisos en la exposición graduada. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 32-35.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0011",
+    "question_text": "Un paciente ha completado diez sesiones de psicoterapia por síntomas de ansiedad. Refiere mejoría en su funcionamiento diario, reconoce sus patrones de pensamiento y comenta que se siente capaz de aplicar varias estrategias sin tanta ayuda. El terapeuta propone dedicar las próximas sesiones a revisar avances, consolidar recursos y elaborar un plan para manejar posibles recaídas. ¿Qué fase del proceso psicoterapéutico se está iniciando?",
+    "option_a": "Fase de evaluación, centrada en ampliar la recopilación de información clínica.",
+    "option_b": "Fase inicial, centrada en construir desde cero la comprensión del caso.",
+    "option_c": "Fase media, centrada en introducir por primera vez las técnicas principales.",
+    "option_d": "Fase final, dirigida a consolidar logros y preparar el automanejo.",
+    "correct_option": "D",
+    "explanation": "La fase final inicia cuando los objetivos principales han sido alcanzados o muestran avance suficiente. Incluye consolidación, revisión de logros, prevención de recaídas y transición hacia el automanejo. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 36-47.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0012",
+    "question_text": "Durante las primeras sesiones, un terapeuta explora el motivo de consulta de un paciente con ansiedad, organiza los síntomas, identifica factores contextuales y presenta una hipótesis sobre cómo estos elementos se relacionan. Luego pregunta al paciente si esa comprensión tiene sentido para él y qué elementos agregaría o corregiría. Ambos acuerdan una explicación común que guiará los objetivos del tratamiento. ¿Qué evento marca principalmente el cierre de la fase inicial?",
+    "option_a": "La obtención de puntajes iniciales mediante instrumentos estandarizados.",
+    "option_b": "La definición del horario regular y los acuerdos administrativos básicos.",
+    "option_c": "La construcción colaborativa de una formulación de caso compartida.",
+    "option_d": "La asignación temprana de actividades para realizar entre sesiones.",
+    "correct_option": "C",
+    "explanation": "La fase inicial culmina con una formulación compartida que guía el tratamiento. Los instrumentos, tareas y acuerdos administrativos pueden ser útiles, pero no reemplazan este hito clínico. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 12-20.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0013",
+    "question_text": "Un paciente con ansiedad presenta mejoría inicial tras aprender técnicas de regulación respiratoria. Sin embargo, en la tercera sesión expresa: “siento que avanzamos, pero no sé si entiendes lo que me pasa cuando creo que me voy a ahogar”. El terapeuta valida brevemente la emoción y continúa con la actividad planificada sin explorar la duda. En la siguiente sesión, el paciente no asiste. ¿Qué aspecto clínico fue principalmente omitido?",
+    "option_a": "La aplicación de actividades más intensas para acelerar la reducción de síntomas.",
+    "option_b": "La exploración de la duda para clarificar expectativas y fortalecer la alianza.",
+    "option_c": "La corrección inmediata de la percepción del paciente sobre su mejoría clínica.",
+    "option_d": "La repetición completa de la evaluación inicial antes de continuar el tratamiento.",
+    "correct_option": "B",
+    "explanation": "Las dudas del paciente sobre sentirse comprendido deben explorarse directamente. Ignorarlas puede debilitar la alianza, disminuir adherencia y aumentar el riesgo de abandono terapéutico. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 4-6.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0014",
+    "question_text": "Un paciente abandona la psicoterapia después de tres sesiones y comenta que no comprendía cómo las explicaciones del terapeuta se relacionaban con su problema. El profesional había explicado la depresión desde factores biológicos y psicológicos, propuso actividades iniciales y sugirió tareas, pero no exploró con el paciente cuál era su problema central ni cómo entendía su propio malestar. ¿Qué elemento crítico faltó en la fase inicial?",
+    "option_a": "La formulación colaborativa que integrara la perspectiva del paciente y del terapeuta.",
+    "option_b": "La selección de actividades más complejas para lograr cambios desde las primeras sesiones.",
+    "option_c": "La indicación de una evaluación externa antes de iniciar cualquier intervención clínica.",
+    "option_d": "La adopción de una postura más directiva para aumentar la adherencia del paciente.",
+    "correct_option": "A",
+    "explanation": "El error central fue iniciar procedimientos sin una formulación compartida. Cuando el paciente no entiende cómo la intervención responde a su problema específico, la alianza se debilita y aumenta el riesgo de abandono. Bibliografía: Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 20-26.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0015",
+    "question_text": "Una joven de 20 años consulta porque se siente bloqueada al tomar una decisión académica importante. Tiene buen rendimiento, pero refiere ansiedad, presión familiar y miedo a equivocarse. El psicólogo explora intereses, fortalezas, expectativas familiares y alternativas disponibles. Luego ofrece información organizada sobre opciones, posibles consecuencias y recursos de apoyo para que la paciente tome una decisión más informada. ¿Qué tipo de intervención describe mejor este proceso?",
+    "option_a": "Proceso dirigido a modificar características estables de personalidad.",
+    "option_b": "Evaluación clínica orientada a establecer un diagnóstico psicológico.",
+    "option_c": "Asesoramiento breve dirigido a un problema presente y a la toma de decisiones.",
+    "option_d": "Seguimiento prolongado centrado en consolidar cambios profundos.",
+    "correct_option": "C",
+    "explanation": "El asesoramiento se centra en problemas específicos del presente, ofrece información y guía para tomar decisiones. No busca modificar personalidad ni realizar una exploración clínica profunda. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 89-95.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0016",
+    "question_text": "Un padre consulta en un servicio de psicología clínica porque su hijo presenta conductas desafiantes en casa y reportes de problemas en la escuela. El psicólogo analiza cuándo ocurren, en qué contextos aparecen, qué estrategias intentó la familia y qué alternativas prácticas puede aplicar el padre. Tras pocas sesiones, revisan la utilidad de las estrategias y realizan ajustes concretos. ¿Cuál característica define mejor este tipo de asesoramiento?",
+    "option_a": "Intervención breve y práctica centrada en estrategias aplicables al contexto del cliente.",
+    "option_b": "Proceso prolongado dirigido a reconstruir toda la historia familiar del caso.",
+    "option_c": "Sesión única donde el psicólogo entrega indicaciones sin exploración colaborativa.",
+    "option_d": "Seguimiento indefinido hasta lograr una explicación completa del comportamiento.",
+    "correct_option": "A",
+    "explanation": "El asesoramiento suele ser breve y orientado a soluciones prácticas. Requiere comprensión del problema, colaboración con el consultante y estrategias aplicables al contexto actual. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 90-91.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Baja",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0017",
+    "question_text": "Un adulto de 28 años consulta porque desea independizarse de la casa materna sin generar conflicto emocional. En tres sesiones, el psicólogo explora motivaciones actuales, analiza consecuencias de permanecer o mudarse, revisa opciones viables y facilita que el paciente tome una decisión. Aunque aparece una historia de dependencia familiar, el trabajo se centra en resolver una decisión presente. ¿Cuál es la diferencia principal entre este asesoramiento y una psicoterapia?",
+    "option_a": "El asesoramiento entrega información, mientras la psicoterapia excluye el análisis de opciones.",
+    "option_b": "El asesoramiento solo se realiza en consultas individuales y la psicoterapia en otros formatos.",
+    "option_c": "El asesoramiento se define por durar pocas horas, sin importar el foco del problema.",
+    "option_d": "El asesoramiento aborda una decisión actual; la psicoterapia explora patrones históricos más profundos.",
+    "correct_option": "D",
+    "explanation": "El asesoramiento se enfoca en problemas actuales y decisiones concretas. La psicoterapia implica mayor profundidad, exploración de patrones históricos y dinámicas psicológicas más amplias. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 93-94.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0018",
+    "question_text": "Un adolescente de 17 años consulta porque debe tomar una decisión académica y se siente ansioso. Refiere interés por un área, pero su familia insiste en otra opción porque considera que le dará mayor estabilidad. El psicólogo explora intereses, recursos personales, expectativas familiares y consecuencias posibles de cada alternativa. También facilita que el adolescente pueda expresar su postura con mayor claridad. ¿Cuál es el componente más desafiante del asesoramiento en este caso?",
+    "option_a": "Reunir información completa sobre todas las opciones académicas disponibles.",
+    "option_b": "Diferenciar sus preferencias genuinas de la influencia familiar y asumir la decisión.",
+    "option_c": "Calcular con exactitud los costos de cada alternativa antes de decidir.",
+    "option_d": "Elaborar una lista extensa de ventajas y desventajas de cada posibilidad.",
+    "correct_option": "B",
+    "explanation": "El desafío principal no es solo entregar información, sino ayudar al adolescente a reconocer cómo el contexto familiar influye en sus preferencias. El asesoramiento busca facilitar una decisión autónoma, reflexiva e informada. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 90-91.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0019",
+    "question_text": "Un hombre de 45 años consulta porque no sabe qué hacer con su relación de pareja. El psicólogo escucha sus intentos previos de resolver el conflicto, revisa alternativas posibles y analiza con él las consecuencias de cada opción. Al final, el consultante decide iniciar terapia de pareja. ¿Cuál es el resultado esperado del asesoramiento?",
+    "option_a": "Que el psicólogo determine si la relación es funcional y prescriba la acción adecuada.",
+    "option_b": "Que el profesional resuelva directamente el conflicto de pareja durante la consulta.",
+    "option_c": "Que el cliente reciba opciones y apoyo para tomar una decisión reflexiva y autónoma.",
+    "option_d": "Que el cliente adopte la alternativa considerada más conveniente por el profesional.",
+    "correct_option": "C",
+    "explanation": "El asesoramiento busca facilitar decisiones mediante información clara, reflexión y apoyo profesional. La decisión corresponde al cliente; el psicólogo no impone ni resuelve directamente el problema. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 89-91.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0020",
+    "question_text": "Una mujer de 34 años consulta porque tiene un conflicto persistente con su hermana sobre el cuidado de su madre enferma. Refiere malestar, discusiones frecuentes y dificultad para decidir cómo organizar responsabilidades familiares, pero no presenta riesgo inmediato, pérdida de control conductual ni amenaza para su seguridad. El psicólogo explora la situación, analiza patrones de comunicación y revisa alternativas como establecer acuerdos, solicitar apoyo familiar, distribuir tareas o buscar orientación externa. ¿Cuál es la diferencia fundamental entre este asesoramiento y una intervención en crisis?",
+    "option_a": "El asesoramiento permite reflexión; la crisis exige respuesta inmediata ante urgencia o riesgo.",
+    "option_b": "El asesoramiento trabaja solo con información, mientras la crisis trabaja solo con emoción.",
+    "option_c": "El asesoramiento se define por durar menos tiempo que cualquier intervención en crisis.",
+    "option_d": "El asesoramiento se aplica solo a individuos, mientras la crisis se aplica solo a grupos.",
+    "correct_option": "A",
+    "explanation": "El asesoramiento aborda decisiones no urgentes con tiempo para reflexión colaborativa. La intervención en crisis requiere respuesta inmediata cuando existe urgencia, desorganización intensa o riesgo potencial de seguridad. Bibliografía: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 23-24.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0021",
+    "question_text": "Una mujer de 45 años consulta porque se siente agotada tras varios años como cuidadora principal de su madre dependiente. Quiere delegar parte del cuidado a otros familiares, pero teme sentirse “egoísta” y perder un rol que ha dado sentido a su vida diaria. El psicólogo explora sus motivaciones, el impacto familiar, las redes de apoyo y opciones realistas de redistribución del cuidado. ¿Qué componente resulta más desafiante en este asesoramiento?",
+    "option_a": "Precisar todos los recursos externos disponibles para el cuidado familiar.",
+    "option_b": "Analizar cómo la decisión impacta su identidad personal y su rol familiar y social.",
+    "option_c": "Indicar cuál alternativa debe elegir para reducir rápidamente su agotamiento.",
+    "option_d": "Enumerar ventajas y desventajas de cada opción de forma exhaustiva.",
+    "correct_option": "B",
+    "explanation": "El asesoramiento requiere explorar dimensiones emocionales y de identidad, no solo información práctica. En este caso, el desafío central es comprender cómo la decisión modifica el sentido de rol y propósito de la consultante. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. p. 94.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0022",
+    "question_text": "Un joven consulta por bloqueo al elegir una carrera. Tras dos sesiones de asesoramiento, ya cuenta con información suficiente sobre alternativas, costos y requisitos. Sin embargo, expresa miedo intenso al fracaso, dudas persistentes sobre “quién será” si se equivoca y angustia que excede la decisión académica inmediata. ¿Qué señala clínicamente esta situación?",
+    "option_a": "Que sus necesidades emocionales exceden el asesoramiento y requieren exploración psicoterapéutica.",
+    "option_b": "Que todavía falta entregar información académica más detallada antes de decidir.",
+    "option_c": "Que debe elegir la opción con menos riesgo para reducir la ansiedad actual.",
+    "option_d": "Que el psicólogo debe prolongar el asesoramiento hasta que desaparezca la duda.",
+    "correct_option": "A",
+    "explanation": "Cuando la intensidad emocional es desproporcionada al problema presente, el caso supera los límites del asesoramiento. La ansiedad e identidad involucradas requieren un proceso psicoterapéutico más profundo. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 95-96.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0023",
+    "question_text": "Un padre consulta porque su hijo de 8 años presenta miedo intenso a ir a la escuela. El psicólogo explora cuándo inició el problema, identifica situaciones asociadas como separación del cuidador y temor a compañeros, y propone estrategias parentales concretas: aproximación gradual, validación del miedo y refuerzo de intentos. ¿Cuál es el resultado esperado del asesoramiento?",
+    "option_a": "Obtener un diagnóstico definitivo del niño antes de ofrecer cualquier orientación.",
+    "option_b": "Lograr que el niño deje de sentir ansiedad de manera inmediata y estable.",
+    "option_c": "Explicar al padre todos los motivos profundos que originan el miedo escolar.",
+    "option_d": "Proporcionar al padre estrategias informadas y prácticas para favorecer mejoría gradual.",
+    "correct_option": "D",
+    "explanation": "El asesoramiento entrega herramientas prácticas basadas en información y reflexión compartida. No busca resolver de forma inmediata ni establecer necesariamente un diagnóstico definitivo. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 91-92.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0024",
+    "question_text": "Un adulto consulta porque mantiene un conflicto con su hermana sobre la venta de una casa familiar heredada. El psicólogo realiza dos sesiones para explorar la situación, revisar intentos previos de diálogo, analizar alternativas posibles y aclarar consecuencias de cada una. El objetivo es que el consultante decida cómo proceder de forma informada. ¿Cuál es el resultado esperado?",
+    "option_a": "Que el psicólogo resuelva directamente el conflicto familiar con la hermana.",
+    "option_b": "Que el profesional determine quién tiene la razón y recomiende la acción correcta.",
+    "option_c": "Que el consultante reciba opciones informadas y apoyo para decidir autónomamente.",
+    "option_d": "Que el consultante adopte la alternativa considerada más conveniente por el psicólogo.",
+    "correct_option": "C",
+    "explanation": "El asesoramiento facilita decisiones reflexivas mediante información y apoyo, sin imponer una elección. La responsabilidad de decidir permanece en el consultante. Bibliografía: Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 89-91.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0025",
+    "question_text": "Un hombre de 52 años acude a urgencias psicológicas. Hace tres días su esposa lo abandonó; desde entonces tiene insomnio severo, ha dejado de realizar actividades cotidianas y expresa que “la vida no vale la pena sin ella”. El psicólogo inicia una evaluación inmediata. ¿Cuál es el factor más importante en la valoración de riesgo?",
+    "option_a": "Evaluar de forma integral ideación, plan, acceso a medios, antecedentes, apoyo disponible y estado cognitivo actual.",
+    "option_b": "Considerar que toda ideación suicida implica hospitalización urgente sin análisis adicional.",
+    "option_c": "Asumir que la presencia de apoyo familiar elimina el riesgo clínico relevante.",
+    "option_d": "Clasificar el riesgo como bajo si no menciona un plan suicida específico.",
+    "correct_option": "A",
+    "explanation": "La evaluación de riesgo debe integrar múltiples factores simultáneamente, no limitarse a la presencia o ausencia de ideación. Plan, medios, historia previa, apoyo y capacidad actual orientan la decisión clínica. Bibliografía: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 29-35.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0026",
+    "question_text": "Una madre lleva a su hijo de 8 años a urgencias psicológicas. La noche anterior el niño presenció una discusión violenta en casa; hoy presenta enuresis, conducta muy dependiente y miedo intenso. La madre también se muestra ansiosa, llora y dice no saber cómo tranquilizarlo. ¿Cuál debe ser la prioridad inicial de intervención?",
+    "option_a": "Atender primero los síntomas del niño de forma separada porque es el más vulnerable.",
+    "option_b": "Contener a la madre para que pueda funcionar como figura segura para el niño.",
+    "option_c": "Separar al niño de la madre para evitar que observe su ansiedad.",
+    "option_d": "Indicar institucionalización inmediata como primera medida de protección.",
+    "correct_option": "B",
+    "explanation": "En crisis familiares con un cuidador disponible, estabilizar al adulto permite que este actúe como contenedor del menor. La seguridad emocional del niño depende en gran parte de la regulación del cuidador. Bibliografía: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 40-45.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0027",
+    "question_text": "Un paciente llega en crisis tras una ruptura de pareja. Refiere ideación suicida activa, ha pensado en métodos específicos, tiene diagnóstico previo de depresión mayor y un intento suicida hace diez años. Dice que su hija pequeña es la razón por la que no lo ha hecho y que cuenta con una hermana que podría apoyarlo. ¿Cuál es el nivel de riesgo más apropiado?",
+    "option_a": "Riesgo bajo, porque existen razones para vivir y apoyo familiar disponible.",
+    "option_b": "Riesgo medio, porque presenta ideación pero aún conserva factores protectores.",
+    "option_c": "Riesgo muy bajo, porque el intento previo ocurrió hace varios años.",
+    "option_d": "Riesgo alto, por ideación activa con plan y antecedente de intento, aunque existan factores protectores.",
+    "correct_option": "D",
+    "explanation": "La combinación de ideación activa, método específico y antecedente de intento previo eleva el riesgo. Los factores protectores son relevantes, pero no eliminan ni minimizan el riesgo cuando hay plan e historia previa. Bibliografía: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 31-34.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0028",
+    "question_text": "Una mujer de 38 años llega a urgencias psicológicas. Hace dos horas recibió la noticia de que su hermana falleció en un accidente. Habla lentamente, repite que “no parece real”, se muestra entumecida y está sola. El psicólogo inicia intervención en crisis. ¿Cuál es la función principal en este momento?",
+    "option_a": "Proporcionar contención emocional, validar la experiencia y conectar con una red de apoyo inmediata.",
+    "option_b": "Analizar en detalle la relación previa con la hermana para comprender el duelo.",
+    "option_c": "Enseñar varias técnicas de afrontamiento para que procese el trauma en la sesión.",
+    "option_d": "Centrar la intervención en explicar las etapas del duelo y su evolución esperada.",
+    "correct_option": "A",
+    "explanation": "En una crisis aguda, la prioridad es contener, validar y conectar con apoyo inmediato. La exploración profunda o la enseñanza extensa de recursos puede ser prematura cuando la persona aún está en shock. Bibliografía: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 46-50.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Media",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0029",
+    "question_text": "Un joven de 18 años llega a urgencias seis horas después de terminar una relación de tres años. Dice “no puedo vivir sin ella” y “preferiría no estar aquí”. Reconoce ideas suicidas y comenta que está pensando en métodos, aunque no especifica acceso a medios. Vive con sus padres, quienes están en casa, y tiene amigos disponibles. ¿Cuál es la intervención más apropiada?",
+    "option_a": "Hospitalizar de inmediato por cualquier ideación suicida, sin valorar la supervisión disponible.",
+    "option_b": "Derivar solo a valoración médica y suspender la intervención psicológica inicial.",
+    "option_c": "Mantener evaluación de riesgo, activar supervisión familiar, conectar apoyo social y realizar monitoreo frecuente.",
+    "option_d": "Ofrecer apoyo emocional general sin establecer plan de seguridad ni seguimiento formal.",
+    "correct_option": "C",
+    "explanation": "En riesgo medio-alto con supervisión familiar disponible, corresponde mantener evaluación activa, activar apoyo inmediato y monitorear con frecuencia. La hospitalización se reserva para riesgo muy alto o falta de supervisión segura. Bibliografía: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 51-60.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-json30-0030",
+    "question_text": "Una mujer de 45 años acude a urgencias porque su hijo de 19 años fue arrestado hace pocas horas por conducir bajo efectos de alcohol. Llora, respira con dificultad y repite: “fracasé como madre” y “mi vida está arruinada”. El psicólogo debe intervenir en la crisis de la madre. ¿Cuál sería el error más común de un profesional inexperto?",
+    "option_a": "Brindar información básica sobre pasos inmediatos después de contener la crisis.",
+    "option_b": "Explorar exhaustivamente la historia de crianza, aumentando culpa y autorreproche.",
+    "option_c": "Contactar una red de apoyo cercana para que la acompañe durante las primeras horas.",
+    "option_d": "Validar la emoción y establecer límites para evitar desorganización conductual.",
+    "correct_option": "B",
+    "explanation": "En crisis aguda, explorar causas profundas o errores parentales puede aumentar la culpa y el malestar sin estabilizar a la persona. La prioridad es contención, seguridad, información organizada y apoyo inmediato. Bibliografía: Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. p. 47.",
+    "option_explanations": {},
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · Preguntas CACES Psicología Clínica 1-30",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0001",
+    "question_text": "Una terapeuta atiende a una mujer de 31 años con ansiedad social. La paciente cumple las tareas de exposición, pero evita registrar pensamientos porque dice que “eso me pone más nerviosa”. La terapeuta nota mejoría parcial, aunque el miedo a ser evaluada persiste en reuniones laborales. ¿Cuál formulación explica mejor el mantenimiento del problema?",
+    "option_a": "La exposición reduce evitación conductual, pero la falta de trabajo cognitivo mantiene predicciones de evaluación negativa en contextos laborales.",
+    "option_b": "La paciente muestra baja motivación hacia el tratamiento, por lo que conviene aumentar la frecuencia de sesiones antes de ajustar técnicas.",
+    "option_c": "La ansiedad social depende ante todo de habilidades comunicativas pobres, de modo que el entrenamiento asertivo sería suficiente.",
+    "option_d": "El registro de pensamientos incrementa síntomas, por lo que debe retirarse de la formulación y priorizar relajación aplicada.",
+    "correct_option": "A",
+    "explanation": "La respuesta integra conducta y cognición: la exposición puede mejorar el funcionamiento, pero si las creencias anticipatorias no se revisan, el temor evaluativo persiste en situaciones relevantes.",
+    "option_explanations": {
+      "B": "La adherencia parcial no equivale a baja motivación; el dato central es la evitación de un componente específico.",
+      "C": "La falta de habilidades puede participar, pero el caso enfatiza predicciones de evaluación y evitación cognitiva.",
+      "D": "Retirar el componente cognitivo sin reformularlo deja intacto un factor de mantenimiento importante."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Formulación cognitivo-conductual",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0002",
+    "question_text": "Un paciente con crisis de pánico evita transporte público. Durante sesiones imaginarias tolera sensaciones corporales, pero abandona prácticas en buses porque interpreta la taquicardia como señal de pérdida de control. El terapeuta debe ajustar el plan. ¿Qué intervención es más coherente con la formulación?",
+    "option_a": "Mantener ensayos imaginarios hasta que desaparezca la ansiedad antes de exponerlo a situaciones con pasajeros.",
+    "option_b": "Combinar exposición interoceptiva con exposición situacional graduada y revisión de interpretaciones catastróficas.",
+    "option_c": "Cambiar a terapia de apoyo centrada en aceptación emocional, dejando la exposición para una fase posterior.",
+    "option_d": "Aplicar psicoeducación sobre el sistema nervioso y evaluar después si el paciente desea exponerse al bus.",
+    "correct_option": "B",
+    "explanation": "La dificultad aparece cuando la activación corporal se interpreta como amenaza durante una situación real; por eso conviene integrar exposición a sensaciones, exposición situacional y reestructuración.",
+    "option_explanations": {
+      "A": "Esperar ausencia de ansiedad puede reforzar la idea de que la activación es peligrosa.",
+      "C": "La aceptación puede ayudar, pero no aborda de forma suficiente la evitación situacional descrita.",
+      "D": "La psicoeducación aislada no modifica por sí misma la evitación ni la interpretación durante la práctica."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Trastorno de pánico y exposición",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0003",
+    "question_text": "Una consultante acude por dificultades de pareja y refiere episodios de celos, revisión del teléfono y miedo intenso al abandono. El terapeuta observa que la demanda inicial es “hacer que mi pareja cambie”. ¿Qué encuadre inicial protege mejor la alianza y la responsabilidad clínica?",
+    "option_a": "Aceptar la demanda tal como llega y centrar el tratamiento en estrategias para modificar la conducta de la pareja.",
+    "option_b": "Explicar que la terapia no puede incluir asuntos de pareja y derivar desde la primera sesión.",
+    "option_c": "Reformular la demanda hacia patrones propios de regulación, vínculo y conducta, sin invalidar el malestar relacional.",
+    "option_d": "Confrontar la revisión del teléfono como conducta inadecuada y establecer abstinencia conductual como primer objetivo.",
+    "correct_option": "C",
+    "explanation": "El encuadre conserva la alianza al validar el malestar, pero delimita que el foco terapéutico debe formularse sobre procesos modificables de la consultante y no sobre controlar a un tercero.",
+    "option_explanations": {
+      "A": "Centrar la terapia en cambiar a la pareja confunde el foco de intervención y reduce responsabilidad clínica.",
+      "B": "La derivación puede ser útil luego, pero el caso permite una reformulación inicial individual.",
+      "D": "La confrontación temprana puede ser válida en otro momento, aunque aquí falta una formulación compartida."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Motivo de consulta y demanda",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0004",
+    "question_text": "En un grupo terapéutico para duelo, una participante nueva relata la muerte reciente de su padre. Otra integrante, con más tiempo en el grupo, responde con consejos extensos sobre rituales y trámites. La nueva participante guarda silencio y mira al piso. ¿Cuál sería la intervención grupal más adecuada?",
+    "option_a": "Agradecer la intención de ayuda y redirigir el foco hacia cómo recibió la participante nueva esos consejos.",
+    "option_b": "Permitir que el intercambio continúe para que la experiencia de una integrante más avanzada modele afrontamiento.",
+    "option_c": "Pedir a la integrante antigua que evite compartir experiencias personales durante las próximas sesiones.",
+    "option_d": "Cambiar de tema hacia psicoeducación sobre duelo para disminuir tensión entre ambas participantes.",
+    "correct_option": "A",
+    "explanation": "La intervención reconoce la intención prosocial y, a la vez, protege el proceso grupal al explorar el impacto en quien acaba de abrir una experiencia vulnerable.",
+    "option_explanations": {
+      "B": "El modelado puede ser útil, pero aquí el silencio sugiere que la participante nueva puede sentirse desplazada.",
+      "C": "Restringir la participación de manera amplia empobrece el intercambio y puede generar vergüenza.",
+      "D": "La psicoeducación evita procesar una dinámica grupal clínicamente relevante."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Proceso grupal y facilitación",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0005",
+    "question_text": "Un terapeuta propone finalizar un tratamiento por mejoría sostenida. La paciente acepta, pero en la sesión siguiente trae varios problemas nuevos y pide “empezar de nuevo”. Los objetivos iniciales están cumplidos y no hay riesgo clínico. ¿Qué respuesta sostiene mejor la fase de cierre?",
+    "option_a": "Extender el tratamiento con nuevos objetivos para evitar que la paciente viva el cierre como abandono.",
+    "option_b": "Revisar logros, explorar el significado del cierre y acordar criterios para futuras consultas si fueran necesarias.",
+    "option_c": "Mantener sesiones mensuales indefinidas como seguimiento preventivo ante posibles recaídas emocionales.",
+    "option_d": "Cerrar en esa misma sesión para reforzar autonomía y evitar dependencia hacia el espacio terapéutico.",
+    "correct_option": "B",
+    "explanation": "El cierre requiere consolidar avances y trabajar la reacción emocional ante la terminación, sin convertir nuevos temas menores en una prolongación poco delimitada.",
+    "option_explanations": {
+      "A": "Ampliar objetivos puede ser válido, pero aquí parece responder más a ansiedad de separación que a necesidad clínica nueva.",
+      "C": "El seguimiento puede pactarse, aunque no como extensión indefinida del tratamiento.",
+      "D": "Cerrar sin elaborar la reacción de la paciente desaprovecha una tarea propia de la fase final."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Cierre y seguimiento",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0006",
+    "question_text": "Un adolescente acude por mandato de sus padres tras bajar su rendimiento. En sesión afirma que no quiere hablar, pero reconoce que extraña entrenar fútbol y que se siente agotado. ¿Cuál estrategia inicial equilibra autonomía, alianza y evaluación clínica?",
+    "option_a": "Trabajar con los padres hasta que el adolescente muestre disposición explícita para participar.",
+    "option_b": "Explicar límites de confidencialidad y explorar metas propias vinculadas a bienestar y actividades significativas.",
+    "option_c": "Solicitar pruebas psicométricas antes de iniciar conversación clínica para reducir resistencia inicial.",
+    "option_d": "Centrar la primera sesión en consecuencias académicas para conectar la consulta con la demanda familiar.",
+    "correct_option": "B",
+    "explanation": "La intervención delimita confidencialidad, respeta la autonomía del adolescente y usa intereses propios como entrada clínica, sin quedar atrapada en la demanda parental.",
+    "option_explanations": {
+      "A": "Trabajar con padres puede complementar, pero no sustituye la construcción de alianza con el adolescente.",
+      "C": "La evaluación puede ser útil, aunque no resuelve el desafío relacional inicial.",
+      "D": "Empezar por consecuencias académicas puede reforzar la vivencia de imposición externa."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Encuadre con adolescentes",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0007",
+    "question_text": "Una paciente con depresión mejora sueño y apetito, pero mantiene aislamiento. Dice que salir con amistades “sería actuar como si nada pasara”. El terapeuta considera activación conductual. ¿Cuál objetivo inicial tiene mejor fundamento clínico?",
+    "option_a": "Programar actividades sociales graduadas y revisar creencias sobre legitimidad del malestar durante la activación.",
+    "option_b": "Esperar que mejore el estado de ánimo antes de introducir actividades que demanden contacto interpersonal.",
+    "option_c": "Indicar salidas frecuentes con amistades para demostrar que la conducta puede cambiar el ánimo.",
+    "option_d": "Centrar el trabajo en higiene del sueño, dado que los síntomas vegetativos ya muestran respuesta favorable.",
+    "correct_option": "A",
+    "explanation": "La activación requiere tareas graduadas y revisión del significado atribuido a la conducta; en el caso, la creencia de invalidez del malestar mantiene aislamiento.",
+    "option_explanations": {
+      "B": "Esperar a que cambie el ánimo puede mantener el ciclo de evitación y retraimiento.",
+      "C": "Aumentar salidas sin graduación ni formulación puede elevar abandono o vivirse como presión.",
+      "D": "La higiene del sueño no aborda el factor interpersonal que permanece activo."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Activación conductual",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0008",
+    "question_text": "En una intervención en crisis, un hombre que perdió su empleo hace tres días expresa vergüenza, evita llamar a su familia y teme ser una carga. No hay ideación suicida actual, pero se observa desorganización y falta de plan. ¿Cuál foco inicial es más pertinente?",
+    "option_a": "Analizar su historia laboral para identificar patrones de fracaso y prevenir decisiones impulsivas.",
+    "option_b": "Ordenar necesidades inmediatas, activar apoyo disponible y construir un plan de próximas acciones manejables.",
+    "option_c": "Explorar creencias tempranas sobre autosuficiencia antes de contactar a personas cercanas.",
+    "option_d": "Recomendar búsqueda laboral intensa para recuperar sentido de eficacia durante la primera semana.",
+    "correct_option": "B",
+    "explanation": "La crisis demanda organizar necesidades, reducir aislamiento y traducir el problema en acciones próximas. La exploración profunda o la presión por rendimiento pueden ser prematuras.",
+    "option_explanations": {
+      "A": "La historia laboral puede explorarse luego; en crisis interesa estabilización y pasos concretos.",
+      "C": "Las creencias tempranas no son el foco inicial cuando hay desorganización y aislamiento.",
+      "D": "La búsqueda intensa puede aumentar vergüenza si no se acompaña de estabilización y apoyo."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Intervención en crisis",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0009",
+    "question_text": "Un grupo psicoeducativo sobre manejo de ansiedad recibe buenos comentarios, pero varios asistentes no aplican las técnicas fuera de sesión. En la evaluación refieren que entienden la teoría, aunque no saben adaptarla a situaciones familiares. ¿Qué ajuste mejora más la transferencia?",
+    "option_a": "Aumentar contenido teórico para que los participantes comprendan con mayor precisión los mecanismos de ansiedad.",
+    "option_b": "Incluir práctica guiada con ejemplos personales, barreras de aplicación y tareas revisadas en la sesión siguiente.",
+    "option_c": "Reducir la participación de asistentes que no aplican tareas para proteger el ritmo del grupo.",
+    "option_d": "Transformar el grupo en psicoterapia abierta, ya que la falta de práctica indica conflictos profundos.",
+    "correct_option": "B",
+    "explanation": "La transferencia mejora cuando la información se practica, se contextualiza y se revisan obstáculos. Comprender la teoría no garantiza aplicación cotidiana.",
+    "option_explanations": {
+      "A": "Más teoría puede aumentar comprensión verbal sin resolver la brecha de aplicación.",
+      "C": "Excluir participantes no atiende las barreras del diseño psicoeducativo.",
+      "D": "La falta de práctica no basta para concluir que el formato deba convertirse en psicoterapia."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos psicoeducativos",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0010",
+    "question_text": "Una terapeuta recibe un pedido judicial de informe sobre una paciente. La paciente autoriza entregar información, pero pide incluir detalles íntimos para “demostrar sufrimiento”. ¿Cuál respuesta cuida mejor ética, encuadre y utilidad clínica del documento?",
+    "option_a": "Redactar un informe objetivo, pertinente al pedido, con alcance limitado y consentimiento informado de la paciente.",
+    "option_b": "Incluir el relato completo solicitado por la paciente, ya que la autorización habilita el uso de la historia clínica.",
+    "option_c": "Negarse a emitir cualquier informe para preservar la neutralidad terapéutica y evitar riesgos legales.",
+    "option_d": "Enviar una síntesis diagnóstica breve sin revisar el contenido con la paciente para proteger independencia técnica.",
+    "correct_option": "A",
+    "explanation": "La autorización no elimina el deber de pertinencia, prudencia y delimitación del informe. El documento debe responder al propósito solicitado y proteger información innecesaria.",
+    "option_explanations": {
+      "B": "El consentimiento no justifica revelar más información de la necesaria para el objetivo del informe.",
+      "C": "Puede emitirse un informe clínico si se delimita alcance y base de la información.",
+      "D": "La independencia técnica no impide aclarar alcance y consentimiento con la paciente."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Informes y confidencialidad",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0011",
+    "question_text": "Un paciente con consumo problemático de alcohol asiste por presión de su pareja. Reconoce discusiones y ausencias laborales, pero dice que beber “lo ayuda a dormir”. El terapeuta quiere evitar confrontación temprana. ¿Qué intervención inicial favorece cambio sin romper alianza?",
+    "option_a": "Explorar ambivalencia entre beneficios percibidos y costos actuales, vinculándola con metas personales del paciente.",
+    "option_b": "Señalar que el consumo explica los conflictos y solicitar compromiso de abstinencia en la primera sesión.",
+    "option_c": "Trabajar con la pareja como principal fuente de información mientras el paciente reconoce el problema.",
+    "option_d": "Centrarse en técnicas de sueño para reducir una razón de consumo antes de hablar de consecuencias.",
+    "correct_option": "A",
+    "explanation": "Explorar ambivalencia permite usar la propia perspectiva del paciente como base de cambio, integrando costos y funciones del consumo sin confrontación prematura.",
+    "option_explanations": {
+      "B": "La confrontación inicial puede aumentar resistencia cuando la motivación es externa.",
+      "C": "La pareja aporta datos, pero desplazar el foco debilita la alianza con el paciente.",
+      "D": "El sueño es relevante, aunque aislarlo puede evitar el análisis funcional del consumo."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Motivación y cambio",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0012",
+    "question_text": "Durante la fase media, una paciente con estrés postraumático reporta disminución de pesadillas, pero aumenta irritabilidad con sus hijos. El terapeuta había focalizado exposición narrativa. ¿Qué lectura clínica orienta mejor el ajuste del tratamiento?",
+    "option_a": "La reducción de pesadillas indica mejoría suficiente, por lo que la irritabilidad puede trabajarse en seguimiento.",
+    "option_b": "La irritabilidad sugiere que la exposición fue inadecuada y conviene abandonar el foco traumático.",
+    "option_c": "El cambio sintomático parcial requiere revisar regulación emocional y contexto familiar dentro de la formulación.",
+    "option_d": "La irritabilidad corresponde a resistencia al tratamiento y debe interpretarse en términos transferenciales.",
+    "correct_option": "C",
+    "explanation": "La fase media exige monitoreo de resultados y efectos funcionales. La mejoría parcial no basta si otro dominio relevante empeora o queda fuera de la formulación.",
+    "option_explanations": {
+      "A": "Reducir un síntoma no implica que el funcionamiento familiar pueda postergarse sin evaluación.",
+      "B": "Un aumento de irritabilidad no demuestra por sí mismo que el foco traumático deba abandonarse.",
+      "D": "La transferencia puede explorarse, pero el caso apunta a regulación emocional y contexto familiar."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Monitoreo en fase media",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0013",
+    "question_text": "En un grupo de apoyo para cuidadores, una participante monopoliza el tiempo con detalles médicos de su familiar. Otros miembros empiezan a responder con frases breves y menos asistencia. ¿Cuál intervención del facilitador equilibra contención e inclusión grupal?",
+    "option_a": "Interrumpir de forma firme y asignar el turno a otra persona para corregir la distribución del tiempo.",
+    "option_b": "Validar la carga de la participante y abrir una ronda que conecte su experiencia con la de otros cuidadores.",
+    "option_c": "Permitir que continúe, ya que el grupo de apoyo debe priorizar a quien expresa mayor malestar.",
+    "option_d": "Recomendarle terapia individual y pedir que limite sus intervenciones a información resumida.",
+    "correct_option": "B",
+    "explanation": "La facilitación sostiene la contención de quien habla y protege la participación del grupo, transformando el monopolio en un puente hacia experiencias compartidas.",
+    "option_explanations": {
+      "A": "Interrumpir sin validación puede generar vergüenza y no usa el material grupal disponible.",
+      "C": "Priorizar a una integrante deteriora el clima y reduce la función de apoyo mutuo.",
+      "D": "La derivación puede considerarse, pero no resuelve la dinámica grupal presente."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos de apoyo",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0014",
+    "question_text": "Una persona consulta por insomnio tras un asalto. Describe hipervigilancia, evita pasar por la calle del evento y se culpa por “no haber reaccionado mejor”. Han pasado dos semanas. ¿Cuál decisión clínica inicial es más ajustada?",
+    "option_a": "Normalizar reacciones iniciales, evaluar seguridad y funcionamiento, y ofrecer estrategias de estabilización con seguimiento.",
+    "option_b": "Diagnosticar estrés postraumático y comenzar exposición prolongada centrada en el recuerdo del asalto.",
+    "option_c": "Indicar que la evitación confirma cronificación y requiere intervención intensiva desde la primera sesión.",
+    "option_d": "Centrar la consulta en higiene del sueño porque el insomnio es el motivo que organiza la demanda.",
+    "correct_option": "A",
+    "explanation": "A las dos semanas pueden presentarse reacciones agudas que requieren evaluación, estabilización y seguimiento. La formulación debe distinguir respuesta inicial de persistencia clínica.",
+    "option_explanations": {
+      "B": "El diagnóstico y la exposición intensiva requieren evaluación temporal y clínica más cuidadosa.",
+      "C": "La evitación temprana es relevante, pero no basta para afirmar cronificación.",
+      "D": "El sueño importa, aunque el caso muestra una respuesta traumática más amplia."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Trauma y estabilización",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0015",
+    "question_text": "Una paciente pide cambiar de terapeuta dentro del mismo centro porque siente que su psicóloga “la juzga”. Al revisar, hay avances objetivos y también varias rupturas no abordadas tras tareas incumplidas. ¿Qué respuesta institucional y clínica es más adecuada?",
+    "option_a": "Cambiar de terapeuta para preservar satisfacción de la paciente y evitar deterioro de la adherencia.",
+    "option_b": "Desestimar la queja por los avances objetivos y pedir continuidad hasta completar el plan inicial.",
+    "option_c": "Explorar la ruptura de alianza, validar la experiencia y decidir continuidad o derivación tras una sesión de revisión.",
+    "option_d": "Solicitar informe de la terapeuta y resolver el cambio sin involucrar a la paciente en el análisis.",
+    "correct_option": "C",
+    "explanation": "La alianza requiere revisión explícita de rupturas. La decisión de continuar o derivar debe considerar la experiencia subjetiva y los avances, no solo un indicador aislado.",
+    "option_explanations": {
+      "A": "Cambiar sin revisar puede repetir el patrón y perder información clínica útil.",
+      "B": "Los avances objetivos no anulan la vivencia de juicio ni la ruptura de alianza.",
+      "D": "Excluir a la paciente contradice el trabajo colaborativo y reduce transparencia."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Alianza y ruptura terapéutica",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0016",
+    "question_text": "En una primera entrevista, un consultante habla de problemas laborales, duelo reciente y discusiones familiares. Al final pregunta si “tiene un trastorno”. El terapeuta aún no cuenta con información suficiente. ¿Qué devolución inicial es más responsable?",
+    "option_a": "Ofrecer una hipótesis provisional, explicar la necesidad de evaluación adicional y acordar prioridades de trabajo.",
+    "option_b": "Evitar cualquier hipótesis para no influir en el relato y continuar recopilando información por varias sesiones.",
+    "option_c": "Responder con el diagnóstico más probable para disminuir incertidumbre y aumentar adherencia.",
+    "option_d": "Centrar la devolución en que sus problemas son reacciones normales ante eventos estresantes recientes.",
+    "correct_option": "A",
+    "explanation": "Una devolución responsable puede ser provisional y colaborativa: contiene la incertidumbre, orienta el proceso y evita sobrediagnosticar o minimizar datos aún incompletos.",
+    "option_explanations": {
+      "B": "Evitar toda hipótesis puede aumentar confusión y debilitar la colaboración.",
+      "C": "Diagnosticar con información insuficiente puede cerrar prematuramente la formulación.",
+      "D": "Normalizar puede ayudar, aunque aquí faltan datos para descartar problemas clínicos relevantes."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Devolución inicial",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0017",
+    "question_text": "Una mujer solicita terapia por “baja autoestima”. En la exploración aparece violencia psicológica de pareja, aislamiento económico y temor a que él revise sus mensajes. Ella pide trabajar en seguridad personal sin denunciar por ahora. ¿Cuál plan inicial es más prudente?",
+    "option_a": "Respetar su decisión, evaluar riesgo, construir plan de seguridad y fortalecer red de apoyo sin imponer denuncia.",
+    "option_b": "Condicionar la terapia a que denuncie, porque sin acción legal no habrá cambios sostenibles.",
+    "option_c": "Trabajar autoestima mediante tareas de autoafirmación y posponer la violencia hasta que gane confianza.",
+    "option_d": "Convocar a la pareja a sesión para contrastar versiones y reducir malentendidos relacionales.",
+    "correct_option": "A",
+    "explanation": "La intervención prioriza seguridad, autonomía y evaluación de riesgo. Imponer acciones puede aumentar peligro o abandono; ignorar la violencia desorganiza la formulación.",
+    "option_explanations": {
+      "B": "Condicionar la atención a una denuncia puede incrementar riesgo y reducir acceso a ayuda.",
+      "C": "La autoestima es relevante, pero el contexto de coerción modifica prioridades clínicas.",
+      "D": "Convocar a la pareja puede aumentar exposición y control si no se evalúa seguridad."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Violencia y seguridad",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0018",
+    "question_text": "Un psicólogo facilita un grupo de intervención en crisis tras un accidente escolar. Algunos estudiantes quieren narrar detalles gráficos, mientras otros se muestran pálidos y retraídos. ¿Qué manejo grupal protege mejor la estabilización?",
+    "option_a": "Favorecer relatos extensos para que el grupo elabore lo ocurrido y reduzca rumores.",
+    "option_b": "Establecer límites al detalle gráfico, validar reacciones y orientar a recursos de seguridad y apoyo.",
+    "option_c": "Separar a quienes no desean hablar y mantener el trabajo narrativo con quienes sí lo piden.",
+    "option_d": "Dedicar la sesión a explicar síntomas postraumáticos esperables y evitar expresiones emocionales.",
+    "correct_option": "B",
+    "explanation": "En crisis grupal, la estabilización requiere validar y contener sin promover exposición gráfica que pueda sobrecargar a participantes vulnerables.",
+    "option_explanations": {
+      "A": "Los relatos extensos pueden aumentar activación en quienes aún no están regulados.",
+      "C": "Separar puede ser útil en casos específicos, pero aquí conviene regular el encuadre común.",
+      "D": "La psicoeducación ayuda si no sustituye contención y orientación práctica."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Crisis grupal",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0019",
+    "question_text": "Un paciente con obsesiones de contaminación realiza exposición con prevención de respuesta en consulta, pero en casa pide a su madre que limpie objetos por él. Los síntomas bajan en sesión y se mantienen en el hogar. ¿Qué ajuste es más pertinente?",
+    "option_a": "Incluir acomodación familiar en la formulación y diseñar tareas graduadas que reduzcan participación de la madre.",
+    "option_b": "Aumentar dificultad de exposiciones en consulta porque la ansiedad baja con demasiada rapidez.",
+    "option_c": "Cambiar a reestructuración cognitiva, ya que la exposición no produce generalización doméstica.",
+    "option_d": "Pedir a la madre que suspenda su ayuda desde la próxima semana para acelerar respuesta terapéutica.",
+    "correct_option": "A",
+    "explanation": "La acomodación familiar mantiene rituales fuera de sesión. Incluir a la madre y retirar apoyo de forma graduada favorece generalización sin romper cooperación.",
+    "option_explanations": {
+      "B": "El problema no es la intensidad de la consulta, sino la conducta de seguridad en casa.",
+      "C": "La exposición puede seguir siendo adecuada si se modifica el contexto de mantenimiento.",
+      "D": "Retirar ayuda sin graduación puede elevar conflicto y reducir adherencia."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · TOC y acomodación familiar",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0020",
+    "question_text": "Una paciente llega tarde repetidamente y pide extender la sesión para “compensar”. El terapeuta ha cedido dos veces y nota que otras tareas quedan desplazadas. ¿Cuál intervención protege mejor el encuadre sin dañar la alianza?",
+    "option_a": "Mantener el horario acordado, explorar el patrón de llegadas y revisar cómo afecta objetivos y responsabilidad compartida.",
+    "option_b": "Extender la sesión cuando sea posible para evitar que la paciente pierda contenido clínico importante.",
+    "option_c": "Aplicar una consecuencia económica adicional y no abordar el tema dentro del proceso terapéutico.",
+    "option_d": "Interpretar las tardanzas como resistencia al cambio y confrontarlas al inicio de la próxima sesión.",
+    "correct_option": "A",
+    "explanation": "El encuadre se sostiene con límites consistentes y exploración clínica del patrón. La alianza mejora cuando el límite se vincula al trabajo, no a castigo o confrontación aislada.",
+    "option_explanations": {
+      "B": "Extender sesiones refuerza una excepción que ya está afectando el proceso.",
+      "C": "La consecuencia administrativa no reemplaza el análisis clínico del patrón.",
+      "D": "La resistencia puede ser una hipótesis, pero presentarla como conclusión temprana reduce colaboración."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Encuadre terapéutico",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0021",
+    "question_text": "Un grupo terapéutico para habilidades sociales celebra que un miembro “por fin habló”. El participante sonríe, pero después comunica al terapeuta que se sintió expuesto y no quiere volver. ¿Qué aprendizaje clínico debe guiar la siguiente sesión?",
+    "option_a": "Reforzar públicamente avances visibles puede ser útil, pero requiere explorar consentimiento, ritmo y vivencia subjetiva.",
+    "option_b": "Evitar comentarios positivos en grupo, dado que pueden aumentar vergüenza en participantes inhibidos.",
+    "option_c": "Pedir al participante que explique al grupo su malestar para reparar el impacto de la celebración.",
+    "option_d": "Continuar el plan, ya que la sonrisa durante la sesión indicó que el refuerzo fue recibido favorablemente.",
+    "correct_option": "A",
+    "explanation": "La respuesta visible no basta para inferir vivencia interna. El facilitador debe ajustar refuerzos al ritmo y consentimiento, especialmente con miembros sensibles a exposición social.",
+    "option_explanations": {
+      "B": "El refuerzo grupal puede ser terapéutico si se usa con sensibilidad al contexto.",
+      "C": "Pedir explicación pública puede repetir la exposición que generó malestar.",
+      "D": "La conducta observable no sustituye la información posterior del participante."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Habilidades sociales",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0022",
+    "question_text": "Una paciente con síntomas depresivos dice que no hizo la tarea porque “no sirve de nada”. El terapeuta siente frustración y piensa insistir en la importancia del cumplimiento. ¿Qué respuesta clínica maneja mejor proceso y técnica?",
+    "option_a": "Explorar obstáculos, significado de la tarea y expectativas de cambio, ajustando el plan si la actividad no fue viable.",
+    "option_b": "Reexplicar la evidencia de la técnica para aumentar confianza en el procedimiento asignado.",
+    "option_c": "Suspender tareas entre sesiones hasta que la paciente muestre mayor disposición al tratamiento.",
+    "option_d": "Señalar que la falta de cumplimiento impide evaluar progreso y compromete el contrato terapéutico.",
+    "correct_option": "A",
+    "explanation": "El incumplimiento se formula como información clínica. Explorar significado, barreras y viabilidad permite adaptar la intervención y preservar colaboración.",
+    "option_explanations": {
+      "B": "La evidencia puede ayudar, pero no aborda desesperanza ni barreras específicas.",
+      "C": "Suspender tareas elimina un recurso terapéutico sin comprender el problema.",
+      "D": "Señalar consecuencias puede ser necesario luego, aunque aquí puede aumentar defensividad."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Adherencia terapéutica",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0023",
+    "question_text": "Un consultante pide consejo directo sobre divorciarse. Hay conflicto intenso, hijos pequeños y ambivalencia. El psicólogo identifica presión por obtener una respuesta rápida. ¿Qué intervención respeta mejor el rol profesional?",
+    "option_a": "Acompañar análisis de valores, riesgos, alternativas y consecuencias, sin decidir por el consultante.",
+    "option_b": "Recomendar esperar hasta que disminuya el conflicto para prevenir decisiones impulsivas.",
+    "option_c": "Sugerir separación temporal como punto intermedio mientras se aclaran emociones.",
+    "option_d": "Derivar a asesoría legal antes de continuar, porque la decisión pertenece al ámbito jurídico.",
+    "correct_option": "A",
+    "explanation": "El rol psicológico no consiste en elegir por la persona, sino en favorecer una deliberación informada, emocionalmente regulada y congruente con valores y contexto.",
+    "option_explanations": {
+      "B": "Esperar puede ser prudente en algunos casos, pero aquí sigue siendo un consejo directivo.",
+      "C": "La separación temporal también decide un curso de acción sin suficiente elaboración.",
+      "D": "La asesoría legal puede complementar, aunque no reemplaza el trabajo psicológico de decisión."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Asesoramiento psicológico",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0024",
+    "question_text": "Una terapeuta observa que un paciente intelectualiza cada emoción y trae lecturas sobre apego para explicar su conducta. Las sesiones son ordenadas, pero hay poca conexión afectiva y escasos cambios. ¿Cuál ajuste técnico es más indicado?",
+    "option_a": "Usar la comprensión conceptual como punto de partida y dirigir atención a experiencia emocional presente en sesión.",
+    "option_b": "Pedir que deje de leer sobre psicología para reducir interferencias cognitivas en el proceso.",
+    "option_c": "Aumentar la cantidad de psicoeducación para que el paciente organice mejor sus conceptos.",
+    "option_d": "Cambiar a un enfoque conductual centrado en tareas, evitando exploración emocional por el momento.",
+    "correct_option": "A",
+    "explanation": "La intelectualización no se combate retirando significado, sino enlazando la comprensión verbal con experiencia emocional y relacional observable en sesión.",
+    "option_explanations": {
+      "B": "Prohibir lecturas puede generar lucha de poder y no transforma el uso defensivo del conocimiento.",
+      "C": "Más psicoeducación puede reforzar el mismo patrón intelectualizado.",
+      "D": "Las tareas pueden ayudar, pero evitar emoción mantiene el proceso central sin abordar."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Proceso emocional",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0025",
+    "question_text": "Una paciente pide sesiones por videollamada desde una ciudad donde el terapeuta no conoce recursos locales. Refiere autolesiones superficiales recientes y apoyo limitado. Antes de continuar online, ¿qué condición clínica debe establecerse?",
+    "option_a": "Contar con plan de seguridad, contactos de emergencia y recursos locales verificables para manejo de riesgo.",
+    "option_b": "Pedir compromiso verbal de no autolesionarse durante el proceso remoto y registrar el acuerdo.",
+    "option_c": "Continuar sesiones online si la paciente valora la continuidad y no presenta ideación suicida actual.",
+    "option_d": "Derivar a atención presencial y cerrar el proceso remoto sin realizar intervención de transición.",
+    "correct_option": "A",
+    "explanation": "La atención remota con riesgo requiere condiciones mínimas de seguridad: contactos, recursos locales y plan de acción. La continuidad no debe depender de un compromiso verbal aislado.",
+    "option_explanations": {
+      "B": "El compromiso verbal aporta poco si no existe red y ruta de respuesta ante escalamiento.",
+      "C": "La ausencia de ideación actual no elimina el riesgo asociado a autolesiones recientes y apoyo limitado.",
+      "D": "La derivación puede ser necesaria, pero debe cuidarse una transición clínica segura."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Atención remota y seguridad",
+    "difficulty": "Alta",
+    "created_at": null
   }
 ]

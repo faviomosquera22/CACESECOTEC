@@ -1,0 +1,452 @@
+[
+  {
+    "id": "local-psicologia-c1-alta-0001",
+    "question_text": "Una terapeuta atiende a una mujer de 31 años con ansiedad social. La paciente cumple las tareas de exposición, pero evita registrar pensamientos porque dice que “eso me pone más nerviosa”. La terapeuta nota mejoría parcial, aunque el miedo a ser evaluada persiste en reuniones laborales. ¿Cuál formulación explica mejor el mantenimiento del problema?",
+    "option_a": "La exposición reduce evitación conductual, pero la falta de trabajo cognitivo mantiene predicciones de evaluación negativa en contextos laborales.",
+    "option_b": "La paciente muestra baja motivación hacia el tratamiento, por lo que conviene aumentar la frecuencia de sesiones antes de ajustar técnicas.",
+    "option_c": "La ansiedad social depende ante todo de habilidades comunicativas pobres, de modo que el entrenamiento asertivo sería suficiente.",
+    "option_d": "El registro de pensamientos incrementa síntomas, por lo que debe retirarse de la formulación y priorizar relajación aplicada.",
+    "correct_option": "A",
+    "explanation": "La respuesta integra conducta y cognición: la exposición puede mejorar el funcionamiento, pero si las creencias anticipatorias no se revisan, el temor evaluativo persiste en situaciones relevantes.",
+    "option_explanations": {
+      "B": "La adherencia parcial no equivale a baja motivación; el dato central es la evitación de un componente específico.",
+      "C": "La falta de habilidades puede participar, pero el caso enfatiza predicciones de evaluación y evitación cognitiva.",
+      "D": "Retirar el componente cognitivo sin reformularlo deja intacto un factor de mantenimiento importante."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Formulación cognitivo-conductual",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0002",
+    "question_text": "Un paciente con crisis de pánico evita transporte público. Durante sesiones imaginarias tolera sensaciones corporales, pero abandona prácticas en buses porque interpreta la taquicardia como señal de pérdida de control. El terapeuta debe ajustar el plan. ¿Qué intervención es más coherente con la formulación?",
+    "option_a": "Mantener ensayos imaginarios hasta que desaparezca la ansiedad antes de exponerlo a situaciones con pasajeros.",
+    "option_b": "Combinar exposición interoceptiva con exposición situacional graduada y revisión de interpretaciones catastróficas.",
+    "option_c": "Cambiar a terapia de apoyo centrada en aceptación emocional, dejando la exposición para una fase posterior.",
+    "option_d": "Aplicar psicoeducación sobre el sistema nervioso y evaluar después si el paciente desea exponerse al bus.",
+    "correct_option": "B",
+    "explanation": "La dificultad aparece cuando la activación corporal se interpreta como amenaza durante una situación real; por eso conviene integrar exposición a sensaciones, exposición situacional y reestructuración.",
+    "option_explanations": {
+      "A": "Esperar ausencia de ansiedad puede reforzar la idea de que la activación es peligrosa.",
+      "C": "La aceptación puede ayudar, pero no aborda de forma suficiente la evitación situacional descrita.",
+      "D": "La psicoeducación aislada no modifica por sí misma la evitación ni la interpretación durante la práctica."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Trastorno de pánico y exposición",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0003",
+    "question_text": "Una consultante acude por dificultades de pareja y refiere episodios de celos, revisión del teléfono y miedo intenso al abandono. El terapeuta observa que la demanda inicial es “hacer que mi pareja cambie”. ¿Qué encuadre inicial protege mejor la alianza y la responsabilidad clínica?",
+    "option_a": "Aceptar la demanda tal como llega y centrar el tratamiento en estrategias para modificar la conducta de la pareja.",
+    "option_b": "Explicar que la terapia no puede incluir asuntos de pareja y derivar desde la primera sesión.",
+    "option_c": "Reformular la demanda hacia patrones propios de regulación, vínculo y conducta, sin invalidar el malestar relacional.",
+    "option_d": "Confrontar la revisión del teléfono como conducta inadecuada y establecer abstinencia conductual como primer objetivo.",
+    "correct_option": "C",
+    "explanation": "El encuadre conserva la alianza al validar el malestar, pero delimita que el foco terapéutico debe formularse sobre procesos modificables de la consultante y no sobre controlar a un tercero.",
+    "option_explanations": {
+      "A": "Centrar la terapia en cambiar a la pareja confunde el foco de intervención y reduce responsabilidad clínica.",
+      "B": "La derivación puede ser útil luego, pero el caso permite una reformulación inicial individual.",
+      "D": "La confrontación temprana puede ser válida en otro momento, aunque aquí falta una formulación compartida."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Motivo de consulta y demanda",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0004",
+    "question_text": "En un grupo terapéutico para duelo, una participante nueva relata la muerte reciente de su padre. Otra integrante, con más tiempo en el grupo, responde con consejos extensos sobre rituales y trámites. La nueva participante guarda silencio y mira al piso. ¿Cuál sería la intervención grupal más adecuada?",
+    "option_a": "Agradecer la intención de ayuda y redirigir el foco hacia cómo recibió la participante nueva esos consejos.",
+    "option_b": "Permitir que el intercambio continúe para que la experiencia de una integrante más avanzada modele afrontamiento.",
+    "option_c": "Pedir a la integrante antigua que evite compartir experiencias personales durante las próximas sesiones.",
+    "option_d": "Cambiar de tema hacia psicoeducación sobre duelo para disminuir tensión entre ambas participantes.",
+    "correct_option": "A",
+    "explanation": "La intervención reconoce la intención prosocial y, a la vez, protege el proceso grupal al explorar el impacto en quien acaba de abrir una experiencia vulnerable.",
+    "option_explanations": {
+      "B": "El modelado puede ser útil, pero aquí el silencio sugiere que la participante nueva puede sentirse desplazada.",
+      "C": "Restringir la participación de manera amplia empobrece el intercambio y puede generar vergüenza.",
+      "D": "La psicoeducación evita procesar una dinámica grupal clínicamente relevante."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Proceso grupal y facilitación",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0005",
+    "question_text": "Un terapeuta propone finalizar un tratamiento por mejoría sostenida. La paciente acepta, pero en la sesión siguiente trae varios problemas nuevos y pide “empezar de nuevo”. Los objetivos iniciales están cumplidos y no hay riesgo clínico. ¿Qué respuesta sostiene mejor la fase de cierre?",
+    "option_a": "Extender el tratamiento con nuevos objetivos para evitar que la paciente viva el cierre como abandono.",
+    "option_b": "Revisar logros, explorar el significado del cierre y acordar criterios para futuras consultas si fueran necesarias.",
+    "option_c": "Mantener sesiones mensuales indefinidas como seguimiento preventivo ante posibles recaídas emocionales.",
+    "option_d": "Cerrar en esa misma sesión para reforzar autonomía y evitar dependencia hacia el espacio terapéutico.",
+    "correct_option": "B",
+    "explanation": "El cierre requiere consolidar avances y trabajar la reacción emocional ante la terminación, sin convertir nuevos temas menores en una prolongación poco delimitada.",
+    "option_explanations": {
+      "A": "Ampliar objetivos puede ser válido, pero aquí parece responder más a ansiedad de separación que a necesidad clínica nueva.",
+      "C": "El seguimiento puede pactarse, aunque no como extensión indefinida del tratamiento.",
+      "D": "Cerrar sin elaborar la reacción de la paciente desaprovecha una tarea propia de la fase final."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Cierre y seguimiento",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0006",
+    "question_text": "Un adolescente acude por mandato de sus padres tras bajar su rendimiento. En sesión afirma que no quiere hablar, pero reconoce que extraña entrenar fútbol y que se siente agotado. ¿Cuál estrategia inicial equilibra autonomía, alianza y evaluación clínica?",
+    "option_a": "Trabajar con los padres hasta que el adolescente muestre disposición explícita para participar.",
+    "option_b": "Explicar límites de confidencialidad y explorar metas propias vinculadas a bienestar y actividades significativas.",
+    "option_c": "Solicitar pruebas psicométricas antes de iniciar conversación clínica para reducir resistencia inicial.",
+    "option_d": "Centrar la primera sesión en consecuencias académicas para conectar la consulta con la demanda familiar.",
+    "correct_option": "B",
+    "explanation": "La intervención delimita confidencialidad, respeta la autonomía del adolescente y usa intereses propios como entrada clínica, sin quedar atrapada en la demanda parental.",
+    "option_explanations": {
+      "A": "Trabajar con padres puede complementar, pero no sustituye la construcción de alianza con el adolescente.",
+      "C": "La evaluación puede ser útil, aunque no resuelve el desafío relacional inicial.",
+      "D": "Empezar por consecuencias académicas puede reforzar la vivencia de imposición externa."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Encuadre con adolescentes",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0007",
+    "question_text": "Una paciente con depresión mejora sueño y apetito, pero mantiene aislamiento. Dice que salir con amistades “sería actuar como si nada pasara”. El terapeuta considera activación conductual. ¿Cuál objetivo inicial tiene mejor fundamento clínico?",
+    "option_a": "Programar actividades sociales graduadas y revisar creencias sobre legitimidad del malestar durante la activación.",
+    "option_b": "Esperar que mejore el estado de ánimo antes de introducir actividades que demanden contacto interpersonal.",
+    "option_c": "Indicar salidas frecuentes con amistades para demostrar que la conducta puede cambiar el ánimo.",
+    "option_d": "Centrar el trabajo en higiene del sueño, dado que los síntomas vegetativos ya muestran respuesta favorable.",
+    "correct_option": "A",
+    "explanation": "La activación requiere tareas graduadas y revisión del significado atribuido a la conducta; en el caso, la creencia de invalidez del malestar mantiene aislamiento.",
+    "option_explanations": {
+      "B": "Esperar a que cambie el ánimo puede mantener el ciclo de evitación y retraimiento.",
+      "C": "Aumentar salidas sin graduación ni formulación puede elevar abandono o vivirse como presión.",
+      "D": "La higiene del sueño no aborda el factor interpersonal que permanece activo."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Activación conductual",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0008",
+    "question_text": "En una intervención en crisis, un hombre que perdió su empleo hace tres días expresa vergüenza, evita llamar a su familia y teme ser una carga. No hay ideación suicida actual, pero se observa desorganización y falta de plan. ¿Cuál foco inicial es más pertinente?",
+    "option_a": "Analizar su historia laboral para identificar patrones de fracaso y prevenir decisiones impulsivas.",
+    "option_b": "Ordenar necesidades inmediatas, activar apoyo disponible y construir un plan de próximas acciones manejables.",
+    "option_c": "Explorar creencias tempranas sobre autosuficiencia antes de contactar a personas cercanas.",
+    "option_d": "Recomendar búsqueda laboral intensa para recuperar sentido de eficacia durante la primera semana.",
+    "correct_option": "B",
+    "explanation": "La crisis demanda organizar necesidades, reducir aislamiento y traducir el problema en acciones próximas. La exploración profunda o la presión por rendimiento pueden ser prematuras.",
+    "option_explanations": {
+      "A": "La historia laboral puede explorarse luego; en crisis interesa estabilización y pasos concretos.",
+      "C": "Las creencias tempranas no son el foco inicial cuando hay desorganización y aislamiento.",
+      "D": "La búsqueda intensa puede aumentar vergüenza si no se acompaña de estabilización y apoyo."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Intervención en crisis",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0009",
+    "question_text": "Un grupo psicoeducativo sobre manejo de ansiedad recibe buenos comentarios, pero varios asistentes no aplican las técnicas fuera de sesión. En la evaluación refieren que entienden la teoría, aunque no saben adaptarla a situaciones familiares. ¿Qué ajuste mejora más la transferencia?",
+    "option_a": "Aumentar contenido teórico para que los participantes comprendan con mayor precisión los mecanismos de ansiedad.",
+    "option_b": "Incluir práctica guiada con ejemplos personales, barreras de aplicación y tareas revisadas en la sesión siguiente.",
+    "option_c": "Reducir la participación de asistentes que no aplican tareas para proteger el ritmo del grupo.",
+    "option_d": "Transformar el grupo en psicoterapia abierta, ya que la falta de práctica indica conflictos profundos.",
+    "correct_option": "B",
+    "explanation": "La transferencia mejora cuando la información se practica, se contextualiza y se revisan obstáculos. Comprender la teoría no garantiza aplicación cotidiana.",
+    "option_explanations": {
+      "A": "Más teoría puede aumentar comprensión verbal sin resolver la brecha de aplicación.",
+      "C": "Excluir participantes no atiende las barreras del diseño psicoeducativo.",
+      "D": "La falta de práctica no basta para concluir que el formato deba convertirse en psicoterapia."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos psicoeducativos",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0010",
+    "question_text": "Una terapeuta recibe un pedido judicial de informe sobre una paciente. La paciente autoriza entregar información, pero pide incluir detalles íntimos para “demostrar sufrimiento”. ¿Cuál respuesta cuida mejor ética, encuadre y utilidad clínica del documento?",
+    "option_a": "Redactar un informe objetivo, pertinente al pedido, con alcance limitado y consentimiento informado de la paciente.",
+    "option_b": "Incluir el relato completo solicitado por la paciente, ya que la autorización habilita el uso de la historia clínica.",
+    "option_c": "Negarse a emitir cualquier informe para preservar la neutralidad terapéutica y evitar riesgos legales.",
+    "option_d": "Enviar una síntesis diagnóstica breve sin revisar el contenido con la paciente para proteger independencia técnica.",
+    "correct_option": "A",
+    "explanation": "La autorización no elimina el deber de pertinencia, prudencia y delimitación del informe. El documento debe responder al propósito solicitado y proteger información innecesaria.",
+    "option_explanations": {
+      "B": "El consentimiento no justifica revelar más información de la necesaria para el objetivo del informe.",
+      "C": "Puede emitirse un informe clínico si se delimita alcance y base de la información.",
+      "D": "La independencia técnica no impide aclarar alcance y consentimiento con la paciente."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Informes y confidencialidad",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0011",
+    "question_text": "Un paciente con consumo problemático de alcohol asiste por presión de su pareja. Reconoce discusiones y ausencias laborales, pero dice que beber “lo ayuda a dormir”. El terapeuta quiere evitar confrontación temprana. ¿Qué intervención inicial favorece cambio sin romper alianza?",
+    "option_a": "Explorar ambivalencia entre beneficios percibidos y costos actuales, vinculándola con metas personales del paciente.",
+    "option_b": "Señalar que el consumo explica los conflictos y solicitar compromiso de abstinencia en la primera sesión.",
+    "option_c": "Trabajar con la pareja como principal fuente de información mientras el paciente reconoce el problema.",
+    "option_d": "Centrarse en técnicas de sueño para reducir una razón de consumo antes de hablar de consecuencias.",
+    "correct_option": "A",
+    "explanation": "Explorar ambivalencia permite usar la propia perspectiva del paciente como base de cambio, integrando costos y funciones del consumo sin confrontación prematura.",
+    "option_explanations": {
+      "B": "La confrontación inicial puede aumentar resistencia cuando la motivación es externa.",
+      "C": "La pareja aporta datos, pero desplazar el foco debilita la alianza con el paciente.",
+      "D": "El sueño es relevante, aunque aislarlo puede evitar el análisis funcional del consumo."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Motivación y cambio",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0012",
+    "question_text": "Durante la fase media, una paciente con estrés postraumático reporta disminución de pesadillas, pero aumenta irritabilidad con sus hijos. El terapeuta había focalizado exposición narrativa. ¿Qué lectura clínica orienta mejor el ajuste del tratamiento?",
+    "option_a": "La reducción de pesadillas indica mejoría suficiente, por lo que la irritabilidad puede trabajarse en seguimiento.",
+    "option_b": "La irritabilidad sugiere que la exposición fue inadecuada y conviene abandonar el foco traumático.",
+    "option_c": "El cambio sintomático parcial requiere revisar regulación emocional y contexto familiar dentro de la formulación.",
+    "option_d": "La irritabilidad corresponde a resistencia al tratamiento y debe interpretarse en términos transferenciales.",
+    "correct_option": "C",
+    "explanation": "La fase media exige monitoreo de resultados y efectos funcionales. La mejoría parcial no basta si otro dominio relevante empeora o queda fuera de la formulación.",
+    "option_explanations": {
+      "A": "Reducir un síntoma no implica que el funcionamiento familiar pueda postergarse sin evaluación.",
+      "B": "Un aumento de irritabilidad no demuestra por sí mismo que el foco traumático deba abandonarse.",
+      "D": "La transferencia puede explorarse, pero el caso apunta a regulación emocional y contexto familiar."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Monitoreo en fase media",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0013",
+    "question_text": "En un grupo de apoyo para cuidadores, una participante monopoliza el tiempo con detalles médicos de su familiar. Otros miembros empiezan a responder con frases breves y menos asistencia. ¿Cuál intervención del facilitador equilibra contención e inclusión grupal?",
+    "option_a": "Interrumpir de forma firme y asignar el turno a otra persona para corregir la distribución del tiempo.",
+    "option_b": "Validar la carga de la participante y abrir una ronda que conecte su experiencia con la de otros cuidadores.",
+    "option_c": "Permitir que continúe, ya que el grupo de apoyo debe priorizar a quien expresa mayor malestar.",
+    "option_d": "Recomendarle terapia individual y pedir que limite sus intervenciones a información resumida.",
+    "correct_option": "B",
+    "explanation": "La facilitación sostiene la contención de quien habla y protege la participación del grupo, transformando el monopolio en un puente hacia experiencias compartidas.",
+    "option_explanations": {
+      "A": "Interrumpir sin validación puede generar vergüenza y no usa el material grupal disponible.",
+      "C": "Priorizar a una integrante deteriora el clima y reduce la función de apoyo mutuo.",
+      "D": "La derivación puede considerarse, pero no resuelve la dinámica grupal presente."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Grupos de apoyo",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0014",
+    "question_text": "Una persona consulta por insomnio tras un asalto. Describe hipervigilancia, evita pasar por la calle del evento y se culpa por “no haber reaccionado mejor”. Han pasado dos semanas. ¿Cuál decisión clínica inicial es más ajustada?",
+    "option_a": "Normalizar reacciones iniciales, evaluar seguridad y funcionamiento, y ofrecer estrategias de estabilización con seguimiento.",
+    "option_b": "Diagnosticar estrés postraumático y comenzar exposición prolongada centrada en el recuerdo del asalto.",
+    "option_c": "Indicar que la evitación confirma cronificación y requiere intervención intensiva desde la primera sesión.",
+    "option_d": "Centrar la consulta en higiene del sueño porque el insomnio es el motivo que organiza la demanda.",
+    "correct_option": "A",
+    "explanation": "A las dos semanas pueden presentarse reacciones agudas que requieren evaluación, estabilización y seguimiento. La formulación debe distinguir respuesta inicial de persistencia clínica.",
+    "option_explanations": {
+      "B": "El diagnóstico y la exposición intensiva requieren evaluación temporal y clínica más cuidadosa.",
+      "C": "La evitación temprana es relevante, pero no basta para afirmar cronificación.",
+      "D": "El sueño importa, aunque el caso muestra una respuesta traumática más amplia."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Trauma y estabilización",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0015",
+    "question_text": "Una paciente pide cambiar de terapeuta dentro del mismo centro porque siente que su psicóloga “la juzga”. Al revisar, hay avances objetivos y también varias rupturas no abordadas tras tareas incumplidas. ¿Qué respuesta institucional y clínica es más adecuada?",
+    "option_a": "Cambiar de terapeuta para preservar satisfacción de la paciente y evitar deterioro de la adherencia.",
+    "option_b": "Desestimar la queja por los avances objetivos y pedir continuidad hasta completar el plan inicial.",
+    "option_c": "Explorar la ruptura de alianza, validar la experiencia y decidir continuidad o derivación tras una sesión de revisión.",
+    "option_d": "Solicitar informe de la terapeuta y resolver el cambio sin involucrar a la paciente en el análisis.",
+    "correct_option": "C",
+    "explanation": "La alianza requiere revisión explícita de rupturas. La decisión de continuar o derivar debe considerar la experiencia subjetiva y los avances, no solo un indicador aislado.",
+    "option_explanations": {
+      "A": "Cambiar sin revisar puede repetir el patrón y perder información clínica útil.",
+      "B": "Los avances objetivos no anulan la vivencia de juicio ni la ruptura de alianza.",
+      "D": "Excluir a la paciente contradice el trabajo colaborativo y reduce transparencia."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Alianza y ruptura terapéutica",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0016",
+    "question_text": "En una primera entrevista, un consultante habla de problemas laborales, duelo reciente y discusiones familiares. Al final pregunta si “tiene un trastorno”. El terapeuta aún no cuenta con información suficiente. ¿Qué devolución inicial es más responsable?",
+    "option_a": "Ofrecer una hipótesis provisional, explicar la necesidad de evaluación adicional y acordar prioridades de trabajo.",
+    "option_b": "Evitar cualquier hipótesis para no influir en el relato y continuar recopilando información por varias sesiones.",
+    "option_c": "Responder con el diagnóstico más probable para disminuir incertidumbre y aumentar adherencia.",
+    "option_d": "Centrar la devolución en que sus problemas son reacciones normales ante eventos estresantes recientes.",
+    "correct_option": "A",
+    "explanation": "Una devolución responsable puede ser provisional y colaborativa: contiene la incertidumbre, orienta el proceso y evita sobrediagnosticar o minimizar datos aún incompletos.",
+    "option_explanations": {
+      "B": "Evitar toda hipótesis puede aumentar confusión y debilitar la colaboración.",
+      "C": "Diagnosticar con información insuficiente puede cerrar prematuramente la formulación.",
+      "D": "Normalizar puede ayudar, aunque aquí faltan datos para descartar problemas clínicos relevantes."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Devolución inicial",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0017",
+    "question_text": "Una mujer solicita terapia por “baja autoestima”. En la exploración aparece violencia psicológica de pareja, aislamiento económico y temor a que él revise sus mensajes. Ella pide trabajar en seguridad personal sin denunciar por ahora. ¿Cuál plan inicial es más prudente?",
+    "option_a": "Respetar su decisión, evaluar riesgo, construir plan de seguridad y fortalecer red de apoyo sin imponer denuncia.",
+    "option_b": "Condicionar la terapia a que denuncie, porque sin acción legal no habrá cambios sostenibles.",
+    "option_c": "Trabajar autoestima mediante tareas de autoafirmación y posponer la violencia hasta que gane confianza.",
+    "option_d": "Convocar a la pareja a sesión para contrastar versiones y reducir malentendidos relacionales.",
+    "correct_option": "A",
+    "explanation": "La intervención prioriza seguridad, autonomía y evaluación de riesgo. Imponer acciones puede aumentar peligro o abandono; ignorar la violencia desorganiza la formulación.",
+    "option_explanations": {
+      "B": "Condicionar la atención a una denuncia puede incrementar riesgo y reducir acceso a ayuda.",
+      "C": "La autoestima es relevante, pero el contexto de coerción modifica prioridades clínicas.",
+      "D": "Convocar a la pareja puede aumentar exposición y control si no se evalúa seguridad."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Violencia y seguridad",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0018",
+    "question_text": "Un psicólogo facilita un grupo de intervención en crisis tras un accidente escolar. Algunos estudiantes quieren narrar detalles gráficos, mientras otros se muestran pálidos y retraídos. ¿Qué manejo grupal protege mejor la estabilización?",
+    "option_a": "Favorecer relatos extensos para que el grupo elabore lo ocurrido y reduzca rumores.",
+    "option_b": "Establecer límites al detalle gráfico, validar reacciones y orientar a recursos de seguridad y apoyo.",
+    "option_c": "Separar a quienes no desean hablar y mantener el trabajo narrativo con quienes sí lo piden.",
+    "option_d": "Dedicar la sesión a explicar síntomas postraumáticos esperables y evitar expresiones emocionales.",
+    "correct_option": "B",
+    "explanation": "En crisis grupal, la estabilización requiere validar y contener sin promover exposición gráfica que pueda sobrecargar a participantes vulnerables.",
+    "option_explanations": {
+      "A": "Los relatos extensos pueden aumentar activación en quienes aún no están regulados.",
+      "C": "Separar puede ser útil en casos específicos, pero aquí conviene regular el encuadre común.",
+      "D": "La psicoeducación ayuda si no sustituye contención y orientación práctica."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Crisis grupal",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0019",
+    "question_text": "Un paciente con obsesiones de contaminación realiza exposición con prevención de respuesta en consulta, pero en casa pide a su madre que limpie objetos por él. Los síntomas bajan en sesión y se mantienen en el hogar. ¿Qué ajuste es más pertinente?",
+    "option_a": "Incluir acomodación familiar en la formulación y diseñar tareas graduadas que reduzcan participación de la madre.",
+    "option_b": "Aumentar dificultad de exposiciones en consulta porque la ansiedad baja con demasiada rapidez.",
+    "option_c": "Cambiar a reestructuración cognitiva, ya que la exposición no produce generalización doméstica.",
+    "option_d": "Pedir a la madre que suspenda su ayuda desde la próxima semana para acelerar respuesta terapéutica.",
+    "correct_option": "A",
+    "explanation": "La acomodación familiar mantiene rituales fuera de sesión. Incluir a la madre y retirar apoyo de forma graduada favorece generalización sin romper cooperación.",
+    "option_explanations": {
+      "B": "El problema no es la intensidad de la consulta, sino la conducta de seguridad en casa.",
+      "C": "La exposición puede seguir siendo adecuada si se modifica el contexto de mantenimiento.",
+      "D": "Retirar ayuda sin graduación puede elevar conflicto y reducir adherencia."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · TOC y acomodación familiar",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0020",
+    "question_text": "Una paciente llega tarde repetidamente y pide extender la sesión para “compensar”. El terapeuta ha cedido dos veces y nota que otras tareas quedan desplazadas. ¿Cuál intervención protege mejor el encuadre sin dañar la alianza?",
+    "option_a": "Mantener el horario acordado, explorar el patrón de llegadas y revisar cómo afecta objetivos y responsabilidad compartida.",
+    "option_b": "Extender la sesión cuando sea posible para evitar que la paciente pierda contenido clínico importante.",
+    "option_c": "Aplicar una consecuencia económica adicional y no abordar el tema dentro del proceso terapéutico.",
+    "option_d": "Interpretar las tardanzas como resistencia al cambio y confrontarlas al inicio de la próxima sesión.",
+    "correct_option": "A",
+    "explanation": "El encuadre se sostiene con límites consistentes y exploración clínica del patrón. La alianza mejora cuando el límite se vincula al trabajo, no a castigo o confrontación aislada.",
+    "option_explanations": {
+      "B": "Extender sesiones refuerza una excepción que ya está afectando el proceso.",
+      "C": "La consecuencia administrativa no reemplaza el análisis clínico del patrón.",
+      "D": "La resistencia puede ser una hipótesis, pero presentarla como conclusión temprana reduce colaboración."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Encuadre terapéutico",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0021",
+    "question_text": "Un grupo terapéutico para habilidades sociales celebra que un miembro “por fin habló”. El participante sonríe, pero después comunica al terapeuta que se sintió expuesto y no quiere volver. ¿Qué aprendizaje clínico debe guiar la siguiente sesión?",
+    "option_a": "Reforzar públicamente avances visibles puede ser útil, pero requiere explorar consentimiento, ritmo y vivencia subjetiva.",
+    "option_b": "Evitar comentarios positivos en grupo, dado que pueden aumentar vergüenza en participantes inhibidos.",
+    "option_c": "Pedir al participante que explique al grupo su malestar para reparar el impacto de la celebración.",
+    "option_d": "Continuar el plan, ya que la sonrisa durante la sesión indicó que el refuerzo fue recibido favorablemente.",
+    "correct_option": "A",
+    "explanation": "La respuesta visible no basta para inferir vivencia interna. El facilitador debe ajustar refuerzos al ritmo y consentimiento, especialmente con miembros sensibles a exposición social.",
+    "option_explanations": {
+      "B": "El refuerzo grupal puede ser terapéutico si se usa con sensibilidad al contexto.",
+      "C": "Pedir explicación pública puede repetir la exposición que generó malestar.",
+      "D": "La conducta observable no sustituye la información posterior del participante."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.2 Intervenciones clínicas grupales · Habilidades sociales",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0022",
+    "question_text": "Una paciente con síntomas depresivos dice que no hizo la tarea porque “no sirve de nada”. El terapeuta siente frustración y piensa insistir en la importancia del cumplimiento. ¿Qué respuesta clínica maneja mejor proceso y técnica?",
+    "option_a": "Explorar obstáculos, significado de la tarea y expectativas de cambio, ajustando el plan si la actividad no fue viable.",
+    "option_b": "Reexplicar la evidencia de la técnica para aumentar confianza en el procedimiento asignado.",
+    "option_c": "Suspender tareas entre sesiones hasta que la paciente muestre mayor disposición al tratamiento.",
+    "option_d": "Señalar que la falta de cumplimiento impide evaluar progreso y compromete el contrato terapéutico.",
+    "correct_option": "A",
+    "explanation": "El incumplimiento se formula como información clínica. Explorar significado, barreras y viabilidad permite adaptar la intervención y preservar colaboración.",
+    "option_explanations": {
+      "B": "La evidencia puede ayudar, pero no aborda desesperanza ni barreras específicas.",
+      "C": "Suspender tareas elimina un recurso terapéutico sin comprender el problema.",
+      "D": "Señalar consecuencias puede ser necesario luego, aunque aquí puede aumentar defensividad."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.3 Proceso psicoterapéutico: fases · Adherencia terapéutica",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0023",
+    "question_text": "Un consultante pide consejo directo sobre divorciarse. Hay conflicto intenso, hijos pequeños y ambivalencia. El psicólogo identifica presión por obtener una respuesta rápida. ¿Qué intervención respeta mejor el rol profesional?",
+    "option_a": "Acompañar análisis de valores, riesgos, alternativas y consecuencias, sin decidir por el consultante.",
+    "option_b": "Recomendar esperar hasta que disminuya el conflicto para prevenir decisiones impulsivas.",
+    "option_c": "Sugerir separación temporal como punto intermedio mientras se aclaran emociones.",
+    "option_d": "Derivar a asesoría legal antes de continuar, porque la decisión pertenece al ámbito jurídico.",
+    "correct_option": "A",
+    "explanation": "El rol psicológico no consiste en elegir por la persona, sino en favorecer una deliberación informada, emocionalmente regulada y congruente con valores y contexto.",
+    "option_explanations": {
+      "B": "Esperar puede ser prudente en algunos casos, pero aquí sigue siendo un consejo directivo.",
+      "C": "La separación temporal también decide un curso de acción sin suficiente elaboración.",
+      "D": "La asesoría legal puede complementar, aunque no reemplaza el trabajo psicológico de decisión."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Asesoramiento psicológico",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0024",
+    "question_text": "Una terapeuta observa que un paciente intelectualiza cada emoción y trae lecturas sobre apego para explicar su conducta. Las sesiones son ordenadas, pero hay poca conexión afectiva y escasos cambios. ¿Cuál ajuste técnico es más indicado?",
+    "option_a": "Usar la comprensión conceptual como punto de partida y dirigir atención a experiencia emocional presente en sesión.",
+    "option_b": "Pedir que deje de leer sobre psicología para reducir interferencias cognitivas en el proceso.",
+    "option_c": "Aumentar la cantidad de psicoeducación para que el paciente organice mejor sus conceptos.",
+    "option_d": "Cambiar a un enfoque conductual centrado en tareas, evitando exploración emocional por el momento.",
+    "correct_option": "A",
+    "explanation": "La intelectualización no se combate retirando significado, sino enlazando la comprensión verbal con experiencia emocional y relacional observable en sesión.",
+    "option_explanations": {
+      "B": "Prohibir lecturas puede generar lucha de poder y no transforma el uso defensivo del conocimiento.",
+      "C": "Más psicoeducación puede reforzar el mismo patrón intelectualizado.",
+      "D": "Las tareas pueden ayudar, pero evitar emoción mantiene el proceso central sin abordar."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.1 Intervenciones clínicas individuales · Proceso emocional",
+    "difficulty": "Alta",
+    "created_at": null
+  },
+  {
+    "id": "local-psicologia-c1-alta-0025",
+    "question_text": "Una paciente pide sesiones por videollamada desde una ciudad donde el terapeuta no conoce recursos locales. Refiere autolesiones superficiales recientes y apoyo limitado. Antes de continuar online, ¿qué condición clínica debe establecerse?",
+    "option_a": "Contar con plan de seguridad, contactos de emergencia y recursos locales verificables para manejo de riesgo.",
+    "option_b": "Pedir compromiso verbal de no autolesionarse durante el proceso remoto y registrar el acuerdo.",
+    "option_c": "Continuar sesiones online si la paciente valora la continuidad y no presenta ideación suicida actual.",
+    "option_d": "Derivar a atención presencial y cerrar el proceso remoto sin realizar intervención de transición.",
+    "correct_option": "A",
+    "explanation": "La atención remota con riesgo requiere condiciones mínimas de seguridad: contactos, recursos locales y plan de acción. La continuidad no debe depender de un compromiso verbal aislado.",
+    "option_explanations": {
+      "B": "El compromiso verbal aporta poco si no existe red y ruta de respuesta ante escalamiento.",
+      "C": "La ausencia de ideación actual no elimina el riesgo asociado a autolesiones recientes y apoyo limitado.",
+      "D": "La derivación puede ser necesaria, pero debe cuidarse una transición clínica segura."
+    },
+    "category": "Psicología - 1. Intervenciones clínicas y fundamentos de psicoterapia · 1.4 Proceso psicoterapéutico: elementos · Atención remota y seguridad",
+    "difficulty": "Alta",
+    "created_at": null
+  }
+]

@@ -193,7 +193,7 @@ export default async function StudentExamSimulatorPage({
       {persistenceMode === "local" ? (
         <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-800">
           {shouldUsePsychiatryBank
-            ? "Usando el banco local de Psicología: 80 preguntas seleccionadas aleatoriamente de 105, con sus argumentaciones de respuesta."
+            ? "Usando el banco local de Psicología: 100 preguntas seleccionadas aleatoriamente de un banco depurado de 200, con sus argumentaciones de respuesta."
             : `Usando banco local de ${exam.shortTitle} mientras Supabase no tenga la tabla de preguntas cargada.`}
         </div>
       ) : null}

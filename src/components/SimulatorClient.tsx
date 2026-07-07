@@ -28,9 +28,9 @@ type SimulatorClientProps = {
   draftStorageKey?: string;
 };
 
-const OLD_SIMULATION_SECONDS = 60 * 60;
-const SIMULATION_SECONDS = 120 * 60;
-const DRAFT_VERSION = 2;
+const LEGACY_SIMULATION_SECONDS = 120 * 60;
+const SIMULATION_SECONDS = 60 * 60;
+const DRAFT_VERSION = 3;
 const LEGACY_DRAFT_PREFIX = "draft";
 const LEGACY_DRAFT_DONE_PREFIX = "draft_done";
 
@@ -101,6 +101,28 @@ function getRemainingSeconds(startedAt: Date) {
   );
 }
 
+function normalizeDraftTimeLeft(draft: Partial<SimulationDraft>) {
+  const previousSimulationSeconds =
+    typeof draft.simulationSeconds === "number" && draft.simulationSeconds > 0
+      ? draft.simulationSeconds
+      : draft.version === 2
+        ? LEGACY_SIMULATION_SECONDS
+        : SIMULATION_SECONDS;
+  const previousTimeLeft =
+    typeof draft.timeLeft === "number"
+      ? Math.min(previousSimulationSeconds, Math.max(0, draft.timeLeft))
+      : previousSimulationSeconds;
+  const elapsedSeconds = Math.max(
+    0,
+    previousSimulationSeconds - previousTimeLeft,
+  );
+
+  return Math.min(
+    SIMULATION_SECONDS,
+    Math.max(0, SIMULATION_SECONDS - elapsedSeconds),
+  );
+}
+
 function parseLocalDraft(
   rawDraft: string | null,
   questionIds: Set<string>,
@@ -113,7 +135,7 @@ function parseLocalDraft(
   try {
     const draft = JSON.parse(rawDraft) as SimulationDraft;
 
-    if (![1, DRAFT_VERSION].includes(draft.version)) {
+    if (![1, 2, DRAFT_VERSION].includes(draft.version)) {
       return null;
     }
 
@@ -131,17 +153,12 @@ function parseLocalDraft(
         questionIds.has(questionId),
       ),
     );
-    const timeLeft =
-      draft.version === 1
-        ? (draft.timeLeft ?? OLD_SIMULATION_SECONDS) +
-          (SIMULATION_SECONDS - OLD_SIMULATION_SECONDS)
-        : (draft.timeLeft ?? SIMULATION_SECONDS);
 
     return {
       answers,
       comments,
       startedAt: draft.startedAt ? new Date(draft.startedAt) : new Date(),
-      timeLeft: Math.min(SIMULATION_SECONDS, Math.max(0, timeLeft)),
+      timeLeft: normalizeDraftTimeLeft(draft),
     };
   } catch {
     return null;
@@ -179,7 +196,7 @@ function parseStoredDraft(
     typeof draft.startedAt === "string" ? new Date(draft.startedAt) : new Date();
   const timeLeft =
     typeof draft.timeLeft === "number"
-      ? Math.min(SIMULATION_SECONDS, Math.max(0, draft.timeLeft))
+      ? normalizeDraftTimeLeft(draft)
       : getRemainingSeconds(startedAt);
 
   return {

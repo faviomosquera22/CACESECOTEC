@@ -35,7 +35,7 @@ export const psychologyExamDistribution = [
   {
     area: "Muestra rotativa del banco de Psicología",
     percent: 100,
-    count: 80,
+    count: 100,
   },
 ];
 
@@ -62,6 +62,10 @@ const brokenQuestionTexts = new Set([
 function normalizeOptionText(value: string) {
   return value.trim().replace(/\.$/, "").toLowerCase();
 }
+
+const psychologyExamQuestionCount = 100;
+const absolutistOptionPattern =
+  /\b(siempre|nunca|jamás|jamas|todos?|todas|ningún|ningun|ninguna|ninguno|solamente|s[oó]lo|solo|únicamente|unicamente|exclusivamente|completamente|automáticamente|automaticamente|definitivamente|obligatoriamente|por completo)\b/i;
 
 export function isUsableQuestion(question: Question) {
   const questionText = question.question_text?.trim() ?? "";
@@ -132,6 +136,36 @@ function dedupeQuestions(questions: Question[]) {
   });
 
   return result;
+}
+
+function isBalancedPsychologyQuestion(question: Question) {
+  if (!isUsableQuestion(question)) {
+    return false;
+  }
+
+  const options = {
+    A: question.option_a.trim(),
+    B: question.option_b.trim(),
+    C: question.option_c.trim(),
+    D: question.option_d.trim(),
+  };
+  const lengths = Object.values(options).map((option) => option.length);
+  const shortestLength = Math.max(1, Math.min(...lengths));
+  const longestLength = Math.max(...lengths);
+  const averageLength =
+    lengths.reduce((total, length) => total + length, 0) / lengths.length;
+  const correctLength = options[question.correct_option].length;
+  const correctLengthRatio = correctLength / averageLength;
+
+  if (longestLength / shortestLength > 2.6) {
+    return false;
+  }
+
+  if (correctLengthRatio < 0.55 || correctLengthRatio > 1.65) {
+    return false;
+  }
+
+  return !absolutistOptionPattern.test(options[question.correct_option]);
 }
 
 function createSeededRandom(seed: string) {
@@ -224,17 +258,23 @@ export function selectPsychologyExamQuestions(
   questions: Question[],
   attemptSeed?: string,
 ) {
+  const qualityPool = questions.filter(isBalancedPsychologyQuestion);
+  const questionPool =
+    qualityPool.length >= psychologyExamQuestionCount
+      ? qualityPool
+      : questions.filter(isUsableQuestion);
+
   if (attemptSeed === legacyFixedPsychologyAttemptSeed) {
-    return questions.filter(isUsableQuestion).slice(0, 80);
+    return questionPool.slice(0, psychologyExamQuestionCount);
   }
 
   // Cada intento toma una muestra nueva y cambia también el orden. El banco
   // completo permanece disponible para que estudiantes simultáneos no reciban
   // necesariamente el mismo examen.
   return shuffleQuestions(
-    questions.filter(isUsableQuestion),
+    questionPool,
     getRandomSource(attemptSeed),
-  ).slice(0, 80);
+  ).slice(0, psychologyExamQuestionCount);
 }
 
 export function selectQuestionsForExam(

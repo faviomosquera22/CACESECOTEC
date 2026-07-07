@@ -1,0 +1,572 @@
+[
+  {
+    "id": 1,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Fácil",
+    "enunciado": "Un psicólogo clínico recibe por primera vez a un hombre de 28 años que consulta por ansiedad persistente. El paciente comenta que suele callar lo que siente y que rara vez ha podido hablar sin sentirse juzgado. Durante la sesión, el terapeuta mantiene contacto visual, escucha sin interrumpir, usa señales breves de seguimiento y permite que el paciente complete su relato antes de formular nuevas preguntas. Al finalizar, el paciente expresa sentirse comprendido y acepta continuar el proceso. ¿Cuál es el principal efecto clínico de esta intervención inicial?",
+    "opciones": {
+      "A": "Favorece una comunicación menos inhibida y fortalece el rapport terapéutico inicial.",
+      "B": "Permite completar la evaluación diagnóstica desde la primera entrevista clínica.",
+      "C": "Reduce la necesidad de formular objetivos terapéuticos durante el proceso.",
+      "D": "Facilita que el terapeuta dirija el relato hacia los síntomas que considera prioritarios."
+    },
+    "respuesta_correcta": "A",
+    "justificacion": "La escucha sin interrupciones prematuras evita sesgar la información y favorece que el paciente comunique con mayor libertad. Esto facilita el rapport terapéutico y aumenta la disposición inicial hacia el proceso.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Diferencia a quien comprende la función clínica de la escucha activa de quien la confunde con recopilar información o dirigir la entrevista."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 3-5."
+  },
+  {
+    "id": 2,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Un terapeuta evalúa a un adulto de 35 años con síntomas depresivos persistentes. Identifica anhedonia, insomnio, fatiga, baja autoestima, dependencia afectiva, dificultades para establecer límites familiares y estrés asociado al cuidado de un familiar enfermo. El paciente refiere sentirse abrumado porque “todo parece estar conectado”. Antes de definir el plan inicial, el profesional necesita organizar la información clínica. ¿Cuál es el criterio más adecuado para seleccionar el foco inicial de trabajo?",
+    "opciones": {
+      "A": "Iniciar por el síntoma que el paciente menciona con mayor frecuencia durante la entrevista.",
+      "B": "Aplicar primero las estrategias que suelen utilizarse con mayor frecuencia en cuadros depresivos.",
+      "C": "Construir una formulación compartida sobre el problema principal y sus factores de mantenimiento.",
+      "D": "Priorizar el área que resulte más sencilla de modificar para obtener avance rápido."
+    },
+    "respuesta_correcta": "C",
+    "justificacion": "La selección del foco terapéutico debe surgir de una formulación colaborativa, no de una elección automática. Esta formulación permite identificar el problema principal y los factores específicos que lo mantienen.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Exige diferenciar una decisión clínica basada en formulación de decisiones guiadas por frecuencia, facilidad o intervención automática."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 15-20. Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI. Editorial UOC. pp. 83-90."
+  },
+  {
+    "id": 3,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un paciente de 32 años con ansiedad generalizada refiere palpitaciones, preocupación constante por su salud, evitación de reuniones familiares, vergüenza intensa, ausencias a actividades importantes y conflictos con su pareja. Describe su situación como “caótica” y pregunta por dónde debería empezar. El terapeuta necesita jerarquizar los problemas antes de iniciar la intervención. ¿Qué criterio debe guiar esta priorización?",
+    "opciones": {
+      "A": "Abordar primero los síntomas fisiológicos porque son más observables y medibles.",
+      "B": "Trabajar todos los problemas al mismo tiempo para evitar que alguno quede pendiente.",
+      "C": "Iniciar por los pensamientos de amenaza porque parecen explicar todo el malestar.",
+      "D": "Priorizar el área con mayor impacto funcional y acordar con el paciente la secuencia de trabajo."
+    },
+    "respuesta_correcta": "D",
+    "justificacion": "Cuando existen múltiples problemas, la jerarquización debe considerar el impacto funcional y realizarse de forma colaborativa. Esto evita dispersión y permite organizar objetivos terapéuticos claros.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Permite distinguir a quien prioriza clínicamente de quien selecciona síntomas llamativos o intenta intervenir todo sin orden."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 6-7."
+  },
+  {
+    "id": 4,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "En la octava sesión, un paciente de 42 años con trastorno de pánico muestra avances medibles: disminución de crisis, mayor participación social y mejor funcionamiento en casa. Sin embargo, comenta: “Siento que he mejorado, pero no sé si realmente entiendes lo que vivo cuando aparece el ataque”. El terapeuta identifica una diferencia entre mejoría sintomática y percepción de comprensión emocional. ¿Cuál es la interpretación clínica más adecuada?",
+    "opciones": {
+      "A": "El avance sintomático indica que la duda no requiere exploración adicional.",
+      "B": "La duda debe abordarse para fortalecer la alianza y aclarar expectativas compartidas.",
+      "C": "El comentario muestra que el paciente no está reconociendo objetivamente sus avances.",
+      "D": "La discrepancia confirma que el tratamiento debe intensificarse de forma inmediata."
+    },
+    "respuesta_correcta": "B",
+    "justificacion": "La alianza terapéutica requiere atención continua, incluso cuando existen avances sintomáticos. Las dudas sobre sentirse comprendido deben explorarse, porque pueden afectar adherencia y colaboración.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Evalúa si el estudiante reconoce que la mejoría clínica no sustituye el trabajo sobre la alianza terapéutica."
+    },
+    "bibliografia": "Brown, N. (2011). Psychoeducational groups: Process and practice (3ª ed.). Routledge. pp. 148-158. Rodríguez Morejón, A. (2019). Manual de psicoterapias: Teoría y técnicas. Herder. pp. 88-95."
+  },
+  {
+    "id": 5,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Media",
+    "enunciado": "Una mujer de 38 años consulta porque repite relaciones de pareja en las que termina cediendo decisiones importantes. Ha tenido tres relaciones con patrones similares y afirma: “creo que tengo mala suerte con las parejas”. En la evaluación aparecen baja autoestima, apego ansioso, antecedentes de abuso emocional y vínculos dependientes. El terapeuta inicia una formulación conjunta del caso. ¿Cuál es la función principal de esta fase inicial?",
+    "opciones": {
+      "A": "Mostrar seguridad profesional para que la paciente acepte con mayor facilidad las indicaciones.",
+      "B": "Explicar de inmediato todas las causas posibles del problema para reducir la incertidumbre.",
+      "C": "Transformar la narrativa de azar en comprensión de factores modificables y metas realistas.",
+      "D": "Señalar que la paciente debe asumir la solución sin depender del acompañamiento clínico."
+    },
+    "respuesta_correcta": "C",
+    "justificacion": "La formulación colaborativa ayuda a que la paciente comprenda sus patrones como factores modificables, no como simple mala suerte. Esto favorece esperanza realista y objetivos terapéuticos compartidos.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Diferencia la formulación colaborativa de explicaciones directivas, culpabilizantes o centradas solo en autoridad profesional."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 10-15. Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI. Editorial UOC. pp. 106-112."
+  },
+  {
+    "id": 6,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un paciente de 28 años con ansiedad social ha logrado avances en contextos familiares: mantiene conversaciones breves y participa en reuniones pequeñas. Sin embargo, cuando debe hablar en reuniones ampliadas o presentarse ante personas poco conocidas, la ansiedad se mantiene elevada, evita intervenir y presenta sudoración y temblor. Pregunta por qué no logra aplicar lo aprendido en esos contextos. ¿Cuál sería la intervención más pertinente?",
+    "opciones": {
+      "A": "Explorar diferencias entre los contextos exitosos y los difíciles para ajustar la intervención.",
+      "B": "Aumentar la frecuencia de sesiones sin revisar las condiciones específicas del problema.",
+      "C": "Asumir que el avance parcial indica que el caso requiere empezar nuevamente desde cero.",
+      "D": "Concluir que el paciente no está suficientemente comprometido con la práctica."
+    },
+    "respuesta_correcta": "A",
+    "justificacion": "El monitoreo permite identificar contextos donde la intervención no se generaliza. Explorar diferencias situacionales ayuda a ajustar el trabajo clínico a las condiciones que mantienen la ansiedad.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Discrimina entre ajuste clínico contextual y errores frecuentes como atribuir el problema a falta de motivación o reiniciar sin análisis."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 32-35."
+  },
+  {
+    "id": 7,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Un terapeuta atiende a un paciente con síntomas depresivos e identifica cinco problemas interrelacionados: aislamiento, bajo estado de ánimo, pensamientos de inutilidad, conflictos familiares y dificultad para mantener rutinas. En las primeras sesiones introduce varias estrategias, asigna tareas para cada área y aborda todos los temas sin definir un foco principal. En la cuarta sesión, el paciente dice: “no sé cuál es el objetivo ni en qué debería concentrarme”. Poco después abandona el proceso. ¿Qué principio terapéutico fue principalmente descuidado?",
+    "opciones": {
+      "A": "Continuidad del proceso, porque las sesiones no fueron suficientes para observar cambios.",
+      "B": "Registro clínico, porque faltó documentar cada tarea asignada entre sesiones.",
+      "C": "Apoyo emocional, porque el terapeuta no respondió a todas las preocupaciones por igual.",
+      "D": "Especificidad y priorización, porque trabajó varias áreas sin jerarquía terapéutica clara."
+    },
+    "respuesta_correcta": "D",
+    "justificacion": "Trabajar múltiples problemas sin jerarquización puede generar confusión sobre los objetivos y reducir adherencia. La formulación debe definir prioridades y organizar el tratamiento de manera comprensible.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Obliga a identificar el error estructural del proceso, no solo aspectos secundarios como registro, duración o apoyo general."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 6-8. Eiroa-Orosa, F.J., Fernández Gómez, M.J., & Nieto, R. (2021). Formulación y tratamiento psicológico en el siglo XXI. Editorial UOC. pp. 85-90."
+  },
+  {
+    "id": 8,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Fácil",
+    "enunciado": "Un psicólogo trabaja con un adolescente de 16 años con ansiedad social. En cada sesión revisa avances, registra ansiedad mediante una escala breve, realiza ejercicios prácticos y acuerda tareas para practicar entre sesiones. Esta estructura se mantiene durante el tratamiento activo, después de haber definido los objetivos y la formulación inicial. ¿Qué caracteriza principalmente esta fase del proceso terapéutico?",
+    "opciones": {
+      "A": "La evaluación inicial para delimitar el motivo de consulta principal.",
+      "B": "La aplicación sistemática de técnicas y tareas orientadas a consolidar cambios.",
+      "C": "El cierre progresivo del proceso y la preparación para el automanejo.",
+      "D": "La organización administrativa del encuadre y consentimiento informado."
+    },
+    "respuesta_correcta": "B",
+    "justificacion": "La fase media se caracteriza por la aplicación sistemática de técnicas planificadas a partir de la formulación inicial. Las tareas entre sesiones permiten consolidar los cambios fuera del espacio terapéutico.",
+    "discriminacion": {
+      "estimacion": "Media",
+      "explicacion": "Es un reactivo directo, pero diferencia adecuadamente entre fase inicial, media y final."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 28-32."
+  },
+  {
+    "id": 9,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Fácil",
+    "enunciado": "En la primera sesión, un paciente con ansiedad generalizada pregunta cuánto durará el tratamiento y cómo sabrá si está mejorando. El terapeuta explica que se estimará un proceso de varios meses, con metas revisables como disminuir síntomas, mejorar la concentración en actividades diarias y fortalecer relaciones familiares. El paciente refiere alivio al comprender el plan. ¿Cuál es el principal beneficio psicológico de esta intervención?",
+    "opciones": {
+      "A": "Establece un número de sesiones que no debe modificarse durante el proceso.",
+      "B": "Evita que el paciente participe en la revisión posterior de sus objetivos.",
+      "C": "Permite omitir ajustes futuros si aparecen cambios en los síntomas.",
+      "D": "Disminuye incertidumbre al ofrecer estructura, expectativas realistas y colaboración."
+    },
+    "respuesta_correcta": "D",
+    "justificacion": "La claridad sobre duración estimada y objetivos reduce incertidumbre y ansiedad. Además, establece una colaboración inicial basada en expectativas compartidas y revisables.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Evalúa si el estudiante diferencia claridad terapéutica de rigidez o imposición."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 27-30."
+  },
+  {
+    "id": 10,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un paciente con fobia a conducir ha progresado en exposiciones graduales: practicó en espacios controlados, luego en calles residenciales y después en avenidas. Actualmente puede manejar en ciudad con ansiedad tolerable, pero al intentar ingresar a una autopista su ansiedad aumenta intensamente. El terapeuta pregunta qué diferencias percibe entre conducir en ciudad y hacerlo en autopista. ¿Cuál es la función clínica principal de esta pregunta?",
+    "opciones": {
+      "A": "Confirmar si el paciente requiere suspender el plan actual por falta de respuesta.",
+      "B": "Identificar variables contextuales que mantienen la ansiedad y ajustar la exposición.",
+      "C": "Señalar que el paciente no está aplicando correctamente lo aprendido.",
+      "D": "Indicar que debe evitar situaciones que superen su capacidad actual."
+    },
+    "respuesta_correcta": "B",
+    "justificacion": "La pregunta permite identificar factores específicos del contexto de autopista que mantienen la fobia. Esta información orienta ajustes más precisos en la exposición graduada.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Requiere reconocer la función de una pregunta clínica dentro del monitoreo y ajuste de intervención."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 32-35."
+  },
+  {
+    "id": 11,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Fácil",
+    "enunciado": "Un paciente ha completado diez sesiones de psicoterapia por síntomas de ansiedad. Refiere mejoría en su funcionamiento diario, reconoce sus patrones de pensamiento y comenta que se siente capaz de aplicar varias estrategias sin tanta ayuda. El terapeuta propone dedicar las próximas sesiones a revisar avances, consolidar recursos y elaborar un plan para manejar posibles recaídas. ¿Qué fase del proceso psicoterapéutico se está iniciando?",
+    "opciones": {
+      "A": "Fase de evaluación, centrada en ampliar la recopilación de información clínica.",
+      "B": "Fase inicial, centrada en construir desde cero la comprensión del caso.",
+      "C": "Fase media, centrada en introducir por primera vez las técnicas principales.",
+      "D": "Fase final, dirigida a consolidar logros y preparar el automanejo."
+    },
+    "respuesta_correcta": "D",
+    "justificacion": "La fase final inicia cuando los objetivos principales han sido alcanzados o muestran avance suficiente. Incluye consolidación, revisión de logros, prevención de recaídas y transición hacia el automanejo.",
+    "discriminacion": {
+      "estimacion": "Media",
+      "explicacion": "Evalúa reconocimiento de fases terapéuticas y evita confundir cierre planificado con abandono o intervención activa."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 36-47."
+  },
+  {
+    "id": 12,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Media",
+    "enunciado": "Durante las primeras sesiones, un terapeuta explora el motivo de consulta de un paciente con ansiedad, organiza los síntomas, identifica factores contextuales y presenta una hipótesis sobre cómo estos elementos se relacionan. Luego pregunta al paciente si esa comprensión tiene sentido para él y qué elementos agregaría o corregiría. Ambos acuerdan una explicación común que guiará los objetivos del tratamiento. ¿Qué evento marca principalmente el cierre de la fase inicial?",
+    "opciones": {
+      "A": "La obtención de puntajes iniciales mediante instrumentos estandarizados.",
+      "B": "La definición del horario regular y los acuerdos administrativos básicos.",
+      "C": "La construcción colaborativa de una formulación de caso compartida.",
+      "D": "La asignación temprana de actividades para realizar entre sesiones."
+    },
+    "respuesta_correcta": "C",
+    "justificacion": "La fase inicial culmina con una formulación compartida que guía el tratamiento. Los instrumentos, tareas y acuerdos administrativos pueden ser útiles, pero no reemplazan este hito clínico.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Diferencia acciones complementarias del evento clínico que permite pasar a la intervención activa."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 12-20."
+  },
+  {
+    "id": 13,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un paciente con ansiedad presenta mejoría inicial tras aprender técnicas de regulación respiratoria. Sin embargo, en la tercera sesión expresa: “siento que avanzamos, pero no sé si entiendes lo que me pasa cuando creo que me voy a ahogar”. El terapeuta valida brevemente la emoción y continúa con la actividad planificada sin explorar la duda. En la siguiente sesión, el paciente no asiste. ¿Qué aspecto clínico fue principalmente omitido?",
+    "opciones": {
+      "A": "La aplicación de actividades más intensas para acelerar la reducción de síntomas.",
+      "B": "La exploración de la duda para clarificar expectativas y fortalecer la alianza.",
+      "C": "La corrección inmediata de la percepción del paciente sobre su mejoría clínica.",
+      "D": "La repetición completa de la evaluación inicial antes de continuar el tratamiento."
+    },
+    "respuesta_correcta": "B",
+    "justificacion": "Las dudas del paciente sobre sentirse comprendido deben explorarse directamente. Ignorarlas puede debilitar la alianza, disminuir adherencia y aumentar el riesgo de abandono terapéutico.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Exige reconocer una falla relacional aunque la intervención técnica parezca estar funcionando."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 4-6."
+  },
+  {
+    "id": 14,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Un paciente abandona la psicoterapia después de tres sesiones y comenta que no comprendía cómo las explicaciones del terapeuta se relacionaban con su problema. El profesional había explicado la depresión desde factores biológicos y psicológicos, propuso actividades iniciales y sugirió tareas, pero no exploró con el paciente cuál era su problema central ni cómo entendía su propio malestar. ¿Qué elemento crítico faltó en la fase inicial?",
+    "opciones": {
+      "A": "La formulación colaborativa que integrara la perspectiva del paciente y del terapeuta.",
+      "B": "La selección de actividades más complejas para lograr cambios desde las primeras sesiones.",
+      "C": "La indicación de una evaluación externa antes de iniciar cualquier intervención clínica.",
+      "D": "La adopción de una postura más directiva para aumentar la adherencia del paciente."
+    },
+    "respuesta_correcta": "A",
+    "justificacion": "El error central fue iniciar procedimientos sin una formulación compartida. Cuando el paciente no entiende cómo la intervención responde a su problema específico, la alianza se debilita y aumenta el riesgo de abandono.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Distingue entre una falla de formulación clínica y explicaciones superficiales centradas en técnica, directividad o derivación."
+    },
+    "bibliografia": "Bados López, A., & García Grau, E. (2009). El Proceso de Evaluación y Tratamiento. Universidad de Barcelona. pp. 20-26."
+  },
+  {
+    "id": 15,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Media",
+    "enunciado": "Una joven de 20 años consulta porque se siente bloqueada al tomar una decisión académica importante. Tiene buen rendimiento, pero refiere ansiedad, presión familiar y miedo a equivocarse. El psicólogo explora intereses, fortalezas, expectativas familiares y alternativas disponibles. Luego ofrece información organizada sobre opciones, posibles consecuencias y recursos de apoyo para que la paciente tome una decisión más informada. ¿Qué tipo de intervención describe mejor este proceso?",
+    "opciones": {
+      "A": "Proceso dirigido a modificar características estables de personalidad.",
+      "B": "Evaluación clínica orientada a establecer un diagnóstico psicológico.",
+      "C": "Asesoramiento breve dirigido a un problema presente y a la toma de decisiones.",
+      "D": "Seguimiento prolongado centrado en consolidar cambios profundos."
+    },
+    "respuesta_correcta": "C",
+    "justificacion": "El asesoramiento se centra en problemas específicos del presente, ofrece información y guía para tomar decisiones. No busca modificar personalidad ni realizar una exploración clínica profunda.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Diferencia asesoramiento de diagnóstico, seguimiento prolongado o intervención sobre rasgos personales."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 89-95."
+  },
+  {
+    "id": 16,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Fácil",
+    "enunciado": "Un padre consulta en un servicio de psicología clínica porque su hijo presenta conductas desafiantes en casa y reportes de problemas en la escuela. El psicólogo analiza cuándo ocurren, en qué contextos aparecen, qué estrategias intentó la familia y qué alternativas prácticas puede aplicar el padre. Tras pocas sesiones, revisan la utilidad de las estrategias y realizan ajustes concretos. ¿Cuál característica define mejor este tipo de asesoramiento?",
+    "opciones": {
+      "A": "Intervención breve y práctica centrada en estrategias aplicables al contexto del cliente.",
+      "B": "Proceso prolongado dirigido a reconstruir toda la historia familiar del caso.",
+      "C": "Sesión única donde el psicólogo entrega indicaciones sin exploración colaborativa.",
+      "D": "Seguimiento indefinido hasta lograr una explicación completa del comportamiento."
+    },
+    "respuesta_correcta": "A",
+    "justificacion": "El asesoramiento suele ser breve y orientado a soluciones prácticas. Requiere comprensión del problema, colaboración con el consultante y estrategias aplicables al contexto actual.",
+    "discriminacion": {
+      "estimacion": "Media",
+      "explicacion": "Evalúa una característica central del asesoramiento y lo diferencia del consejo directivo o de procesos prolongados."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 90-91."
+  },
+  {
+    "id": 17,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Un adulto de 28 años consulta porque desea independizarse de la casa materna sin generar conflicto emocional. En tres sesiones, el psicólogo explora motivaciones actuales, analiza consecuencias de permanecer o mudarse, revisa opciones viables y facilita que el paciente tome una decisión. Aunque aparece una historia de dependencia familiar, el trabajo se centra en resolver una decisión presente. ¿Cuál es la diferencia principal entre este asesoramiento y una psicoterapia?",
+    "opciones": {
+      "A": "El asesoramiento entrega información, mientras la psicoterapia excluye el análisis de opciones.",
+      "B": "El asesoramiento solo se realiza en consultas individuales y la psicoterapia en otros formatos.",
+      "C": "El asesoramiento se define por durar pocas horas, sin importar el foco del problema.",
+      "D": "El asesoramiento aborda una decisión actual; la psicoterapia explora patrones históricos más profundos."
+    },
+    "respuesta_correcta": "D",
+    "justificacion": "El asesoramiento se enfoca en problemas actuales y decisiones concretas. La psicoterapia implica mayor profundidad, exploración de patrones históricos y dinámicas psicológicas más amplias.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "El caso incluye dependencia familiar, pero el estudiante debe reconocer que el foco presentado es una decisión actual."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 93-94."
+  },
+  {
+    "id": 18,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un adolescente de 17 años consulta porque debe tomar una decisión académica y se siente ansioso. Refiere interés por un área, pero su familia insiste en otra opción porque considera que le dará mayor estabilidad. El psicólogo explora intereses, recursos personales, expectativas familiares y consecuencias posibles de cada alternativa. También facilita que el adolescente pueda expresar su postura con mayor claridad. ¿Cuál es el componente más desafiante del asesoramiento en este caso?",
+    "opciones": {
+      "A": "Reunir información completa sobre todas las opciones académicas disponibles.",
+      "B": "Diferenciar sus preferencias genuinas de la influencia familiar y asumir la decisión.",
+      "C": "Calcular con exactitud los costos de cada alternativa antes de decidir.",
+      "D": "Elaborar una lista extensa de ventajas y desventajas de cada posibilidad."
+    },
+    "respuesta_correcta": "B",
+    "justificacion": "El desafío principal no es solo entregar información, sino ayudar al adolescente a reconocer cómo el contexto familiar influye en sus preferencias. El asesoramiento busca facilitar una decisión autónoma, reflexiva e informada.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Distingue entre tareas informativas necesarias y el verdadero reto psicológico de decidir con autonomía."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 90-91."
+  },
+  {
+    "id": 19,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un hombre de 45 años consulta porque no sabe qué hacer con su relación de pareja. El psicólogo escucha sus intentos previos de resolver el conflicto, revisa alternativas posibles y analiza con él las consecuencias de cada opción. Al final, el consultante decide iniciar terapia de pareja. ¿Cuál es el resultado esperado del asesoramiento?",
+    "opciones": {
+      "A": "Que el psicólogo determine si la relación es funcional y prescriba la acción adecuada.",
+      "B": "Que el profesional resuelva directamente el conflicto de pareja durante la consulta.",
+      "C": "Que el cliente reciba opciones y apoyo para tomar una decisión reflexiva y autónoma.",
+      "D": "Que el cliente adopte la alternativa considerada más conveniente por el profesional."
+    },
+    "respuesta_correcta": "C",
+    "justificacion": "El asesoramiento busca facilitar decisiones mediante información clara, reflexión y apoyo profesional. La decisión corresponde al cliente; el psicólogo no impone ni resuelve directamente el problema.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Evalúa el rol del asesor sin confundirlo con dirección autoritaria o resolución directa del conflicto."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 89-91."
+  },
+  {
+    "id": 20,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Una mujer de 34 años consulta porque tiene un conflicto persistente con su hermana sobre el cuidado de su madre enferma. Refiere malestar, discusiones frecuentes y dificultad para decidir cómo organizar responsabilidades familiares, pero no presenta riesgo inmediato, pérdida de control conductual ni amenaza para su seguridad. El psicólogo explora la situación, analiza patrones de comunicación y revisa alternativas como establecer acuerdos, solicitar apoyo familiar, distribuir tareas o buscar orientación externa. ¿Cuál es la diferencia fundamental entre este asesoramiento y una intervención en crisis?",
+    "opciones": {
+      "A": "El asesoramiento permite reflexión; la crisis exige respuesta inmediata ante urgencia o riesgo.",
+      "B": "El asesoramiento trabaja solo con información, mientras la crisis trabaja solo con emoción.",
+      "C": "El asesoramiento se define por durar menos tiempo que cualquier intervención en crisis.",
+      "D": "El asesoramiento se aplica solo a individuos, mientras la crisis se aplica solo a grupos."
+    },
+    "respuesta_correcta": "A",
+    "justificacion": "El asesoramiento aborda decisiones no urgentes con tiempo para reflexión colaborativa. La intervención en crisis requiere respuesta inmediata cuando existe urgencia, desorganización intensa o riesgo potencial de seguridad.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Exige diferenciar modalidades por urgencia y riesgo, no por duración, formato o tipo de apoyo."
+    },
+    "bibliografia": "Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 23-24."
+  },
+  {
+    "id": 21,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Media",
+    "enunciado": "Una mujer de 45 años consulta porque se siente agotada tras varios años como cuidadora principal de su madre dependiente. Quiere delegar parte del cuidado a otros familiares, pero teme sentirse “egoísta” y perder un rol que ha dado sentido a su vida diaria. El psicólogo explora sus motivaciones, el impacto familiar, las redes de apoyo y opciones realistas de redistribución del cuidado. ¿Qué componente resulta más desafiante en este asesoramiento?",
+    "opciones": {
+      "A": "Precisar todos los recursos externos disponibles para el cuidado familiar.",
+      "B": "Analizar cómo la decisión impacta su identidad personal y su rol familiar y social.",
+      "C": "Indicar cuál alternativa debe elegir para reducir rápidamente su agotamiento.",
+      "D": "Enumerar ventajas y desventajas de cada opción de forma exhaustiva."
+    },
+    "respuesta_correcta": "B",
+    "justificacion": "El asesoramiento requiere explorar dimensiones emocionales y de identidad, no solo información práctica. En este caso, el desafío central es comprender cómo la decisión modifica el sentido de rol y propósito de la consultante.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Distingue entre una orientación meramente informativa y la comprensión clínica de la identidad asociada al rol de cuidado."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. p. 94."
+  },
+  {
+    "id": 22,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Un joven consulta por bloqueo al elegir una carrera. Tras dos sesiones de asesoramiento, ya cuenta con información suficiente sobre alternativas, costos y requisitos. Sin embargo, expresa miedo intenso al fracaso, dudas persistentes sobre “quién será” si se equivoca y angustia que excede la decisión académica inmediata. ¿Qué señala clínicamente esta situación?",
+    "opciones": {
+      "A": "Que sus necesidades emocionales exceden el asesoramiento y requieren exploración psicoterapéutica.",
+      "B": "Que todavía falta entregar información académica más detallada antes de decidir.",
+      "C": "Que debe elegir la opción con menos riesgo para reducir la ansiedad actual.",
+      "D": "Que el psicólogo debe prolongar el asesoramiento hasta que desaparezca la duda."
+    },
+    "respuesta_correcta": "A",
+    "justificacion": "Cuando la intensidad emocional es desproporcionada al problema presente, el caso supera los límites del asesoramiento. La ansiedad e identidad involucradas requieren un proceso psicoterapéutico más profundo.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Permite diferenciar una dificultad normal de decisión de un malestar emocional que requiere otra modalidad de intervención."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 95-96."
+  },
+  {
+    "id": 23,
+    "nivel_cognitivo": "Aplicación",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un padre consulta porque su hijo de 8 años presenta miedo intenso a ir a la escuela. El psicólogo explora cuándo inició el problema, identifica situaciones asociadas como separación del cuidador y temor a compañeros, y propone estrategias parentales concretas: aproximación gradual, validación del miedo y refuerzo de intentos. ¿Cuál es el resultado esperado del asesoramiento?",
+    "opciones": {
+      "A": "Obtener un diagnóstico definitivo del niño antes de ofrecer cualquier orientación.",
+      "B": "Lograr que el niño deje de sentir ansiedad de manera inmediata y estable.",
+      "C": "Explicar al padre todos los motivos profundos que originan el miedo escolar.",
+      "D": "Proporcionar al padre estrategias informadas y prácticas para favorecer mejoría gradual."
+    },
+    "respuesta_correcta": "D",
+    "justificacion": "El asesoramiento entrega herramientas prácticas basadas en información y reflexión compartida. No busca resolver de forma inmediata ni establecer necesariamente un diagnóstico definitivo.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Diferencia el objetivo práctico del asesoramiento de expectativas irreales de diagnóstico, explicación profunda o cambio inmediato."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 91-92."
+  },
+  {
+    "id": 24,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un adulto consulta porque mantiene un conflicto con su hermana sobre la venta de una casa familiar heredada. El psicólogo realiza dos sesiones para explorar la situación, revisar intentos previos de diálogo, analizar alternativas posibles y aclarar consecuencias de cada una. El objetivo es que el consultante decida cómo proceder de forma informada. ¿Cuál es el resultado esperado?",
+    "opciones": {
+      "A": "Que el psicólogo resuelva directamente el conflicto familiar con la hermana.",
+      "B": "Que el profesional determine quién tiene la razón y recomiende la acción correcta.",
+      "C": "Que el consultante reciba opciones informadas y apoyo para decidir autónomamente.",
+      "D": "Que el consultante adopte la alternativa considerada más conveniente por el psicólogo."
+    },
+    "respuesta_correcta": "C",
+    "justificacion": "El asesoramiento facilita decisiones reflexivas mediante información y apoyo, sin imponer una elección. La responsabilidad de decidir permanece en el consultante.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Evalúa el rol del psicólogo como facilitador de decisión y no como juez, mediador directivo o solucionador externo."
+    },
+    "bibliografia": "Balarezo Chiriboga, L. (1998). Psicoterapia, asesoramiento y consejería. Pontificia Universidad Católica del Ecuador. pp. 89-91."
+  },
+  {
+    "id": 25,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Media",
+    "enunciado": "Un hombre de 52 años acude a urgencias psicológicas. Hace tres días su esposa lo abandonó; desde entonces tiene insomnio severo, ha dejado de realizar actividades cotidianas y expresa que “la vida no vale la pena sin ella”. El psicólogo inicia una evaluación inmediata. ¿Cuál es el factor más importante en la valoración de riesgo?",
+    "opciones": {
+      "A": "Evaluar de forma integral ideación, plan, acceso a medios, antecedentes, apoyo disponible y estado cognitivo actual.",
+      "B": "Considerar que toda ideación suicida implica hospitalización urgente sin análisis adicional.",
+      "C": "Asumir que la presencia de apoyo familiar elimina el riesgo clínico relevante.",
+      "D": "Clasificar el riesgo como bajo si no menciona un plan suicida específico."
+    },
+    "respuesta_correcta": "A",
+    "justificacion": "La evaluación de riesgo debe integrar múltiples factores simultáneamente, no limitarse a la presencia o ausencia de ideación. Plan, medios, historia previa, apoyo y capacidad actual orientan la decisión clínica.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Diferencia la valoración clínica integral de decisiones automáticas basadas en un solo indicador de riesgo."
+    },
+    "bibliografia": "Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 29-35."
+  },
+  {
+    "id": 26,
+    "nivel_cognitivo": "Aplicación",
+    "nivel_dificultad": "Media",
+    "enunciado": "Una madre lleva a su hijo de 8 años a urgencias psicológicas. La noche anterior el niño presenció una discusión violenta en casa; hoy presenta enuresis, conducta muy dependiente y miedo intenso. La madre también se muestra ansiosa, llora y dice no saber cómo tranquilizarlo. ¿Cuál debe ser la prioridad inicial de intervención?",
+    "opciones": {
+      "A": "Atender primero los síntomas del niño de forma separada porque es el más vulnerable.",
+      "B": "Contener a la madre para que pueda funcionar como figura segura para el niño.",
+      "C": "Separar al niño de la madre para evitar que observe su ansiedad.",
+      "D": "Indicar institucionalización inmediata como primera medida de protección."
+    },
+    "respuesta_correcta": "B",
+    "justificacion": "En crisis familiares con un cuidador disponible, estabilizar al adulto permite que este actúe como contenedor del menor. La seguridad emocional del niño depende en gran parte de la regulación del cuidador.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Evalúa priorización clínica en crisis familiar, evitando respuestas impulsivas centradas solo en el menor o en separación inmediata."
+    },
+    "bibliografia": "Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 40-45."
+  },
+  {
+    "id": 27,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Un paciente llega en crisis tras una ruptura de pareja. Refiere ideación suicida activa, ha pensado en métodos específicos, tiene diagnóstico previo de depresión mayor y un intento suicida hace diez años. Dice que su hija pequeña es la razón por la que no lo ha hecho y que cuenta con una hermana que podría apoyarlo. ¿Cuál es el nivel de riesgo más apropiado?",
+    "opciones": {
+      "A": "Riesgo bajo, porque existen razones para vivir y apoyo familiar disponible.",
+      "B": "Riesgo medio, porque presenta ideación pero aún conserva factores protectores.",
+      "C": "Riesgo muy bajo, porque el intento previo ocurrió hace varios años.",
+      "D": "Riesgo alto, por ideación activa con plan y antecedente de intento, aunque existan factores protectores."
+    },
+    "respuesta_correcta": "D",
+    "justificacion": "La combinación de ideación activa, método específico y antecedente de intento previo eleva el riesgo. Los factores protectores son relevantes, pero no eliminan ni minimizan el riesgo cuando hay plan e historia previa.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Obliga a integrar factores de riesgo y protección sin sobredimensionar estos últimos ni tomar decisiones simplistas."
+    },
+    "bibliografia": "Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 31-34."
+  },
+  {
+    "id": 28,
+    "nivel_cognitivo": "Comprensión",
+    "nivel_dificultad": "Media",
+    "enunciado": "Una mujer de 38 años llega a urgencias psicológicas. Hace dos horas recibió la noticia de que su hermana falleció en un accidente. Habla lentamente, repite que “no parece real”, se muestra entumecida y está sola. El psicólogo inicia intervención en crisis. ¿Cuál es la función principal en este momento?",
+    "opciones": {
+      "A": "Proporcionar contención emocional, validar la experiencia y conectar con una red de apoyo inmediata.",
+      "B": "Analizar en detalle la relación previa con la hermana para comprender el duelo.",
+      "C": "Enseñar varias técnicas de afrontamiento para que procese el trauma en la sesión.",
+      "D": "Centrar la intervención en explicar las etapas del duelo y su evolución esperada."
+    },
+    "respuesta_correcta": "A",
+    "justificacion": "En una crisis aguda, la prioridad es contener, validar y conectar con apoyo inmediato. La exploración profunda o la enseñanza extensa de recursos puede ser prematura cuando la persona aún está en shock.",
+    "discriminacion": {
+      "estimacion": "Media-alta",
+      "explicacion": "Diferencia la intervención de crisis inmediata de acciones útiles en fases posteriores del proceso."
+    },
+    "bibliografia": "Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 46-50."
+  },
+  {
+    "id": 29,
+    "nivel_cognitivo": "Aplicación",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Un joven de 18 años llega a urgencias seis horas después de terminar una relación de tres años. Dice “no puedo vivir sin ella” y “preferiría no estar aquí”. Reconoce ideas suicidas y comenta que está pensando en métodos, aunque no especifica acceso a medios. Vive con sus padres, quienes están en casa, y tiene amigos disponibles. ¿Cuál es la intervención más apropiada?",
+    "opciones": {
+      "A": "Hospitalizar de inmediato por cualquier ideación suicida, sin valorar la supervisión disponible.",
+      "B": "Derivar solo a valoración médica y suspender la intervención psicológica inicial.",
+      "C": "Mantener evaluación de riesgo, activar supervisión familiar, conectar apoyo social y realizar monitoreo frecuente.",
+      "D": "Ofrecer apoyo emocional general sin establecer plan de seguridad ni seguimiento formal."
+    },
+    "respuesta_correcta": "C",
+    "justificacion": "En riesgo medio-alto con supervisión familiar disponible, corresponde mantener evaluación activa, activar apoyo inmediato y monitorear con frecuencia. La hospitalización se reserva para riesgo muy alto o falta de supervisión segura.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Evalúa toma de decisiones en crisis suicida sin caer en hospitalización automática ni en apoyo insuficiente."
+    },
+    "bibliografia": "Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. pp. 51-60."
+  },
+  {
+    "id": 30,
+    "nivel_cognitivo": "Análisis",
+    "nivel_dificultad": "Difícil",
+    "enunciado": "Una mujer de 45 años acude a urgencias porque su hijo de 19 años fue arrestado hace pocas horas por conducir bajo efectos de alcohol. Llora, respira con dificultad y repite: “fracasé como madre” y “mi vida está arruinada”. El psicólogo debe intervenir en la crisis de la madre. ¿Cuál sería el error más común de un profesional inexperto?",
+    "opciones": {
+      "A": "Brindar información básica sobre pasos inmediatos después de contener la crisis.",
+      "B": "Explorar exhaustivamente la historia de crianza, aumentando culpa y autorreproche.",
+      "C": "Contactar una red de apoyo cercana para que la acompañe durante las primeras horas.",
+      "D": "Validar la emoción y establecer límites para evitar desorganización conductual."
+    },
+    "respuesta_correcta": "B",
+    "justificacion": "En crisis aguda, explorar causas profundas o errores parentales puede aumentar la culpa y el malestar sin estabilizar a la persona. La prioridad es contención, seguridad, información organizada y apoyo inmediato.",
+    "discriminacion": {
+      "estimacion": "Alta",
+      "explicacion": "Diferencia intervención de crisis de exploración profunda prematura, un error frecuente en profesionales con poca experiencia."
+    },
+    "bibliografia": "Slaikeu, K. A. (1996). Intervención en crisis: Manual para práctica e investigación. Manual Moderno. p. 47."
+  }
+]
