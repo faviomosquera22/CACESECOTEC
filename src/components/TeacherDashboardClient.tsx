@@ -16,6 +16,7 @@ import {
   ClipboardList,
   LockKeyhole,
   Loader2,
+  Pencil,
   Search,
   Trash2,
   TrendingUp,
@@ -71,6 +72,7 @@ type DeleteStudentResponse = {
   error?: string;
   details?: string;
 };
+type UpdateStudentEmailResponse = DeleteStudentResponse;
 
 function getInitialCreateStudentForm(
   careerSlug: StudentCareerSlug,
@@ -148,6 +150,9 @@ export function TeacherDashboardClient({
   const [careerOverrides, setCareerOverrides] = useState<
     Record<string, CareerOverride>
   >({});
+  const [emailOverrides, setEmailOverrides] = useState<Record<string, string>>(
+    {},
+  );
   const [accessOverrides, setAccessOverrides] = useState<Record<string, boolean>>(
     {},
   );
@@ -167,6 +172,14 @@ export function TeacherDashboardClient({
   );
   const [deleteStudentError, setDeleteStudentError] = useState("");
   const [deleteStudentMessage, setDeleteStudentMessage] = useState("");
+  const [studentToEditEmail, setStudentToEditEmail] =
+    useState<StudentCardData | null>(null);
+  const [editEmailValue, setEditEmailValue] = useState("");
+  const [savingEmailStudentId, setSavingEmailStudentId] = useState<string | null>(
+    null,
+  );
+  const [emailError, setEmailError] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
   const [query, setQuery] = useState("");
   const [careerFilter, setCareerFilter] =
     useState<CareerFilter>(teacherCareerScope);
@@ -195,6 +208,7 @@ export function TeacherDashboardClient({
       studentsById.set(student.id, {
         ...student,
         ...(careerOverrides[student.id] ?? {}),
+        email: emailOverrides[student.id] ?? student.email,
         simulatorAccessEnabled:
           accessOverrides[student.id] ?? student.simulatorAccessEnabled,
       });
@@ -206,6 +220,7 @@ export function TeacherDashboardClient({
     careerOverrides,
     createdStudents,
     deletedStudentIds,
+    emailOverrides,
     students,
   ]);
 
@@ -402,6 +417,16 @@ export function TeacherDashboardClient({
     setDeleteStudentError("");
   }
 
+  function closeEditEmailDialog() {
+    if (savingEmailStudentId) {
+      return;
+    }
+
+    setStudentToEditEmail(null);
+    setEditEmailValue("");
+    setEmailError("");
+  }
+
   async function createStudent(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setCreateStudentError("");
@@ -491,6 +516,11 @@ export function TeacherDashboardClient({
         delete nextOverrides[studentId];
         return nextOverrides;
       });
+      setEmailOverrides((currentOverrides) => {
+        const nextOverrides = { ...currentOverrides };
+        delete nextOverrides[studentId];
+        return nextOverrides;
+      });
       setAccessOverrides((currentOverrides) => {
         const nextOverrides = { ...currentOverrides };
         delete nextOverrides[studentId];
@@ -510,6 +540,62 @@ export function TeacherDashboardClient({
       );
     } finally {
       setDeletingStudentId(null);
+    }
+  }
+
+  async function updateStudentEmail(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!studentToEditEmail) {
+      return;
+    }
+
+    const studentId = studentToEditEmail.id;
+    setEmailError("");
+    setEmailMessage("");
+    setSavingEmailStudentId(studentId);
+
+    try {
+      const response = await fetch(`/api/teacher/students/${studentId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: editEmailValue }),
+      });
+      const payload = (await response
+        .json()
+        .catch(() => null)) as UpdateStudentEmailResponse | null;
+
+      if (!response.ok || !payload?.student?.email) {
+        throw new Error(payload?.error ?? "No se pudo actualizar el correo.");
+      }
+
+      const updatedEmail = payload.student.email;
+
+      setEmailOverrides((currentOverrides) => ({
+        ...currentOverrides,
+        [studentId]: updatedEmail,
+      }));
+      setCreatedStudents((currentStudents) =>
+        currentStudents.map((student) =>
+          student.id === studentId ? { ...student, email: updatedEmail } : student,
+        ),
+      );
+      setEmailMessage(
+        `Correo actualizado para ${payload.student.fullName}.`,
+      );
+      setStudentToEditEmail(null);
+      setEditEmailValue("");
+      router.refresh();
+    } catch (caughtError) {
+      setEmailError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "No se pudo actualizar el correo.",
+      );
+    } finally {
+      setSavingEmailStudentId(null);
     }
   }
 
@@ -707,6 +793,7 @@ export function TeacherDashboardClient({
                 setCreateStudentError("");
                 setCreateStudentMessage("");
                 setDeleteStudentMessage("");
+                setEmailMessage("");
                 setShowCreateDialog(true);
               }}
               className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
@@ -822,6 +909,12 @@ export function TeacherDashboardClient({
         {deleteStudentMessage ? (
           <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
             {deleteStudentMessage}
+          </div>
+        ) : null}
+
+        {emailMessage ? (
+          <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
+            {emailMessage}
           </div>
         ) : null}
 
@@ -969,6 +1062,27 @@ export function TeacherDashboardClient({
                           >
                             Ver historial
                           </Link>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEmailError("");
+                              setEmailMessage("");
+                              setStudentToEditEmail(student);
+                              setEditEmailValue(student.email);
+                            }}
+                            disabled={savingEmailStudentId === student.id}
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            {savingEmailStudentId === student.id ? (
+                              <Loader2
+                                className="h-4 w-4 animate-spin"
+                                aria-hidden="true"
+                              />
+                            ) : (
+                              <Pencil className="h-4 w-4" aria-hidden="true" />
+                            )}
+                            <span className="sr-only">Editar correo</span>
+                          </button>
                           <button
                             type="button"
                             onClick={() => {
@@ -1146,6 +1260,96 @@ export function TeacherDashboardClient({
                   <UserPlus className="h-4 w-4" aria-hidden="true" />
                 )}
                 Crear estudiante
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : null}
+
+      {studentToEditEmail ? (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/40 px-4 py-6 backdrop-blur-sm">
+          <form
+            aria-labelledby="edit-student-email-title"
+            aria-modal="true"
+            role="dialog"
+            onSubmit={updateStudentEmail}
+            className="w-full max-w-lg rounded-lg border border-slate-200 bg-white p-6 shadow-2xl"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold text-sky-700">
+                  Editar acceso
+                </p>
+                <h3
+                  id="edit-student-email-title"
+                  className="mt-1 text-xl font-semibold tracking-normal text-slate-950"
+                >
+                  Cambiar correo del estudiante
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={closeEditEmailDialog}
+                disabled={Boolean(savingEmailStudentId)}
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:bg-slate-50 hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <X className="h-4 w-4" aria-hidden="true" />
+                <span className="sr-only">Cerrar</span>
+              </button>
+            </div>
+
+            <div className="mt-5 rounded-lg border border-slate-100 bg-slate-50 p-4">
+              <p className="font-semibold text-slate-950">
+                {studentToEditEmail.fullName}
+              </p>
+              <p className="mt-1 break-all text-sm text-slate-600">
+                Correo actual: {studentToEditEmail.email}
+              </p>
+            </div>
+
+            <label className="mt-5 block text-sm font-semibold text-slate-700">
+              Nuevo correo
+              <input
+                type="email"
+                value={editEmailValue}
+                onChange={(event) => setEditEmailValue(event.target.value)}
+                autoComplete="email"
+                required
+                disabled={Boolean(savingEmailStudentId)}
+                className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-950 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+              />
+            </label>
+
+            {emailError ? (
+              <div className="mt-5 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                <AlertCircle
+                  className="mt-0.5 h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                />
+                <p>{emailError}</p>
+              </div>
+            ) : null}
+
+            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={closeEditEmailDialog}
+                disabled={Boolean(savingEmailStudentId)}
+                className="inline-flex h-10 items-center justify-center rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                disabled={Boolean(savingEmailStudentId)}
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-sky-700 px-4 text-sm font-semibold text-white transition hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {savingEmailStudentId ? (
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                ) : (
+                  <Pencil className="h-4 w-4" aria-hidden="true" />
+                )}
+                Guardar correo
               </button>
             </div>
           </form>
