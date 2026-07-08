@@ -7,6 +7,7 @@ import {
   FileSpreadsheet,
   FileText,
   Loader2,
+  UserRound,
 } from "lucide-react";
 import type { StudentCardData } from "@/components/StudentCard";
 import { formatScore } from "@/lib/format";
@@ -14,25 +15,39 @@ import {
   getLocalSimulationIndexKey,
   subscribeToLocalSimulationChanges,
 } from "@/lib/localSimulationStorage";
-import type { OptionLetter, Question } from "@/lib/database.types";
 import {
+  buildStudentAnalyticsReportPdf,
   buildTeacherAnalyticsReportPdf,
+  buildTeacherModulesFromAnswers,
+  buildTeacherQuestionsFromAnswers,
   getTeacherAnalyticsReportFilename,
+  getTeacherStudentReportFilename,
+  type TeacherAttemptAnalytics,
+  type TeacherReportAnswer,
 } from "@/lib/teacherAnalyticsReport";
 
-export type TeacherQuestionAnswerRecord = {
-  question_id: string;
-  selected_option: OptionLetter | null;
-  is_correct: boolean | null;
-  questions: Pick<
-    Question,
-    "id" | "question_text" | "category" | "difficulty" | "correct_option"
-  > | null;
-};
+export type TeacherQuestionAnswerRecord = TeacherReportAnswer;
 
 type TeacherLearningToolsProps = {
   students: StudentCardData[];
   serverAnswers: TeacherQuestionAnswerRecord[];
+  serverAttempts: TeacherAttemptAnalytics[];
+};
+
+type LocalSimulationPayload = {
+  simulation?: {
+    id?: string;
+    student_id?: string | null;
+    started_at?: string | null;
+    finished_at?: string | null;
+    created_at?: string | null;
+    total_questions?: number | null;
+    correct_answers?: number | null;
+    incorrect_answers?: number | null;
+    score?: number | null;
+    time_used_seconds?: number | null;
+  };
+  answers?: TeacherQuestionAnswerRecord[];
 };
 
 function readJsonArray<T>(value: string | null): T[] {
@@ -47,36 +62,117 @@ function readJsonArray<T>(value: string | null): T[] {
   }
 }
 
-function readLocalAnswers(students: StudentCardData[]) {
-  if (typeof window === "undefined") {
-    return [];
+function inferExamSlug(
+  student: StudentCardData,
+  answers: TeacherQuestionAnswerRecord[],
+) {
+  if (student.careerSlug) {
+    return student.careerSlug;
   }
 
-  return students.flatMap((student) => {
-    const summaries = readJsonArray<{ id: string }>(
-      window.localStorage.getItem(getLocalSimulationIndexKey(student.id)),
-    );
+  return answers.some((answer) =>
+    (answer.questions?.category ?? "").toLowerCase().includes("psicolog"),
+  )
+    ? "psicologia"
+    : "enfermeria";
+}
 
-    return summaries.flatMap((summary) => {
-      const rawPayload = window.localStorage.getItem(
-        `local-simulation:${summary.id}`,
+function getAnswerTotals(answers: TeacherQuestionAnswerRecord[]) {
+  return answers.reduce(
+    (totals, answer) => {
+      totals.total += 1;
+
+      if (answer.is_correct === true) {
+        totals.correct += 1;
+      } else if (answer.selected_option === null) {
+        totals.unanswered += 1;
+      } else {
+        totals.incorrect += 1;
+      }
+
+      return totals;
+    },
+    { total: 0, correct: 0, incorrect: 0, unanswered: 0 },
+  );
+}
+
+function readLocalReportData(students: StudentCardData[]): {
+  answers: TeacherQuestionAnswerRecord[];
+  attempts: TeacherAttemptAnalytics[];
+} {
+  if (typeof window === "undefined") {
+    return { answers: [], attempts: [] };
+  }
+
+  return students.reduce<{
+    answers: TeacherQuestionAnswerRecord[];
+    attempts: TeacherAttemptAnalytics[];
+  }>(
+    (reportData, student) => {
+      const summaries = readJsonArray<{ id: string }>(
+        window.localStorage.getItem(getLocalSimulationIndexKey(student.id)),
       );
 
-      if (!rawPayload) {
-        return [];
-      }
+      summaries.forEach((summary) => {
+        const rawPayload = window.localStorage.getItem(
+          `local-simulation:${summary.id}`,
+        );
 
-      try {
-        const payload = JSON.parse(rawPayload) as {
-          answers?: TeacherQuestionAnswerRecord[];
-        };
+        if (!rawPayload) {
+          return;
+        }
 
-        return payload.answers ?? [];
-      } catch {
-        return [];
-      }
-    });
-  });
+        try {
+          const payload = JSON.parse(rawPayload) as LocalSimulationPayload;
+          const rawAnswers = payload.answers ?? [];
+          const examSlug = inferExamSlug(student, rawAnswers);
+          const simulationId = payload.simulation?.id ?? summary.id;
+          const answers = rawAnswers.map((answer) => ({
+            ...answer,
+            student_id: student.id,
+            exam_slug: examSlug,
+            attempt_id: answer.attempt_id ?? simulationId,
+            simulation_id: answer.simulation_id ?? simulationId,
+          }));
+          const totals = getAnswerTotals(answers);
+          const totalQuestions =
+            payload.simulation?.total_questions ?? totals.total;
+          const correctAnswers =
+            payload.simulation?.correct_answers ?? totals.correct;
+          const incorrectAnswers =
+            payload.simulation?.incorrect_answers ?? totals.incorrect;
+          const unansweredAnswers = Math.max(
+            0,
+            totalQuestions - correctAnswers - incorrectAnswers,
+          );
+
+          reportData.answers.push(...answers);
+          reportData.attempts.push({
+            id: simulationId,
+            student_id: student.id,
+            exam_slug: examSlug,
+            finished_at: payload.simulation?.finished_at ?? null,
+            created_at: payload.simulation?.created_at ?? null,
+            total_questions: totalQuestions,
+            correct_answers: correctAnswers,
+            incorrect_answers: incorrectAnswers,
+            unanswered_answers: unansweredAnswers,
+            score:
+              payload.simulation?.score ??
+              (totalQuestions > 0
+                ? Math.round((correctAnswers / totalQuestions) * 10000) / 100
+                : 0),
+            time_used_seconds: payload.simulation?.time_used_seconds ?? null,
+          });
+        } catch {
+          return;
+        }
+      });
+
+      return reportData;
+    },
+    { answers: [], attempts: [] },
+  );
 }
 
 function csvValue(value: string | number | null | undefined) {
@@ -84,7 +180,7 @@ function csvValue(value: string | number | null | undefined) {
   return `"${text.replaceAll('"', '""')}"`;
 }
 
-function downloadBlob(filename: string, content: string, type: string) {
+function downloadBlob(filename: string, content: BlobPart, type: string) {
   const blob = new Blob([content], { type });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -106,8 +202,10 @@ function escapeHtml(value: string | number | null | undefined) {
 export function TeacherLearningTools({
   students,
   serverAnswers,
+  serverAttempts,
 }: TeacherLearningToolsProps) {
   const [isExportingPdf, setIsExportingPdf] = useState(false);
+  const [exportingStudentId, setExportingStudentId] = useState("");
   const [pdfError, setPdfError] = useState("");
   const localStorageSnapshot = useSyncExternalStore(
     subscribeToLocalSimulationChanges,
@@ -120,96 +218,55 @@ export function TeacherLearningTools({
     () => "[]",
   );
 
-  const allAnswers = useMemo(() => {
+  const localReportData = useMemo(() => {
     void localStorageSnapshot;
-    return [...serverAnswers, ...readLocalAnswers(students)];
-  }, [localStorageSnapshot, serverAnswers, students]);
+    return readLocalReportData(students);
+  }, [localStorageSnapshot, students]);
 
-  const moduleAnalytics = useMemo(() => {
-    const modules = new Map<
-      string,
-      { category: string; total: number; incorrect: number; correct: number }
-    >();
+  const allAnswers = useMemo(
+    () => [...serverAnswers, ...localReportData.answers],
+    [localReportData.answers, serverAnswers],
+  );
 
-    allAnswers.forEach((answer) => {
-      const category = answer.questions?.category?.trim() || "Sin categoría";
-      const current = modules.get(category) ?? {
-        category,
-        total: 0,
-        incorrect: 0,
-        correct: 0,
-      };
+  const allAttempts = useMemo(
+    () => [...serverAttempts, ...localReportData.attempts],
+    [localReportData.attempts, serverAttempts],
+  );
 
-      current.total += 1;
-      if (answer.is_correct === true) {
-        current.correct += 1;
-      } else {
-        current.incorrect += 1;
-      }
-      modules.set(category, current);
-    });
+  const moduleAnalytics = useMemo(
+    () => buildTeacherModulesFromAnswers(allAnswers),
+    [allAnswers],
+  );
 
-    return Array.from(modules.values())
-      .map((item) => ({
-        ...item,
-        errorRate:
-          item.total > 0
-            ? Math.round((item.incorrect / item.total) * 10000) / 100
-            : 0,
-      }))
-      .sort(
-        (left, right) =>
-          right.errorRate - left.errorRate ||
-          right.total - left.total ||
-          left.category.localeCompare(right.category),
-      );
-  }, [allAnswers]);
+  const questionAnalytics = useMemo(
+    () => buildTeacherQuestionsFromAnswers(allAnswers, 8),
+    [allAnswers],
+  );
 
-  const questionAnalytics = useMemo(() => {
-    const questions = new Map<
-      string,
-      {
-        id: string;
-        text: string;
-        category: string;
-        total: number;
-        incorrect: number;
-      }
-    >();
+  const studentReportRows = useMemo(
+    () =>
+      students
+        .map((student) => {
+          const answers = allAnswers.filter(
+            (answer) => answer.student_id === student.id,
+          );
+          const attempts = allAttempts.filter(
+            (attempt) => attempt.student_id === student.id,
+          );
+          const totals = getAnswerTotals(answers);
 
-    allAnswers.forEach((answer) => {
-      const current = questions.get(answer.question_id) ?? {
-        id: answer.question_id,
-        text: answer.questions?.question_text ?? "Pregunta no disponible",
-        category: answer.questions?.category?.trim() || "Sin categoría",
-        total: 0,
-        incorrect: 0,
-      };
-
-      current.total += 1;
-      if (answer.is_correct !== true) {
-        current.incorrect += 1;
-      }
-      questions.set(answer.question_id, current);
-    });
-
-    return Array.from(questions.values())
-      .map((item) => ({
-        ...item,
-        errorRate:
-          item.total > 0
-            ? Math.round((item.incorrect / item.total) * 10000) / 100
-            : 0,
-      }))
-      .filter((item) => item.total > 0)
-      .sort(
-        (left, right) =>
-          right.errorRate - left.errorRate ||
-          right.total - left.total ||
-          left.text.localeCompare(right.text),
-      )
-      .slice(0, 6);
-  }, [allAnswers]);
+          return {
+            student,
+            attempts,
+            answers,
+            totals,
+          };
+        })
+        .sort((left, right) =>
+          left.student.fullName.localeCompare(right.student.fullName),
+        ),
+    [allAnswers, allAttempts, students],
+  );
 
   function exportCsv() {
     const rows = [
@@ -220,25 +277,41 @@ export function TeacherLearningTools({
         "Simulaciones",
         "Promedio",
         "Mejor puntaje",
+        "Correctas",
+        "Incorrectas",
+        "No respondidas",
         "Última actividad",
       ],
-      ...students.map((student) => [
-        student.fullName,
-        student.email,
-        student.careerLabel,
-        student.simulationsCount,
-        formatScore(student.averageScore),
-        formatScore(student.bestScore),
-        student.lastActivity ?? "",
-      ]),
+      ...studentReportRows.map(({ student, attempts, totals }) => [
+          student.fullName,
+          student.email,
+          student.careerLabel,
+          attempts.length || student.simulationsCount,
+          formatScore(student.averageScore),
+          formatScore(student.bestScore),
+          totals.correct,
+          totals.incorrect,
+          totals.unanswered,
+          student.lastActivity ?? "",
+        ]),
       [],
-      ["Módulo", "Respuestas", "Correctas", "Incorrectas", "Tasa de error"],
+      [
+        "Categoría",
+        "Respuestas",
+        "Correctas",
+        "Incorrectas",
+        "No respondidas",
+        "Desempeño",
+        "Tasa de alerta",
+      ],
       ...moduleAnalytics.map((item) => [
         item.category,
         item.total,
         item.correct,
         item.incorrect,
-        formatScore(item.errorRate),
+        item.unanswered,
+        formatScore(item.score),
+        formatScore(item.affectedRate),
       ]),
     ];
 
@@ -250,27 +323,31 @@ export function TeacherLearningTools({
   }
 
   function exportExcel() {
-    const studentRows = students
+    const studentRows = studentReportRows
       .map(
-        (student) =>
+        ({ student, attempts, totals }) =>
           `<tr><td>${escapeHtml(student.fullName)}</td><td>${escapeHtml(
             student.email,
           )}</td><td>${escapeHtml(student.careerLabel)}</td><td>${
-            student.simulationsCount
+            attempts.length || student.simulationsCount
           }</td><td>${escapeHtml(formatScore(student.averageScore))}</td><td>${escapeHtml(
             formatScore(student.bestScore),
-          )}</td></tr>`,
+          )}</td><td>${totals.correct}</td><td>${totals.incorrect}</td><td>${
+            totals.unanswered
+          }</td></tr>`,
       )
       .join("");
     const moduleRows = moduleAnalytics
       .map(
         (item) =>
-          `<tr><td>${escapeHtml(item.category)}</td><td>${item.total}</td><td>${item.correct}</td><td>${item.incorrect}</td><td>${escapeHtml(
-            formatScore(item.errorRate),
+          `<tr><td>${escapeHtml(item.category)}</td><td>${item.total}</td><td>${item.correct}</td><td>${item.incorrect}</td><td>${item.unanswered}</td><td>${escapeHtml(
+            formatScore(item.score),
+          )}</td><td>${escapeHtml(
+            formatScore(item.affectedRate),
           )}</td></tr>`,
       )
       .join("");
-    const workbook = `<html><body><h1>Reporte docente CACES</h1><h2>Estudiantes</h2><table border="1"><tr><th>Estudiante</th><th>Correo</th><th>Carrera</th><th>Simulaciones</th><th>Promedio</th><th>Mejor</th></tr>${studentRows}</table><h2>Analítica por módulo</h2><table border="1"><tr><th>Módulo</th><th>Respuestas</th><th>Correctas</th><th>Incorrectas</th><th>Tasa de error</th></tr>${moduleRows}</table></body></html>`;
+    const workbook = `<html><body><h1>Reporte docente CACES</h1><h2>Estudiantes</h2><table border="1"><tr><th>Estudiante</th><th>Correo</th><th>Carrera</th><th>Simulaciones</th><th>Promedio</th><th>Mejor</th><th>Correctas</th><th>Incorrectas</th><th>No respondidas</th></tr>${studentRows}</table><h2>Analítica por categoría</h2><table border="1"><tr><th>Categoría</th><th>Respuestas</th><th>Correctas</th><th>Incorrectas</th><th>No respondidas</th><th>Desempeño</th><th>Tasa de alerta</th></tr>${moduleRows}</table></body></html>`;
 
     downloadBlob(
       "reporte-docente-caces.xls",
@@ -289,25 +366,54 @@ export function TeacherLearningTools({
         students,
         modules: moduleAnalytics,
         questions: questionAnalytics,
+        attempts: allAttempts,
+        answers: allAnswers,
         generatedAt,
       });
-      const blob = new Blob([report], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = getTeacherAnalyticsReportFilename(generatedAt);
-      link.hidden = true;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
-    } catch {
-      setPdfError(
-        "No se pudo generar el reporte PDF. Intenta nuevamente.",
+      downloadBlob(
+        getTeacherAnalyticsReportFilename(generatedAt),
+        report,
+        "application/pdf",
       );
+    } catch {
+      setPdfError("No se pudo generar el reporte PDF. Intenta nuevamente.");
     } finally {
       setIsExportingPdf(false);
+    }
+  }
+
+  async function exportStudentPdf(student: StudentCardData) {
+    setExportingStudentId(student.id);
+    setPdfError("");
+
+    try {
+      const generatedAt = new Date();
+      const studentAnswers = allAnswers.filter(
+        (answer) => answer.student_id === student.id,
+      );
+      const studentAttempts = allAttempts.filter(
+        (attempt) => attempt.student_id === student.id,
+      );
+      const report = await buildStudentAnalyticsReportPdf({
+        student,
+        attempts: studentAttempts,
+        answers: studentAnswers,
+        modules: buildTeacherModulesFromAnswers(studentAnswers),
+        questions: buildTeacherQuestionsFromAnswers(studentAnswers, 8),
+        generatedAt,
+      });
+
+      downloadBlob(
+        getTeacherStudentReportFilename(student, generatedAt),
+        report,
+        "application/pdf",
+      );
+    } catch {
+      setPdfError(
+        "No se pudo generar el reporte individual. Intenta nuevamente.",
+      );
+    } finally {
+      setExportingStudentId("");
     }
   }
 
@@ -350,7 +456,7 @@ export function TeacherLearningTools({
             ) : (
               <FileText className="h-4 w-4" aria-hidden="true" />
             )}
-            {isExportingPdf ? "Generando..." : "PDF"}
+            {isExportingPdf ? "Generando..." : "Reporte general PDF"}
           </button>
         </div>
       </div>
@@ -360,6 +466,102 @@ export function TeacherLearningTools({
           {pdfError}
         </p>
       ) : null}
+
+      <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex items-center gap-2">
+            <UserRound className="h-5 w-5 text-slate-700" aria-hidden="true" />
+            <div>
+              <h3 className="text-base font-semibold text-slate-950">
+                Reportes individuales
+              </h3>
+              <p className="mt-1 text-sm text-slate-500">
+                Descarga un PDF por estudiante con historial, categorías,
+                preguntas a revisar y no respondidas.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 overflow-hidden rounded-lg border border-slate-200">
+          <div className="max-h-96 overflow-auto">
+            <table className="min-w-full divide-y divide-slate-200 text-sm">
+              <thead className="sticky top-0 bg-slate-50">
+                <tr className="text-left text-xs font-semibold uppercase tracking-normal text-slate-500">
+                  <th className="px-4 py-3">Estudiante</th>
+                  <th className="px-4 py-3">Carrera</th>
+                  <th className="px-4 py-3 text-right">Intentos</th>
+                  <th className="px-4 py-3 text-right">Correctas</th>
+                  <th className="px-4 py-3 text-right">Incorrectas</th>
+                  <th className="px-4 py-3 text-right">Sin responder</th>
+                  <th className="px-4 py-3 text-right">Reporte</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 bg-white">
+                {studentReportRows.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="px-4 py-5 text-center text-sm text-slate-500"
+                    >
+                      No hay estudiantes disponibles para exportar.
+                    </td>
+                  </tr>
+                ) : (
+                  studentReportRows.map(({ student, attempts, totals }) => (
+                    <tr key={student.id}>
+                      <td className="px-4 py-3">
+                        <p className="font-semibold text-slate-950">
+                          {student.fullName}
+                        </p>
+                        <p className="mt-1 text-xs text-slate-500">
+                          {student.email}
+                        </p>
+                      </td>
+                      <td className="px-4 py-3 text-slate-600">
+                        {student.careerLabel}
+                      </td>
+                      <td className="px-4 py-3 text-right font-medium text-slate-700">
+                        {attempts.length || student.simulationsCount}
+                      </td>
+                      <td className="px-4 py-3 text-right font-medium text-emerald-700">
+                        {totals.correct}
+                      </td>
+                      <td className="px-4 py-3 text-right font-medium text-red-700">
+                        {totals.incorrect}
+                      </td>
+                      <td className="px-4 py-3 text-right font-medium text-amber-700">
+                        {totals.unanswered}
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <button
+                          type="button"
+                          onClick={() => void exportStudentPdf(student)}
+                          disabled={Boolean(exportingStudentId)}
+                          className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          {exportingStudentId === student.id ? (
+                            <Loader2
+                              className="h-3.5 w-3.5 animate-spin"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <FileText
+                              className="h-3.5 w-3.5"
+                              aria-hidden="true"
+                            />
+                          )}
+                          PDF
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
 
       <div className="grid gap-5 xl:grid-cols-2">
         <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm xl:col-span-2">
@@ -371,7 +573,8 @@ export function TeacherLearningTools({
                   Rendimiento por módulo
                 </h3>
                 <p className="mt-1 text-sm text-slate-500">
-                  Distribución de respuestas correctas e incorrectas.
+                  Distribución de respuestas correctas, incorrectas y no
+                  respondidas.
                 </p>
               </div>
             </div>
@@ -384,6 +587,10 @@ export function TeacherLearningTools({
                 <span className="h-2.5 w-2.5 rounded-full bg-red-500" />
                 Incorrectas
               </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                Sin responder
+              </span>
             </div>
           </div>
 
@@ -394,20 +601,32 @@ export function TeacherLearningTools({
               </p>
             ) : (
               moduleAnalytics.slice(0, 6).map((item) => {
-                const correctRate = Math.round((item.correct / item.total) * 100);
-                const incorrectRate = 100 - correctRate;
+                const correctRate =
+                  item.total > 0
+                    ? Math.round((item.correct / item.total) * 100)
+                    : 0;
+                const incorrectRate =
+                  item.total > 0
+                    ? Math.round((item.incorrect / item.total) * 100)
+                    : 0;
+                const unansweredRate = Math.max(
+                  0,
+                  100 - correctRate - incorrectRate,
+                );
 
                 return (
                   <div key={item.category}>
                     <div className="mb-2 flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between">
                       <p className="font-medium text-slate-800">{item.category}</p>
                       <p className="text-xs text-slate-500">
-                        {item.correct} correctas · {item.incorrect} incorrectas · {item.total} respuestas
+                        {item.correct} correctas · {item.incorrect} incorrectas
+                        · {item.unanswered} sin responder · {item.total}{" "}
+                        respuestas
                       </p>
                     </div>
                     <div
                       role="img"
-                      aria-label={`${item.category}: ${correctRate}% de respuestas correctas y ${incorrectRate}% de respuestas incorrectas.`}
+                      aria-label={`${item.category}: ${correctRate}% de respuestas correctas, ${incorrectRate}% incorrectas y ${unansweredRate}% sin responder.`}
                       className="flex h-4 overflow-hidden rounded-full bg-slate-100 ring-1 ring-inset ring-slate-200"
                     >
                       <div
@@ -418,10 +637,19 @@ export function TeacherLearningTools({
                         className="bg-red-500 transition-[width]"
                         style={{ width: `${incorrectRate}%` }}
                       />
+                      <div
+                        className="bg-amber-400 transition-[width]"
+                        style={{ width: `${unansweredRate}%` }}
+                      />
                     </div>
                     <div className="mt-1.5 flex justify-between text-xs font-medium">
                       <span className="text-emerald-700">{correctRate}% correctas</span>
-                      <span className="text-red-700">{incorrectRate}% errores</span>
+                      <span className="text-red-700">
+                        {incorrectRate}% errores
+                      </span>
+                      <span className="text-amber-700">
+                        {unansweredRate}% sin responder
+                      </span>
                     </div>
                   </div>
                 );
@@ -450,11 +678,12 @@ export function TeacherLearningTools({
                       {item.category}
                     </p>
                     <p className="text-sm font-semibold text-red-700">
-                      {formatScore(item.errorRate)}
+                      {formatScore(item.affectedRate)}
                     </p>
                   </div>
                   <p className="mt-1 text-xs text-slate-500">
-                    {item.incorrect} errores de {item.total} respuestas
+                    {item.incorrect} incorrectas · {item.unanswered} sin
+                    responder · {item.total} respuestas
                   </p>
                 </div>
               ))
@@ -482,11 +711,12 @@ export function TeacherLearningTools({
                       {item.text}
                     </p>
                     <p className="shrink-0 text-sm font-semibold text-red-700">
-                      {formatScore(item.errorRate)}
+                      {formatScore(item.affectedRate)}
                     </p>
                   </div>
                   <p className="mt-1 text-xs text-slate-500">
-                    {item.category} · {item.incorrect} errores de {item.total}
+                    {item.category} · {item.incorrect} incorrectas ·{" "}
+                    {item.unanswered} sin responder de {item.total}
                   </p>
                 </div>
               ))

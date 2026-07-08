@@ -1,4 +1,11 @@
-import type { SimulationAnswerWithQuestion } from "@/lib/database.types";
+import type { Question, SimulationAnswerWithQuestion } from "@/lib/database.types";
+
+export type PerformanceAnswerInput = Pick<
+  SimulationAnswerWithQuestion,
+  "selected_option" | "is_correct"
+> & {
+  questions: Pick<Question, "category" | "question_text"> | null;
+};
 
 export type PerformanceCategoryInsight = {
   category: string;
@@ -87,7 +94,7 @@ function includesAny(value: string, keywords: string[]) {
   return keywords.some((keyword) => value.includes(keyword));
 }
 
-function getPsychologyPerformanceArea(answer: SimulationAnswerWithQuestion) {
+function getPsychologyPerformanceArea(answer: PerformanceAnswerInput) {
   const category = normalize(answer.questions?.category?.trim() ?? "");
   const questionText = normalize(answer.questions?.question_text?.trim() ?? "");
   const source = `${category} ${questionText}`;
@@ -183,7 +190,7 @@ function getPsychologyPerformanceArea(answer: SimulationAnswerWithQuestion) {
   return psychologyAreas[5];
 }
 
-function getPerformanceArea(answer: SimulationAnswerWithQuestion) {
+function getPerformanceArea(answer: PerformanceAnswerInput) {
   const rawCategory = answer.questions?.category?.trim();
 
   if (!rawCategory) {
@@ -203,7 +210,7 @@ function getPerformanceArea(answer: SimulationAnswerWithQuestion) {
 }
 
 export function buildPerformanceCategoryInsights(
-  answers: SimulationAnswerWithQuestion[],
+  answers: PerformanceAnswerInput[],
 ) {
   const insights = new Map<
     string,
@@ -252,7 +259,7 @@ export function buildPerformanceCategoryInsights(
 }
 
 export function buildPerformanceRecommendations(
-  answers: SimulationAnswerWithQuestion[],
+  answers: PerformanceAnswerInput[],
 ) {
   const categoryInsights = buildPerformanceCategoryInsights(answers);
   const weakCategories = categoryInsights
