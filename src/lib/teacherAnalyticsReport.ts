@@ -84,6 +84,16 @@ export type StudentAnalyticsReportData = {
 };
 
 type PdfDocument = Awaited<ReturnType<typeof createPdfDocument>>;
+type RgbColor = [number, number, number];
+type PdfChartPalette = {
+  navy: RgbColor;
+  blue: RgbColor;
+  slate: RgbColor;
+  lightSlate: RgbColor;
+  emerald: RgbColor;
+  red: RgbColor;
+  amber: RgbColor;
+};
 
 function formatPercentage(value: number) {
   return `${new Intl.NumberFormat("es-EC", {
@@ -368,6 +378,360 @@ function addFooter({
   }
 }
 
+function clampPercentage(value: number) {
+  return Math.max(0, Math.min(100, value));
+}
+
+function getRate(value: number, total: number) {
+  return total > 0 ? clampPercentage((value / total) * 100) : 0;
+}
+
+function truncateText(value: string, maxLength: number) {
+  return value.length > maxLength ? `${value.slice(0, maxLength - 1)}.` : value;
+}
+
+function addLegend({
+  document,
+  items,
+  x,
+  y,
+  slate,
+}: {
+  document: PdfDocument["document"];
+  items: { label: string; color: RgbColor }[];
+  x: number;
+  y: number;
+  slate: RgbColor;
+}) {
+  let currentX = x;
+
+  items.forEach((item) => {
+    document.setFillColor(...item.color);
+    document.roundedRect(currentX, y - 2.6, 3, 3, 0.6, 0.6, "F");
+    document.setTextColor(...slate);
+    document.setFont("helvetica", "normal");
+    document.setFontSize(6.8);
+    document.text(item.label, currentX + 4.2, y);
+    currentX += document.getTextWidth(item.label) + 12;
+  });
+}
+
+function addChartPanel({
+  document,
+  title,
+  subtitle,
+  x,
+  y,
+  width,
+  height,
+  palette,
+}: {
+  document: PdfDocument["document"];
+  title: string;
+  subtitle: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  palette: PdfChartPalette;
+}) {
+  document.setFillColor(255, 255, 255);
+  document.setDrawColor(226, 232, 240);
+  document.roundedRect(x, y, width, height, 2.5, 2.5, "FD");
+  document.setTextColor(...palette.navy);
+  document.setFont("helvetica", "bold");
+  document.setFontSize(9.2);
+  document.text(title, x + 4, y + 7);
+  document.setTextColor(...palette.slate);
+  document.setFont("helvetica", "normal");
+  document.setFontSize(6.8);
+  document.text(subtitle, x + 4, y + 12);
+}
+
+function addEmptyChartMessage({
+  document,
+  message,
+  x,
+  y,
+  width,
+  palette,
+}: {
+  document: PdfDocument["document"];
+  message: string;
+  x: number;
+  y: number;
+  width: number;
+  palette: PdfChartPalette;
+}) {
+  document.setFillColor(...palette.lightSlate);
+  document.roundedRect(x, y, width, 10, 1.5, 1.5, "F");
+  document.setTextColor(...palette.slate);
+  document.setFont("helvetica", "normal");
+  document.setFontSize(7.2);
+  document.text(message, x + 3, y + 6.5);
+}
+
+function addResponseMixBar({
+  document,
+  x,
+  y,
+  width,
+  totals,
+  palette,
+}: {
+  document: PdfDocument["document"];
+  x: number;
+  y: number;
+  width: number;
+  totals: ReturnType<typeof getAnswerTotals>;
+  palette: PdfChartPalette;
+}) {
+  const segments = [
+    { value: totals.correct, color: palette.emerald },
+    { value: totals.incorrect, color: palette.red },
+    { value: totals.unanswered, color: palette.amber },
+  ];
+  let currentX = x;
+
+  document.setFillColor(...palette.lightSlate);
+  document.roundedRect(x, y, width, 6, 1.5, 1.5, "F");
+
+  segments.forEach((segment) => {
+    if (totals.total <= 0 || segment.value <= 0) {
+      return;
+    }
+
+    const segmentWidth = (segment.value / totals.total) * width;
+    document.setFillColor(...segment.color);
+    document.rect(currentX, y, segmentWidth, 6, "F");
+    currentX += segmentWidth;
+  });
+
+  document.setTextColor(...palette.slate);
+  document.setFont("helvetica", "normal");
+  document.setFontSize(6.8);
+  document.text(
+    `${totals.correct} correctas - ${totals.incorrect} incorrectas - ${totals.unanswered} sin responder`,
+    x,
+    y + 11,
+  );
+}
+
+function addModuleStackedBarsChart({
+  document,
+  title,
+  subtitle,
+  modules,
+  totals,
+  x,
+  y,
+  width,
+  height,
+  palette,
+}: {
+  document: PdfDocument["document"];
+  title: string;
+  subtitle: string;
+  modules: TeacherModuleAnalytics[];
+  totals: ReturnType<typeof getAnswerTotals>;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  palette: PdfChartPalette;
+}) {
+  addChartPanel({ document, title, subtitle, x, y, width, height, palette });
+  addLegend({
+    document,
+    x: x + width - 77,
+    y: y + 7,
+    slate: palette.slate,
+    items: [
+      { label: "Correctas", color: palette.emerald },
+      { label: "Errores", color: palette.red },
+      { label: "Sin resp.", color: palette.amber },
+    ],
+  });
+
+  if (totals.total <= 0 || modules.length === 0) {
+    addEmptyChartMessage({
+      document,
+      message: "La gráfica aparecerá cuando existan respuestas registradas.",
+      x: x + 4,
+      y: y + 20,
+      width: width - 8,
+      palette,
+    });
+    return;
+  }
+
+  addResponseMixBar({
+    document,
+    x: x + 4,
+    y: y + 18,
+    width: width - 8,
+    totals,
+    palette,
+  });
+
+  const rows = modules
+    .filter((module) => module.total > 0)
+    .sort(
+      (left, right) =>
+        right.affectedRate - left.affectedRate || right.total - left.total,
+    )
+    .slice(0, 4);
+  const rowStartY = y + 35;
+  const labelWidth = Math.min(54, width * 0.34);
+  const valueWidth = 16;
+  const barX = x + 4 + labelWidth;
+  const barWidth = width - labelWidth - valueWidth - 12;
+
+  rows.forEach((module, index) => {
+    const rowY = rowStartY + index * 8;
+    const correctWidth = (getRate(module.correct, module.total) / 100) * barWidth;
+    const incorrectWidth =
+      (getRate(module.incorrect, module.total) / 100) * barWidth;
+    const unansweredWidth =
+      (getRate(module.unanswered, module.total) / 100) * barWidth;
+
+    document.setTextColor(...palette.navy);
+    document.setFont("helvetica", "normal");
+    document.setFontSize(6.7);
+    document.text(truncateText(module.category, 32), x + 4, rowY + 3.2);
+    document.setFillColor(...palette.lightSlate);
+    document.roundedRect(barX, rowY, barWidth, 4, 1, 1, "F");
+
+    let currentX = barX;
+    [
+      { width: correctWidth, color: palette.emerald },
+      { width: incorrectWidth, color: palette.red },
+      { width: unansweredWidth, color: palette.amber },
+    ].forEach((segment) => {
+      if (segment.width <= 0) {
+        return;
+      }
+      document.setFillColor(...segment.color);
+      document.rect(currentX, rowY, segment.width, 4, "F");
+      currentX += segment.width;
+    });
+
+    document.setTextColor(...palette.slate);
+    document.setFont("helvetica", "bold");
+    document.setFontSize(6.6);
+    document.text(
+      formatPercentage(module.affectedRate),
+      x + width - 4,
+      rowY + 3.2,
+      { align: "right" },
+    );
+  });
+}
+
+function addScoreTrendChart({
+  document,
+  title,
+  subtitle,
+  attempts,
+  x,
+  y,
+  width,
+  height,
+  palette,
+}: {
+  document: PdfDocument["document"];
+  title: string;
+  subtitle: string;
+  attempts: TeacherAttemptAnalytics[];
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  palette: PdfChartPalette;
+}) {
+  addChartPanel({ document, title, subtitle, x, y, width, height, palette });
+
+  const scoredAttempts = [...attempts]
+    .filter((attempt) => typeof attempt.score === "number")
+    .sort(
+      (left, right) =>
+        Date.parse(getAttemptDate(left) ?? "") -
+        Date.parse(getAttemptDate(right) ?? ""),
+    )
+    .slice(-8);
+
+  if (scoredAttempts.length === 0) {
+    addEmptyChartMessage({
+      document,
+      message: "La tendencia aparecerá cuando existan intentos con puntaje.",
+      x: x + 4,
+      y: y + 20,
+      width: width - 8,
+      palette,
+    });
+    return;
+  }
+
+  const chartX = x + 10;
+  const chartY = y + 19;
+  const chartWidth = width - 18;
+  const chartHeight = height - 31;
+  const bottomY = chartY + chartHeight;
+  const average = getAttemptAverage(scoredAttempts);
+
+  document.setDrawColor(226, 232, 240);
+  document.setLineWidth(0.2);
+  [0, 25, 50, 75, 100].forEach((tick) => {
+    const tickY = bottomY - (tick / 100) * chartHeight;
+    document.line(chartX, tickY, chartX + chartWidth, tickY);
+    document.setTextColor(...palette.slate);
+    document.setFont("helvetica", "normal");
+    document.setFontSize(6);
+    document.text(String(tick), chartX - 2, tickY + 1.5, { align: "right" });
+  });
+
+  document.setDrawColor(...palette.amber);
+  document.setLineWidth(0.35);
+  const averageY = bottomY - (clampPercentage(average) / 100) * chartHeight;
+  document.line(chartX, averageY, chartX + chartWidth, averageY);
+
+  const points = scoredAttempts.map((attempt, index) => {
+    const pointX =
+      scoredAttempts.length === 1
+        ? chartX + chartWidth / 2
+        : chartX + (index / (scoredAttempts.length - 1)) * chartWidth;
+    const pointY =
+      bottomY - (clampPercentage(attempt.score ?? 0) / 100) * chartHeight;
+
+    return { x: pointX, y: pointY, score: attempt.score ?? 0 };
+  });
+
+  document.setDrawColor(...palette.blue);
+  document.setLineWidth(0.7);
+  points.forEach((point, index) => {
+    if (index === 0) {
+      return;
+    }
+    const previous = points[index - 1];
+    document.line(previous.x, previous.y, point.x, point.y);
+  });
+
+  points.forEach((point) => {
+    document.setFillColor(...palette.blue);
+    document.circle(point.x, point.y, 1.4, "F");
+  });
+
+  const lastPoint = points[points.length - 1];
+  document.setTextColor(...palette.navy);
+  document.setFont("helvetica", "bold");
+  document.setFontSize(7);
+  document.text(
+    `Último ${formatPercentage(lastPoint.score)} - Prom. ${formatPercentage(average)}`,
+    x + 4,
+    y + height - 5,
+  );
+}
+
 function buildCareerRows({
   students,
   attempts,
@@ -542,6 +906,15 @@ export async function buildTeacherAnalyticsReportPdf({
   const blue: [number, number, number] = [3, 105, 161];
   const slate: [number, number, number] = [71, 85, 105];
   const lightSlate: [number, number, number] = [241, 245, 249];
+  const palette: PdfChartPalette = {
+    navy,
+    blue,
+    slate,
+    lightSlate,
+    emerald: [16, 185, 129],
+    red: [239, 68, 68],
+    amber: [245, 158, 11],
+  };
   const totalAttempts =
     attempts.length ||
     students.reduce((total, student) => total + student.simulationsCount, 0);
@@ -588,6 +961,36 @@ export async function buildTeacherAnalyticsReportPdf({
     ],
   });
 
+  const chartGap = 6;
+  const chartY = 58;
+  const chartHeight = 62;
+  const chartWidth = (pageWidth - margin * 2 - chartGap) / 2;
+
+  addModuleStackedBarsChart({
+    document,
+    title: "Distribución de respuestas y alertas",
+    subtitle: "Correctas, errores y omisiones en los módulos prioritarios",
+    modules,
+    totals,
+    x: margin,
+    y: chartY,
+    width: chartWidth,
+    height: chartHeight,
+    palette,
+  });
+
+  addScoreTrendChart({
+    document,
+    title: "Tendencia de puntajes",
+    subtitle: "Últimos intentos terminados con calificación registrada",
+    attempts,
+    x: margin + chartWidth + chartGap,
+    y: chartY,
+    width: chartWidth,
+    height: chartHeight,
+    palette,
+  });
+
   const documentWithTable = document as typeof document & {
     lastAutoTable?: { finalY?: number };
   };
@@ -608,7 +1011,7 @@ export async function buildTeacherAnalyticsReportPdf({
   }
 
   autoTable(document, {
-    startY: 62,
+    startY: 130,
     margin: { left: margin, right: margin, bottom: 14 },
     head: [
       [
@@ -865,6 +1268,15 @@ export async function buildStudentAnalyticsReportPdf({
   const blue: [number, number, number] = [3, 105, 161];
   const slate: [number, number, number] = [71, 85, 105];
   const lightSlate: [number, number, number] = [241, 245, 249];
+  const palette: PdfChartPalette = {
+    navy,
+    blue,
+    slate,
+    lightSlate,
+    emerald: [16, 185, 129],
+    red: [239, 68, 68],
+    amber: [245, 158, 11],
+  };
   const totals = getAnswerTotals(answers);
   const sortedAttempts = [...attempts].sort(
     (left, right) =>
@@ -908,6 +1320,31 @@ export async function buildStudentAnalyticsReportPdf({
     ],
   });
 
+  addModuleStackedBarsChart({
+    document,
+    title: "Resumen visual por categoría",
+    subtitle: "Distribución de aciertos, errores y respuestas omitidas",
+    modules,
+    totals,
+    x: margin,
+    y: 58,
+    width: pageWidth - margin * 2,
+    height: 64,
+    palette,
+  });
+
+  addScoreTrendChart({
+    document,
+    title: "Evolución de puntajes",
+    subtitle: "Últimos intentos terminados del estudiante",
+    attempts: sortedAttempts,
+    x: margin,
+    y: 128,
+    width: pageWidth - margin * 2,
+    height: 54,
+    palette,
+  });
+
   const documentWithTable = document as typeof document & {
     lastAutoTable?: { finalY?: number };
   };
@@ -928,7 +1365,7 @@ export async function buildStudentAnalyticsReportPdf({
   }
 
   autoTable(document, {
-    startY: 62,
+    startY: 190,
     margin: { left: margin, right: margin, bottom: 14 },
     head: [["Campo", "Detalle"]],
     body: [
