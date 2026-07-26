@@ -41,4 +41,11 @@ npm run build
 
 ## Tablas esperadas
 
-La app consume las tablas `profiles`, `questions`, `simulations` y `simulation_answers` en Supabase.
+La app consume las tablas `profiles`, `questions`, `simulations`,
+`simulation_answers`, `simulation_attempts`, `simulation_drafts`,
+`student_simulator_access` y `teacher_simulator_settings` en Supabase.
+
+Para habilitar los controles docentes de dificultad y categoría en una
+instalación existente, ejecuta
+`supabase/teacher_simulator_settings.sql` en el SQL Editor después de
+`supabase/student_simulator_access.sql`.

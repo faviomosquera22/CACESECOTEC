@@ -60,6 +60,30 @@ export interface Database {
         };
         Relationships: [];
       };
+      teacher_simulator_settings: {
+        Row: {
+          career_slug: string;
+          enabled_difficulties: string[];
+          enabled_categories: string[];
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          career_slug: string;
+          enabled_difficulties?: string[];
+          enabled_categories?: string[];
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          career_slug?: string;
+          enabled_difficulties?: string[];
+          enabled_categories?: string[];
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [];
+      };
       questions: {
         Row: {
           id: string;

@@ -1,4 +1,9 @@
 import type { Question } from "@/lib/database.types";
+import {
+  filterQuestionsForSimulatorSettings,
+  type SimulatorSettings,
+} from "@/lib/simulatorSettingsCatalog";
+import type { StudentCareerSlug } from "@/lib/studentCareer";
 
 export const legacyFixedPsychologyAttemptSeed =
   "00000000-0000-4000-8000-000000000000";
@@ -281,17 +286,27 @@ export function selectQuestionsForExam(
   examType: string,
   questions: Question[],
   attemptSeed?: string,
+  settings?: SimulatorSettings,
 ) {
+  const filteredQuestions =
+    settings && (examType === "enfermeria" || examType === "psicologia")
+      ? filterQuestionsForSimulatorSettings(
+          examType as StudentCareerSlug,
+          questions,
+          settings,
+        )
+      : questions;
+
   if (examType === "enfermeria") {
-    return selectNursingExamQuestions(questions, attemptSeed);
+    return selectNursingExamQuestions(filteredQuestions, attemptSeed);
   }
 
   if (examType === "psicologia") {
-    return selectPsychologyExamQuestions(questions, attemptSeed);
+    return selectPsychologyExamQuestions(filteredQuestions, attemptSeed);
   }
 
   return shuffleQuestions(
-    questions.filter(isUsableQuestion),
+    filteredQuestions.filter(isUsableQuestion),
     getRandomSource(attemptSeed),
   ).slice(0, 100);
 }
@@ -299,15 +314,18 @@ export function selectQuestionsForExam(
 export async function getLocalQuestionsForExam(
   examType: string,
   attemptSeed?: string,
+  settings?: SimulatorSettings,
 ) {
   if (examType === "enfermeria") {
     const { default: enfermeriaQuestions } = await import(
       "@/data/enfermeriaQuestions.json"
     );
 
-    return selectNursingExamQuestions(
+    return selectQuestionsForExam(
+      examType,
       enfermeriaQuestions as Question[],
       attemptSeed,
+      settings,
     );
   }
 
@@ -316,9 +334,11 @@ export async function getLocalQuestionsForExam(
       "@/data/psicologiaQuestions.json"
     );
 
-    return selectPsychologyExamQuestions(
+    return selectQuestionsForExam(
+      examType,
       psicologiaQuestions as Question[],
       attemptSeed,
+      settings,
     );
   }
 

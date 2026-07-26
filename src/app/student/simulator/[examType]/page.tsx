@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import Link from "next/link";
-import { ArrowLeft, ClipboardList } from "lucide-react";
+import { ArrowLeft, ClipboardList, SlidersHorizontal } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SimulatorClient } from "@/components/SimulatorClient";
@@ -13,6 +13,11 @@ import {
   selectQuestionsForExam,
 } from "@/lib/localQuestions";
 import { getSimulatorExam } from "@/lib/simulatorCatalog";
+import { getCareerSimulatorSettings } from "@/lib/simulatorSettings";
+import {
+  getDefaultSimulatorSettings,
+  getSimulatorSettingsCatalog,
+} from "@/lib/simulatorSettingsCatalog";
 import { getStudentCareerOption } from "@/lib/studentCareer";
 import { requireStudentSimulatorAccess } from "@/lib/studentSimulatorAccess";
 
@@ -64,12 +69,15 @@ export default async function StudentExamSimulatorPage({
     typeof query.attempt === "string" && attemptSeedPattern.test(query.attempt)
       ? query.attempt
       : null;
-  const { data: storedDraft } = await supabase
-    .from("simulation_drafts")
-    .select("draft")
-    .eq("student_id", profile.id)
-    .eq("exam_slug", exam.slug)
-    .maybeSingle<{ draft: Json }>();
+  const [{ data: storedDraft }, simulatorSettings] = await Promise.all([
+    supabase
+      .from("simulation_drafts")
+      .select("draft")
+      .eq("student_id", profile.id)
+      .eq("exam_slug", exam.slug)
+      .maybeSingle<{ draft: Json }>(),
+    getCareerSimulatorSettings(supabase, exam.slug),
+  ]);
   const storedAttemptSeed = getStoredAttemptSeed(storedDraft?.draft);
   const attemptSeed = storedAttemptSeed
     ? storedAttemptSeed
@@ -107,12 +115,43 @@ export default async function StudentExamSimulatorPage({
   }
 
   const questions = shouldUsePsychiatryBank
-    ? await getLocalQuestionsForExam(exam.slug, attemptSeed)
+    ? await getLocalQuestionsForExam(
+        exam.slug,
+        attemptSeed,
+        simulatorSettings,
+      )
     : questionLoadError || supabaseQuestions.length === 0
-      ? await getLocalQuestionsForExam(exam.slug, attemptSeed)
-      : selectQuestionsForExam(exam.slug, supabaseQuestions, attemptSeed);
+      ? await getLocalQuestionsForExam(
+          exam.slug,
+          attemptSeed,
+          simulatorSettings,
+        )
+      : selectQuestionsForExam(
+          exam.slug,
+          supabaseQuestions,
+          attemptSeed,
+          simulatorSettings,
+        );
   const persistenceMode = isLocalQuestionSet(questions) ? "local" : "supabase";
   const Icon = exam.icon;
+  const settingsCatalog = getSimulatorSettingsCatalog(exam.slug);
+  const defaultSettings = getDefaultSimulatorSettings(exam.slug);
+  const hasCustomSettings =
+    simulatorSettings.enabledCategories.length !==
+      defaultSettings.enabledCategories.length ||
+    (settingsCatalog.supportsDifficulty &&
+      simulatorSettings.enabledDifficulties.length !==
+        defaultSettings.enabledDifficulties.length);
+  const activeCategoryLabels = settingsCatalog.categories
+    .filter((category) =>
+      simulatorSettings.enabledCategories.includes(category.key),
+    )
+    .map((category) => category.label);
+  const activeDifficultyLabels = settingsCatalog.difficulties
+    .filter((difficulty) =>
+      simulatorSettings.enabledDifficulties.includes(difficulty.key),
+    )
+    .map((difficulty) => difficulty.label.toLowerCase());
 
   if (questionLoadError && questions.length === 0) {
     return (
@@ -132,8 +171,9 @@ export default async function StudentExamSimulatorPage({
           No hay preguntas para {exam.shortTitle}
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
-          Registra preguntas en Supabase con la categoría relacionada a{" "}
-          {exam.shortTitle} para que este simulador pueda cargarlas.
+          La configuración docente actual no coincide con preguntas disponibles
+          del banco de {exam.shortTitle}. Pide a tu docente que habilite otra
+          dificultad o categoría.
         </p>
         <Link
           href="/student/dashboard"
@@ -171,7 +211,7 @@ export default async function StudentExamSimulatorPage({
             <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-500">
               {exam.description}
             </p>
-            {examDistribution.length > 0 ? (
+            {examDistribution.length > 0 && !hasCustomSettings ? (
               <div className="mt-4 grid gap-2 text-sm text-slate-600 md:grid-cols-2">
                 {examDistribution.map((item) => (
                   <div
@@ -190,10 +230,30 @@ export default async function StudentExamSimulatorPage({
         </div>
       </section>
 
+      <section className="rounded-lg border border-violet-200 bg-violet-50 p-4 text-violet-950">
+        <div className="flex items-start gap-3">
+          <SlidersHorizontal
+            className="mt-0.5 h-5 w-5 shrink-0 text-violet-700"
+            aria-hidden="true"
+          />
+          <div>
+            <p className="text-sm font-semibold">Configuración del docente</p>
+            <p className="mt-1 text-sm leading-6 text-violet-800">
+              Este intento tiene {questions.length} pregunta
+              {questions.length === 1 ? "" : "s"} de:{" "}
+              {activeCategoryLabels.join(", ")}.
+              {settingsCatalog.supportsDifficulty
+                ? ` Dificultades activas: ${activeDifficultyLabels.join(", ")}.`
+                : ""}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {persistenceMode === "local" ? (
         <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-800">
           {shouldUsePsychiatryBank
-            ? "Usando el banco local de Psicología: 100 preguntas seleccionadas aleatoriamente de un banco depurado de 200, con sus argumentaciones de respuesta."
+            ? `Usando el banco local de Psicología: ${questions.length} preguntas seleccionadas según la configuración docente, con sus argumentaciones de respuesta.`
             : `Usando banco local de ${exam.shortTitle} mientras Supabase no tenga la tabla de preguntas cargada.`}
         </div>
       ) : null}

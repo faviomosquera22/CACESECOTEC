@@ -1,4 +1,6 @@
 import { TeacherDashboardClient } from "@/components/TeacherDashboardClient";
+import { TeacherSimulatorSettings } from "@/components/TeacherSimulatorSettings";
+import { getCareerSimulatorSettings } from "@/lib/simulatorSettings";
 import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
 import { getTeacherStudentCards } from "@/lib/teacherStudents";
 
@@ -6,10 +8,10 @@ export const dynamic = "force-dynamic";
 
 export default async function TeacherDashboardPage() {
   const { supabase, teacherCareerScope } = await requireTeacherCareerScope();
-  const studentCards = await getTeacherStudentCards(
-    supabase,
-    teacherCareerScope,
-  );
+  const [studentCards, simulatorSettings] = await Promise.all([
+    getTeacherStudentCards(supabase, teacherCareerScope),
+    getCareerSimulatorSettings(supabase, teacherCareerScope),
+  ]);
 
   return (
     <div className="space-y-8">
@@ -23,6 +25,11 @@ export default async function TeacherDashboardPage() {
           asignada.
         </p>
       </section>
+
+      <TeacherSimulatorSettings
+        career={teacherCareerScope}
+        initialSettings={simulatorSettings}
+      />
 
       <TeacherDashboardClient
         students={studentCards}
