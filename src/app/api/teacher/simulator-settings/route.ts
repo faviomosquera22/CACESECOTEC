@@ -4,11 +4,13 @@ import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
 import {
   getSimulatorSettingsCatalog,
   type SimulatorDifficultyKey,
+  type SimulatorPhaseKey,
 } from "@/lib/simulatorSettingsCatalog";
 
 type UpdateSimulatorSettingsBody = {
   enabledDifficulties?: unknown;
   enabledCategories?: unknown;
+  enabledPhases?: unknown;
 };
 
 export const dynamic = "force-dynamic";
@@ -46,6 +48,9 @@ export async function PATCH(request: Request) {
   const allowedCategories = new Set(
     catalog.categories.map((option) => option.key),
   );
+  const allowedPhases = new Set(
+    catalog.phases.map((option) => option.key),
+  );
 
   if (
     !Array.isArray(body.enabledDifficulties) ||
@@ -74,19 +79,37 @@ export async function PATCH(request: Request) {
     );
   }
 
+  if (
+    !Array.isArray(body.enabledPhases) ||
+    !body.enabledPhases.every(
+      (item): item is SimulatorPhaseKey =>
+        typeof item === "string" &&
+        allowedPhases.has(item as SimulatorPhaseKey),
+    )
+  ) {
+    return Response.json(
+      { error: "La selección de fases no es válida." },
+      { status: 400 },
+    );
+  }
+
   const enabledDifficulties = Array.from(
     new Set(body.enabledDifficulties),
   );
   const enabledCategories = Array.from(new Set(body.enabledCategories));
+  const enabledPhases = Array.from(new Set(body.enabledPhases));
 
   if (
     (catalog.supportsDifficulty && enabledDifficulties.length === 0) ||
-    enabledCategories.length === 0
+    enabledCategories.length === 0 ||
+    enabledPhases.length === 0
   ) {
     return Response.json(
       {
         error:
-          "Selecciona al menos una dificultad y una categoría antes de guardar.",
+          catalog.supportsDifficulty
+            ? "Selecciona al menos una dificultad, una categoría y una fase antes de guardar."
+            : "Selecciona al menos una categoría y una fase antes de guardar.",
       },
       { status: 400 },
     );
@@ -120,6 +143,7 @@ export async function PATCH(request: Request) {
         career_slug: teacherCareerScope,
         enabled_difficulties: savedDifficulties,
         enabled_categories: enabledCategories,
+        enabled_phases: enabledPhases,
         updated_at: updatedAt,
         updated_by: authContext.profile.id,
       },
@@ -141,6 +165,7 @@ export async function PATCH(request: Request) {
     settings: {
       enabledDifficulties: savedDifficulties,
       enabledCategories,
+      enabledPhases,
       updatedAt,
     },
   });

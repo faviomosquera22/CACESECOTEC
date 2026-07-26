@@ -49,3 +49,7 @@ Para habilitar los controles docentes de dificultad y categoría en una
 instalación existente, ejecuta
 `supabase/teacher_simulator_settings.sql` en el SQL Editor después de
 `supabase/student_simulator_access.sql`.
+
+La misma migración es reutilizable: si la tabla ya existe, vuelve a ejecutarla
+para incorporar el selector de fases. Todas las preguntas sin una fase
+explícita se consideran parte de `fase-1`.

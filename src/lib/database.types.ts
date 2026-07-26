@@ -65,6 +65,7 @@ export interface Database {
           career_slug: string;
           enabled_difficulties: string[];
           enabled_categories: string[];
+          enabled_phases: string[];
           updated_at: string;
           updated_by: string | null;
         };
@@ -72,6 +73,7 @@ export interface Database {
           career_slug: string;
           enabled_difficulties?: string[];
           enabled_categories?: string[];
+          enabled_phases?: string[];
           updated_at?: string;
           updated_by?: string | null;
         };
@@ -79,6 +81,7 @@ export interface Database {
           career_slug?: string;
           enabled_difficulties?: string[];
           enabled_categories?: string[];
+          enabled_phases?: string[];
           updated_at?: string;
           updated_by?: string | null;
         };
@@ -304,6 +307,11 @@ export type Inserts<T extends keyof Database["public"]["Tables"]> =
 export type Profile = Tables<"profiles">;
 export type StudentSimulatorAccess = Tables<"student_simulator_access">;
 export type Question = Tables<"questions"> & {
+  /**
+   * Identificador estable del bloque de preguntas. Los bancos anteriores a
+   * esta clasificación se consideran automáticamente `fase-1`.
+   */
+  phase?: string | null;
   /**
    * Argumentos específicos de los distractores del banco local. No forman parte
    * de la tabla `questions`; viajan en el snapshot de cada intento.

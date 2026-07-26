@@ -139,6 +139,8 @@ export default async function StudentExamSimulatorPage({
   const hasCustomSettings =
     simulatorSettings.enabledCategories.length !==
       defaultSettings.enabledCategories.length ||
+    [...simulatorSettings.enabledPhases].sort().join("|") !==
+      [...defaultSettings.enabledPhases].sort().join("|") ||
     (settingsCatalog.supportsDifficulty &&
       simulatorSettings.enabledDifficulties.length !==
         defaultSettings.enabledDifficulties.length);
@@ -152,6 +154,9 @@ export default async function StudentExamSimulatorPage({
       simulatorSettings.enabledDifficulties.includes(difficulty.key),
     )
     .map((difficulty) => difficulty.label.toLowerCase());
+  const activePhaseLabels = settingsCatalog.phases
+    .filter((phase) => simulatorSettings.enabledPhases.includes(phase.key))
+    .map((phase) => phase.label);
 
   if (questionLoadError && questions.length === 0) {
     return (
@@ -173,7 +178,7 @@ export default async function StudentExamSimulatorPage({
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
           La configuración docente actual no coincide con preguntas disponibles
           del banco de {exam.shortTitle}. Pide a tu docente que habilite otra
-          dificultad o categoría.
+          fase, dificultad o categoría.
         </p>
         <Link
           href="/student/dashboard"
@@ -242,6 +247,7 @@ export default async function StudentExamSimulatorPage({
               Este intento tiene {questions.length} pregunta
               {questions.length === 1 ? "" : "s"} de:{" "}
               {activeCategoryLabels.join(", ")}.
+              {` Fases activas: ${activePhaseLabels.join(", ")}.`}
               {settingsCatalog.supportsDifficulty
                 ? ` Dificultades activas: ${activeDifficultyLabels.join(", ")}.`
                 : ""}

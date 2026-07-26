@@ -87,6 +87,7 @@ function normalizeQuestion(value: unknown): Question | null {
     ),
     category: question.category ?? null,
     difficulty: question.difficulty ?? null,
+    phase: question.phase ?? null,
     created_at: question.created_at ?? null,
   };
 }

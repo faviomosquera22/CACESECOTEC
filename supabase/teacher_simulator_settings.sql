@@ -9,6 +9,7 @@ create table if not exists public.teacher_simulator_settings (
   enabled_difficulties text[] not null
     default array['facil', 'media', 'dificil']::text[],
   enabled_categories text[] not null,
+  enabled_phases text[] not null default array['fase-1']::text[],
   updated_at timestamp with time zone not null default now(),
   updated_by uuid references public.profiles(id) on delete set null,
   constraint teacher_simulator_settings_difficulties_not_empty
@@ -19,8 +20,50 @@ create table if not exists public.teacher_simulator_settings (
       <@ array['facil', 'media', 'dificil']::text[]
     ),
   constraint teacher_simulator_settings_categories_not_empty
-    check (cardinality(enabled_categories) > 0)
+    check (cardinality(enabled_categories) > 0),
+  constraint teacher_simulator_settings_phases_not_empty
+    check (cardinality(enabled_phases) > 0),
+  constraint teacher_simulator_settings_phases_valid
+    check (
+      enabled_phases
+      <@ array['fase-1', 'fase-2', 'fase-3', 'fase-4', 'fase-5']::text[]
+    )
 );
+
+-- Permite volver a ejecutar esta migración en instalaciones donde la tabla ya
+-- existía antes de incorporar el filtro por fases.
+alter table public.teacher_simulator_settings
+add column if not exists enabled_phases text[] not null
+default array['fase-1']::text[];
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'teacher_simulator_settings_phases_not_empty'
+      and conrelid = 'public.teacher_simulator_settings'::regclass
+  ) then
+    alter table public.teacher_simulator_settings
+    add constraint teacher_simulator_settings_phases_not_empty
+    check (cardinality(enabled_phases) > 0);
+  end if;
+
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'teacher_simulator_settings_phases_valid'
+      and conrelid = 'public.teacher_simulator_settings'::regclass
+  ) then
+    alter table public.teacher_simulator_settings
+    add constraint teacher_simulator_settings_phases_valid
+    check (
+      enabled_phases
+      <@ array['fase-1', 'fase-2', 'fase-3', 'fase-4', 'fase-5']::text[]
+    );
+  end if;
+end;
+$$;
 
 insert into public.teacher_simulator_settings (
   career_slug,

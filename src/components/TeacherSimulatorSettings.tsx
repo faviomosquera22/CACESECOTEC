@@ -5,6 +5,7 @@ import {
   AlertCircle,
   CheckCircle2,
   Gauge,
+  Flag,
   Layers3,
   Loader2,
   Save,
@@ -15,6 +16,7 @@ import {
   getSimulatorSettingsCatalog,
   sanitizeSimulatorSettings,
   type SimulatorDifficultyKey,
+  type SimulatorPhaseKey,
   type SimulatorSettings,
 } from "@/lib/simulatorSettingsCatalog";
 
@@ -27,6 +29,7 @@ type SettingsResponse = {
   settings?: {
     enabledDifficulties?: unknown;
     enabledCategories?: unknown;
+    enabledPhases?: unknown;
     updatedAt?: unknown;
   };
   error?: string;
@@ -101,6 +104,9 @@ export function TeacherSimulatorSettings({
   const [enabledCategories, setEnabledCategories] = useState<string[]>(
     sanitizedInitialSettings.enabledCategories,
   );
+  const [enabledPhases, setEnabledPhases] = useState<SimulatorPhaseKey[]>(
+    sanitizedInitialSettings.enabledPhases,
+  );
   const [savedSettings, setSavedSettings] = useState(sanitizedInitialSettings);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -110,9 +116,12 @@ export function TeacherSimulatorSettings({
     [...enabledDifficulties].sort().join("|") !==
       [...savedSettings.enabledDifficulties].sort().join("|") ||
     [...enabledCategories].sort().join("|") !==
-      [...savedSettings.enabledCategories].sort().join("|");
+      [...savedSettings.enabledCategories].sort().join("|") ||
+    [...enabledPhases].sort().join("|") !==
+      [...savedSettings.enabledPhases].sort().join("|");
   const hasValidSelection =
     enabledCategories.length > 0 &&
+    enabledPhases.length > 0 &&
     (!catalog.supportsDifficulty || enabledDifficulties.length > 0);
 
   function toggleDifficulty(difficulty: SimulatorDifficultyKey) {
@@ -135,6 +144,16 @@ export function TeacherSimulatorSettings({
     setError("");
   }
 
+  function togglePhase(phase: SimulatorPhaseKey) {
+    setEnabledPhases((current) =>
+      current.includes(phase)
+        ? current.filter((item) => item !== phase)
+        : [...current, phase],
+    );
+    setMessage("");
+    setError("");
+  }
+
   async function saveSettings() {
     if (!hasValidSelection || isSaving) {
       return;
@@ -151,6 +170,7 @@ export function TeacherSimulatorSettings({
         body: JSON.stringify({
           enabledDifficulties,
           enabledCategories,
+          enabledPhases,
         }),
       });
       const payload = (await response
@@ -169,6 +189,7 @@ export function TeacherSimulatorSettings({
       );
       setEnabledDifficulties(nextSettings.enabledDifficulties);
       setEnabledCategories(nextSettings.enabledCategories);
+      setEnabledPhases(nextSettings.enabledPhases);
       setSavedSettings(nextSettings);
       setMessage(
         "Configuración guardada. Se aplicará a los próximos intentos de los estudiantes.",
@@ -210,10 +231,36 @@ export function TeacherSimulatorSettings({
           {catalog.supportsDifficulty
             ? ` · ${enabledDifficulties.length} de ${catalog.difficulties.length} dificultades`
             : ""}
+          {` · ${enabledPhases.length} de ${catalog.phases.length} fases`}
         </div>
       </div>
 
       <div className="mt-6 space-y-6">
+        <div>
+          <div className="flex items-center gap-2">
+            <Flag className="h-4 w-4 text-sky-700" aria-hidden="true" />
+            <h3 className="text-sm font-semibold text-slate-950">
+              Fases permitidas
+            </h3>
+          </div>
+          <p className="mt-1 text-xs leading-5 text-slate-500">
+            Todas las preguntas actuales pertenecen a la Fase 1. Los nombres
+            podrán cambiarse después sin perder esta configuración.
+          </p>
+          <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+            {catalog.phases.map((phase) => (
+              <SwitchControl
+                key={phase.key}
+                checked={enabledPhases.includes(phase.key)}
+                disabled={isSaving}
+                label={phase.label}
+                description={phase.description}
+                onChange={() => togglePhase(phase.key)}
+              />
+            ))}
+          </div>
+        </div>
+
         <div>
           <div className="flex items-center gap-2">
             <Gauge className="h-4 w-4 text-sky-700" aria-hidden="true" />
@@ -298,7 +345,9 @@ export function TeacherSimulatorSettings({
             className="mt-0.5 h-4 w-4 shrink-0"
             aria-hidden="true"
           />
-          Selecciona al menos una dificultad y una categoría.
+          {catalog.supportsDifficulty
+            ? "Selecciona al menos una dificultad, una categoría y una fase."
+            : "Selecciona al menos una categoría y una fase."}
         </div>
       ) : null}
 

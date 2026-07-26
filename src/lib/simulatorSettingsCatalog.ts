@@ -2,10 +2,17 @@ import type { Question } from "@/lib/database.types";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
 
 export type SimulatorDifficultyKey = "facil" | "media" | "dificil";
+export type SimulatorPhaseKey =
+  | "fase-1"
+  | "fase-2"
+  | "fase-3"
+  | "fase-4"
+  | "fase-5";
 
 export type SimulatorSettings = {
   enabledDifficulties: SimulatorDifficultyKey[];
   enabledCategories: string[];
+  enabledPhases: SimulatorPhaseKey[];
   updatedAt: string | null;
 };
 
@@ -18,6 +25,7 @@ type SimulatorSettingOption<T extends string = string> = {
 type SimulatorSettingsCatalog = {
   difficulties: SimulatorSettingOption<SimulatorDifficultyKey>[];
   categories: SimulatorSettingOption[];
+  phases: SimulatorSettingOption<SimulatorPhaseKey>[];
   supportsDifficulty: boolean;
 };
 
@@ -37,6 +45,35 @@ export const simulatorDifficultyOptions: SimulatorSettingOption<SimulatorDifficu
       key: "dificil",
       label: "Difíciles",
       description: "Preguntas de dificultad alta.",
+    },
+  ];
+
+export const simulatorPhaseOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
+  [
+    {
+      key: "fase-1",
+      label: "Fase 1",
+      description: "Banco actual de preguntas.",
+    },
+    {
+      key: "fase-2",
+      label: "Fase 2",
+      description: "Preparada para el próximo banco.",
+    },
+    {
+      key: "fase-3",
+      label: "Fase 3",
+      description: "Preparada para el próximo banco.",
+    },
+    {
+      key: "fase-4",
+      label: "Fase 4",
+      description: "Preparada para el próximo banco.",
+    },
+    {
+      key: "fase-5",
+      label: "Fase 5",
+      description: "Preparada para el próximo banco.",
     },
   ];
 
@@ -108,11 +145,13 @@ const settingsCatalogByCareer: Record<
   enfermeria: {
     difficulties: simulatorDifficultyOptions,
     categories: nursingCategoryOptions,
+    phases: simulatorPhaseOptions,
     supportsDifficulty: false,
   },
   psicologia: {
     difficulties: simulatorDifficultyOptions,
     categories: psychologyCategoryOptions,
+    phases: simulatorPhaseOptions,
     supportsDifficulty: true,
   },
 };
@@ -248,6 +287,16 @@ function getDifficultyKey(value: string | null) {
   return null;
 }
 
+function getPhaseKey(value: string | null | undefined): SimulatorPhaseKey {
+  const phase = normalize(value ?? "");
+  const matchingPhase = simulatorPhaseOptions.find(
+    (option) =>
+      normalize(option.key) === phase || normalize(option.label) === phase,
+  );
+
+  return matchingPhase?.key ?? "fase-1";
+}
+
 export function getSimulatorSettingsCatalog(career: StudentCareerSlug) {
   return settingsCatalogByCareer[career];
 }
@@ -260,6 +309,7 @@ export function getDefaultSimulatorSettings(
   return {
     enabledDifficulties: catalog.difficulties.map((option) => option.key),
     enabledCategories: catalog.categories.map((option) => option.key),
+    enabledPhases: ["fase-1"],
     updatedAt: null,
   };
 }
@@ -270,6 +320,7 @@ export function sanitizeSimulatorSettings(
     | {
         enabledDifficulties?: unknown;
         enabledCategories?: unknown;
+        enabledPhases?: unknown;
         updatedAt?: unknown;
       }
     | null
@@ -282,6 +333,9 @@ export function sanitizeSimulatorSettings(
   );
   const allowedCategoryKeys = new Set(
     catalog.categories.map((option) => option.key),
+  );
+  const allowedPhaseKeys = new Set(
+    catalog.phases.map((option) => option.key),
   );
   const enabledDifficulties = Array.isArray(value?.enabledDifficulties)
     ? value.enabledDifficulties.filter(
@@ -296,6 +350,13 @@ export function sanitizeSimulatorSettings(
           typeof item === "string" && allowedCategoryKeys.has(item),
       )
     : [];
+  const enabledPhases = Array.isArray(value?.enabledPhases)
+    ? value.enabledPhases.filter(
+        (item): item is SimulatorPhaseKey =>
+          typeof item === "string" &&
+          allowedPhaseKeys.has(item as SimulatorPhaseKey),
+      )
+    : [];
 
   return {
     enabledDifficulties:
@@ -306,6 +367,8 @@ export function sanitizeSimulatorSettings(
       enabledCategories.length > 0
         ? enabledCategories
         : defaults.enabledCategories,
+    enabledPhases:
+      enabledPhases.length > 0 ? enabledPhases : defaults.enabledPhases,
     updatedAt:
       typeof value?.updatedAt === "string" ? value.updatedAt : defaults.updatedAt,
   } satisfies SimulatorSettings;
@@ -319,12 +382,17 @@ export function filterQuestionsForSimulatorSettings(
   const catalog = getSimulatorSettingsCatalog(career);
   const selectedCategories = new Set(settings.enabledCategories);
   const selectedDifficulties = new Set(settings.enabledDifficulties);
+  const selectedPhases = new Set(settings.enabledPhases);
   const allCategoriesSelected =
     selectedCategories.size === catalog.categories.length;
   const allDifficultiesSelected =
     selectedDifficulties.size === catalog.difficulties.length;
 
   return questions.filter((question) => {
+    if (!selectedPhases.has(getPhaseKey(question.phase))) {
+      return false;
+    }
+
     const categoryKey =
       career === "enfermeria"
         ? getNursingCategoryKey(question)
