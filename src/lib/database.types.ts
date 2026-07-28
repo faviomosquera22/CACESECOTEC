@@ -308,6 +308,14 @@ export type Profile = Tables<"profiles">;
 export type StudentSimulatorAccess = Tables<"student_simulator_access">;
 export type Question = Tables<"questions"> & {
   /**
+   * Recurso visual opcional recuperado del banco fuente. Estos campos no
+   * forman parte de la tabla `questions`; se añaden al preparar el intento.
+   */
+  image_url?: string | null;
+  image_alt?: string | null;
+  image_width?: number | null;
+  image_height?: number | null;
+  /**
    * Identificador estable del bloque de preguntas. Los bancos anteriores a
    * esta clasificación se consideran automáticamente `fase-1`.
    */

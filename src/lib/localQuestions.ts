@@ -60,12 +60,141 @@ const brokenOptionTexts = new Set([
 ]);
 
 const brokenQuestionTexts = new Set([
+  "pacientes de una tercera institución. ¿qué tipo de estudio se está utilizando para este caso?",
+  "un electrocardiograma que reporta bloqueos cardíacos. ¿cuál es la alteración electrolítica que presenta el paciente?",
+  "un electrocardiograma que reporta intervalo qt y segmento st prolongados. ¿cuál es la alteración electrolítica que presenta el paciente?",
+  "una persona con discapacidad. excepto:",
+  "¿a qué característica del proceso hace referencia el enunciado?",
+  "¿cuál es la alteración que presenta el paciente?",
+  "¿cuál es la escala que mide esas acciones?",
+  "¿cuál es la etiqueta diagnóstica de enfermería a la que hace referencia el enunciado?",
+  "¿cuál es la intervención de enfermería principal en este caso?",
+  "¿cuál es la patología que presenta el rn?",
+  "¿cuál es la teorizante que utilizaría en este caso?",
+  "¿cuál es el diagnóstico de enfermería prioritario en este caso?",
+  "¿cuál es el ruido que presenta el paciente?",
+  "¿cuáles son las alteraciones que presenta el paciente?",
+  "¿en qué etapa de la vida se encuentra el niño?",
+  "¿qué alteración electrolítica presenta la paciente?",
+  "¿qué diagnóstico considera para la planificación de cuidados de enfermería en la paciente?",
+  "¿qué trastorno hipertensivo presenta la paciente?",
+  "¿qué valor esencial se pone de manifiesto en esta situación?",
+  "¿qué valores determinan esta alteración?",
   "lograr el conocimiento sobre el procedimiento y desarrollar su memoria",
   "orientar hacia la calidad de la atención y seguridad del paciente",
 ]);
 
+const questionTextRepairs = new Map<string, string>([
+  [
+    "¿Qué tipo de familia representa la gráfica?",
+    "En un familiograma se observa un hogar integrado por una pareja, sus hijos y otros parientes consanguíneos de generaciones anteriores. ¿Qué tipo de familia representa esta composición?",
+  ],
+  [
+    "La representación gráfica del familiograma, pertenece a la familia N N. Identifique el tipo de familia, el ciclo vital del desarrollo familiar, y la relación de los hijos con su padre.",
+    "Una pareja forma un nuevo hogar después de relaciones previas. Sus hijos de 20 y 17 años se encuentran próximos a abandonar el hogar y mantienen una relación conflictiva con su padre. Identifique el tipo de familia, el ciclo vital del desarrollo familiar y la relación de los hijos con su padre.",
+  ],
+  [
+    "Observe la curva de peso para la edad e identifique el estado nutricional:",
+    "En el control de crecimiento, el indicador de peso para la edad de un niño se ubica dentro del rango esperado para su edad. Identifique el estado nutricional:",
+  ],
+  [
+    "Paciente que ingresa en el Servicio de Urgencias en contra de su voluntad, presenta los siguientes síntomas: Náuseas, vómitos, disnea, hipertensión arterial y edemas. Además, se encuentra obnubilado, con diagnóstico de síndrome de Alport hace cinco años, presenta un claro déficit de autocuidado de naturaleza alta. Se adopta un sistema compensatorio total. El objetivo prioritario es salvar la vida del paciente y estabilizar las funciones vitales. Presenta dificultad para tomar decisiones y llevar a cabo acciones de auto cuidado. No hace uso de los recursos sanitarios adecuadamente, déficit a nivel de juzgar/actuar, no se posiciona en necesidad de ayuda, negación de su estado actual, patrón de eliminación inadecuado, déficit de conocimiento sobre la ingesta apropiada y gran desvío de su estado de salud: no diferencia salud ideal/salud real. ¿Cuál de las teorizantes se pone de manifiesto en el caso anterior?",
+    "Paciente que ingresa en el Servicio de Urgencias en contra de su voluntad, presenta los siguientes síntomas: Náuseas, vómitos, disnea, hipertensión arterial y edemas. Además, se encuentra obnubilado, con diagnóstico de síndrome de Alport hace cinco años, presenta un claro déficit de autocuidado de naturaleza alta. Se adopta un sistema compensatorio total. El objetivo prioritario es salvar la vida del paciente y estabilizar las funciones vitales. Presenta dificultad para tomar decisiones y llevar a cabo acciones de auto cuidado. No hace uso de los recursos sanitarios adecuadamente, déficit a nivel de juzgar/actuar, no se posiciona en necesidad de ayuda, negación de su estado actual, patrón de eliminación inadecuado, déficit de conocimiento sobre la ingesta apropiada y gran desvío de su estado de salud: no diferencia salud ideal/salud real. ¿Cuál de las teorizantes se pone de manifiesto en el caso descrito?",
+  ],
+  [
+    "En el caso anterior, el manejo conservador descrito por los autores del texto incluye:",
+    "Puérpera de 28 años, en el día 20 posparto, presenta loquios prolongados, sangrado irregular y un útero más grande y blando de lo esperado, sin fiebre, compatible con subinvolución uterina. El manejo conservador descrito por los autores incluye:",
+  ],
+  [
+    "En el caso anterior, el tratamiento empírico inicial habitual y su duración recomendada son:",
+    "Mujer en el día 10 posparto que amamanta presenta escalofríos, fiebre, taquicardia y una mama endurecida, enrojecida y dolorosa, compatible con mastitis puerperal. El tratamiento empírico inicial habitual y su duración recomendada son:",
+  ],
+  [
+    "¿Cuál recomendación, corresponde a esta actividad?",
+    "En un centro de salud, el profesional de enfermería encargado del programa de tuberculosis implementa medidas de control ambiental. ¿Cuál recomendación corresponde a esta actividad?",
+  ],
+  [
+    "¿A qué tipo de incontinencia se refiere?",
+    "Un adulto con hipertrofia prostática presenta goteo continuo de orina, sensación de vejiga llena y vaciamiento incompleto. ¿A qué tipo de incontinencia se refiere?",
+  ],
+  [
+    "¿Qué condiciones clínicas corresponde a este estadio?",
+    "Una paciente con VIH se encuentra en el estadio clínico II. ¿Qué condición clínica corresponde a este estadio?",
+  ],
+]);
+
+type QuestionMedia = Pick<
+  Question,
+  "image_url" | "image_alt" | "image_width" | "image_height"
+>;
+
+const extendedFamilyMedia: QuestionMedia = {
+  image_url: "/images/questions/familiograma-familia-extensa.png",
+  image_alt:
+    "Familiograma con una pareja, dos hijos y vínculos con familiares consanguíneos de generaciones anteriores.",
+  image_width: 637,
+  image_height: 455,
+};
+const reconstitutedFamilyMedia: QuestionMedia = {
+  image_url: "/images/questions/familiograma-familia-reconstituida.png",
+  image_alt:
+    "Familiograma de una pareja formada después de relaciones previas, con hijos próximos a abandonar el hogar y vínculos conflictivos con el padre.",
+  image_width: 948,
+  image_height: 485,
+};
+const normalWeightCurveMedia: QuestionMedia = {
+  image_url: "/images/questions/curva-peso-edad-normal.jpeg",
+  image_alt:
+    "Curva de peso para la edad cuyas mediciones se mantienen dentro del rango esperado, entre las líneas de puntuación Z menos uno y cero.",
+  image_width: 384,
+  image_height: 249,
+};
+
+const questionMediaByText = new Map<string, QuestionMedia>([
+  ["¿Qué tipo de familia representa la gráfica?", extendedFamilyMedia],
+  [
+    "En un familiograma se observa un hogar integrado por una pareja, sus hijos y otros parientes consanguíneos de generaciones anteriores. ¿Qué tipo de familia representa esta composición?",
+    extendedFamilyMedia,
+  ],
+  [
+    "La representación gráfica del familiograma, pertenece a la familia N N. Identifique el tipo de familia, el ciclo vital del desarrollo familiar, y la relación de los hijos con su padre.",
+    reconstitutedFamilyMedia,
+  ],
+  [
+    "Una pareja forma un nuevo hogar después de relaciones previas. Sus hijos de 20 y 17 años se encuentran próximos a abandonar el hogar y mantienen una relación conflictiva con su padre. Identifique el tipo de familia, el ciclo vital del desarrollo familiar y la relación de los hijos con su padre.",
+    reconstitutedFamilyMedia,
+  ],
+  [
+    "Observe la curva de peso para la edad e identifique el estado nutricional:",
+    normalWeightCurveMedia,
+  ],
+  [
+    "En el control de crecimiento, el indicador de peso para la edad de un niño se ubica dentro del rango esperado para su edad. Identifique el estado nutricional:",
+    normalWeightCurveMedia,
+  ],
+]);
+
+const missingRequiredVisualPattern =
+  /(?:\b(?:seg[uú]n|de acuerdo (?:con|al)|con base en|observe|observa|analice|interprete|revise)\s+(?:el|la|los|las)?\s*(?:gr[aá]fic[oa]|figura|imagen|tabla|cuadro|diagrama|familiograma)\b|\bobserve\s+(?:el|la)\s+curva\b|\brepresenta (?:el|la) gr[aá]fic[oa]\b|\brepresentaci[oó]n gr[aá]fica del familiograma\b)/i;
+const missingPriorContextPattern =
+  /\b(?:en|del|seg[uú]n) (?:el )?caso anterior\b|\b(?:pregunta|informaci[oó]n|situaci[oó]n|enunciado) anterior\b/i;
+
 function normalizeOptionText(value: string) {
   return value.trim().replace(/\.$/, "").toLowerCase();
+}
+
+function repairQuestionText(question: Question) {
+  const sourceText = question.question_text.trim();
+  const repairedText = questionTextRepairs.get(sourceText);
+  const media = questionMediaByText.get(sourceText);
+
+  return repairedText || media
+    ? {
+        ...question,
+        ...media,
+        question_text: repairedText ?? question.question_text,
+      }
+    : question;
 }
 
 const psychologyExamQuestionCount = 100;
@@ -90,6 +219,13 @@ export function isUsableQuestion(question: Question) {
   }
 
   if (brokenQuestionTexts.has(questionText.toLowerCase())) {
+    return false;
+  }
+
+  if (
+    (missingRequiredVisualPattern.test(questionText) && !question.image_url) ||
+    missingPriorContextPattern.test(questionText)
+  ) {
     return false;
   }
 
@@ -216,7 +352,9 @@ function selectDistributedExamQuestions(
   distribution: ExamDistribution,
   random: () => number,
 ) {
-  const usableQuestions = questions.filter(isUsableQuestion);
+  const usableQuestions = questions
+    .map(repairQuestionText)
+    .filter(isUsableQuestion);
   const selected: Question[] = [];
   const targetCount = distribution.reduce((total, item) => total + item.count, 0);
 

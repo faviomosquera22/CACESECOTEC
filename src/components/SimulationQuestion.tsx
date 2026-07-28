@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { OptionLetter, Question } from "@/lib/database.types";
 
 type SimulationQuestionProps = {
@@ -40,6 +41,19 @@ export function SimulationQuestion({
       <h2 className="mt-5 text-xl font-semibold leading-8 text-slate-950">
         {question.question_text}
       </h2>
+
+      {question.image_url ? (
+        <figure className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-50 p-3">
+          <Image
+            src={question.image_url}
+            alt={question.image_alt ?? "Recurso gráfico de la pregunta"}
+            width={question.image_width ?? 960}
+            height={question.image_height ?? 640}
+            sizes="(max-width: 768px) 100vw, 800px"
+            className="mx-auto h-auto max-h-[34rem] w-full object-contain"
+          />
+        </figure>
+      ) : null}
 
       <div className="mt-6 grid gap-3">
         {optionKeys.map((option) => {

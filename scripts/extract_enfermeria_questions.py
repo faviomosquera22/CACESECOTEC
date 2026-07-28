@@ -81,6 +81,29 @@ EXPLANATION = (
     "para el simulador manteniendo la respuesta correcta marcada."
 )
 
+INCOMPLETE_QUESTION_TEXTS = {
+    "pacientes de una tercera institución. ¿qué tipo de estudio se está utilizando para este caso?",
+    "un electrocardiograma que reporta bloqueos cardíacos. ¿cuál es la alteración electrolítica que presenta el paciente?",
+    "un electrocardiograma que reporta intervalo qt y segmento st prolongados. ¿cuál es la alteración electrolítica que presenta el paciente?",
+    "una persona con discapacidad. excepto:",
+    "¿a qué característica del proceso hace referencia el enunciado?",
+    "¿cuál es la alteración que presenta el paciente?",
+    "¿cuál es la escala que mide esas acciones?",
+    "¿cuál es la etiqueta diagnóstica de enfermería a la que hace referencia el enunciado?",
+    "¿cuál es la intervención de enfermería principal en este caso?",
+    "¿cuál es la patología que presenta el rn?",
+    "¿cuál es la teorizante que utilizaría en este caso?",
+    "¿cuál es el diagnóstico de enfermería prioritario en este caso?",
+    "¿cuál es el ruido que presenta el paciente?",
+    "¿cuáles son las alteraciones que presenta el paciente?",
+    "¿en qué etapa de la vida se encuentra el niño?",
+    "¿qué alteración electrolítica presenta la paciente?",
+    "¿qué diagnóstico considera para la planificación de cuidados de enfermería en la paciente?",
+    "¿qué trastorno hipertensivo presenta la paciente?",
+    "¿qué valor esencial se pone de manifiesto en esta situación?",
+    "¿qué valores determinan esta alteración?",
+}
+
 
 def clean_line(line: str) -> str:
     line = line.replace("\u00a0", " ")
@@ -202,6 +225,16 @@ def is_question_usable(question_text: str, options: list[str]) -> bool:
     ]
 
     if any(re.search(pattern, lower) for pattern in blocked_patterns):
+        return False
+
+    if lower in INCOMPLETE_QUESTION_TEXTS:
+        return False
+
+    if re.search(
+        r"\b(?:en|del|según) (?:el )?caso anterior\b|"
+        r"\b(?:pregunta|información|situación|enunciado) anterior\b",
+        lower,
+    ):
         return False
 
     if not has_distinct_options(options):

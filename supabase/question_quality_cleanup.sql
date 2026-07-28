@@ -98,4 +98,74 @@ where question_text in (
   'Orientar hacia la calidad de la atención y seguridad del paciente'
 );
 
+-- Preguntas cuyo enunciado perdió un gráfico o el contexto clínico durante
+-- la extracción. Se reconstruyen únicamente cuando la fuente permite
+-- conservar sin ambigüedad la respuesta original.
+update public.questions
+set question_text = 'En un familiograma se observa un hogar integrado por una pareja, sus hijos y otros parientes consanguíneos de generaciones anteriores. ¿Qué tipo de familia representa esta composición?'
+where question_text = '¿Qué tipo de familia representa la gráfica?';
+
+update public.questions
+set question_text = 'Una pareja forma un nuevo hogar después de relaciones previas. Sus hijos de 20 y 17 años se encuentran próximos a abandonar el hogar y mantienen una relación conflictiva con su padre. Identifique el tipo de familia, el ciclo vital del desarrollo familiar y la relación de los hijos con su padre.'
+where question_text = 'La representación gráfica del familiograma, pertenece a la familia N N. Identifique el tipo de familia, el ciclo vital del desarrollo familiar, y la relación de los hijos con su padre.';
+
+update public.questions
+set question_text = 'En el control de crecimiento, el indicador de peso para la edad de un niño se ubica dentro del rango esperado para su edad. Identifique el estado nutricional:'
+where question_text = 'Observe la curva de peso para la edad e identifique el estado nutricional:';
+
+update public.questions
+set question_text = replace(
+  question_text,
+  '¿Cuál de las teorizantes se pone de manifiesto en el caso anterior?',
+  '¿Cuál de las teorizantes se pone de manifiesto en el caso descrito?'
+)
+where question_text like 'Paciente que ingresa en el Servicio de Urgencias en contra de su voluntad,%'
+  and question_text like '%¿Cuál de las teorizantes se pone de manifiesto en el caso anterior?';
+
+update public.questions
+set question_text = 'Puérpera de 28 años, en el día 20 posparto, presenta loquios prolongados, sangrado irregular y un útero más grande y blando de lo esperado, sin fiebre, compatible con subinvolución uterina. El manejo conservador descrito por los autores incluye:'
+where question_text = 'En el caso anterior, el manejo conservador descrito por los autores del texto incluye:';
+
+update public.questions
+set question_text = 'Mujer en el día 10 posparto que amamanta presenta escalofríos, fiebre, taquicardia y una mama endurecida, enrojecida y dolorosa, compatible con mastitis puerperal. El tratamiento empírico inicial habitual y su duración recomendada son:'
+where question_text = 'En el caso anterior, el tratamiento empírico inicial habitual y su duración recomendada son:';
+
+update public.questions
+set question_text = 'En un centro de salud, el profesional de enfermería encargado del programa de tuberculosis implementa medidas de control ambiental. ¿Cuál recomendación corresponde a esta actividad?'
+where question_text = '¿Cuál recomendación, corresponde a esta actividad?';
+
+update public.questions
+set question_text = 'Un adulto con hipertrofia prostática presenta goteo continuo de orina, sensación de vejiga llena y vaciamiento incompleto. ¿A qué tipo de incontinencia se refiere?'
+where question_text = '¿A qué tipo de incontinencia se refiere?';
+
+update public.questions
+set question_text = 'Una paciente con VIH se encuentra en el estadio clínico II. ¿Qué condición clínica corresponde a este estadio?'
+where question_text = '¿Qué condiciones clínicas corresponde a este estadio?';
+
+-- Si no existe información suficiente para reconstruir el caso, se elimina la
+-- pregunta en vez de inferir datos clínicos que no aparecen en la fuente.
+delete from public.questions
+where lower(trim(question_text)) in (
+  'pacientes de una tercera institución. ¿qué tipo de estudio se está utilizando para este caso?',
+  'un electrocardiograma que reporta bloqueos cardíacos. ¿cuál es la alteración electrolítica que presenta el paciente?',
+  'un electrocardiograma que reporta intervalo qt y segmento st prolongados. ¿cuál es la alteración electrolítica que presenta el paciente?',
+  'una persona con discapacidad. excepto:',
+  '¿a qué característica del proceso hace referencia el enunciado?',
+  '¿cuál es la alteración que presenta el paciente?',
+  '¿cuál es la escala que mide esas acciones?',
+  '¿cuál es la etiqueta diagnóstica de enfermería a la que hace referencia el enunciado?',
+  '¿cuál es la intervención de enfermería principal en este caso?',
+  '¿cuál es la patología que presenta el rn?',
+  '¿cuál es la teorizante que utilizaría en este caso?',
+  '¿cuál es el diagnóstico de enfermería prioritario en este caso?',
+  '¿cuál es el ruido que presenta el paciente?',
+  '¿cuáles son las alteraciones que presenta el paciente?',
+  '¿en qué etapa de la vida se encuentra el niño?',
+  '¿qué alteración electrolítica presenta la paciente?',
+  '¿qué diagnóstico considera para la planificación de cuidados de enfermería en la paciente?',
+  '¿qué trastorno hipertensivo presenta la paciente?',
+  '¿qué valor esencial se pone de manifiesto en esta situación?',
+  '¿qué valores determinan esta alteración?'
+);
+
 commit;

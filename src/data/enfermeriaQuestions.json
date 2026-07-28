@@ -7580,7 +7580,7 @@
   },
   {
     "id": "local-enfermeria-0584-5490d4b11dda",
-    "question_text": "Paciente que ingresa en el Servicio de Urgencias en contra de su voluntad, presenta los siguientes síntomas: Náuseas, vómitos, disnea, hipertensión arterial y edemas. Además, se encuentra obnubilado, con diagnóstico de síndrome de Alport hace cinco años, presenta un claro déficit de autocuidado de naturaleza alta. Se adopta un sistema compensatorio total. El objetivo prioritario es salvar la vida del paciente y estabilizar las funciones vitales. Presenta dificultad para tomar decisiones y llevar a cabo acciones de auto cuidado. No hace uso de los recursos sanitarios adecuadamente, déficit a nivel de juzgar/actuar, no se posiciona en necesidad de ayuda, negación de su estado actual, patrón de eliminación inadecuado, déficit de conocimiento sobre la ingesta apropiada y gran desvío de su estado de salud: no diferencia salud ideal/salud real. ¿Cuál de las teorizantes se pone de manifiesto en el caso anterior?",
+    "question_text": "Paciente que ingresa en el Servicio de Urgencias en contra de su voluntad, presenta los siguientes síntomas: Náuseas, vómitos, disnea, hipertensión arterial y edemas. Además, se encuentra obnubilado, con diagnóstico de síndrome de Alport hace cinco años, presenta un claro déficit de autocuidado de naturaleza alta. Se adopta un sistema compensatorio total. El objetivo prioritario es salvar la vida del paciente y estabilizar las funciones vitales. Presenta dificultad para tomar decisiones y llevar a cabo acciones de auto cuidado. No hace uso de los recursos sanitarios adecuadamente, déficit a nivel de juzgar/actuar, no se posiciona en necesidad de ayuda, negación de su estado actual, patrón de eliminación inadecuado, déficit de conocimiento sobre la ingesta apropiada y gran desvío de su estado de salud: no diferencia salud ideal/salud real. ¿Cuál de las teorizantes se pone de manifiesto en el caso descrito?",
     "option_a": "Imogene M. King.",
     "option_b": "Dorothea Orem.",
     "option_c": "Virginia Henderson.",
@@ -19280,7 +19280,11 @@
   },
   {
     "id": "local-enfermeria-1484-ebf205c0c4a7",
-    "question_text": "¿Qué tipo de familia representa la gráfica?",
+    "question_text": "En un familiograma se observa un hogar integrado por una pareja, sus hijos y otros parientes consanguíneos de generaciones anteriores. ¿Qué tipo de familia representa esta composición?",
+    "image_url": "/images/questions/familiograma-familia-extensa.png",
+    "image_alt": "Familiograma con una pareja, dos hijos y vínculos con familiares consanguíneos de generaciones anteriores.",
+    "image_width": 637,
+    "image_height": 455,
     "option_a": "Familia extensa.",
     "option_b": "Familia nuclear.",
     "option_c": "Familia ampliada.",
@@ -19293,7 +19297,11 @@
   },
   {
     "id": "local-enfermeria-1485-f070834d30d3",
-    "question_text": "La representación gráfica del familiograma, pertenece a la familia N N. Identifique el tipo de familia, el ciclo vital del desarrollo familiar, y la relación de los hijos con su padre.",
+    "question_text": "Una pareja forma un nuevo hogar después de relaciones previas. Sus hijos de 20 y 17 años se encuentran próximos a abandonar el hogar y mantienen una relación conflictiva con su padre. Identifique el tipo de familia, el ciclo vital del desarrollo familiar y la relación de los hijos con su padre.",
+    "image_url": "/images/questions/familiograma-familia-reconstituida.png",
+    "image_alt": "Familiograma de una pareja formada después de relaciones previas, con hijos próximos a abandonar el hogar y vínculos conflictivos con el padre.",
+    "image_width": 948,
+    "image_height": 485,
     "option_a": "Familia nuclear, ciclo vital con niños adolescentes y relación de los hijos distante.",
     "option_b": "Familia reconstituida, ciclo vital de plataforma de colocación y relación conflictiva.",
     "option_c": "Familia ampliada, ciclo vital con niños escolares y relación de los hijos unidos.",
@@ -24142,7 +24150,7 @@
   },
   {
     "id": "local-enfermeria-1859-940995e364e2",
-    "question_text": "¿Qué condiciones clínicas corresponde a este estadio?",
+    "question_text": "Una paciente con VIH se encuentra en el estadio clínico II. ¿Qué condición clínica corresponde a este estadio?",
     "option_a": "Fiebre persistente.",
     "option_b": "Anemia.",
     "option_c": "Asintomático.",
@@ -24545,7 +24553,7 @@
   },
   {
     "id": "local-enfermeria-1891-bc103406f0b0",
-    "question_text": "¿Cuál recomendación, corresponde a esta actividad?",
+    "question_text": "En un centro de salud, el profesional de enfermería encargado del programa de tuberculosis implementa medidas de control ambiental. ¿Cuál recomendación corresponde a esta actividad?",
     "option_a": "Como medida general reforzar la importancia del lavado de manos.",
     "option_b": "Los afectados con TB pulmonar o laríngea permanezcan en aislamiento respiratorio, mientras presenten una baciloscopia positiva.",
     "option_c": "Instalación de sistema de ventilación con presión negativa en laboratorios y salas.",
@@ -24571,7 +24579,11 @@
   },
   {
     "id": "local-enfermeria-1893-a6fbce063a50",
-    "question_text": "Observe la curva de peso para la edad e identifique el estado nutricional:",
+    "question_text": "En el control de crecimiento, el indicador de peso para la edad de un niño se ubica dentro del rango esperado para su edad. Identifique el estado nutricional:",
+    "image_url": "/images/questions/curva-peso-edad-normal.jpeg",
+    "image_alt": "Curva de peso para la edad cuyas mediciones se mantienen dentro del rango esperado, entre las líneas de puntuación Z menos uno y cero.",
+    "image_width": 384,
+    "image_height": 249,
     "option_a": "Peso bajo.",
     "option_b": "Peso alto.",
     "option_c": "Normal.",
@@ -24597,7 +24609,7 @@
   },
   {
     "id": "local-enfermeria-1895-39a940dae436",
-    "question_text": "¿A qué tipo de incontinencia se refiere?",
+    "question_text": "Un adulto con hipertrofia prostática presenta goteo continuo de orina, sensación de vejiga llena y vaciamiento incompleto. ¿A qué tipo de incontinencia se refiere?",
     "option_a": "Funcional.",
     "option_b": "Esfuerzo.",
     "option_c": "Por rebosamiento.",
@@ -31812,7 +31824,7 @@
   },
   {
     "id": "local-enfermeria-ehep-93fcf5a39771",
-    "question_text": "En el caso anterior, el manejo conservador descrito por los autores del texto incluye:",
+    "question_text": "Puérpera de 28 años, en el día 20 posparto, presenta loquios prolongados, sangrado irregular y un útero más grande y blando de lo esperado, sin fiebre, compatible con subinvolución uterina. El manejo conservador descrito por los autores incluye:",
     "option_a": "Metilergonovina 0.2 mg VO cada 3 a 4 horas por 24 a 48 horas",
     "option_b": "Legrado uterino inmediato",
     "option_c": "Ácido tranexámico intravenoso durante 5 días",
@@ -32488,7 +32500,7 @@
   },
   {
     "id": "local-enfermeria-ehep-255297d77054",
-    "question_text": "En el caso anterior, el tratamiento empírico inicial habitual y su duración recomendada son:",
+    "question_text": "Mujer en el día 10 posparto que amamanta presenta escalofríos, fiebre, taquicardia y una mama endurecida, enrojecida y dolorosa, compatible con mastitis puerperal. El tratamiento empírico inicial habitual y su duración recomendada son:",
     "option_a": "Amoxicilina 500 mg VO cada 8 h por 3 días",
     "option_b": "Dicloxacilina 500 mg VO cada 6 h durante 10 días",
     "option_c": "Ceftriaxona 1 g IM dosis única",
