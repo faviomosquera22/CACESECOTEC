@@ -58,7 +58,7 @@ export const simulatorPhaseOptions: SimulatorSettingOption<SimulatorPhaseKey>[] 
     {
       key: "fase-2",
       label: "Componente 2",
-      description: "Preparada para el próximo banco.",
+      description: "Evaluación psicológica y psicodiagnóstico.",
     },
     {
       key: "fase-3",
@@ -136,6 +136,24 @@ const psychologyCategoryOptions: SimulatorSettingOption[] = [
     label: "Psicoterapia individual y formulación",
     description: "Formulación clínica, técnicas y casos individuales.",
   },
+  {
+    key: "pruebas-evaluacion-clinica",
+    label: "2.1 Pruebas psicológicas",
+    description:
+      "Pruebas psicológicas, psicometría e interpretación en la evaluación clínica.",
+  },
+  {
+    key: "psicodiagnostico-etapas",
+    label: "2.2 Psicodiagnóstico: etapas",
+    description:
+      "Entrevista, proceso evaluativo, devolución y consideraciones éticas.",
+  },
+  {
+    key: "formulacion-casos",
+    label: "2.3 Formulación de casos",
+    description:
+      "Hipótesis, integración diagnóstica y análisis funcional del caso.",
+  },
 ];
 
 const settingsCatalogByCareer: Record<
@@ -199,6 +217,20 @@ function getNursingCategoryKey(question: Question) {
 }
 
 function getPsychologyCategoryKey(question: Question) {
+  const subcomponent = normalize(question.subcomponent ?? "");
+
+  if (subcomponent.startsWith("2.1")) {
+    return "pruebas-evaluacion-clinica";
+  }
+
+  if (subcomponent.startsWith("2.2")) {
+    return "psicodiagnostico-etapas";
+  }
+
+  if (subcomponent.startsWith("2.3")) {
+    return "formulacion-casos";
+  }
+
   const source = normalize(
     `${question.category ?? ""} ${question.question_text ?? ""}`,
   );

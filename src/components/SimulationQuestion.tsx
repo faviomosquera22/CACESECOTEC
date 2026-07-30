@@ -26,7 +26,17 @@ export function SimulationQuestion({
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap gap-2">
-        {question.category ? (
+        {question.component ? (
+          <span className="rounded-lg bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-800">
+            Componente: {question.component}
+          </span>
+        ) : null}
+        {question.subcomponent ? (
+          <span className="rounded-lg bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
+            Subcomponente: {question.subcomponent}
+          </span>
+        ) : null}
+        {!question.component && !question.subcomponent && question.category ? (
           <span className="rounded-lg bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-800">
             {question.category}
           </span>

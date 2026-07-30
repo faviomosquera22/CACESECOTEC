@@ -320,6 +320,10 @@ export type Question = Tables<"questions"> & {
    * esta clasificación se consideran automáticamente `fase-1`.
    */
   phase?: string | null;
+  /** Nombre académico visible del componente al que pertenece el reactivo. */
+  component?: string | null;
+  /** Nombre académico visible del subcomponente al que pertenece el reactivo. */
+  subcomponent?: string | null;
   /**
    * Argumentos específicos de los distractores del banco local. No forman parte
    * de la tabla `questions`; viajan en el snapshot de cada intento.
