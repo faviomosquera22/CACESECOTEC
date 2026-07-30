@@ -31,11 +31,6 @@ export function SimulationQuestion({
             {question.category}
           </span>
         ) : null}
-        {question.difficulty ? (
-          <span className="rounded-lg bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
-            {question.difficulty}
-          </span>
-        ) : null}
       </div>
 
       <h2 className="mt-5 text-xl font-semibold leading-8 text-slate-950">

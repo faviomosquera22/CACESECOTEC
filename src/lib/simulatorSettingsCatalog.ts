@@ -52,27 +52,27 @@ export const simulatorPhaseOptions: SimulatorSettingOption<SimulatorPhaseKey>[] 
   [
     {
       key: "fase-1",
-      label: "Fase 1",
+      label: "Componente 1",
       description: "Banco actual de preguntas.",
     },
     {
       key: "fase-2",
-      label: "Fase 2",
+      label: "Componente 2",
       description: "Preparada para el próximo banco.",
     },
     {
       key: "fase-3",
-      label: "Fase 3",
+      label: "Componente 3",
       description: "Preparada para el próximo banco.",
     },
     {
       key: "fase-4",
-      label: "Fase 4",
+      label: "Componente 4",
       description: "Preparada para el próximo banco.",
     },
     {
       key: "fase-5",
-      label: "Fase 5",
+      label: "Componente 5",
       description: "Preparada para el próximo banco.",
     },
   ];

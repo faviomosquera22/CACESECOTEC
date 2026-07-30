@@ -88,7 +88,7 @@ export async function PATCH(request: Request) {
     )
   ) {
     return Response.json(
-      { error: "La selección de fases no es válida." },
+      { error: "La selección de componentes no es válida." },
       { status: 400 },
     );
   }
@@ -108,8 +108,8 @@ export async function PATCH(request: Request) {
       {
         error:
           catalog.supportsDifficulty
-            ? "Selecciona al menos una dificultad, una categoría y una fase antes de guardar."
-            : "Selecciona al menos una categoría y una fase antes de guardar.",
+            ? "Selecciona al menos una dificultad, una categoría y un componente antes de guardar."
+            : "Selecciona al menos una categoría y un componente antes de guardar.",
       },
       { status: 400 },
     );

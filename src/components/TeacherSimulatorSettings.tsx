@@ -231,7 +231,7 @@ export function TeacherSimulatorSettings({
           {catalog.supportsDifficulty
             ? ` · ${enabledDifficulties.length} de ${catalog.difficulties.length} dificultades`
             : ""}
-          {` · ${enabledPhases.length} de ${catalog.phases.length} fases`}
+          {` · ${enabledPhases.length} de ${catalog.phases.length} componentes`}
         </div>
       </div>
 
@@ -240,12 +240,12 @@ export function TeacherSimulatorSettings({
           <div className="flex items-center gap-2">
             <Flag className="h-4 w-4 text-sky-700" aria-hidden="true" />
             <h3 className="text-sm font-semibold text-slate-950">
-              Fases permitidas
+              Componentes permitidos
             </h3>
           </div>
           <p className="mt-1 text-xs leading-5 text-slate-500">
-            Todas las preguntas actuales pertenecen a la Fase 1. Los nombres
-            podrán cambiarse después sin perder esta configuración.
+            Todas las preguntas actuales pertenecen al Componente 1. Los
+            nombres podrán cambiarse después sin perder esta configuración.
           </p>
           <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
             {catalog.phases.map((phase) => (
@@ -346,8 +346,8 @@ export function TeacherSimulatorSettings({
             aria-hidden="true"
           />
           {catalog.supportsDifficulty
-            ? "Selecciona al menos una dificultad, una categoría y una fase."
-            : "Selecciona al menos una categoría y una fase."}
+            ? "Selecciona al menos una dificultad, una categoría y un componente."
+            : "Selecciona al menos una categoría y un componente."}
         </div>
       ) : null}
 

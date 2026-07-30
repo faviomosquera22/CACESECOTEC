@@ -149,11 +149,6 @@ export default async function StudentExamSimulatorPage({
       simulatorSettings.enabledCategories.includes(category.key),
     )
     .map((category) => category.label);
-  const activeDifficultyLabels = settingsCatalog.difficulties
-    .filter((difficulty) =>
-      simulatorSettings.enabledDifficulties.includes(difficulty.key),
-    )
-    .map((difficulty) => difficulty.label.toLowerCase());
   const activePhaseLabels = settingsCatalog.phases
     .filter((phase) => simulatorSettings.enabledPhases.includes(phase.key))
     .map((phase) => phase.label);
@@ -178,7 +173,7 @@ export default async function StudentExamSimulatorPage({
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
           La configuración docente actual no coincide con preguntas disponibles
           del banco de {exam.shortTitle}. Pide a tu docente que habilite otra
-          fase, dificultad o categoría.
+          componente o categoría.
         </p>
         <Link
           href="/student/dashboard"
@@ -247,10 +242,7 @@ export default async function StudentExamSimulatorPage({
               Este intento tiene {questions.length} pregunta
               {questions.length === 1 ? "" : "s"} de:{" "}
               {activeCategoryLabels.join(", ")}.
-              {` Fases activas: ${activePhaseLabels.join(", ")}.`}
-              {settingsCatalog.supportsDifficulty
-                ? ` Dificultades activas: ${activeDifficultyLabels.join(", ")}.`
-                : ""}
+              {` Componentes activos: ${activePhaseLabels.join(", ")}.`}
             </p>
           </div>
         </div>
