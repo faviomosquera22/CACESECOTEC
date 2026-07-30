@@ -396,9 +396,15 @@ def parse_teacher_questions(
 
         case_body = clean(match.group(1))
         title = titles.get(case_number, "")
-        if title and normalized(case_body).startswith(normalized(title)):
-            scenario = clean(case_body[len(title) :])
-            case_body = f"{title}. {scenario}"
+        if not title:
+            raise ValueError(f"No se pudo identificar el título del Caso {case_number}")
+        if not normalized(case_body).startswith(normalized(title)):
+            raise ValueError(
+                f"El cuerpo del Caso {case_number} no comienza con su título"
+            )
+        case_body = clean(case_body[len(title) :])
+        if not case_body:
+            raise ValueError(f"El Caso {case_number} no contiene un enunciado")
         case_and_question = f"{case_body} {clean(match.group(2))}"
         source_correct = match.group(7).upper()
         source_options = {
