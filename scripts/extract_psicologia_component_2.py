@@ -175,7 +175,7 @@ def make_question(
     options: list[tuple[str, str | None, bool]],
     explanation: str,
     subcomponent: str,
-    difficulty: str = "Media",
+    difficulty: str = "Alta",
 ) -> dict[str, Any]:
     rendered_options, correct_option, option_explanations = rotate_options(
         options,
