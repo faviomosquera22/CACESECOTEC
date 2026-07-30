@@ -20458,7 +20458,7 @@
   },
   {
     "id": "local-enfermeria-1574-7e9bc333e8b2",
-    "question_text": "¿Cuál es la intervención de enfermería principal en este caso?",
+    "question_text": "Ingresa al servicio de quemados un paciente con lesiones térmicas producida por el derrame de líquido caliente. Al examen físico se observa al paciente consciente, signos vitales en parámetros normales se identifica una quemadura de tercer grado en abdomen y miembro inferior derecho con una superficie corporal quemada del 27%. ¿Cuál es la intervención de enfermería principal en este caso?",
     "option_a": "Valorar el nivel de conciencia y control de signos de alarma.",
     "option_b": "Controlar la gasometría arterial y monitorización cardíaca.",
     "option_c": "Establecer una vía aérea y la ventilación del paciente.",
@@ -20471,7 +20471,7 @@
   },
   {
     "id": "local-enfermeria-1575-3dc7589b4f68",
-    "question_text": "¿Cuál es la velocidad de infusión en gotas?",
+    "question_text": "Se debe administrar solución salina 500 ml en 24 horas. ¿Cuál es la velocidad de infusión en gotas?",
     "option_a": "21 gotas x min.",
     "option_b": "28 gotas x min.",
     "option_c": "14 gotas x min.",
@@ -20505,19 +20505,6 @@
     "correct_option": "D",
     "explanation": "Respuesta importada del banco CACES. Las opciones fueron reorganizadas para el simulador manteniendo la respuesta correcta marcada.",
     "category": "Enfermería - Cuidado y Procedimientos Clínicos de Enfermería",
-    "difficulty": "CACES Octubre 2023",
-    "created_at": null
-  },
-  {
-    "id": "local-enfermeria-1578-a1e0bf56b360",
-    "question_text": "E- Facilitar la adecuación cultural de los servicios y prestaciones de medicina tradicional, alternativa, complementaria definidas en el MAIS-FCI",
-    "option_a": "E - D",
-    "option_b": "A - C",
-    "option_c": "B - D",
-    "option_d": "C - E",
-    "correct_option": "C",
-    "explanation": "Respuesta importada del banco CACES. Las opciones fueron reorganizadas para el simulador manteniendo la respuesta correcta marcada.",
-    "category": "Enfermería - Cuidado Familiar, Comunitario e Intercultural",
     "difficulty": "CACES Octubre 2023",
     "created_at": null
   },
@@ -20588,7 +20575,7 @@
   },
   {
     "id": "local-enfermeria-1584-57d8e585706f",
-    "question_text": "¿Cuál es el diagnóstico de enfermería prioritario en este caso?",
+    "question_text": "Paciente masculino de 38 años, llega al servicio de emergencia con sangrado profuso con herida por arma blanca en miembro inferior derecho. A la valoración presenta: confusión, TA= 85/60 mmHg, FC= 110 X’, FR= 32 X’, mucosas orales secas y oliguria. ¿Cuál es el diagnóstico de enfermería prioritario en este caso?",
     "option_a": "Patrón Respiratorio Ineficaz R/C hiperventilación M/P taquipnea.",
     "option_b": "Déficit del volumen de líquidos R/C pérdida activa de líquidos M/P oliguria.",
     "option_c": "Confusión aguda R/C deshidratación M/P alteración en el nivel de conciencia.",
@@ -20614,7 +20601,7 @@
   },
   {
     "id": "local-enfermeria-1586-4039cf11b0e7",
-    "question_text": "¿Cuál de ellas NO corresponde?",
+    "question_text": "De las siguientes acciones para identificar a un sintomático respiratorio, ¿cuál NO corresponde?",
     "option_a": "Obtener dos muestras de esputo en 24 horas, siendo una de ellas matutina.",
     "option_b": "Conservar las muestras en una caja de cartón, protegidas de la luz solar o calor excesivo.",
     "option_c": "Detectar al sintomático respiratorio en forma permanente durante todo el horario de atención.",
@@ -20679,7 +20666,7 @@
   },
   {
     "id": "local-enfermeria-1591-24ffb23c1c0a",
-    "question_text": "¿Qué diagnóstico considera para la planificación de cuidados de enfermería en la paciente?",
+    "question_text": "Paciente de 28 años, con diagnóstico de Diabetes Mellitus tipo I, es llevada por su esposo al servicio de emergencia, por pérdida del estado de vigilia, debido a que hace 5 días no se ha administrado la insulina; a la valoración se encuentra: somnolienta, pálida y deshidratada, con signos vitales: TA 80/40 mmHg, FC 125 lpm, FR 30 rpm, T 36.5 °C, SatO2 86%. Usted recibe los resultados de la gasometría con los siguientes valores: pH 7.33, HCO3 11 mEq/L, PaCO2 15 mmHg, Lactato de 2 y EB -12 mmol/L. ¿Qué diagnóstico considera para la planificación de cuidados de enfermería en la paciente?",
     "option_a": "Acidosis metabólica.",
     "option_b": "Alcalosis metabólica.",
     "option_c": "Alcalosis respiratoria.",
@@ -20692,7 +20679,7 @@
   },
   {
     "id": "local-enfermeria-1592-1ce657d5b560",
-    "question_text": "¿Qué solución utiliza para la reposición?",
+    "question_text": "Paciente de 33 años con diagnóstico de íleo paralítico, con sonda nasogástrica que ha drenado gran cantidad de líquido, muestra signos de hipopotasemia e hiponatremia, tiene prescripción de reposición de las pérdidas gastrointestinales por vía intravenosa. ¿Qué solución utiliza para la reposición?",
     "option_a": "Dextrosa al 10% en agua.",
     "option_b": "Lactato Ringer.",
     "option_c": "Solución salina normal.",
@@ -20708,7 +20695,7 @@
     "question_text": "DM2-Al realizar la valoración física de enfermería a una paciente hospitalizada con diagnóstico de diabetes mellitus, se observa erupciones cutáneas en todo su cuerpo, exudado con secreción purulenta, prurito y zona eritematosa. ¿Qué patrón funcional se encuentra alterado?",
     "option_a": "Actividad - ejercicio.",
     "option_b": "Nutricional - metabólico.",
-    "option_c": "Rol -",
+    "option_c": "Rol - relaciones.",
     "option_d": "Eliminación.",
     "correct_option": "B",
     "explanation": "Respuesta importada del banco CACES. Las opciones fueron reorganizadas para el simulador manteniendo la respuesta correcta marcada.",
@@ -20861,7 +20848,7 @@
   },
   {
     "id": "local-enfermeria-1605-e8023c6f1236",
-    "question_text": "¿Cuál de ellos proponen la modificación de las relaciones económicas, políticas, sociales y culturales entre hombres y mujeres de manera que exista igualdad en el ejercicio de derechos, en el acceso a beneficios, recursos y oportunidades?",
+    "question_text": "En los enfoques de los Derechos Sexuales y Reproductivos en el Ecuador. ¿Cuál de ellos proponen la modificación de las relaciones económicas, políticas, sociales y culturales entre hombres y mujeres de manera que exista igualdad en el ejercicio de derechos, en el acceso a beneficios, recursos y oportunidades?",
     "option_a": "Enfoque de igualdad.",
     "option_b": "Enfoque de interculturalidad.",
     "option_c": "Enfoque de sexualidad integral.",
@@ -20874,7 +20861,7 @@
   },
   {
     "id": "local-enfermeria-1606-0a81fafcb953",
-    "question_text": "¿Cuál de las siguientes intervenciones usted realiza?",
+    "question_text": "Al brindar cuidados de enfermería a pacientes con Hipotiroidismo. ¿Cuál de las siguientes intervenciones usted realiza?",
     "option_a": "Proporcionar una capa adicional de ropa adecuada y evitar la exposición al frío.",
     "option_b": "Incrementar el uso de laxantes en los pacientes para prevenir la constipación.",
     "option_c": "Promover el uso de fuentes de calor externas para mantener la temperatura corporal.",
@@ -20913,7 +20900,7 @@
   },
   {
     "id": "local-enfermeria-1609-395389ea04e6",
-    "question_text": "¿Cuál es la técnica de agarre recomendada por el MSP para un correcto amamantamiento?",
+    "question_text": "Paciente primigesta de 16 años, tuvo un parto céfalo vaginal sin complicaciones, dando un recién nacido de 2700 gr de peso, talla 50 cm, perímetro cefálico 33 cm, perímetro braquial 9 cm y perímetro toráxico 31 cm. La madre tiene mamas secretantes agrietadas, con pezones evertidos y siente mucho dolor al dar el seno. ¿Cuál es la técnica de agarre recomendada por el MSP para un correcto amamantamiento?",
     "option_a": "La boca del recién nacido está abierta, el labio inferior está invertido, el mentón está tocando el pecho, pezón dentro de la boca.",
     "option_b": "La boca del recién nacido está semi abierta, el labio inferior está invertido, el mentón está tocando el pecho, areola dentro de la boca.",
     "option_c": "La boca del recién nacido está bien abierta, el labio inferior está evertido, el mentón está tocando el pecho, areola y pezón dentro de la boca.",
@@ -20952,7 +20939,7 @@
   },
   {
     "id": "local-enfermeria-1612-114116dd340c",
-    "question_text": "¿Qué teórica explica este tipo de cambio en el proceso salud y enfermedad?",
+    "question_text": "La teorizante de enfermería moderna que establece que las condiciones externas afectan la vida y contribuyen a las enfermedades es:",
     "option_a": "Dorothea Orem.",
     "option_b": "Florence Nightingale.",
     "option_c": "Nola Pender.",
@@ -20978,7 +20965,7 @@
   },
   {
     "id": "local-enfermeria-1614-6e75fab45f57",
-    "question_text": "¿Qué sistema está aplicando según Dorothea Orem?",
+    "question_text": "Al realizar un baño en cama a un paciente con yeso pelvipédico. ¿Qué sistema está aplicando según Dorothea Orem?",
     "option_a": "Totalmente compensador.",
     "option_b": "Apoyo educativo.",
     "option_c": "Parcialmente compensador.",
@@ -21056,7 +21043,7 @@
   },
   {
     "id": "local-enfermeria-1620-3e28edb56a07",
-    "question_text": "¿Qué valora la segunda maniobra?",
+    "question_text": "Paciente embarazada de 32 semanas de gestación que acude al control prenatal; dentro de la valoración a la gestante debe realizar las maniobras de Leopold. ¿Qué valora la segunda maniobra?",
     "option_a": "La presentación del feto.",
     "option_b": "Situación en relación del eje longitudinal del feto con el útero.",
     "option_c": "Si la cabeza esta encajada en relación con los planos de Hodge.",
@@ -21069,7 +21056,7 @@
   },
   {
     "id": "local-enfermeria-1621-0c8a5ddbe4aa",
-    "question_text": "¿Cuál es el que tiene como objetivo la síntesis o agrupación de resultados de diversos estudios previos, utilizando el análisis estadístico para determinar el efecto de una intervención y la consistencia de las relaciones?",
+    "question_text": "Considerando los procesos utilizados para sintetizar evidencia científica. ¿Cuál es el que tiene como objetivo la síntesis o agrupación de resultados de diversos estudios previos, utilizando el análisis estadístico para determinar el efecto de una intervención y la consistencia de las relaciones?",
     "option_a": "Revisión sistemática.",
     "option_b": "Metasíntesis.",
     "option_c": "Revisión sistemática de métodos mixtos.",
@@ -21082,7 +21069,7 @@
   },
   {
     "id": "local-enfermeria-1622-0e0207d1e976",
-    "question_text": "Complete el enunciado: La parotiditis es una enfermedad que se transmite por vía , las partículas son. En este caso, como medida de bioseguridad, se utiliza",
+    "question_text": "Complete el enunciado: La parotiditis es una enfermedad que se transmite por vía ________________, las partículas son ________________. En este caso, como medida de bioseguridad, se utiliza ________________ .",
     "option_a": "Indirecta – menores de 5 micras – mascarilla quirúrgica.",
     "option_b": "Directa – mayores de 5 micras – mascarilla quirúrgica.",
     "option_c": "Directa – menores de 5 micras – mascarilla N95.",
@@ -21134,7 +21121,7 @@
   },
   {
     "id": "local-enfermeria-1626-199ee9bcdd7e",
-    "question_text": "¿Cuál es la principal manifestación de la DA en el lactante o primera infancia?",
+    "question_text": "La dermatitis atópica (DA), es una enfermedad alérgica de la piel. ¿Cuál es la principal manifestación de la DA en el lactante o primera infancia?",
     "option_a": "Enrojecimiento de las mejillas.",
     "option_b": "Piel seca y áspera en otras zonas.",
     "option_c": "Prurito intenso que afecta el sueño.",
@@ -21147,7 +21134,7 @@
   },
   {
     "id": "local-enfermeria-1627-9230499b9a5e",
-    "question_text": "¿Cuál de las acciones constituye un paso esencial en la fase de pausa quirúrgica?",
+    "question_text": "Al realizar el chequeo de la Lista de Verificación de la Seguridad Quirúrgica. ¿Cuál de las acciones constituye un paso esencial en la fase de pausa quirúrgica?",
     "option_a": "Comprobación de la seguridad anestésica a través de la inspección del instrumental.",
     "option_b": "Los aspectos críticos de la recuperación del paciente post operatorio.",
     "option_c": "Verificar si existe una vía aérea difícil y riesgo de aspiración.",
@@ -21290,7 +21277,7 @@
   },
   {
     "id": "local-enfermeria-1638-a4c95d1e783a",
-    "question_text": "¿Cuál es el tipo de determinante de la salud que existe en una comunidad rural con coberturas bajas de vacunación?",
+    "question_text": "Según MAIS - FCI indique: ¿Cuál es el tipo de determinante de la salud que existe en una comunidad rural con coberturas bajas de vacunación?",
     "option_a": "Biológicos.",
     "option_b": "Ambientales.",
     "option_c": "Conductuales.",
@@ -21342,7 +21329,7 @@
   },
   {
     "id": "local-enfermeria-1642-3e3005122963",
-    "question_text": "¿Cuál de estas herramientas debe utilizar?",
+    "question_text": "Identificar oportunamente a una mujer con riesgo obstétrico durante el embarazo, parto y puerperio requiere de la aplicación de una herramienta complementaria. ¿Cuál de estas herramientas debe utilizar?",
     "option_a": "Escala de Norton.",
     "option_b": "Escala de Sepsis Obstétrica.",
     "option_c": "Score Mamá.",
@@ -21394,7 +21381,7 @@
   },
   {
     "id": "local-enfermeria-1646-6fd28182152b",
-    "question_text": "en el brazo y pierna derecha con dolores musculares y articulares, por lo que decide consultar. ¿Cuáles de las manifestaciones clínicas son tipificadas como subjetivas?",
+    "question_text": "Sujeto de cuidado femenino de 76 años, que llega al servicio de neurología manifestando que hace 2 meses le aparecieron movimientos involuntarios, repentinos e impredecibles como cierre y apertura de las manos y flexión y extensión de los pies, los cuales no tienen un ritmo específico y desaparecen durante el sueño y aumentan las preocupaciones del hogar. Hace 15 días percibe otras molestias como la protrusión de los labios como si lanzara besos; hace tres días refiere que emergieron movimientos violentos e involuntarios en el brazo y pierna derecha con dolores musculares y articulares, por lo que decide consultar. ¿Cuáles de las manifestaciones clínicas son tipificadas como subjetivas?",
     "option_a": "Protrusión de la comisura labial y mialgias intensas.",
     "option_b": "Movimientos coreicos en extremidades y monobalismo superior derecho.",
     "option_c": "Mialgias intensas y artralgias.",
@@ -21407,7 +21394,7 @@
   },
   {
     "id": "local-enfermeria-1647-b052ec862582",
-    "question_text": "¿Cuáles son las alteraciones que presenta el paciente?",
+    "question_text": "Paciente ingresa al servicio de emergencia por presentar somnolencia. A la valoración de Enfermería se observa fasciculaciones, piel seca e hiporreflexia, el médico solicita exámenes de laboratorio y se encuentra los siguientes datos: Na=130mEq/l, K=5, 0mEq/l, Ca=9,0mEq/l, Mg=3,5mEq/l. De acuerdo con estos valores de electrolitos, indique. ¿Cuáles son las alteraciones que presenta el paciente?",
     "option_a": "Hiperkalemia, hipercalcemia.",
     "option_b": "Hipokalemia, hipocalcemia.",
     "option_c": "Hiponatremia, hipermagnesemia.",
@@ -21420,7 +21407,7 @@
   },
   {
     "id": "local-enfermeria-1648-a669068ecbbc",
-    "question_text": "¿Qué sonido es más probable que se perciba?",
+    "question_text": "A la auscultación de los sonidos pulmonares en un niño con asma, ¿qué sonido es más probable que se perciba?",
     "option_a": "Roce por fricción pleural.",
     "option_b": "Murmullo.",
     "option_c": "Sibilancia.",
@@ -21485,7 +21472,7 @@
   },
   {
     "id": "local-enfermeria-1653-c9b190cce279",
-    "question_text": "¿Cuál es la cantidad de SRO que se debe administrar?",
+    "question_text": "Niño de 18 meses es llevado al centro de salud por presentar 3 deposiciones líquidas en moderada cantidad, al ser valorado no se encuentra signos de deshidratación. ¿Cuál es la cantidad de SRO que se debe administrar?",
     "option_a": "50 a 100 mL (más o menos ¼ a ½ taza) después de cada deposición acuosa.",
     "option_b": "30 a 60 mL (más o menos 2 a 3 onzas) después de cada deposición acuosa.",
     "option_c": "100 a 200 mL (más o menos ½ a 1 taza) después de cada deposición acuosa.",
@@ -21524,7 +21511,7 @@
   },
   {
     "id": "local-enfermeria-1656-0388a81ff76d",
-    "question_text": "¿Cuáles son los aspectos más importantes que debe valorar el profesional de enfermería?",
+    "question_text": "Paciente de 34 años, multípara es su quinto parto; cursa por puerperio normal inmediato sus primeras dos horas, por lo que se encuentra en centro obstétrico. ¿Cuáles son los aspectos más importantes que debe valorar el profesional de enfermería?",
     "option_a": "Signos vitales, resultados de laboratorio, características de loquios.",
     "option_b": "Coloración de la piel, involución uterina, características de los loquios.",
     "option_c": "SCORE mamá, estado de conciencia, apariencia de periné.",
@@ -21537,7 +21524,7 @@
   },
   {
     "id": "local-enfermeria-1657-4d61da9aa77d",
-    "question_text": "¿Cuál de las siguientes opciones describe mejor el efecto irritante?",
+    "question_text": "Los fármacos antineoplásicos pueden ser irritantes. ¿Cuál de las siguientes opciones describe mejor el efecto irritante?",
     "option_a": "Causan necrosis tisular y daño a tendones, nervios y vasos sanguíneos subyacentes.",
     "option_b": "Nunca debe administrarse en venas periféricas de la mano o la muñeca.",
     "option_c": "Inducen reacciones inflamatorias, pero casi nunca daño hístico permanente.",
@@ -21602,7 +21589,7 @@
   },
   {
     "id": "local-enfermeria-1662-4f85b374a949",
-    "question_text": "Paciente que presenta un peso de 80Kg y una talla 1.75m tiene un índice de masa corporal deque corresponde a",
+    "question_text": "Complete el siguiente enunciado: Paciente que presenta un peso de 80Kg y una talla 1.75m tiene un índice de masa corporal de ___________ que corresponde a ______________.",
     "option_a": "26.14 - sobrepeso",
     "option_b": "32.14 - Obesidad Grado II.",
     "option_c": "32.14 - Obesidad o sobrepeso.",
@@ -21615,7 +21602,7 @@
   },
   {
     "id": "local-enfermeria-1663-8c4bd4dd9e75",
-    "question_text": "¿Cuál es la teorizante que utilizaría en este caso?",
+    "question_text": "En el servicio de consulta externa debe planificar una charla educativa sobre hipertensión arterial dirigida a los pacientes que reciben atención en esta casa de salud, para su intervención debe basar su actuación en un modelo de enfermería. ¿Cuál es la teorizante que utilizaría en este caso?",
     "option_a": "Virginia Henderson.",
     "option_b": "Nola Pender.",
     "option_c": "Hildegard Peplau.",
@@ -21641,7 +21628,7 @@
   },
   {
     "id": "local-enfermeria-1665-13b123e64f12",
-    "question_text": "¿A qué patología corresponden estas manifestaciones clínicas?",
+    "question_text": "Usuario de 53 años, durante la anamnesis manifiesta sentir dolor persistente, sensación de quemadura a nivel de la boca del estómago; refiere vómito y que las heces son oscuras. ¿A qué patología corresponden estas manifestaciones clínicas?",
     "option_a": "Pancreatitis aguda.",
     "option_b": "Cirrosis hepática.",
     "option_c": "Úlcera gástrica.",
@@ -21667,7 +21654,7 @@
   },
   {
     "id": "local-enfermeria-1667-9fa7197d5b57",
-    "question_text": "¿Qué vacunas y qué número de dosis le corresponde administrar al niño?",
+    "question_text": "Niño de 8 meses es traído por su madre al centro de salud para ser vacunado. La madre refiere que no lo pudo traer a los 6 meses porque estaba enfermo, y luego se olvidó. El profesional en enfermería al revisar el carné de vacunas constata que solo se le han administrado las vacunas correspondientes hasta los 4 meses. En este momento ¿Qué vacunas y qué número de dosis le corresponde administrar al niño?",
     "option_a": "Pentavalente (3era. Dosis), Neumococo (3era. Dosis), OPV (2da. Dosis).",
     "option_b": "Pentavalente (3era. Dosis), Neumococo (3era. Dosis), OPV (1era. Dosis).",
     "option_c": "Pentavalente (3era. Dosis), Neumococo (3era. Dosis), Rotavirus (3era. Dosis).",
@@ -21680,7 +21667,7 @@
   },
   {
     "id": "local-enfermeria-1668-fd3345b68cd2",
-    "question_text": "Complete el enunciado: 5.PAE-Luego de formular los diagnósticos enfermeros, se inicia la etapa de planeación durante la cual se establecen____________ y los taxonomía NOC",
+    "question_text": "Luego de formular los diagnósticos enfermeros, se inicia la etapa de planeación durante la cual se establecen____________ y los ____________ utilizando la taxonomía NOC.",
     "option_a": "Ejecuciones - dominios.",
     "option_b": "Evaluaciones - resultados.",
     "option_c": "Resultados - indicadores.",
@@ -21693,7 +21680,7 @@
   },
   {
     "id": "local-enfermeria-1669-efcdc4e7fbbb",
-    "question_text": "¿Cuál es la concentración en gramos de la ampolla?",
+    "question_text": "El Sulfato de Magnesio tiene una presentación: ampolla de 10 ml al 20 %. ¿Cuál es la concentración en gramos de la ampolla?",
     "option_a": "3 g",
     "option_b": "1 g",
     "option_c": "4 g",
@@ -21771,7 +21758,7 @@
   },
   {
     "id": "local-enfermeria-1675-633df5329180",
-    "question_text": "pacientes de una tercera institución. ¿Qué tipo de estudio se está utilizando para este caso?",
+    "question_text": "Al experimentar con dos antipsicóticos nuevos en pacientes diagnosticados de esquizofrenia, con la finalidad de identificar el es más eficaz y seguro, se trabaja con tres grupos de individuos de instituciones diferentes. Los individuos del primer grupo experimental (antipsicóticos 1), se encuentran internados en un hospital psiquiátrico; los del segundo grupo experimental (antipsicóticos 2), son tratados en otro hospital; y, los del grupo de control son pacientes de una tercera institución. ¿Qué tipo de estudio se está utilizando para este caso?",
     "option_a": "Estudios experimentales de campo.",
     "option_b": "Estudios pre experimentales.",
     "option_c": "Estudios cuasiexperimentales.",
@@ -21836,7 +21823,7 @@
   },
   {
     "id": "local-enfermeria-1680-23ca19e3bbca",
-    "question_text": "¿En qué etapa de la vida se encuentra el niño?",
+    "question_text": "En la valoración del desarrollo psicomotor mediante el test de Denver se observa que el crecimiento del niño es algo lento y se mantiene el lenguaje desarrollado, el desarrollo motor, sensorial y psicosocial; además, se educa a la madre sobre prevención de accidentes. ¿En qué etapa de la vida se encuentra el niño?",
     "option_a": "Período de lactancia.",
     "option_b": "Tercera infancia.",
     "option_c": "Segunda infancia.",
@@ -21849,7 +21836,7 @@
   },
   {
     "id": "local-enfermeria-1681-c8922bc4cf4b",
-    "question_text": "¿Cuál corresponde a la fase activa del trabajo de parto?",
+    "question_text": "De la siguientes definiciones. ¿Cuál corresponde a la fase activa del trabajo de parto?",
     "option_a": "Período que transcurre entre los 4 cm y los 10 cm de dilatación y se acompaña de dinámica regular.",
     "option_b": "Periodo que transcurre desde el inicio de la dilatación <30%, las contracciones del útero muy irregulares y duran menos tiempo.",
     "option_c": "Período que transcurre entre el inicio de las contracciones uterinas regulares con modificación cervical hasta los 4 cm de dilatación.",
@@ -21992,7 +21979,7 @@
   },
   {
     "id": "local-enfermeria-1692-e30e1c9672b5",
-    "question_text": "¿Cuál es el ruido que presenta el paciente?",
+    "question_text": "Mediante la técnica de auscultación, usted detecta un paciente que presenta sonidos fuertes de tono bajo, retumbantes que se oyen durante la inspiración o la espiración. ¿Cuál es el ruido que presenta el paciente?",
     "option_a": "Roce pleural.",
     "option_b": "Sibilancias.",
     "option_c": "Roncus.",
@@ -22031,7 +22018,7 @@
   },
   {
     "id": "local-enfermeria-1695-8b7e5a81caca",
-    "question_text": "Al realizar las compresiones torácicas en adultos, comprimir a una frecuencia de entrecpm, con una profundidad decomo mínimo y permita que el tórax se expandadespués de cada compresión",
+    "question_text": "Con relación a la Reanimación Cardiopulmonar (RCP) de alta calidad, complete el siguiente enunciado: Al realizar las compresiones torácicas en adultos, comprimir a una frecuencia de entre __________ cpm, con una profundidad de __________ como mínimo y permita que el tórax se expanda _________________ después de cada compresión.",
     "option_a": "70 a 90 - 4 cm - completamente.",
     "option_b": "100 a 120 - 5 cm - completamente.",
     "option_c": "80 a 100 - 4 cm - un tercio.",
@@ -22148,7 +22135,7 @@
   },
   {
     "id": "local-enfermeria-1704-5457fcdc578b",
-    "question_text": "en el marco de la praxis los profesionales de enfermería manipulan el entorno del paciente para incluir: sonido, nutrición, higiene, luz, comodidad, socialización y esperanza. ¿A qué teoría corresponde a este enunciado?",
+    "question_text": "La enfermería es una disciplina versátil que se esfuerza por satisfacer las necesidades fisiológicas, psicológicas, socioculturales, de desarrollo y espirituales de los pacientes; en el marco de la praxis los profesionales de enfermería manipulan el entorno del paciente para incluir: sonido, nutrición, higiene, luz, comodidad, socialización y esperanza. ¿A qué teoría corresponde a este enunciado?",
     "option_a": "Teoría de Nightingale.",
     "option_b": "Teoría de Benner y Wrubel.",
     "option_c": "Teoría de Leininger.",
@@ -22226,7 +22213,7 @@
   },
   {
     "id": "local-enfermeria-1710-1ae16082f10c",
-    "question_text": "¿Cómo se denomina esta técnica?",
+    "question_text": "Las entrevistas colectivas ayudan a recolectar datos sobre un tema investigado. ¿Cómo se denomina esta técnica?",
     "option_a": "Escalas de actitudes.",
     "option_b": "Cuestionarios.",
     "option_c": "Grupos de enfoque.",
@@ -22294,7 +22281,7 @@
     "question_text": "Seleccione una de las características de la investigación longitudinal:",
     "option_a": "La información recogida de cada persona representa un momento del tiempo.",
     "option_b": "Todos los datos se recogen simultáneamente en cada persona.",
-    "option_c": "Se pueden estudiar",
+    "option_c": "Se pueden estudiar relaciones de causa-efecto.",
     "option_d": "Estudia una condición inherente a la persona, algo fisiológico.",
     "correct_option": "C",
     "explanation": "Respuesta importada del banco CACES. Las opciones fueron reorganizadas para el simulador manteniendo la respuesta correcta marcada.",
@@ -22304,7 +22291,7 @@
   },
   {
     "id": "local-enfermeria-1716-f5bf91640f54",
-    "question_text": "¿A qué característica del proceso hace referencia el enunciado?",
+    "question_text": "El profesional de enfermería para el cuidado integral de la persona, familia o comunidad; utiliza la implementación de las etapas del proceso de atención de enfermería que se interrelacionan entre sí para el logro del objetivo alcanzado. ¿A qué característica del proceso hace referencia el enunciado?",
     "option_a": "Sistemático.",
     "option_b": "Dinámico.",
     "option_c": "Interactivo.",
@@ -22317,7 +22304,7 @@
   },
   {
     "id": "local-enfermeria-1717-57b7991a6f85",
-    "question_text": "¿Cuál es la alteración que presenta el paciente?",
+    "question_text": "Paciente ingresa al hospital por presentar hormigueo y debilidad muscular; el médico solicita exámenes de laboratorio donde se evidencian los siguientes datos: Sodio 140 mEq/L; calcio 9 mg/dL, potasio 2.5 mEq/L; magnesio 2 mg/ dL; fósforo 4 mg/dL. ¿Cuál es la alteración que presenta el paciente?",
     "option_a": "Hiponatremia.",
     "option_b": "Hipomagnesemia.",
     "option_c": "Hipocalemia.",
@@ -22382,7 +22369,7 @@
   },
   {
     "id": "local-enfermeria-1722-57d0620abc93",
-    "question_text": "Ciclo regular en el que se incrementa la frecuencia y la profundidad de la respiración, después decrece hasta ocurrir apnea",
+    "question_text": "¿Qué patrón respiratorio se describe a continuación? Ciclo regular en el que se incrementa la frecuencia y la profundidad de la respiración, después decrece hasta ocurrir apnea.",
     "option_a": "Respiración de Biot.",
     "option_b": "Respiración de Kussmaul.",
     "option_c": "Respiración de Cheyne-Stokes.",
@@ -22434,7 +22421,7 @@
   },
   {
     "id": "local-enfermeria-1726-24295a3f614d",
-    "question_text": "¿Cuál sería el principio en la manipulación de esta?",
+    "question_text": "Al manejar material estéril con una pinza de aro cuyas puntas están húmedas, ¿cuál es el principio correcto para manipularla?",
     "option_a": "Mantener las puntas hacia arriba.",
     "option_b": "Mantener las puntas semi abiertas.",
     "option_c": "Mantener las puntas separadas.",
@@ -22486,7 +22473,7 @@
   },
   {
     "id": "local-enfermeria-1730-4130158ba905",
-    "question_text": "La sala situacional es un espacio,, de convergencia en donde se conjugan diferentes saberes para la identificación y estudio de, el análisis de los factores que los determinan, las soluciones más viables y factibles de acuerdo con el contexto local y ……………………… de los resultados obtenidos después de la aplicación de las decisiones tomadas. La información es difundida y presentada en ……………………… como tablas, gráficos, mapas, documentos técnicos, informes, etc",
+    "question_text": "Complete el enunciado: La sala situacional es un espacio __________, de convergencia en donde se conjugan diferentes saberes para la identificación y estudio de __________, el análisis de los factores que los determinan, las soluciones más viables y factibles de acuerdo con el contexto local y __________ de los resultados obtenidos después de aplicar las decisiones tomadas. La información es difundida y presentada en __________ como tablas, gráficos, mapas, documentos técnicos e informes.",
     "option_a": "Virtual y matricial; el monitoreo y evaluación; diferentes formatos; situaciones de salud.",
     "option_b": "Situaciones de salud; virtual y matricial; el monitoreo y evaluación; diferentes formatos.",
     "option_c": "Diferentes formatos; el monitoreo y evaluación; situaciones de salud; virtual y matricial.",
@@ -22525,7 +22512,7 @@
   },
   {
     "id": "local-enfermeria-1733-16eed541f3c2",
-    "question_text": "¿Qué trastorno electrolítico se evidencia?",
+    "question_text": "Con relación a los siguientes resultados de laboratorio: Na. 140 mEq/L; K. 2.7 mEq /L; Ca. 8.9 mg/dL; Mg: 2.1 mg/dL ¿Qué trastorno electrolítico se evidencia?",
     "option_a": "Hipernatremia.",
     "option_b": "Hipopotasemia.",
     "option_c": "Hipocalcemia.",
@@ -22538,7 +22525,7 @@
   },
   {
     "id": "local-enfermeria-1734-1fb9ff7ee27c",
-    "question_text": "¿Cuál de los cambios que se mencionan ocurre en esta fase?",
+    "question_text": "La fase lútea del ciclo menstrual inicia después de la ovulación. ¿Cuál de los cambios que se mencionan ocurre en esta fase?",
     "option_a": "Aumenta la producción de la hormona luteinizante (LH).",
     "option_b": "Aumenta la producción de hormona estimulante del folículo (FSH).",
     "option_c": "El endometrio, grueso y congestionado, se vuelve hemorrágico.",
@@ -22551,7 +22538,7 @@
   },
   {
     "id": "local-enfermeria-1735-87cb6fd4c44c",
-    "question_text": "Lasinfecciones asociadas con la atención de salud (IAAS) se definen como ____________localizadoso __________queseproducen comode la permanencia ode un paciente en una institución de salud que no estaba presente a su",
+    "question_text": "Complete el enunciado: Las infecciones asociadas con la atención de salud (IAAS) se definen como __________ localizados o __________ que se producen como __________ de la permanencia o __________ de un paciente en una institución de salud y que no estaban presentes a su __________.",
     "option_a": "Procesos, generalizados, consecuencia, concurrencia, ingreso.",
     "option_b": "Procesos, generalizados, concurrencia, consecuencia, ingreso.",
     "option_c": "Procesos, generalizados, consecuencia, ingreso, concurrencia.",
@@ -22577,7 +22564,7 @@
   },
   {
     "id": "local-enfermeria-1737-faad266fb256",
-    "question_text": "¿Cuál es la frecuencia y edad de aplicación de esta vacuna?",
+    "question_text": "Dentro del esquema de vacunación se encuentra la vacuna BCG, cuya vía de administración es intradérmica y produce una pápula con superficie semejante a la cáscara de naranja. ¿Cuál es la frecuencia y edad de aplicación de esta vacuna?",
     "option_a": "Dos dosis, se administra a los 8 meses de edad hasta los 23 meses 29 días.",
     "option_b": "Dosis única, se administra dentro de las 24 horas de nacidos",
     "option_c": "Dos dosis, se administra a los 4 meses de edad hasta 7 meses 29 días.",
@@ -22720,7 +22707,7 @@
   },
   {
     "id": "local-enfermeria-1748-e1fd12099c00",
-    "question_text": "Los volúmenes gástricos residuales se miden antes de cada alimentación y cada 4 a 8 horas durante la alimentación. Los volúmenes residuales mayores apueden vincularse con un riesgo aumentado de aspiración y neumonía asociada",
+    "question_text": "Complete el siguiente enunciado con relación al volumen gástrico residual en la alimentación enteral: Los volúmenes gástricos residuales se miden antes de cada alimentación _________________ y cada 4 a 8 horas durante la alimentación _________________. Los volúmenes residuales mayores a ______________ pueden vincularse con un riesgo aumentado de aspiración y neumonía asociada.",
     "option_a": "Continua – intermitente – 100 ml.",
     "option_b": "Intermitente – continua – 200 ml.",
     "option_c": "Intermitente – continua – 50 ml.",
@@ -22746,7 +22733,7 @@
   },
   {
     "id": "local-enfermeria-1750-1ccf45cc8158",
-    "question_text": "¿Cuál de las siguientes es una recomendación adecuada a la preparación del paciente para el test?",
+    "question_text": "A un paciente se la va a realizar un test de sobrecarga oral de glucosa. ¿Cuál de las siguientes es una recomendación adecuada a la preparación del paciente para el test?",
     "option_a": "En los 2 o 3 días anteriores a la prueba debe efectuar una ingesta normocalórica con un aporte diario superior a 150 gr de hidratos de carbono.",
     "option_b": "Indicar al paciente que ingiera algún alimento rico en hidratos de carbonato mientras se realiza la prueba.",
     "option_c": "Durante los 3 días previos a la prueba deberá abstenerse de ingerir todo tipo de hidratos de carbono.",
@@ -22759,7 +22746,7 @@
   },
   {
     "id": "local-enfermeria-1751-819ab3ff0e48",
-    "question_text": "en una situación en la que: la víctima no responde, tiene pulso, pero no respira. Con este antecedente, complete el siguiente enunciado. Realicecada. Cada ventilación debe durar aproximadamente 1 segundo, en la que el tórax debe elevarse visiblemente. Compruebe el pulso cada",
+    "question_text": "Con relación al procedimiento de ventilación de rescate para adultos, cuando la víctima no responde, tiene pulso, pero no respira, complete el enunciado: Realice __________ cada __________. Cada ventilación debe durar aproximadamente 1 segundo y elevar visiblemente el tórax. Compruebe el pulso cada __________.",
     "option_a": "2 ventilaciones - 8 a 10 segundos - minuto.",
     "option_b": "2 ventilaciones - 7 a 8 segundos - minuto.",
     "option_c": "1 ventilación - 3 a 5 segundos - 2 minutos.",
@@ -22889,7 +22876,7 @@
   },
   {
     "id": "local-enfermeria-1762-d3637ac32327",
-    "question_text": "En una investigación experimental cuando se abordan las causas se tratan de las variables, mientras se abordan los efectos se tratan de las variables ; y si se involucran otros elementos entre las variables se denominan variables",
+    "question_text": "En una investigación experimental cuando se abordan las causas se tratan de las variables ______________, mientras se abordan los efectos se tratan de las variables _______________; y si se involucran otros elementos entre las variables se denominan variables ______________.",
     "option_a": "Independientes, intervinientes, dependientes.",
     "option_b": "Dependientes, independientes, intervinientes.",
     "option_c": "Dependientes, intervinientes, independientes.",
@@ -22915,7 +22902,7 @@
   },
   {
     "id": "local-enfermeria-1764-ee8101a19208",
-    "question_text": "¿Cuál es el principio correcto de la comunicación?",
+    "question_text": "En el contexto de la educación para la salud, ¿cuál es el principio correcto de la comunicación?",
     "option_a": "La opinión de los expertos es más efectiva para cambiar las actitudes",
     "option_b": "Las personas tienen más probabilidad de escuchar los mensajes compatibles con sus expectativas.",
     "option_c": "Las personas con elevada autoestima son más influenciables con la persuasión.",
@@ -22954,7 +22941,7 @@
   },
   {
     "id": "local-enfermeria-1767-158352d1ea33",
-    "question_text": "¿Qué valor esencial se pone de manifiesto en esta situación?",
+    "question_text": "El líder de enfermería del servicio en que usted labora, se destaca por su constante preocupación por el estado de salud de los pacientes del servicio, además se puede observar como está al pendiente del bienestar de todos los miembros del equipo de trabajo. ¿Qué valor esencial se pone de manifiesto en esta situación?",
     "option_a": "Integridad.",
     "option_b": "Altruismo.",
     "option_c": "Justicia social.",
@@ -23058,7 +23045,7 @@
   },
   {
     "id": "local-enfermeria-1775-e511e0a8621a",
-    "question_text": "Atención en establecimientos móviles de salud. 15-VAC-¿Qué vacunas deben recibir los lactantes de 12 a 23 meses con esquema de vacunación completo?",
+    "question_text": "¿Qué vacunas deben recibir los lactantes de 12 a 23 meses con el esquema de vacunación completo?",
     "option_a": "DPT, bOPV, SRP, FA, Varicela, Triv. Pediátrica.",
     "option_b": "Neumococo conjugado, bOPV, SRP, FA, Varicela, Triv. Pediátrica.",
     "option_c": "DPT, SRP, Rubéola, FA, Triv. Pediátrica, BCG.",
@@ -23110,7 +23097,7 @@
   },
   {
     "id": "local-enfermeria-1779-2d0b6bc40ff5",
-    "question_text": "¿Cuáles se debe utilizar?",
+    "question_text": "Como parte del Equipo Básico de Atención Integral de Salud (EAIS), usted colabora en la actualización del diagnóstico de salud y de las condiciones de salud de la comunidad. ¿Cuáles herramientas debe utilizar?",
     "option_a": "Diagnóstico dinámico y mapa parlante.",
     "option_b": "Diagnóstico FODA y diagnóstico familiar y comunitario.",
     "option_c": "Diagnóstico situacional y diagnóstico comunitario.",
@@ -23149,7 +23136,7 @@
   },
   {
     "id": "local-enfermeria-1782-ab249e0fa93e",
-    "question_text": "un electrocardiograma que reporta bloqueos cardíacos. ¿Cuál es la alteración electrolítica que presenta el paciente?",
+    "question_text": "Adulto mayor ingresa al servicio médico por presentar hipertensión, debilidad muscular, vómitos deshidratación, al examen físico se observa reflejos osteotendinosos disminuidos, los resultados de laboratorio muestran los siguientes datos: Na: 135mEqL; K: 3,5 mEqL; Ca: 12.5mg/dL, seguidamente de un electrocardiograma que reporta bloqueos cardíacos. ¿Cuál es la alteración electrolítica que presenta el paciente?",
     "option_a": "Hipercalemia.",
     "option_b": "Hipocalemia.",
     "option_c": "Hipocalcemia.",
@@ -23162,7 +23149,7 @@
   },
   {
     "id": "local-enfermeria-1783-78cca31437b9",
-    "question_text": "¿Cuál de las siguientes medidas de prevención se debe aplicar para evitar su contagio y transmisión?",
+    "question_text": "Con relación a la prevención y control de la tuberculosis. ¿Cuál de las siguientes medidas de prevención se debe aplicar para evitar su contagio y transmisión?",
     "option_a": "Una persona afectada con TB, bacteriológicamente positiva, debe usar mascarilla quirúrgica.",
     "option_b": "Una persona afectada con TB, debe hospitalizarse para un mejor control de la enfermedad.",
     "option_c": "Realizar control de contactos dentro de los primeros seis meses de iniciado el tratamiento.",
@@ -23240,7 +23227,7 @@
   },
   {
     "id": "local-enfermeria-1789-48c8e5aa3645",
-    "question_text": "¿En qué momentos debe realizarse esta verificación?",
+    "question_text": "La verificación de seguridad quirúrgica es una de las funciones del enfermero circulante. ¿En qué momentos debe realizarse esta verificación?",
     "option_a": "Cuando el enfermero circulante disponga de tiempo para poder realizar la verificación.",
     "option_b": "Antes de realizar la incisión cutánea, antes de que el paciente se recupere de la anestesia y antes de que el paciente se traslade a recuperación.",
     "option_c": "Antes de la inducción de la anestesia, antes de la incisión cutánea y antes de que el paciente salga del quirófano.",
@@ -23279,7 +23266,7 @@
   },
   {
     "id": "local-enfermeria-1792-a272af78cd67",
-    "question_text": "¿Cuál es la orientación correcta?",
+    "question_text": "Al educar al paciente diabético sobre un programa de ejercicios. ¿Cuál es la orientación correcta?",
     "option_a": "Evitar el ejercicio en presencia de calor o frío extremos.",
     "option_b": "Reforzar la rutina de ejercicio si la glucosa es mayor de 250 mg/dl.",
     "option_c": "Evitar ejercicio de resistencia como levantamiento de pesas.",
@@ -23292,7 +23279,7 @@
   },
   {
     "id": "local-enfermeria-1793-c529a86f202f",
-    "question_text": "¿Cuál es la recomendación en relación a la actividad física?",
+    "question_text": "Para la prevención de venas varicosas en un paciente sin otras complicaciones. ¿Cuál es la recomendación en relación a la actividad física?",
     "option_a": "Cruzar las piernas en los muslos.",
     "option_b": "Utilizar calcetines apretados en el extremo superior.",
     "option_c": "Mantenerse de pie por períodos prolongados.",
@@ -23305,7 +23292,7 @@
   },
   {
     "id": "local-enfermeria-1794-0007157fe907",
-    "question_text": "¿Qué valores determinan esta alteración?",
+    "question_text": "Paciente con dificultad respiratoria, a su llegada al servicio presenta confusión, mareo, parestesias periféricas y calambres. Para el diagnóstico se requiere la medición de gases en sangre arterial, donde se reporta una alcalosis respiratoria. ¿Qué valores determinan esta alteración?",
     "option_a": "PH=7, 56, PaCO2= 45, HCO3= 28",
     "option_b": "PH=7,15, PaCO2= 20, HCO3= 14",
     "option_c": "PH = 7,10, PaCO2 = 50, HCO3 = 28",
@@ -23318,7 +23305,7 @@
   },
   {
     "id": "local-enfermeria-1795-50924648997b",
-    "question_text": "¿Qué actividad prioritaria se realiza teniendo en cuenta los factores de riesgo?",
+    "question_text": "Como licenciado en enfermería realiza la visita domiciliaria a una familia en etapa de contracción, donde ambos cónyuges son adultos mayores con dependencia funcional. ¿Qué actividad prioritaria se realiza teniendo en cuenta los factores de riesgo?",
     "option_a": "Planificar un plan rutinario de ejercicios.",
     "option_b": "Garantizar reposo minimizando las actividades.",
     "option_c": "Facilitar silla de ruedas y cuidadores.",
@@ -23357,7 +23344,7 @@
   },
   {
     "id": "local-enfermeria-1798-48dfc87f9ebb",
-    "question_text": "¿Cuál de las siguientes afirmaciones corresponden a la demencia?",
+    "question_text": "La demencia y el delirio son dos situaciones que pueden presentarse en el adulto mayor. ¿Cuál de las siguientes afirmaciones corresponden a la demencia?",
     "option_a": "Se produce por toxicidad por fármacos.",
     "option_b": "Tiene períodos de lucidez y desorientación.",
     "option_c": "Existe una alteración cognitiva preexistente.",
@@ -23513,7 +23500,7 @@
   },
   {
     "id": "local-enfermeria-1810-c4f302bee953",
-    "question_text": "En el transoperatorio se presenta complicación en la respiración, provocando disminución en la función ventilatoria. ¿Qué factor considera como principal causa de complicación durante el transoperatorio?",
+    "question_text": "Se programa cirugía de colecistectomía en paciente masculino de 47 años, con antecedentes patológicos personales de HIV en tratamiento con su TARGA habitual, ingesta y abuso de alcohol hace 3 años. SV: PA: 100/70mmHg; FC: 76lpm; Fr: 22rpm; T°:36,7°C; IMC: 32. En el transoperatorio se presenta complicación en la respiración, provocando disminución en la función ventilatoria. ¿Qué factor considera como principal causa de complicación durante el transoperatorio?",
     "option_a": "Disminución del peso corporal del paciente.",
     "option_b": "Paciente con antecedentes de inmunodepresión.",
     "option_c": "Aumento del peso corporal del paciente.",
@@ -23552,7 +23539,7 @@
   },
   {
     "id": "local-enfermeria-1813-aa7c2f44c2e2",
-    "question_text": "¿Cuál es la dosis a administrar en gotas?",
+    "question_text": "El niño NN requiere micronebulización con salbutamol 1 miligramo en set. ¿Cuál es la dosis a administrar en gotas?",
     "option_a": "4 gotas.",
     "option_b": "5 gotas.",
     "option_c": "2 gotas.",
@@ -23604,7 +23591,7 @@
   },
   {
     "id": "local-enfermeria-1817-300373637bd6",
-    "question_text": "¿Cuál es la etiqueta diagnóstica de enfermería a la que hace referencia el enunciado?",
+    "question_text": "Paciente ingresa a emergencia producto de un accidente de tránsito, en la evaluación primaria se determina un Glasgow de 10/15, disnea, diaforesis, aleteo nasal, un patrón respiratorio anormal, para su manejo solicitan una gasometría arterial y los resultados encontrados son valores de PO2 40mmHg hipoxemia, PaCO2 de 50 mmHg hipercapnia; por consiguiente, se identifica un deterioro en la ventilación perfusión. ¿Cuál es la etiqueta diagnóstica de enfermería a la que hace referencia el enunciado?",
     "option_a": "Deterioro de la ventilación espontánea.",
     "option_b": "Patrón respiratorio ineficaz.",
     "option_c": "Riesgo de perfusión tisular cerebral ineficaz.",
@@ -23630,7 +23617,7 @@
   },
   {
     "id": "local-enfermeria-1819-b6cbe70c4c05",
-    "question_text": "La osteoporosis primaria puede aparecer en la, la osteoporosis secundaria se asocia a factores comoy",
+    "question_text": "Con relación a la osteoporosis, complete el siguiente enunciado: La osteoporosis primaria puede aparecer en la _________________, la osteoporosis secundaria se asocia a factores como ___________________ y _________________.",
     "option_a": "Postmenopausia - uso de corticosteroides - enfermedad celíaca",
     "option_b": "Senectud - edad del paciente - aumento en la ingestión de calcio",
     "option_c": "Senectud - uso de anticonvulsivos - aumento en la ingestión de calcio",
@@ -23721,7 +23708,7 @@
   },
   {
     "id": "local-enfermeria-1826-a4c4641f4069",
-    "question_text": "En el examen de laboratorio complementario se diagnostica tuberculosis, en la tomografía de tórax se observan condensaciones con excavaciones, post-primaria. Además, en la prueba de fármaco presenta resistencia a fluoroquinolona y a los tres medicamentos inyectables de segunda línea. ¿Cuál es el tipo de resistencia de los medicamentos, basado en este caso?",
+    "question_text": "Paciente de 55 años de sexo masculino, acude al área de emergencia por presentar: anorexia, sudoración nocturna y baja de peso además de tos productiva, con 1 mes de evolución, con antecedentes de diagnóstico de tuberculosis, drogoresistente hace 5 años. Recibe tratamiento de tuberculosis primera fase. Sus signos vitales son: T: 40 ºC; FC: 95/min; TA: 110/90mmHg; FR 22/min; Sat.02: 94%. En el examen de laboratorio complementario se diagnostica tuberculosis, en la tomografía de tórax se observan condensaciones con excavaciones, post-primaria. Además, en la prueba de fármaco presenta resistencia a fluoroquinolona y a los tres medicamentos inyectables de segunda línea. ¿Cuál es el tipo de resistencia de los medicamentos, basado en este caso?",
     "option_a": "Monorresistencia.",
     "option_b": "Polirresistencia.",
     "option_c": "Multidrogorresistencia (MDR).",
@@ -23747,7 +23734,7 @@
   },
   {
     "id": "local-enfermeria-1828-3509a22fb3bf",
-    "question_text": "¿Qué tipo de monitorización aplicaría?",
+    "question_text": "En el recién nacido prematuro el mantener la temperatura corporal depende del grado de madurez del centro termorregulador, por lo tanto debe realizarse una monitorización de la Temperatura. Para realizar el control de la temperatura. ¿Qué tipo de monitorización aplicaría?",
     "option_a": "Monitorización intermitente.",
     "option_b": "Monitorización con infrarrojos.",
     "option_c": "Monitorización continua invasiva.",
@@ -23773,7 +23760,7 @@
   },
   {
     "id": "local-enfermeria-1830-ff8d4524c55c",
-    "question_text": "¿A qué patología corresponden?",
+    "question_text": "Las manifestaciones clínicas: Dolor torácico de inicio súbito que persiste a pesar del reposo y la nitroglicerina; pulso irregular; piel fría, húmeda, diaforética y pálida. ¿A qué patología corresponden?",
     "option_a": "Infarto agudo de miocardio.",
     "option_b": "Edema pulmonar.",
     "option_c": "Insuficiencia cardiaca.",
@@ -23812,7 +23799,7 @@
   },
   {
     "id": "local-enfermeria-1833-639368915c5c",
-    "question_text": "¿Qué alteración electrolítica presenta la paciente?",
+    "question_text": "Nelly es una paciente de 29 años quien presenta signo de Trousseau, hiperreflexia, cambios en el estado de ánimo y aumento de la presión arterial, se encuentra recibiendo nutrición parenteral. Al analizar los resultados de electrolitos séricos, encuentra los siguientes valores: Potasio: 3.5 mEq/L Sodio: 137 mEq/L Cloro: 98 mEq/L Magnesio: 1.3 mg/dL Calcio: 9.0 mg/dL Considerando las manifestaciones y las concentraciones de electrolitos séricos. ¿Qué alteración electrolítica presenta la paciente?",
     "option_a": "Hipocalcemia.",
     "option_b": "Hipomagnesemia.",
     "option_c": "Hipocloremia.",
@@ -23851,7 +23838,7 @@
   },
   {
     "id": "local-enfermeria-1836-6c68bd8543bd",
-    "question_text": "¿Cuál es la jeringa y calibre de aguja, ideal para administrar la medicación indicada?",
+    "question_text": "Un enfermero se encuentra en su turno de trabajo en la sala de medicina interna, tiene que administrar 35 unidades de insulina de acción intermedia (NPH), como esquema de tratamiento diario prescrito para un paciente de 45 años, de contextura muy delgada, con escaso tejido adiposo, con diagnóstico de diabetes mellitus tipo 2. ¿Cuál es la jeringa y calibre de aguja, ideal para administrar la medicación indicada?",
     "option_a": "Jeringa de 0.3 ml con aguja calibre 29.",
     "option_b": "Jeringa de 0.5 ml con aguja calibre 31.",
     "option_c": "Jeringa de 500 U/ml con aguja calibre 25.",
@@ -23916,7 +23903,7 @@
   },
   {
     "id": "local-enfermeria-1841-2862b639f3ff",
-    "question_text": "¿Qué tipo de tendido de cama se debe realizar?",
+    "question_text": "Como parte de las medidas de confort para un paciente que se mantiene deambulando, ¿qué tipo de tendido de cama se debe realizar?",
     "option_a": "Cama cerrada.",
     "option_b": "Cama abierta.",
     "option_c": "Cama ocupada.",
@@ -23929,7 +23916,7 @@
   },
   {
     "id": "local-enfermeria-1842-baa61b443813",
-    "question_text": "¿Cuál se debe evitar?",
+    "question_text": "Un paciente que recibe metotrexato para el tratamiento de cáncer digestivo presenta un recuento de plaquetas de 745.000/mm3. De las siguientes acciones de enfermería ¿Cuál se debe evitar?",
     "option_a": "Administrar enemas, supositorios o laxantes.",
     "option_b": "Indicar al paciente que el cepillado de dientes sea con un cepillo de cerdas suaves.",
     "option_c": "Transfusión de plaquetas según prescripción.",
@@ -23955,7 +23942,7 @@
   },
   {
     "id": "local-enfermeria-1844-afdd73285348",
-    "question_text": "¿Cuáles son los signos y síntomas que se pueden presentar si se habla de presencia de un ESAVI grave?",
+    "question_text": "En la administración de SRP. ¿Cuáles son los signos y síntomas que se pueden presentar si se habla de presencia de un ESAVI grave?",
     "option_a": "Convulsiones febriles que aparecen entre el 7mo y 12vo día.",
     "option_b": "Linfadenitis supurativa de 2 a 6 meses de aplicación de SRP.",
     "option_c": "Llanto persistente de 0 a 24 horas de aplicación de la primera dosis de SRP.",
@@ -24072,7 +24059,7 @@
   },
   {
     "id": "local-enfermeria-1853-f94ccc52d1d1",
-    "question_text": "un electrocardiograma que reporta intervalo QT y segmento ST prolongados. ¿Cuál es la alteración electrolítica que presenta el paciente?",
+    "question_text": "Adulto mayor ingresa al servicio médico por presentar hormigueo en los dedos de las manos, pies y en región peri bucal, al examen físico se observa reflejos osteotendinosos aumentados, los resultados de laboratorio muestran los siguientes datos: Na: 135mEqL; K: 3,5 mEqL; Ca: 7.0mg/dL, seguidamente de un electrocardiograma que reporta intervalo QT y segmento ST prolongados. ¿Cuál es la alteración electrolítica que presenta el paciente?",
     "option_a": "Hipercalemia.",
     "option_b": "Hipercalcemia.",
     "option_c": "Hipocalcemia.",
@@ -24176,7 +24163,7 @@
   },
   {
     "id": "local-enfermeria-1861-2cfc35d9252a",
-    "question_text": "¿Cuál es la escala que mide esas acciones?",
+    "question_text": "En el centro de salud donde usted trabaja, acude una señora con sus familiares, quienes indican que están preocupados porque en las últimas semanas han observado que a su madre le dificulta bañarse, vestirse y caminar. Para la valoración de Enfermería debe utilizar una escala que le permita evaluar la condición del paciente. ¿Cuál es la escala que mide esas acciones?",
     "option_a": "Escala Pfeiffer.",
     "option_b": "Escala Katz.",
     "option_c": "Escala Guijón.",
@@ -24241,7 +24228,7 @@
   },
   {
     "id": "local-enfermeria-1866-e9ded330eaf5",
-    "question_text": "¿Cuál se refiere al liderazgo transaccional?",
+    "question_text": "De las siguientes opciones. ¿Cuál se refiere al liderazgo transaccional?",
     "option_a": "Apela a los intereses, en especial a las necesidades básicas de los seguidores; promete recompensas.",
     "option_b": "Usa muy poco el poder, si es que realmente lo usa alguna vez, y da a sus subordinados un alto grado de independencia en sus operaciones.",
     "option_c": "Tiene la habilidad de crear y comunicar una visión realista creíble y atractiva del futuro, que mejora la situación actual.",
@@ -24280,7 +24267,7 @@
   },
   {
     "id": "local-enfermeria-1870-d597ee36d2a5",
-    "question_text": "Cuando las manos estén visiblemente sucias, la técnica de lavado tiene una duración mínima deasegundos y siguepasos estandarizados",
+    "question_text": "Cuando las manos estén visiblemente sucias, la técnica de lavado tiene una duración mínima de ____ a ____ segundos y sigue ____ pasos estandarizados.",
     "option_a": "20 - 30 - 11",
     "option_b": "40 - 60 - 8",
     "option_c": "40 - 60 - 11",
@@ -24293,7 +24280,7 @@
   },
   {
     "id": "local-enfermeria-1871-c88834899070",
-    "question_text": "¿Cuál es el ruido que se ausculta?",
+    "question_text": "Usted debe tomar la presión arterial de un paciente que ingresa al servicio de Medicina Interna, durante la auscultación se identifica un ruido tipo golpeteo rítmico claro y aumenta gradualmente en intensidad. De acuerdo a los ruidos de Korotkoff ¿Cuál es el ruido que se ausculta?",
     "option_a": "Segundo ruido.",
     "option_b": "Primer ruido.",
     "option_c": "Tercer ruido.",
@@ -24319,7 +24306,7 @@
   },
   {
     "id": "local-enfermeria-1873-4a7657238119",
-    "question_text": "¿Cuál es la indicada para realizar una intubación endotraqueal?",
+    "question_text": "De la siguiente lista de posiciones anatómicas, ¿Cuál es la indicada para realizar una intubación endotraqueal?",
     "option_a": "Decúbito supino o dorsal.",
     "option_b": "Trendelenburg.",
     "option_c": "Posición de Kraske.",
@@ -24345,7 +24332,7 @@
   },
   {
     "id": "local-enfermeria-1875-3c43cbf3bed3",
-    "question_text": "¿Cuál es el derecho que se encuentra vulnerado?",
+    "question_text": "Paciente de 85 años con diagnóstico de cáncer de próstata presenta posibles metástasis y requiere quimioterapia. El médico señala que debe conversar sobre el procedimiento con los familiares, sin incluir al paciente en la decisión. ¿Cuál es el derecho que se encuentra vulnerado?",
     "option_a": "Derecho a la información.",
     "option_b": "Derecho a la confidencialidad.",
     "option_c": "Derecho a no ser discriminado.",
@@ -24384,7 +24371,7 @@
   },
   {
     "id": "local-enfermeria-1878-bd3b3172ef21",
-    "question_text": "La producción de la hormonase da en la glándula, la cual interviene en la eyección de la leche materna",
+    "question_text": "Seleccione la opción de respuesta que complete el siguiente enunciado: La producción de la hormona ____________ se da en la glándula____________, la cual interviene en la eyección de la leche materna.",
     "option_a": "Prolactina, mamaria.",
     "option_b": "Progesterona, hipófisis.",
     "option_c": "Oxitocina, neurohipófisis.",
@@ -24436,7 +24423,7 @@
   },
   {
     "id": "local-enfermeria-1882-14efac46d942",
-    "question_text": "¿Cuál es la formulación correcta del diagnóstico con etiqueta \"Riesgo de desequilibrio de volumen de líquidos\"?",
+    "question_text": "Tomando como referencia los diagnósticos de enfermería con estructura NANDA. ¿Cuál es la formulación correcta del diagnóstico con etiqueta \"Riesgo de desequilibrio de volumen de líquidos\"?",
     "option_a": "Riesgo de desequilibrio de volumen de líquidos, relacionado con cirugía abdominal, manifestado por obstrucción intestinal.",
     "option_b": "Riesgo de desequilibrio de volumen de líquidos, relacionado con lesión traumática, manifestado por la evolución de la fractura de cadera.",
     "option_c": "Riesgo de desequilibrio de volumen de líquidos relacionado con obstrucción intestinal, ascitis, sepsis, lesión traumática, quemaduras.",
@@ -24622,7 +24609,7 @@
   },
   {
     "id": "local-enfermeria-1896-1ea78bc09fbc",
-    "question_text": "¿Cuál de los objetivos planteados en el Modelo de Atención Integral de Salud se está cumpliendo?",
+    "question_text": "Hombre de 28 años acude a la sala de emergencias del hospital por cefalea, dolor de garganta, temperatura de 36 °C y malestar general. El profesional de enfermería lo envía a la unidad de salud a la que pertenece. ¿Cuál de los objetivos planteados en el Modelo de Atención Integral de Salud se está cumpliendo?",
     "option_a": "Garantizar que el primer nivel de atención se constituya en la puerta de entrada obligatoria al sistema de salud.",
     "option_b": "Reorientación del enfoque curativo, centrado en la enfermedad y el individuo, hacia un enfoque de producción y cuidado de la salud sustentando en la estrategia de APS.",
     "option_c": "Fortalecer la planificación e intervención intersectorial que permita intervenir sobre los determinantes de la salud.",
@@ -24687,7 +24674,7 @@
   },
   {
     "id": "local-enfermeria-1901-2327f3e87114",
-    "question_text": "un ciclo de realimentación de entradas (estímulos), producción (procesos de control) y salidas (conductas o respuestas adaptativas). ¿Cuál es la teorizante que utiliza este enfoque?",
+    "question_text": "Una de las teorizantes de enfermería se centra en el individuo como un sistema biopsicosocial adaptativo que emplea un ciclo de realimentación de entradas (estímulos), producción (procesos de control) y salidas (conductas o respuestas adaptativas). ¿Cuál es la teorizante que utiliza este enfoque?",
     "option_a": "Callista Roy.",
     "option_b": "Martha Rogers.",
     "option_c": "Betty Neuman.",
@@ -24700,7 +24687,7 @@
   },
   {
     "id": "local-enfermeria-1902-b77884a55518",
-    "question_text": "¿Cuál es el tipo de muestra que se debe tomar?",
+    "question_text": "En las enfermedades inmunoprevenibles como la Difteria. ¿Cuál es el tipo de muestra que se debe tomar?",
     "option_a": "Líquido cefalorraquídeo, sangre.",
     "option_b": "Hisopado orofaríngeo, nasofaríngeo o de lesiones cutáneas.",
     "option_c": "Orina, saliva o líquido cefalorraquídeo.",
@@ -24778,7 +24765,7 @@
   },
   {
     "id": "local-enfermeria-1908-9e64cc3b59b8",
-    "question_text": "APS-El objetivo general del modelo dees Integrar y consolidar la estrategia de Atención APS-R en los tres niveles de atención, hacia la promoción de la salud y prevención de la enfermedad; y, fortalecer el proceso de la recuperación, rehabilitación de la salud y cuidados paliativos para ___________________ de calidad y de profundo respeto a las personas en su diversidad y su entorno, con énfasis en la participación organizada de los sujetos sociales",
+    "question_text": "El objetivo general del modelo de ___________________ es Integrar y consolidar la estrategia de Atención APS-R en los tres niveles de atención, ___________________ hacia la promoción de la salud y prevención de la enfermedad; y, fortalecer el proceso de la recuperación, rehabilitación de la salud y cuidados paliativos para ___________________ de calidad y de profundo respeto a las personas en su diversidad y su entorno, con énfasis en la participación organizada de los sujetos sociales",
     "option_a": "Participación organizada - reorientando los servicios de salud - atención integral.",
     "option_b": "Promoción de la salud - reorientando los servicios de salud - brindar una atención integral.",
     "option_c": "Participación organizada - reorientando los servicios de salud - personas en su diversidad.",
@@ -24791,7 +24778,7 @@
   },
   {
     "id": "local-enfermeria-1909-45880b69e2fa",
-    "question_text": "en el servicio con la presentación de diazepam en ampollas de 10 miligramos en 2 mililitros. ¿Qué cantidad de mililitros le administra al paciente para que reciba la dosis correcta?",
+    "question_text": "La enfermera/o por prescripción médica en caso de convulsión tiene que administrar diazepam 8 mg, vía intravenosa; cuenta en el servicio con la presentación de diazepam en ampollas de 10 miligramos en 2 mililitros. ¿Qué cantidad de mililitros le administra al paciente para que reciba la dosis correcta?",
     "option_a": "2.2 ml",
     "option_b": "1.6 ml",
     "option_c": "1.3 ml",
@@ -24804,7 +24791,7 @@
   },
   {
     "id": "local-enfermeria-1910-b6923ef7c315",
-    "question_text": "¿Qué trastorno hipertensivo presenta la paciente?",
+    "question_text": "Primigesta de 27 años, en el primer control de embarazo se registra IMC de 24, TA=120/80 mmHg, FC= 72 X’, FR=19 X’, Tº=36,5º C. Acude a control subsecuente con 23 semanas de gestación; en la valoración actual: IMC de 26, TA=150/90 mm Hg, FC= 78 X’, FR=18 X’, Tº= 37ºC, proteinuria con tira reactiva ++ ¿Qué trastorno hipertensivo presenta la paciente?",
     "option_a": "Hipertensión crónica.",
     "option_b": "Hipertensión gestacional.",
     "option_c": "Preeclampsia grave.",
@@ -24856,7 +24843,7 @@
   },
   {
     "id": "local-enfermeria-1914-18b380564527",
-    "question_text": "una persona con discapacidad. EXCEPTO:",
+    "question_text": "De acuerdo con el Manual de atención integral en salud sexual y reproductiva para personas con discapacidad del MSP del Ecuador, los siguientes puntos respaldan los derechos sexuales y reproductivos de una persona con discapacidad. EXCEPTO:",
     "option_a": "Se sugiere generar un comité de ética asistencial, que no es vinculante, pero que puede dar recomendaciones sobre esterilización. En caso de sospecha de violencia sexual se debe presentar la denuncia a la Fiscalía.",
     "option_b": "Si el personal médico tiene dudas respecto a la toma de decisiones autónomas de una persona con discapacidad, se requiere una evaluación por parte de un equipo multidisciplinario. Se asume como prioritario el criterio de la persona con discapacidad.",
     "option_c": "Aunque una persona con discapacidad pueda tomar decisiones, se requiere la presencia de un familiar o representante legal para recibir información o una prestación sobre salud sexual y reproductiva, de manera que la atención tenga respaldo jurídico.",
@@ -24882,7 +24869,7 @@
   },
   {
     "id": "local-enfermeria-1916-3aff942739d5",
-    "question_text": "¿Cuál es la patología que presenta el RN?",
+    "question_text": "En el servicio de Neonatología, usted valora a un RN de 37 semanas que presenta: síndrome de dificultad respiratoria con taquipnea, cianosis, quejido, aumento del esfuerzo con retracciones intercostales, saturación de O2 89 %, en la radiografía de tórax se puede evidenciar una discreta opacidad y resultado de gasometría alterado. ¿Cuál es la patología que presenta el RN?",
     "option_a": "Taquipnea transitoria.",
     "option_b": "Síndrome de aspiración de líquido meconial.",
     "option_c": "Hipertensión pulmonar persistente.",
@@ -24908,7 +24895,7 @@
   },
   {
     "id": "local-enfermeria-1918-f6d200edbcd1",
-    "question_text": "¿Cuál es la causa por la cual el oxímetro de pulso no registra la lectura de la saturación con base en los signos vitales del paciente?",
+    "question_text": "Paciente de 78 años, ingresado por neoplasia de pulmón en estadio final, se encuentra estuporoso, con oxígeno suplementario a 3 litros por minuto por bigotera. Los signos vitales muestran los siguientes datos: TA 50/40 mmHg, temperatura 37.2° C, respiración 32 rpm y saturación de oxígeno sin lectura en el oxímetro de pulso. ¿Cuál es la causa por la cual el oxímetro de pulso no registra la lectura de la saturación con base en los signos vitales del paciente?",
     "option_a": "Disminución del estado de conciencia.",
     "option_b": "Hipotensión arterial.",
     "option_c": "Taquipnea.",

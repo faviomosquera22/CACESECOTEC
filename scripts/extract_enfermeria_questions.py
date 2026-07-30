@@ -104,6 +104,23 @@ INCOMPLETE_QUESTION_TEXTS = {
     "¿qué valores determinan esta alteración?",
 }
 
+OCTOBER_2023_REPAIRS_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "src"
+    / "data"
+    / "enfermeriaQuestionTextRepairs.json"
+)
+
+
+def load_october_2023_question_repairs() -> dict[str, str]:
+    if not OCTOBER_2023_REPAIRS_PATH.exists():
+        return {}
+
+    return json.loads(OCTOBER_2023_REPAIRS_PATH.read_text(encoding="utf-8"))
+
+
+OCTOBER_2023_QUESTION_REPAIRS = load_october_2023_question_repairs()
+
 
 def clean_line(line: str) -> str:
     line = line.replace("\u00a0", " ")
@@ -115,7 +132,7 @@ def clean_option(option: str) -> str:
     option = option.replace("\uf00c", "").replace("\uf00d", "").strip()
     option = re.sub(r"\s+(?:\d+\.\s*){2,}.*$", "", option).strip()
     option = re.sub(
-        r"\s+(?:Complete el enunciado|Seleccione|Identifique|Relacione|Ordene):?.*$",
+        r"\s+(?:Complete el enunciado|Seleccione|Identifique|Relacione|Ordene)\b:?.*$",
         "",
         option,
         flags=re.IGNORECASE,
@@ -190,6 +207,31 @@ def clean_question_text(question_text: str) -> str:
     return question_text.strip(" .")
 
 
+def repair_october_2023_question_text(question_text: str) -> str:
+    direct_repair = OCTOBER_2023_QUESTION_REPAIRS.get(question_text)
+
+    if direct_repair:
+        return direct_repair
+
+    normalized_text = re.sub(r"[\W_]+", "", question_text.lower())
+
+    for source_text, repaired_text in OCTOBER_2023_QUESTION_REPAIRS.items():
+        normalized_source = re.sub(r"[\W_]+", "", source_text.lower())
+        normalized_repair = re.sub(r"[\W_]+", "", repaired_text.lower())
+
+        if normalized_text == normalized_repair:
+            return repaired_text
+
+        if (
+            normalized_source
+            and normalized_text.endswith(normalized_source)
+            and normalized_repair.endswith(normalized_source)
+        ):
+            return repaired_text
+
+    return question_text
+
+
 def is_code_option(option: str) -> bool:
     option = clean_option(option)
     return bool(
@@ -225,6 +267,12 @@ def is_question_usable(question_text: str, options: list[str]) -> bool:
     ]
 
     if any(re.search(pattern, lower) for pattern in blocked_patterns):
+        return False
+
+    if re.match(r"^[a-e]\s*-\s*", question_text, flags=re.IGNORECASE) and all(
+        re.fullmatch(r"[a-e]\s*-\s*[a-e]", option, flags=re.IGNORECASE)
+        for option in options
+    ):
         return False
 
     if lower in INCOMPLETE_QUESTION_TEXTS:
@@ -594,6 +642,7 @@ def parse_first_option_docx(path: Path, source: str) -> list[dict[str, object]]:
 
         if len(options) >= 4:
             question_text = clean_question_text(" ".join(question_lines))
+            question_text = repair_october_2023_question_text(question_text)
             option_values = [clean_option(option) for option in options[:4]]
 
             if (
@@ -623,7 +672,18 @@ def parse_first_option_docx(path: Path, source: str) -> list[dict[str, object]]:
         if skip_line(line) or line == ".":
             continue
 
-        if line.lower().startswith(("respuestas:", "opciones:")):
+        answer_marker = re.search(
+            r"\b(?:respuestas|opciones):\s*",
+            line,
+            flags=re.IGNORECASE,
+        )
+
+        if answer_marker:
+            prompt = line[: answer_marker.start()].strip()
+
+            if prompt:
+                question_lines.append(prompt)
+
             collecting_options = True
             options = []
             continue
@@ -639,10 +699,19 @@ def parse_first_option_docx(path: Path, source: str) -> list[dict[str, object]]:
 
             continue
 
-        if looks_like_new_question(line) and question_lines and not collecting_options:
-            # Defensive reset for malformed blocks that never reached four options.
+        if (
+            looks_like_new_question(line)
+            and question_lines
+            and any(value.lstrip().startswith("-") for value in question_lines)
+        ):
+            # Some source blocks omit the "Respuestas:" label entirely. Their
+            # first answer still starts with a dash. Discard that malformed
+            # block when the next question begins so it cannot contaminate it.
             question_lines = []
 
+        # A valid DOCX question can span several paragraphs (clinical case,
+        # findings, and the final interrogative). Keep the complete block until
+        # its answer marker instead of resetting on each sentence.
         question_lines.append(line)
 
     return questions

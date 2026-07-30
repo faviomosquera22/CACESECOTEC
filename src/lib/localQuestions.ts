@@ -1,4 +1,5 @@
 import type { Question } from "@/lib/database.types";
+import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
 import {
   filterQuestionsForSimulatorSettings,
   type SimulatorSettings,
@@ -57,6 +58,8 @@ const brokenOptionTexts = new Set([
   "de las",
   "es aquel en que se debe mantener una abstención de",
   "mejorar las",
+  "rol -",
+  "se pueden estudiar",
 ]);
 
 const brokenQuestionTexts = new Set([
@@ -82,6 +85,7 @@ const brokenQuestionTexts = new Set([
   "¿qué valores determinan esta alteración?",
   "lograr el conocimiento sobre el procedimiento y desarrollar su memoria",
   "orientar hacia la calidad de la atención y seguridad del paciente",
+  "e- facilitar la adecuación cultural de los servicios y prestaciones de medicina tradicional, alternativa, complementaria definidas en el mais-fci",
 ]);
 
 const questionTextRepairs = new Map<string, string>([
@@ -120,6 +124,21 @@ const questionTextRepairs = new Map<string, string>([
   [
     "¿Qué condiciones clínicas corresponde a este estadio?",
     "Una paciente con VIH se encuentra en el estadio clínico II. ¿Qué condición clínica corresponde a este estadio?",
+  ],
+]);
+
+const october2023QuestionRepairs = new Map(
+  Object.entries(october2023QuestionTextRepairs),
+);
+
+const questionOptionRepairs = new Map<string, Partial<Question>>([
+  [
+    "DM2-Al realizar la valoración física de enfermería a una paciente hospitalizada con diagnóstico de diabetes mellitus, se observa erupciones cutáneas en todo su cuerpo, exudado con secreción purulenta, prurito y zona eritematosa. ¿Qué patrón funcional se encuentra alterado?",
+    { option_c: "Rol - relaciones." },
+  ],
+  [
+    "Seleccione una de las características de la investigación longitudinal:",
+    { option_c: "Se pueden estudiar relaciones de causa-efecto." },
   ],
 ]);
 
@@ -185,13 +204,22 @@ function normalizeOptionText(value: string) {
 
 function repairQuestionText(question: Question) {
   const sourceText = question.question_text.trim();
-  const repairedText = questionTextRepairs.get(sourceText);
+  const repairedText =
+    questionTextRepairs.get(sourceText) ??
+    (question.difficulty === "CACES Octubre 2023"
+      ? october2023QuestionRepairs.get(sourceText)
+      : undefined);
+  const optionRepairs =
+    question.difficulty === "CACES Octubre 2023"
+      ? questionOptionRepairs.get(sourceText)
+      : undefined;
   const media = questionMediaByText.get(sourceText);
 
-  return repairedText || media
+  return repairedText || media || optionRepairs
     ? {
         ...question,
         ...media,
+        ...optionRepairs,
         question_text: repairedText ?? question.question_text,
       }
     : question;
