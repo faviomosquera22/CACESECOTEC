@@ -72,6 +72,7 @@ export type TeacherAnalyticsReportData = {
   attempts?: TeacherAttemptAnalytics[];
   answers?: TeacherReportAnswer[];
   generatedAt?: Date;
+  periodLabel?: string;
 };
 
 export type StudentAnalyticsReportData = {
@@ -81,6 +82,7 @@ export type StudentAnalyticsReportData = {
   modules: TeacherModuleAnalytics[];
   questions: TeacherQuestionAnalytics[];
   generatedAt?: Date;
+  periodLabel?: string;
 };
 
 type PdfDocument = Awaited<ReturnType<typeof createPdfDocument>>;
@@ -303,8 +305,11 @@ function addHeader({
   document.setFontSize(17);
   document.text(title, margin, 12);
   document.setFont("helvetica", "normal");
-  document.setFontSize(9);
-  document.text(subtitle, margin, 20);
+  document.setFontSize(8);
+  document.text(subtitle, margin, 19, {
+    maxWidth: pageWidth - margin * 2,
+    lineHeightFactor: 1.15,
+  });
 }
 
 function addSummaryCards({
@@ -897,6 +902,7 @@ export async function buildTeacherAnalyticsReportPdf({
   attempts = [],
   answers = [],
   generatedAt = new Date(),
+  periodLabel,
 }: TeacherAnalyticsReportData) {
   const { document, autoTable } = await createPdfDocument("landscape");
   const pageWidth = document.internal.pageSize.getWidth();
@@ -935,7 +941,7 @@ export async function buildTeacherAnalyticsReportPdf({
   addHeader({
     document,
     title: "Reporte general de desempeño",
-    subtitle: `Analítica académica - ${careerLabel} - ${new Intl.DateTimeFormat("es-EC", {
+    subtitle: `Analítica académica - ${careerLabel}${periodLabel ? ` - Período: ${periodLabel}` : ""} - Generado: ${new Intl.DateTimeFormat("es-EC", {
       dateStyle: "long",
       timeStyle: "short",
     }).format(generatedAt)}`,
@@ -1259,6 +1265,7 @@ export async function buildStudentAnalyticsReportPdf({
   modules,
   questions,
   generatedAt = new Date(),
+  periodLabel,
 }: StudentAnalyticsReportData) {
   const { document, autoTable } = await createPdfDocument("portrait");
   const pageWidth = document.internal.pageSize.getWidth();
@@ -1295,7 +1302,7 @@ export async function buildStudentAnalyticsReportPdf({
   addHeader({
     document,
     title: "Reporte individual de estudiante",
-    subtitle: `${student.fullName} - ${student.careerLabel} - ${new Intl.DateTimeFormat("es-EC", {
+    subtitle: `${student.fullName} - ${student.careerLabel}${periodLabel ? ` - Período: ${periodLabel}` : ""} - Generado: ${new Intl.DateTimeFormat("es-EC", {
       dateStyle: "long",
       timeStyle: "short",
     }).format(generatedAt)}`,
@@ -1565,13 +1572,17 @@ export async function buildStudentAnalyticsReportPdf({
   return document.output("arraybuffer");
 }
 
-export function getTeacherAnalyticsReportFilename(date = new Date()) {
-  return `reporte-general-caces-${getDatePart(date)}.pdf`;
+export function getTeacherAnalyticsReportFilename(
+  date = new Date(),
+  periodPart?: string,
+) {
+  return `reporte-general-caces-${periodPart ? `${getSafeFilePart(periodPart)}-` : ""}${getDatePart(date)}.pdf`;
 }
 
 export function getTeacherStudentReportFilename(
   student: StudentCardData,
   date = new Date(),
+  periodPart?: string,
 ) {
-  return `reporte-${getSafeFilePart(student.fullName || "estudiante")}-${getDatePart(date)}.pdf`;
+  return `reporte-${getSafeFilePart(student.fullName || "estudiante")}-${periodPart ? `${getSafeFilePart(periodPart)}-` : ""}${getDatePart(date)}.pdf`;
 }

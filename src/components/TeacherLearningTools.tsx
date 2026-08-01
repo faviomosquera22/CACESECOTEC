@@ -3,6 +3,7 @@
 import { useMemo, useState, useSyncExternalStore } from "react";
 import {
   BarChart3,
+  CalendarDays,
   Download,
   FileSpreadsheet,
   FileText,
@@ -15,6 +16,11 @@ import {
   getLocalSimulationIndexKey,
   subscribeToLocalSimulationChanges,
 } from "@/lib/localSimulationStorage";
+import {
+  getCurrentEcuadorDateValue,
+  getReportPeriod,
+  type ReportPeriodMode,
+} from "@/lib/reportPeriod";
 import {
   buildStudentAnalyticsReportPdf,
   buildTeacherAnalyticsReportPdf,
@@ -199,6 +205,45 @@ function escapeHtml(value: string | number | null | undefined) {
     .replaceAll('"', "&quot;");
 }
 
+function getAttemptDate(attempt: TeacherAttemptAnalytics) {
+  return attempt.finished_at ?? attempt.created_at;
+}
+
+function getAttemptScore(attempt: TeacherAttemptAnalytics) {
+  if (typeof attempt.score === "number") {
+    return attempt.score;
+  }
+
+  const totalQuestions = attempt.total_questions ?? 0;
+  const correctAnswers = attempt.correct_answers ?? 0;
+
+  return totalQuestions > 0
+    ? Math.round((correctAnswers / totalQuestions) * 10000) / 100
+    : 0;
+}
+
+function buildPeriodStudent(
+  student: StudentCardData,
+  attempts: TeacherAttemptAnalytics[],
+): StudentCardData {
+  const scores = attempts.map(getAttemptScore);
+  const lastActivity = attempts
+    .map(getAttemptDate)
+    .filter((value): value is string => Boolean(value))
+    .sort((left, right) => Date.parse(right) - Date.parse(left))[0] ?? null;
+
+  return {
+    ...student,
+    simulationsCount: attempts.length,
+    averageScore:
+      scores.length > 0
+        ? scores.reduce((total, score) => total + score, 0) / scores.length
+        : 0,
+    bestScore: scores.length > 0 ? Math.max(...scores) : 0,
+    lastActivity,
+  };
+}
+
 export function TeacherLearningTools({
   students,
   serverAnswers,
@@ -207,6 +252,10 @@ export function TeacherLearningTools({
   const [isExportingPdf, setIsExportingPdf] = useState(false);
   const [exportingStudentId, setExportingStudentId] = useState("");
   const [pdfError, setPdfError] = useState("");
+  const [periodMode, setPeriodMode] = useState<ReportPeriodMode>("week");
+  const [selectedDate, setSelectedDate] = useState(() =>
+    getCurrentEcuadorDateValue(),
+  );
   const localStorageSnapshot = useSyncExternalStore(
     subscribeToLocalSimulationChanges,
     () =>
@@ -233,24 +282,71 @@ export function TeacherLearningTools({
     [localReportData.attempts, serverAttempts],
   );
 
+  const reportPeriod = useMemo(
+    () => getReportPeriod(periodMode, selectedDate),
+    [periodMode, selectedDate],
+  );
+
+  const periodAttempts = useMemo(
+    () =>
+      allAttempts
+        .filter((attempt) => {
+          const value = getAttemptDate(attempt);
+          const timestamp = value ? Date.parse(value) : Number.NaN;
+
+          return (
+            Number.isFinite(timestamp) &&
+            timestamp >= reportPeriod.startAt &&
+            timestamp < reportPeriod.endAt
+          );
+        })
+        .map((attempt) => ({
+          ...attempt,
+          score: getAttemptScore(attempt),
+        })),
+    [allAttempts, reportPeriod.endAt, reportPeriod.startAt],
+  );
+
+  const periodAnswers = useMemo(() => {
+    const attemptIds = new Set(periodAttempts.map((attempt) => attempt.id));
+
+    return allAnswers.filter((answer) => {
+      const attemptId = answer.attempt_id ?? answer.simulation_id;
+      return Boolean(attemptId && attemptIds.has(attemptId));
+    });
+  }, [allAnswers, periodAttempts]);
+
+  const periodStudents = useMemo(
+    () =>
+      students.map((student) =>
+        buildPeriodStudent(
+          student,
+          periodAttempts.filter(
+            (attempt) => attempt.student_id === student.id,
+          ),
+        ),
+      ),
+    [periodAttempts, students],
+  );
+
   const moduleAnalytics = useMemo(
-    () => buildTeacherModulesFromAnswers(allAnswers),
-    [allAnswers],
+    () => buildTeacherModulesFromAnswers(periodAnswers),
+    [periodAnswers],
   );
 
   const questionAnalytics = useMemo(
-    () => buildTeacherQuestionsFromAnswers(allAnswers, 8),
-    [allAnswers],
+    () => buildTeacherQuestionsFromAnswers(periodAnswers, 8),
+    [periodAnswers],
   );
 
   const studentReportRows = useMemo(
     () =>
-      students
+      periodStudents
         .map((student) => {
-          const answers = allAnswers.filter(
+          const answers = periodAnswers.filter(
             (answer) => answer.student_id === student.id,
           );
-          const attempts = allAttempts.filter(
+          const attempts = periodAttempts.filter(
             (attempt) => attempt.student_id === student.id,
           );
           const totals = getAnswerTotals(answers);
@@ -265,11 +361,13 @@ export function TeacherLearningTools({
         .sort((left, right) =>
           left.student.fullName.localeCompare(right.student.fullName),
         ),
-    [allAnswers, allAttempts, students],
+    [periodAnswers, periodAttempts, periodStudents],
   );
 
   function exportCsv() {
     const rows = [
+      ["Período del reporte", reportPeriod.label],
+      [],
       [
         "Estudiante",
         "Correo",
@@ -286,7 +384,7 @@ export function TeacherLearningTools({
           student.fullName,
           student.email,
           student.careerLabel,
-          attempts.length || student.simulationsCount,
+          attempts.length,
           formatScore(student.averageScore),
           formatScore(student.bestScore),
           totals.correct,
@@ -316,7 +414,7 @@ export function TeacherLearningTools({
     ];
 
     downloadBlob(
-      "reporte-docente-caces.csv",
+      `reporte-docente-caces-${reportPeriod.filePart}.csv`,
       rows.map((row) => row.map(csvValue).join(",")).join("\n"),
       "text/csv;charset=utf-8",
     );
@@ -329,7 +427,7 @@ export function TeacherLearningTools({
           `<tr><td>${escapeHtml(student.fullName)}</td><td>${escapeHtml(
             student.email,
           )}</td><td>${escapeHtml(student.careerLabel)}</td><td>${
-            attempts.length || student.simulationsCount
+            attempts.length
           }</td><td>${escapeHtml(formatScore(student.averageScore))}</td><td>${escapeHtml(
             formatScore(student.bestScore),
           )}</td><td>${totals.correct}</td><td>${totals.incorrect}</td><td>${
@@ -347,10 +445,10 @@ export function TeacherLearningTools({
           )}</td></tr>`,
       )
       .join("");
-    const workbook = `<html><body><h1>Reporte docente CACES</h1><h2>Estudiantes</h2><table border="1"><tr><th>Estudiante</th><th>Correo</th><th>Carrera</th><th>Simulaciones</th><th>Promedio</th><th>Mejor</th><th>Correctas</th><th>Incorrectas</th><th>No respondidas</th></tr>${studentRows}</table><h2>Analítica por categoría</h2><table border="1"><tr><th>Categoría</th><th>Respuestas</th><th>Correctas</th><th>Incorrectas</th><th>No respondidas</th><th>Desempeño</th><th>Tasa de alerta</th></tr>${moduleRows}</table></body></html>`;
+    const workbook = `<html><body><h1>Reporte docente CACES</h1><p><strong>Período:</strong> ${escapeHtml(reportPeriod.label)}</p><h2>Estudiantes</h2><table border="1"><tr><th>Estudiante</th><th>Correo</th><th>Carrera</th><th>Simulaciones</th><th>Promedio</th><th>Mejor</th><th>Correctas</th><th>Incorrectas</th><th>No respondidas</th></tr>${studentRows}</table><h2>Analítica por categoría</h2><table border="1"><tr><th>Categoría</th><th>Respuestas</th><th>Correctas</th><th>Incorrectas</th><th>No respondidas</th><th>Desempeño</th><th>Tasa de alerta</th></tr>${moduleRows}</table></body></html>`;
 
     downloadBlob(
-      "reporte-docente-caces.xls",
+      `reporte-docente-caces-${reportPeriod.filePart}.xls`,
       workbook,
       "application/vnd.ms-excel;charset=utf-8",
     );
@@ -363,15 +461,19 @@ export function TeacherLearningTools({
     try {
       const generatedAt = new Date();
       const report = await buildTeacherAnalyticsReportPdf({
-        students,
+        students: periodStudents,
         modules: moduleAnalytics,
         questions: questionAnalytics,
-        attempts: allAttempts,
-        answers: allAnswers,
+        attempts: periodAttempts,
+        answers: periodAnswers,
         generatedAt,
+        periodLabel: reportPeriod.label,
       });
       downloadBlob(
-        getTeacherAnalyticsReportFilename(generatedAt),
+        getTeacherAnalyticsReportFilename(
+          generatedAt,
+          reportPeriod.filePart,
+        ),
         report,
         "application/pdf",
       );
@@ -388,10 +490,10 @@ export function TeacherLearningTools({
 
     try {
       const generatedAt = new Date();
-      const studentAnswers = allAnswers.filter(
+      const studentAnswers = periodAnswers.filter(
         (answer) => answer.student_id === student.id,
       );
-      const studentAttempts = allAttempts.filter(
+      const studentAttempts = periodAttempts.filter(
         (attempt) => attempt.student_id === student.id,
       );
       const report = await buildStudentAnalyticsReportPdf({
@@ -401,10 +503,15 @@ export function TeacherLearningTools({
         modules: buildTeacherModulesFromAnswers(studentAnswers),
         questions: buildTeacherQuestionsFromAnswers(studentAnswers, 8),
         generatedAt,
+        periodLabel: reportPeriod.label,
       });
 
       downloadBlob(
-        getTeacherStudentReportFilename(student, generatedAt),
+        getTeacherStudentReportFilename(
+          student,
+          generatedAt,
+          reportPeriod.filePart,
+        ),
         report,
         "application/pdf",
       );
@@ -458,6 +565,66 @@ export function TeacherLearningTools({
             )}
             {isExportingPdf ? "Generando..." : "Reporte general PDF"}
           </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-800">
+            <CalendarDays className="h-4 w-4 text-sky-700" aria-hidden="true" />
+            Período del reporte
+          </p>
+          <p className="mt-1 text-sm text-slate-500">
+            Mostrando {periodAttempts.length} intento
+            {periodAttempts.length === 1 ? "" : "s"} de {reportPeriod.label}.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+          <div>
+            <span className="text-sm font-semibold text-slate-600">
+              Agrupar por
+            </span>
+            <div
+              role="group"
+              aria-label="Seleccionar período del reporte"
+              className="mt-2 inline-flex rounded-lg border border-slate-200 bg-slate-50 p-1"
+            >
+              {([
+                ["day", "Día"],
+                ["week", "Semana"],
+              ] as const).map(([value, label]) => {
+                const isActive = periodMode === value;
+
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => setPeriodMode(value)}
+                    className={`h-9 rounded-md px-4 text-sm font-semibold transition ${
+                      isActive
+                        ? "bg-slate-950 text-white shadow-sm"
+                        : "text-slate-600 hover:bg-white hover:text-slate-950"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <label className="text-sm font-semibold text-slate-600">
+            {periodMode === "day" ? "Fecha" : "Fecha dentro de la semana"}
+            <input
+              type="date"
+              value={selectedDate}
+              max={getCurrentEcuadorDateValue()}
+              onChange={(event) => setSelectedDate(event.target.value)}
+              className="mt-2 block h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 shadow-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+            />
+          </label>
         </div>
       </div>
 
@@ -522,7 +689,7 @@ export function TeacherLearningTools({
                         {student.careerLabel}
                       </td>
                       <td className="px-4 py-3 text-right font-medium text-slate-700">
-                        {attempts.length || student.simulationsCount}
+                        {attempts.length}
                       </td>
                       <td className="px-4 py-3 text-right font-medium text-emerald-700">
                         {totals.correct}

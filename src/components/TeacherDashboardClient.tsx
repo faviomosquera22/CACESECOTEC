@@ -46,6 +46,7 @@ type TeacherDashboardClientProps = {
 
 type CareerFilter = "all" | StudentCareerSlug;
 type ActivityFilter = "all" | "active" | "inactive" | "low-score";
+type AccessFilter = "all" | "enabled" | "disabled";
 type SortKey = "name" | "average" | "lastActivity" | "simulations";
 type CareerOverride = {
   careerSlug: StudentCareerSlug;
@@ -184,6 +185,7 @@ export function TeacherDashboardClient({
   const [careerFilter, setCareerFilter] =
     useState<CareerFilter>(teacherCareerScope);
   const [activityFilter, setActivityFilter] = useState<ActivityFilter>("all");
+  const [accessFilter, setAccessFilter] = useState<AccessFilter>("all");
   const [sortKey, setSortKey] = useState<SortKey>("lastActivity");
   const [savingCareerStudentId, setSavingCareerStudentId] = useState<
     string | null
@@ -284,28 +286,44 @@ export function TeacherDashboardClient({
     );
   }, [careerFilter, studentsWithResults]);
 
+  const accessFilteredStudents = useMemo(() => {
+    if (accessFilter === "enabled") {
+      return careerFilteredStudents.filter(
+        (student) => student.simulatorAccessEnabled,
+      );
+    }
+
+    if (accessFilter === "disabled") {
+      return careerFilteredStudents.filter(
+        (student) => !student.simulatorAccessEnabled,
+      );
+    }
+
+    return careerFilteredStudents;
+  }, [accessFilter, careerFilteredStudents]);
+
   const activityFilteredStudents = useMemo(() => {
     if (activityFilter === "active") {
-      return careerFilteredStudents.filter(
+      return accessFilteredStudents.filter(
         (student) => student.simulationsCount > 0,
       );
     }
 
     if (activityFilter === "inactive") {
-      return careerFilteredStudents.filter(
+      return accessFilteredStudents.filter(
         (student) => student.simulationsCount === 0,
       );
     }
 
     if (activityFilter === "low-score") {
-      return careerFilteredStudents.filter(
+      return accessFilteredStudents.filter(
         (student) =>
           student.simulationsCount > 0 && student.averageScore < 50,
       );
     }
 
-    return careerFilteredStudents;
-  }, [activityFilter, careerFilteredStudents]);
+    return accessFilteredStudents;
+  }, [accessFilteredStudents, activityFilter]);
 
   const filteredStudents = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -349,28 +367,52 @@ export function TeacherDashboardClient({
       {
         slug: "all" as const,
         label: "Todos los estados",
-        count: careerFilteredStudents.length,
+        count: accessFilteredStudents.length,
       },
       {
         slug: "active" as const,
         label: "Activos",
-        count: careerFilteredStudents.filter(
+        count: accessFilteredStudents.filter(
           (student) => student.simulationsCount > 0,
         ).length,
       },
       {
         slug: "inactive" as const,
         label: "Sin intentos",
-        count: careerFilteredStudents.filter(
+        count: accessFilteredStudents.filter(
           (student) => student.simulationsCount === 0,
         ).length,
       },
       {
         slug: "low-score" as const,
         label: "Puntaje bajo",
-        count: careerFilteredStudents.filter(
+        count: accessFilteredStudents.filter(
           (student) =>
             student.simulationsCount > 0 && student.averageScore < 50,
+        ).length,
+      },
+    ],
+    [accessFilteredStudents],
+  );
+  const accessFilterOptions = useMemo(
+    () => [
+      {
+        slug: "all" as const,
+        label: "Todos",
+        count: careerFilteredStudents.length,
+      },
+      {
+        slug: "enabled" as const,
+        label: "Habilitados",
+        count: careerFilteredStudents.filter(
+          (student) => student.simulatorAccessEnabled,
+        ).length,
+      },
+      {
+        slug: "disabled" as const,
+        label: "Deshabilitados",
+        count: careerFilteredStudents.filter(
+          (student) => !student.simulatorAccessEnabled,
         ).length,
       },
     ],
@@ -468,6 +510,7 @@ export function TeacherDashboardClient({
       setDeleteStudentMessage("");
       setCareerFilter(teacherCareerScope);
       setActivityFilter("all");
+      setAccessFilter("all");
       setQuery("");
       setShowCreateDialog(false);
       setCreateStudentForm(getInitialCreateStudentForm(teacherCareerScope));
@@ -846,7 +889,7 @@ export function TeacherDashboardClient({
             </div>
           </div>
 
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_16rem]">
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_14rem_16rem]">
             <div
               aria-label="Filtrar estudiantes por estado"
               className="flex flex-wrap gap-2"
@@ -880,6 +923,29 @@ export function TeacherDashboardClient({
                 );
               })}
             </div>
+
+            <label className="text-sm font-semibold text-slate-600">
+              Acceso al simulador
+              <div className="mt-2 flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 shadow-sm">
+                <LockKeyhole
+                  className="h-4 w-4 text-slate-400"
+                  aria-hidden="true"
+                />
+                <select
+                  value={accessFilter}
+                  onChange={(event) =>
+                    setAccessFilter(event.target.value as AccessFilter)
+                  }
+                  className="h-full w-full bg-transparent text-sm font-semibold text-slate-700 outline-none"
+                >
+                  {accessFilterOptions.map((option) => (
+                    <option key={option.slug} value={option.slug}>
+                      {option.label} ({option.count})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </label>
 
             <label className="text-sm font-semibold text-slate-600">
               Ordenar por
@@ -939,7 +1005,7 @@ export function TeacherDashboardClient({
         {sortedStudents.length === 0 ? (
           <div className="mt-5 rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
             No hay estudiantes para mostrar con los filtros actuales. Revisa la
-            búsqueda, la carrera seleccionada o el estado de actividad.
+            búsqueda, el acceso al simulador o el estado de actividad.
           </div>
         ) : (
           <div className="mt-5 overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
