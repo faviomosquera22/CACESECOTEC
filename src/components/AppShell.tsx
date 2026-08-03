@@ -4,6 +4,7 @@ import { GraduationCap } from "lucide-react";
 import type { Profile } from "@/lib/database.types";
 import { ContentProtection } from "@/components/ContentProtection";
 import { LogoutButton } from "@/components/LogoutButton";
+import { NavigationPendingIndicator } from "@/components/NavigationPendingIndicator";
 
 export type NavItem = {
   href: string;
@@ -58,6 +59,7 @@ export function AppShell({ profile, navItems, children }: AppShellProps) {
                 >
                   {item.icon}
                   {item.label}
+                  <NavigationPendingIndicator />
                 </Link>
               ))}
             </nav>

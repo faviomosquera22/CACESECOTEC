@@ -50,40 +50,41 @@ export async function getTeacherStudentCards(
         );
   const studentIds = students.map((student) => student.id);
 
-  const { data: accessRows } =
+  const [accessResult, simulationResult, attemptResult] = await Promise.all([
     studentIds.length > 0
-      ? await supabase
+      ? supabase
           .from("student_simulator_access")
           .select("student_id, enabled")
           .in("student_id", studentIds)
           .returns<{ student_id: string; enabled: boolean }[]>()
-      : { data: [] };
-  const accessByStudent = new Map(
-    (accessRows ?? []).map((access) => [access.student_id, access.enabled]),
-  );
-
-  const { data: simulationRows } =
+      : Promise.resolve({ data: [] }),
     studentIds.length > 0
-      ? await supabase
+      ? supabase
           .from("simulations")
           .select("*")
           .in("student_id", studentIds)
           .or("status.eq.finished,status.is.null")
           .order("created_at", { ascending: false })
           .returns<Simulation[]>()
-      : { data: [] };
-
-  const simulations = simulationRows ?? [];
-  const { data: attemptRows } =
+      : Promise.resolve({ data: [] }),
     studentIds.length > 0
-      ? await supabase
+      ? supabase
           .from("simulation_attempts")
           .select(`student_id, ${simulationAttemptHistorySelect}`)
           .in("student_id", studentIds)
           .eq("status", "finished")
           .order("created_at", { ascending: false })
           .returns<(SimulationAttemptHistoryRow & { student_id: string })[]>()
-      : { data: [] };
+      : Promise.resolve({ data: [] }),
+  ]);
+  const accessRows = accessResult.data;
+  const accessByStudent = new Map(
+    (accessRows ?? []).map((access) => [access.student_id, access.enabled]),
+  );
+
+  const simulationRows = simulationResult.data;
+  const simulations = simulationRows ?? [];
+  const attemptRows = attemptResult.data;
   const attemptsByStudent = new Map<
     string,
     (SimulationAttemptHistoryRow & { student_id: string })[]

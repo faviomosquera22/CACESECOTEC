@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import type { User } from "@supabase/supabase-js";
 import type { Profile, ProfileRole } from "@/lib/database.types";
 import { getRoleHomePath } from "@/lib/routes";
@@ -28,30 +29,32 @@ export function isStudentProfileComplete(profile: Profile) {
   );
 }
 
-export async function getCurrentAuthContext(): Promise<AuthContext | null> {
-  const supabase = await createSupabaseServerClient();
+export const getCurrentAuthContext = cache(
+  async (): Promise<AuthContext | null> => {
+    const supabase = await createSupabaseServerClient();
 
-  if (!supabase) {
-    return null;
-  }
+    if (!supabase) {
+      return null;
+    }
 
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-  if (userError || !user) {
-    return null;
-  }
+    if (userError || !user) {
+      return null;
+    }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id, full_name, email, role, career, created_at")
-    .eq("id", user.id)
-    .maybeSingle();
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("id, full_name, email, role, career, created_at")
+      .eq("id", user.id)
+      .maybeSingle();
 
-  return { supabase, user, profile };
-}
+    return { supabase, user, profile };
+  },
+);
 
 export async function requireProfile(
   allowedRoles?: ProfileRole[],
