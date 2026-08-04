@@ -1,4 +1,5 @@
 import type { Question } from "@/lib/database.types";
+import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
 import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
 import {
   filterQuestionsForSimulatorSettings,
@@ -131,6 +132,35 @@ const october2023QuestionRepairs = new Map(
   Object.entries(october2023QuestionTextRepairs),
 );
 
+type NursingQuestionRepair = {
+  difficulty: string;
+  match_question_text: string;
+} & Partial<
+  Pick<
+    Question,
+    | "question_text"
+    | "option_a"
+    | "option_b"
+    | "option_c"
+    | "option_d"
+    | "correct_option"
+    | "explanation"
+  >
+>;
+
+function getNursingQuestionRepairKey(difficulty: string, questionText: string) {
+  return `${difficulty}\u0000${questionText.trim()}`;
+}
+
+const nursingQuestionRepairsBySource = new Map(
+  (nursingQuestionRepairs as NursingQuestionRepair[]).map(
+    ({ difficulty, match_question_text, ...repair }) => [
+      getNursingQuestionRepairKey(difficulty, match_question_text),
+      repair,
+    ],
+  ),
+);
+
 const questionOptionRepairs = new Map<string, Partial<Question>>([
   [
     "DM2-Al realizar la valoración física de enfermería a una paciente hospitalizada con diagnóstico de diabetes mellitus, se observa erupciones cutáneas en todo su cuerpo, exudado con secreción purulenta, prurito y zona eritematosa. ¿Qué patrón funcional se encuentra alterado?",
@@ -204,7 +234,11 @@ function normalizeOptionText(value: string) {
 
 function repairQuestionText(question: Question) {
   const sourceText = question.question_text.trim();
+  const importedQuestionRepair = nursingQuestionRepairsBySource.get(
+    getNursingQuestionRepairKey(question.difficulty ?? "", sourceText),
+  );
   const repairedText =
+    importedQuestionRepair?.question_text ??
     questionTextRepairs.get(sourceText) ??
     (question.difficulty === "CACES Octubre 2023"
       ? october2023QuestionRepairs.get(sourceText)
@@ -215,9 +249,10 @@ function repairQuestionText(question: Question) {
       : undefined;
   const media = questionMediaByText.get(sourceText);
 
-  return repairedText || media || optionRepairs
+  return repairedText || media || optionRepairs || importedQuestionRepair
     ? {
         ...question,
+        ...importedQuestionRepair,
         ...media,
         ...optionRepairs,
         question_text: repairedText ?? question.question_text,
@@ -273,6 +308,25 @@ export function isUsableQuestion(question: Question) {
     return false;
   }
 
+  if (/^[a-záéíóúñ]/.test(questionText)) {
+    return false;
+  }
+
+  if (
+    options.some((option) => /_{5,}/.test(option)) &&
+    !/_{5,}/.test(questionText)
+  ) {
+    return false;
+  }
+
+  if (
+    /\b(?:por el|por la|para el|para la|con el|con la|como|que|y|o)\s*$/i.test(
+      questionText,
+    )
+  ) {
+    return false;
+  }
+
   const normalizedOptions = options.map(normalizeOptionText);
 
   if (normalizedOptions.some((option) => brokenOptionTexts.has(option))) {
@@ -292,15 +346,32 @@ function getQuestionArea(question: Question, distribution: ExamDistribution) {
 }
 
 function dedupeQuestions(questions: Question[]) {
-  const seen = new Set<string>();
+  const seenIds = new Set<string>();
+  const seenContent = new Set<string>();
   const result: Question[] = [];
 
   questions.forEach((question) => {
-    if (seen.has(question.id)) {
+    const options = [
+      question.option_a,
+      question.option_b,
+      question.option_c,
+      question.option_d,
+    ];
+    const correctOptionIndex = ["A", "B", "C", "D"].indexOf(
+      question.correct_option,
+    );
+    const contentKey = [
+      normalizeOptionText(question.question_text),
+      ...options.map(normalizeOptionText).sort(),
+      normalizeOptionText(options[correctOptionIndex] ?? ""),
+    ].join("\u0000");
+
+    if (seenIds.has(question.id) || seenContent.has(contentKey)) {
       return;
     }
 
-    seen.add(question.id);
+    seenIds.add(question.id);
+    seenContent.add(contentKey);
     result.push(question);
   });
 
@@ -380,9 +451,9 @@ function selectDistributedExamQuestions(
   distribution: ExamDistribution,
   random: () => number,
 ) {
-  const usableQuestions = questions
-    .map(repairQuestionText)
-    .filter(isUsableQuestion);
+  const usableQuestions = dedupeQuestions(
+    questions.map(repairQuestionText).filter(isUsableQuestion),
+  );
   const selected: Question[] = [];
   const targetCount = distribution.reduce((total, item) => total + item.count, 0);
 

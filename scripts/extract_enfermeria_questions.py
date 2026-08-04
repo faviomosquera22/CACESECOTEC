@@ -110,6 +110,12 @@ OCTOBER_2023_REPAIRS_PATH = (
     / "data"
     / "enfermeriaQuestionTextRepairs.json"
 )
+QUESTION_REPAIRS_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "src"
+    / "data"
+    / "enfermeriaQuestionRepairs.json"
+)
 
 
 def load_october_2023_question_repairs() -> dict[str, str]:
@@ -120,6 +126,63 @@ def load_october_2023_question_repairs() -> dict[str, str]:
 
 
 OCTOBER_2023_QUESTION_REPAIRS = load_october_2023_question_repairs()
+
+
+def load_question_repairs() -> dict[tuple[str, str], dict[str, str]]:
+    if not QUESTION_REPAIRS_PATH.exists():
+        return {}
+
+    repairs = json.loads(QUESTION_REPAIRS_PATH.read_text(encoding="utf-8"))
+    return {
+        (repair["difficulty"], repair["match_question_text"]): {
+            key: value
+            for key, value in repair.items()
+            if key not in {"difficulty", "match_question_text"}
+        }
+        for repair in repairs
+    }
+
+
+QUESTION_REPAIRS = load_question_repairs()
+
+
+def apply_question_repair(
+    question: dict[str, object],
+    source: str,
+) -> dict[str, object]:
+    repair = QUESTION_REPAIRS.get(
+        (source, str(question["question_text"]).strip())
+    )
+
+    if not repair:
+        return question
+
+    return {**question, **repair}
+
+
+def passes_post_repair_quality(question: dict[str, object]) -> bool:
+    question_text = str(question["question_text"]).strip()
+    options = [
+        str(question[f"option_{letter.lower()}"]).strip()
+        for letter in OPTION_LETTERS
+    ]
+
+    if re.match(r"^[a-záéíóúñ]", question_text):
+        return False
+
+    if any(re.search(r"_{5,}", option) for option in options) and not re.search(
+        r"_{5,}", question_text
+    ):
+        return False
+
+    if re.search(
+        r"\b(?:por el|por la|para el|para la|con el|con la|como|que|y|o)\s*$",
+        question_text,
+        flags=re.IGNORECASE,
+    ):
+        return False
+
+    return True
 
 
 def clean_line(line: str) -> str:
@@ -1479,6 +1542,11 @@ def load_questions() -> list[dict[str, object]]:
 
     for source_path, source, parser in sources:
         for question in parser(source_path, source):
+            question = apply_question_repair(question, source)
+
+            if not passes_post_repair_quality(question):
+                continue
+
             key = question_key(question)
             question_text_key = re.sub(
                 r"\W+", "", str(question["question_text"]).lower()
@@ -1494,6 +1562,11 @@ def load_questions() -> list[dict[str, object]]:
 
     for doc_id, source in GOOGLE_DOCS:
         for question in parse_google_doc(doc_id, source):
+            question = apply_question_repair(question, source)
+
+            if not passes_post_repair_quality(question):
+                continue
+
             key = question_key(question)
             question_text_key = re.sub(
                 r"\W+", "", str(question["question_text"]).lower()
