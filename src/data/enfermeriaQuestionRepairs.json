@@ -120,8 +120,28 @@
     "question_text": "Identifique el efecto que produce la aplicación del frío:"
   },
   {
+    "difficulty": "CACES 2022",
+    "match_question_text": "Paciente embarazada de 32 semanas de gestación que acude al control prenatal; dentro de la valoración a la gestante debe realizar las maniobras de Leopold. ¿Que valora la segunda maniobra? La presentación del feto El encajamiento y movilidad de la cabeza del feto en la entrada de la pelvis materna Situación en relación del eje longitudinal del feto con el útero Si la cabeza esta encajada en relación con los planos de Hodge",
+    "question_text": "Paciente embarazada de 32 semanas de gestación que acude al control prenatal; dentro de la valoración a la gestante debe realizar las maniobras de Leopold. ¿Qué valora la segunda maniobra?"
+  },
+  {
+    "difficulty": "CACES 2022",
+    "match_question_text": "El Plan Nacional de Salud Sexual y Reproductiva, considera importante la aplicación de 4 principios de la bioética refiriendose a: Intervención de la comunidad, autonomía, maleficencia, justicia. Autonomía, no maleficencia, beneficencia, justicia. Potencial de salud, intervención, vinculación, autonomía. Vinculación, intervención, justicia, autonomía.",
+    "question_text": "El Plan Nacional de Salud Sexual y Reproductiva considera importante la aplicación de cuatro principios de la bioética. ¿Cuáles son estos principios?"
+  },
+  {
+    "difficulty": "Preguntas referenciales EHEP Mayo",
+    "match_question_text": "Durante la valoración integral, el profesional de enfermería identifica peso por debajo del percentil esperado, escasa interacción social, vocabulario limitado y retraso en habilidades motoras finas para su edad. La madre refiere que la menor permanece la mayor parte del tiempo frente a dispositivos electrónicos y presenta alimentación basada principalmente en carbohidratos simples. ¿Cuál es la intervención MÁS adecuada según vigilancia integral del crecimiento y desarrollo?",
+    "question_text": "Niña de 3 años acude a consulta comunitaria acompañada de su madre. Durante la valoración integral, el profesional de enfermería identifica peso por debajo del percentil esperado, escasa interacción social, vocabulario limitado y retraso en habilidades motoras finas para su edad. La madre refiere que la menor permanece la mayor parte del tiempo frente a dispositivos electrónicos y presenta alimentación basada principalmente en carbohidratos simples. ¿Cuál es la intervención más adecuada según la vigilancia integral del crecimiento y desarrollo?"
+  },
+  {
+    "difficulty": "Preguntas referenciales EHEP Mayo",
+    "match_question_text": "Durante el seguimiento, refiere sentirse mejor y manifiesta intención de suspender la medicación porque ya no presenta síntomas. ¿Cuál debe ser la respuesta del profesional de enfermería?",
+    "question_text": "Paciente masculino con tuberculosis pulmonar inicia tratamiento DOTS. Durante el seguimiento, refiere sentirse mejor y manifiesta intención de suspender la medicación porque ya no presenta síntomas. ¿Cuál debe ser la respuesta del profesional de enfermería?"
+  },
+  {
     "difficulty": "Preguntas referenciales EHEP Mayo",
     "match_question_text": "paciente, ¿cuál constituye la intervención PRIORITARIA e inmediata?",
-    "question_text": "Según las prácticas seguras administrativas y asistenciales promovidas por el MSP para la seguridad del paciente, ¿cuál constituye la intervención prioritaria e inmediata?"
+    "question_text": "Paciente masculino de 72 años hospitalizado en una unidad de medicina interna por neumonía adquirida en la comunidad presenta riesgo elevado de caída debido a debilidad muscular, uso de oxigenoterapia continua y antecedentes de desorientación nocturna. Durante el turno nocturno, la enfermera identifica que el paciente intenta levantarse solo para acudir al baño, mientras el piso permanece húmedo después de procedimientos de limpieza. Además, el brazalete de identificación se encuentra parcialmente ilegible y no se ha realizado la verificación cruzada de medicamentos antes de su administración intravenosa. Según las prácticas seguras administrativas y asistenciales promovidas por el MSP para la seguridad del paciente, ¿cuál constituye la intervención prioritaria e inmediata?"
   }
 ]

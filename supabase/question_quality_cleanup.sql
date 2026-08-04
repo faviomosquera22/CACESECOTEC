@@ -211,7 +211,11 @@ insert into imported_question_repairs (
   ('CACES Mayo 2026 intento 9', 'Con relación a la osteoporosis, complete el siguiente enunciado:', 'Con relación a la osteoporosis, complete el siguiente enunciado: La osteoporosis primaria puede aparecer en la __________; la osteoporosis secundaria se asocia a factores como __________ y __________.', 'Senectud - uso de anticonvulsivos - aumento en la ingestión de calcio.', 'Pubertad - consumo de calcio - ejercicio de soporte de peso.', null, 'Senectud - edad del paciente - aumento en la ingestión de calcio.'),
   ('CACES Mayo 2026 intento 9', 'DT, influenza, IPV, tifoidea y rotavirus. La epidemiología descriptiva estudia, entre otras, las medidas de frecuencia de la enfermedad. ¿Qué indicador debe utilizar el profesional enfermero de un subcentro de salud en el que se presenta un brote de tifoidea para realizar la intervención correspondiente?', 'La epidemiología descriptiva estudia, entre otras, las medidas de frecuencia de la enfermedad. ¿Qué indicador debe utilizar el profesional de enfermería de un subcentro de salud en el que se presenta un brote de tifoidea para realizar la intervención correspondiente?', null, null, null, null),
   ('CACES Mayo 2026 intento 10', 'Valorar las vesículas que se formen. Identifique el efecto que produce la aplicación del frío', 'Identifique el efecto que produce la aplicación del frío:', null, null, null, null),
-  ('Preguntas referenciales EHEP Mayo', 'paciente, ¿cuál constituye la intervención PRIORITARIA e inmediata?', 'Según las prácticas seguras administrativas y asistenciales promovidas por el MSP para la seguridad del paciente, ¿cuál constituye la intervención prioritaria e inmediata?', null, null, null, null);
+  ('CACES 2022', 'Paciente embarazada de 32 semanas de gestación que acude al control prenatal; dentro de la valoración a la gestante debe realizar las maniobras de Leopold. ¿Que valora la segunda maniobra? La presentación del feto El encajamiento y movilidad de la cabeza del feto en la entrada de la pelvis materna Situación en relación del eje longitudinal del feto con el útero Si la cabeza esta encajada en relación con los planos de Hodge', 'Paciente embarazada de 32 semanas de gestación que acude al control prenatal; dentro de la valoración a la gestante debe realizar las maniobras de Leopold. ¿Qué valora la segunda maniobra?', null, null, null, null),
+  ('CACES 2022', 'El Plan Nacional de Salud Sexual y Reproductiva, considera importante la aplicación de 4 principios de la bioética refiriendose a: Intervención de la comunidad, autonomía, maleficencia, justicia. Autonomía, no maleficencia, beneficencia, justicia. Potencial de salud, intervención, vinculación, autonomía. Vinculación, intervención, justicia, autonomía.', 'El Plan Nacional de Salud Sexual y Reproductiva considera importante la aplicación de cuatro principios de la bioética. ¿Cuáles son estos principios?', null, null, null, null),
+  ('Preguntas referenciales EHEP Mayo', 'Durante la valoración integral, el profesional de enfermería identifica peso por debajo del percentil esperado, escasa interacción social, vocabulario limitado y retraso en habilidades motoras finas para su edad. La madre refiere que la menor permanece la mayor parte del tiempo frente a dispositivos electrónicos y presenta alimentación basada principalmente en carbohidratos simples. ¿Cuál es la intervención MÁS adecuada según vigilancia integral del crecimiento y desarrollo?', 'Niña de 3 años acude a consulta comunitaria acompañada de su madre. Durante la valoración integral, el profesional de enfermería identifica peso por debajo del percentil esperado, escasa interacción social, vocabulario limitado y retraso en habilidades motoras finas para su edad. La madre refiere que la menor permanece la mayor parte del tiempo frente a dispositivos electrónicos y presenta alimentación basada principalmente en carbohidratos simples. ¿Cuál es la intervención más adecuada según la vigilancia integral del crecimiento y desarrollo?', null, null, null, null),
+  ('Preguntas referenciales EHEP Mayo', 'Durante el seguimiento, refiere sentirse mejor y manifiesta intención de suspender la medicación porque ya no presenta síntomas. ¿Cuál debe ser la respuesta del profesional de enfermería?', 'Paciente masculino con tuberculosis pulmonar inicia tratamiento DOTS. Durante el seguimiento, refiere sentirse mejor y manifiesta intención de suspender la medicación porque ya no presenta síntomas. ¿Cuál debe ser la respuesta del profesional de enfermería?', null, null, null, null),
+  ('Preguntas referenciales EHEP Mayo', 'paciente, ¿cuál constituye la intervención PRIORITARIA e inmediata?', 'Paciente masculino de 72 años hospitalizado en una unidad de medicina interna por neumonía adquirida en la comunidad presenta riesgo elevado de caída debido a debilidad muscular, uso de oxigenoterapia continua y antecedentes de desorientación nocturna. Durante el turno nocturno, la enfermera identifica que el paciente intenta levantarse solo para acudir al baño, mientras el piso permanece húmedo después de procedimientos de limpieza. Además, el brazalete de identificación se encuentra parcialmente ilegible y no se ha realizado la verificación cruzada de medicamentos antes de su administración intravenosa. Según las prácticas seguras administrativas y asistenciales promovidas por el MSP para la seguridad del paciente, ¿cuál constituye la intervención prioritaria e inmediata?', null, null, null, null);
 
 update public.questions as question
 set
@@ -223,5 +227,28 @@ set
 from imported_question_repairs as repair
 where question.difficulty = repair.difficulty
   and question.question_text = repair.old_text;
+
+update public.questions
+set question_text = regexp_replace(
+  question_text,
+  '^Tipo:\s*Caso clínico( complejo)?\s+',
+  '',
+  'i'
+)
+where difficulty = 'Preguntas referenciales EHEP Mayo'
+  and question_text ~* '^Tipo:\s*Caso clínico( complejo)?\s+';
+
+-- El extractor de los PDF CACES dejó en algunas alternativas los encabezados
+-- de una tabla ("a. b. c. ..."). Se eliminan solo cuando están al final.
+update public.questions
+set
+  option_a = regexp_replace(option_a, '\s+([a-f]\.\s*){3,}$', '', 'i'),
+  option_b = regexp_replace(option_b, '\s+([a-f]\.\s*){3,}$', '', 'i'),
+  option_c = regexp_replace(option_c, '\s+([a-f]\.\s*){3,}$', '', 'i'),
+  option_d = regexp_replace(option_d, '\s+([a-f]\.\s*){3,}$', '', 'i')
+where option_a ~* '\s+([a-f]\.\s*){3,}$'
+   or option_b ~* '\s+([a-f]\.\s*){3,}$'
+   or option_c ~* '\s+([a-f]\.\s*){3,}$'
+   or option_d ~* '\s+([a-f]\.\s*){3,}$';
 
 commit;

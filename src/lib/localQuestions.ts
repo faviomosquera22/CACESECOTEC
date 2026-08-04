@@ -232,6 +232,10 @@ function normalizeOptionText(value: string) {
   return value.trim().replace(/\.$/, "").toLowerCase();
 }
 
+function cleanImportedOptionText(value: string) {
+  return value.replace(/\s+(?:[a-f]\.\s*){3,}$/i, "").trim();
+}
+
 function repairQuestionText(question: Question) {
   const sourceText = question.question_text.trim();
   const importedQuestionRepair = nursingQuestionRepairsBySource.get(
@@ -248,14 +252,52 @@ function repairQuestionText(question: Question) {
       ? questionOptionRepairs.get(sourceText)
       : undefined;
   const media = questionMediaByText.get(sourceText);
+  const candidateText = repairedText ?? question.question_text;
+  const cleanedText =
+    question.difficulty === "Preguntas referenciales EHEP Mayo"
+      ? candidateText.replace(
+          /^Tipo:\s*Caso cl[ií]nico(?:\s+complejo)?\s+/i,
+          "",
+        )
+      : candidateText;
+  const cleanedOptions = {
+    option_a: cleanImportedOptionText(
+      importedQuestionRepair?.option_a ??
+        optionRepairs?.option_a ??
+        question.option_a,
+    ),
+    option_b: cleanImportedOptionText(
+      importedQuestionRepair?.option_b ??
+        optionRepairs?.option_b ??
+        question.option_b,
+    ),
+    option_c: cleanImportedOptionText(
+      importedQuestionRepair?.option_c ??
+        optionRepairs?.option_c ??
+        question.option_c,
+    ),
+    option_d: cleanImportedOptionText(
+      importedQuestionRepair?.option_d ??
+        optionRepairs?.option_d ??
+        question.option_d,
+    ),
+  };
+  const hasCleanedOption = (
+    ["option_a", "option_b", "option_c", "option_d"] as const
+  ).some((key) => cleanedOptions[key] !== question[key]);
 
-  return repairedText || media || optionRepairs || importedQuestionRepair
+  return cleanedText !== question.question_text ||
+    media ||
+    optionRepairs ||
+    importedQuestionRepair ||
+    hasCleanedOption
     ? {
         ...question,
         ...importedQuestionRepair,
         ...media,
         ...optionRepairs,
-        question_text: repairedText ?? question.question_text,
+        ...cleanedOptions,
+        question_text: cleanedText,
       }
     : question;
 }
@@ -294,6 +336,20 @@ export function isUsableQuestion(question: Question) {
 
   if (/\bRespuestas?:\s*[-–]/i.test(questionText)) {
     return false;
+  }
+
+  const promptEnd = questionText.lastIndexOf("?");
+  if (promptEnd >= 0) {
+    const appendedText = normalizeOptionText(questionText.slice(promptEnd + 1));
+    const appendedOptionCount = options
+      .map(normalizeOptionText)
+      .filter(
+        (option) => option.length >= 12 && appendedText.includes(option),
+      ).length;
+
+    if (appendedOptionCount >= 2) {
+      return false;
+    }
   }
 
   if (/\b\d+\s*-\s*PAE\s*-\s*Paciente/i.test(questionText)) {

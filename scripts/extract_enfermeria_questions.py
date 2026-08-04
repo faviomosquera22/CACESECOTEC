@@ -182,6 +182,22 @@ def passes_post_repair_quality(question: dict[str, object]) -> bool:
     ):
         return False
 
+    prompt_end = question_text.rfind("?")
+    if prompt_end >= 0:
+        appended_text = re.sub(
+            r"\W+", " ", question_text[prompt_end + 1 :].lower()
+        ).strip()
+        appended_option_count = sum(
+            1
+            for option in options
+            if len(re.sub(r"\W+", " ", option.lower()).strip()) >= 12
+            and re.sub(r"\W+", " ", option.lower()).strip()
+            in appended_text
+        )
+
+        if appended_option_count >= 2:
+            return False
+
     return True
 
 
@@ -193,6 +209,12 @@ def clean_line(line: str) -> str:
 def clean_option(option: str) -> str:
     option = clean_line(option)
     option = option.replace("\uf00c", "").replace("\uf00d", "").strip()
+    option = re.sub(
+        r"\s+(?:[a-f]\.\s*){3,}$",
+        "",
+        option,
+        flags=re.IGNORECASE,
+    ).strip()
     option = re.sub(r"\s+(?:\d+\.\s*){2,}.*$", "", option).strip()
     option = re.sub(
         r"\s+(?:Complete el enunciado|Seleccione|Identifique|Relacione|Ordene)\b:?.*$",
@@ -999,6 +1021,7 @@ def parse_google_doc_block(
         line
         for line in [*context_lines, *lines[question_start:question_stop]]
         if line.lower() not in {"caso clínico", "opciones", "pregunta"}
+        and not line.lower().startswith("tipo:")
         and not line.lower().startswith("sección:")
     ]
     question_text = clean_question_text(" ".join(question_lines))
