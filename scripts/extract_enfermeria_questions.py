@@ -5,6 +5,7 @@ import hashlib
 from html.parser import HTMLParser
 import json
 import re
+import unicodedata
 import xml.etree.ElementTree as ET
 import zipfile
 from pathlib import Path
@@ -202,6 +203,7 @@ def passes_post_repair_quality(question: dict[str, object]) -> bool:
 
 
 def clean_line(line: str) -> str:
+    line = unicodedata.normalize("NFKC", line)
     line = line.replace("\u00a0", " ")
     return re.sub(r"\s+", " ", line).strip()
 
@@ -1203,7 +1205,10 @@ def parse_explicit_answer_pdf(path: Path, source: str) -> list[dict[str, object]
 def review_attempt_skip_line(line: str) -> bool:
     lower = line.lower()
 
-    if skip_line(line):
+    # Numeric-only lines can be valid alternatives in Moodle reviews (for
+    # example, Glasgow scores). The generic PDF parser treats them as page
+    # numbers, but doing that here silently removes valid answer options.
+    if skip_line(line) and not re.fullmatch(r"\d+(?:[.,]\d+)?", line):
         return True
 
     return bool(
@@ -1281,10 +1286,22 @@ def collect_review_attempt_lines(path: Path) -> list[str]:
             line = clean_line(raw_line)
 
             if skipping_feedback:
-                if is_feedback_continuation(line):
-                    continue
+                answer_marker = re.search(
+                    r"la respuesta correcta es:",
+                    line,
+                    flags=re.IGNORECASE,
+                )
 
-                skipping_feedback = False
+                if answer_marker:
+                    # PDF extraction can join the final feedback sentence and
+                    # the explicit answer on one line. Preserve the answer even
+                    # while the explanatory feedback is being skipped.
+                    line = line[answer_marker.start() :]
+                    skipping_feedback = False
+                elif is_feedback_continuation(line):
+                    continue
+                else:
+                    skipping_feedback = False
 
             if review_attempt_skip_line(line):
                 continue
@@ -1315,10 +1332,14 @@ def split_review_attempt_blocks(lines: list[str]) -> list[tuple[list[str], str]]
 
             while index < len(lines):
                 next_line = lines[index]
+                needs_first_answer_line = not any(answer_parts)
 
                 if (
                     next_line.lower().startswith("la respuesta correcta es:")
-                    or looks_like_new_question(next_line)
+                    or (
+                        not needs_first_answer_line
+                        and looks_like_new_question(next_line)
+                    )
                     or review_attempt_skip_line(next_line)
                     or "\uf00c" in next_line
                     or "\uf00d" in next_line
