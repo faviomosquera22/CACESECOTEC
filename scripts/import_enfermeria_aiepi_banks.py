@@ -46,6 +46,42 @@ BANKS = (
     ),
 )
 
+# Correcciones de redacción aplicadas únicamente al banco del simulador. El
+# contenido clínico y la clave se mantienen fieles a los documentos de origen.
+EDITORIAL_REPAIRS = {
+    ("aiepi-casos-uees", 5): (
+        "Caso clínico: Niño de 4 años en zona de riesgo de dengue, fiebre de "
+        "3 días, hoy con vómito persistente y dolor abdominal intenso continuo. "
+        "¿Cuál es el manejo correcto?"
+    ),
+    ("aiepi-casos-uees", 13): (
+        "Caso clínico: Niño de 4 años con sangre en heces, fiebre y cólicos "
+        "abdominales. ¿Cuál es la conducta correcta antes de referir?"
+    ),
+    ("aiepi-docente-100", 25): (
+        "Caso clínico: Una niña de 4 años que vive en zona de riesgo de dengue "
+        "presenta fiebre de 3 días y hoy inicia con dolor abdominal intenso y "
+        "continuo, y vómito persistente. ¿Cuál es la clasificación correcta según "
+        "la guía?"
+    ),
+    ("aiepi-docente-100", 33): (
+        "Caso clínico: Un niño de 4 años presenta fiebre de 38.5 °C, amígdalas "
+        "eritematosas con exudado purulento, ganglios cervicales anteriores "
+        "crecidos y dolorosos, y ausencia de tos. ¿Cuál es la clasificación "
+        "correcta y el objetivo principal del tratamiento antibiótico según la guía?"
+    ),
+    ("aiepi-docente-100", 39): (
+        "Caso clínico: En un establecimiento de salud ubicado a 2700 metros "
+        "sobre el nivel del mar, se mide una hemoglobina de 12.3 g/dL en un niño. "
+        "Según la tabla de ajuste por altitud de la guía, ¿cuál es la hemoglobina "
+        "corregida por altitud?"
+    ),
+    ("aiepi-docente-100", 59): (
+        "Según los patrones de crecimiento infantil de la OMS incluidos en la "
+        "guía, ¿qué evalúa principalmente el indicador peso para la longitud?"
+    ),
+}
+
 
 def clean(value: str) -> str:
     return re.sub(r"\s+", " ", value.replace("\u00a0", " ")).strip()
@@ -79,7 +115,11 @@ def parse_bank(bank: Bank) -> list[dict[str, object]]:
             raise ValueError(f"{bank.slug}, ítem {heading.group(1)}: falta pregunta o clave.")
 
         preface = [line for line in block[:prompt_index] if line.startswith("Caso clínico:")]
-        prompt = clean(" ".join([*preface, block[prompt_index].removeprefix("Pregunta:")]))
+        source_number = int(heading.group(1))
+        prompt = EDITORIAL_REPAIRS.get(
+            (bank.slug, source_number),
+            clean(" ".join([*preface, block[prompt_index].removeprefix("Pregunta:")])),
+        )
         options: dict[str, str] = {}
         for line in block[prompt_index + 1 : answer_index]:
             match = re.match(r"^([A-D])\.\s*(.+)$", line)
@@ -102,7 +142,7 @@ def parse_bank(bank: Bank) -> list[dict[str, object]]:
         explanation = clean(" ".join([*justification_lines, *references]))
         questions.append(
             {
-                "source_number": int(heading.group(1)),
+                "source_number": source_number,
                 "question_text": prompt,
                 **{f"option_{letter.lower()}": options[letter] for letter in OPTION_LETTERS},
                 "correct_option": answer_match.group(1),
