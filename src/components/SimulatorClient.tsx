@@ -1079,12 +1079,21 @@ export function SimulatorClient({
     }));
   }
 
+  function goToPrevious() {
+    setCurrentIndex((index) => Math.max(0, index - 1));
+  }
+
   function goToNext() {
     if (!answers[currentQuestion.id]) {
       return;
     }
 
-    setCurrentIndex((index) => Math.min(questions.length - 1, index + 1));
+    if (currentIndex === questions.length - 1) {
+      requestFinishSimulation();
+      return;
+    }
+
+    setCurrentIndex((index) => index + 1);
   }
 
   function requestFinishSimulation() {
@@ -1174,7 +1183,8 @@ export function SimulatorClient({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <button
               type="button"
-              disabled
+              onClick={goToPrevious}
+              disabled={currentIndex === 0 || isSubmitting}
               className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -1185,13 +1195,18 @@ export function SimulatorClient({
               onClick={goToNext}
               disabled={
                 !answers[currentQuestion.id] ||
-                currentIndex === questions.length - 1 ||
                 isSubmitting
               }
               className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Siguiente
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              {currentIndex === questions.length - 1
+                ? "Finalizar"
+                : "Siguiente"}
+              {currentIndex === questions.length - 1 ? (
+                <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              )}
             </button>
           </div>
         </div>
@@ -1209,11 +1224,14 @@ export function SimulatorClient({
               const isAnswered = Boolean(answers[question.id]);
 
               return (
-                <div
+                <button
+                  type="button"
                   key={question.id}
+                  onClick={() => setCurrentIndex(index)}
+                  disabled={isSubmitting}
                   aria-current={isCurrent ? "step" : undefined}
                   aria-label={`Pregunta ${index + 1}`}
-                  className={`flex aspect-square min-h-10 items-center justify-center rounded-lg border text-sm font-semibold ${
+                  className={`flex aspect-square min-h-10 items-center justify-center rounded-lg border text-sm font-semibold transition hover:border-sky-400 hover:bg-sky-50 focus:outline-none focus:ring-4 focus:ring-sky-100 disabled:cursor-not-allowed disabled:opacity-60 ${
                     isCurrent
                       ? "border-slate-950 bg-slate-950 text-white"
                       : isAnswered
@@ -1222,7 +1240,7 @@ export function SimulatorClient({
                   }`}
                 >
                   {index + 1}
-                </div>
+                </button>
               );
             })}
           </div>

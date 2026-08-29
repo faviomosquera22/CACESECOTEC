@@ -49,6 +49,16 @@ BANKS = (
         category="Enfermería - Cuidado Familiar, Comunitario e Intercultural",
         difficulty="MAIS-FCI MSP 2018",
     ),
+    Bank(
+        slug="transfusion-sangre",
+        path=Path(
+            "/Users/Apple/Downloads/"
+            "Banco_100_Preguntas_GPC_Transfusion_Sangre_DOCENTE.docx"
+        ),
+        expected_count=100,
+        category="Enfermería - Cuidado y Procedimientos Clínicos de Enfermería",
+        difficulty="GPC Transfusión de Sangre MSP 2013",
+    ),
 )
 
 
@@ -318,6 +328,7 @@ def main() -> None:
         for question in existing
         if not str(question.get("id", "")).startswith("local-enfermeria-inmunizaciones-2026-")
         and not str(question.get("id", "")).startswith("local-enfermeria-mais-fci-")
+        and not str(question.get("id", "")).startswith("local-enfermeria-transfusion-sangre-")
     ]
     existing_keys = {content_key(question) for question in retained}
     selected: list[dict[str, object]] = []
