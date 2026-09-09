@@ -23,6 +23,7 @@ import {
 type TeacherSimulatorSettingsProps = {
   career: StudentCareerSlug;
   initialSettings: SimulatorSettings;
+  totalQuestionCount: number;
 };
 
 type SettingsResponse = {
@@ -92,6 +93,7 @@ function SwitchControl({
 export function TeacherSimulatorSettings({
   career,
   initialSettings,
+  totalQuestionCount,
 }: TeacherSimulatorSettingsProps) {
   const catalog = getSimulatorSettingsCatalog(career);
   const sanitizedInitialSettings = useMemo(
@@ -226,6 +228,10 @@ export function TeacherSimulatorSettings({
           </div>
         </div>
         <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-medium text-slate-600 ring-1 ring-slate-200">
+          Banco: {totalQuestionCount.toLocaleString("es-EC")} preguntas
+          <span className="mx-1 text-slate-300" aria-hidden="true">
+            ·
+          </span>
           {enabledCategories.length} de {catalog.categories.length} categorías
           activas
           {catalog.supportsDifficulty
@@ -244,8 +250,8 @@ export function TeacherSimulatorSettings({
             </h3>
           </div>
           <p className="mt-1 text-xs leading-5 text-slate-500">
-            Todas las preguntas actuales pertenecen al Componente 1. Los
-            nombres podrán cambiarse después sin perder esta configuración.
+            Las preguntas del simulador se seleccionan únicamente de los
+            componentes que mantengas activos.
           </p>
           <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
             {catalog.phases.map((phase) => (

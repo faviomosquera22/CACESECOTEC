@@ -638,6 +638,22 @@ export async function getLocalQuestionsForExam(
   return [];
 }
 
+export async function getLocalQuestionBankCount(career: StudentCareerSlug) {
+  if (career === "enfermeria") {
+    const { default: enfermeriaQuestions } = await import(
+      "@/data/enfermeriaQuestions.json"
+    );
+
+    return (enfermeriaQuestions as Question[]).length;
+  }
+
+  const { default: psicologiaQuestions } = await import(
+    "@/data/psicologiaQuestions.json"
+  );
+
+  return (psicologiaQuestions as Question[]).length;
+}
+
 export function isLocalQuestionSet(questions: Question[]) {
   return questions.some((question) => question.id.startsWith("local-"));
 }

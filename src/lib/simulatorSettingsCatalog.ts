@@ -48,32 +48,46 @@ export const simulatorDifficultyOptions: SimulatorSettingOption<SimulatorDifficu
     },
   ];
 
-export const simulatorPhaseOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
+const nursingComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
   [
     {
       key: "fase-1",
-      label: "Componente 1",
-      description: "Banco actual de preguntas.",
+      label: "Componente 1: Cuidado y procedimientos clínicos",
+      description: "Seguridad del paciente, procedimientos y razonamiento clínico.",
     },
     {
       key: "fase-2",
-      label: "Componente 2",
-      description: "Evaluación psicológica y psicodiagnóstico.",
+      label: "Componente 2: Mujer, recién nacido, niño y adolescente",
+      description: "Cuidado materno, neonatal, pediátrico y adolescente.",
     },
     {
       key: "fase-3",
-      label: "Componente 3",
-      description: "Preparada para el próximo banco.",
+      label: "Componente 3: Adulto y adulto mayor",
+      description: "Cuidados integrales del adulto y adulto mayor.",
     },
     {
       key: "fase-4",
-      label: "Componente 4",
-      description: "Preparada para el próximo banco.",
+      label: "Componente 4: Cuidado familiar y comunitario",
+      description: "Salud familiar, comunitaria e intercultural.",
     },
     {
       key: "fase-5",
-      label: "Componente 5",
-      description: "Preparada para el próximo banco.",
+      label: "Componente 5: Bases profesionales y epidemiología",
+      description: "Educación, administración, investigación y epidemiología.",
+    },
+  ];
+
+const psychologyComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
+  [
+    {
+      key: "fase-1",
+      label: "Componente 1: Intervenciones clínicas y psicoterapia",
+      description: "Intervenciones individuales, grupales, crisis y proceso terapéutico.",
+    },
+    {
+      key: "fase-2",
+      label: "Componente 2: Evaluación psicológica y psicodiagnóstico",
+      description: "Pruebas psicológicas, etapas diagnósticas y formulación de casos.",
     },
   ];
 
@@ -163,13 +177,13 @@ const settingsCatalogByCareer: Record<
   enfermeria: {
     difficulties: simulatorDifficultyOptions,
     categories: nursingCategoryOptions,
-    phases: simulatorPhaseOptions,
+    phases: nursingComponentOptions,
     supportsDifficulty: false,
   },
   psicologia: {
     difficulties: simulatorDifficultyOptions,
     categories: psychologyCategoryOptions,
-    phases: simulatorPhaseOptions,
+    phases: psychologyComponentOptions,
     supportsDifficulty: true,
   },
 };
@@ -319,9 +333,25 @@ function getDifficultyKey(value: string | null) {
   return null;
 }
 
-function getPhaseKey(value: string | null | undefined): SimulatorPhaseKey {
-  const phase = normalize(value ?? "");
-  const matchingPhase = simulatorPhaseOptions.find(
+function getPhaseKey(
+  career: StudentCareerSlug,
+  question: Question,
+): SimulatorPhaseKey {
+  if (career === "enfermeria") {
+    const categoryKey = getNursingCategoryKey(question);
+    const nursingPhaseByCategory: Record<string, SimulatorPhaseKey> = {
+      "procedimientos-clinicos": "fase-1",
+      "mujer-recien-nacido": "fase-2",
+      "adulto-mayor": "fase-3",
+      comunitario: "fase-4",
+      "bases-profesionales": "fase-5",
+    };
+
+    return nursingPhaseByCategory[categoryKey ?? ""] ?? "fase-1";
+  }
+
+  const phase = normalize(question.phase ?? "");
+  const matchingPhase = psychologyComponentOptions.find(
     (option) =>
       normalize(option.key) === phase || normalize(option.label) === phase,
   );
@@ -341,7 +371,7 @@ export function getDefaultSimulatorSettings(
   return {
     enabledDifficulties: catalog.difficulties.map((option) => option.key),
     enabledCategories: catalog.categories.map((option) => option.key),
-    enabledPhases: ["fase-1"],
+    enabledPhases: catalog.phases.map((option) => option.key),
     updatedAt: null,
   };
 }
@@ -421,7 +451,7 @@ export function filterQuestionsForSimulatorSettings(
     selectedDifficulties.size === catalog.difficulties.length;
 
   return questions.filter((question) => {
-    if (!selectedPhases.has(getPhaseKey(question.phase))) {
+    if (!selectedPhases.has(getPhaseKey(career, question))) {
       return false;
     }
 

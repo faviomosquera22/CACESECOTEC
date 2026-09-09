@@ -1,6 +1,7 @@
 import { TeacherDashboardClient } from "@/components/TeacherDashboardClient";
 import { TeacherSimulatorSettings } from "@/components/TeacherSimulatorSettings";
 import { getCareerSimulatorSettings } from "@/lib/simulatorSettings";
+import { getLocalQuestionBankCount } from "@/lib/localQuestions";
 import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
 import { getTeacherStudentCards } from "@/lib/teacherStudents";
 
@@ -8,9 +9,10 @@ export const dynamic = "force-dynamic";
 
 export default async function TeacherDashboardPage() {
   const { supabase, teacherCareerScope } = await requireTeacherCareerScope();
-  const [studentCards, simulatorSettings] = await Promise.all([
+  const [studentCards, simulatorSettings, totalQuestionCount] = await Promise.all([
     getTeacherStudentCards(supabase, teacherCareerScope),
     getCareerSimulatorSettings(supabase, teacherCareerScope),
+    getLocalQuestionBankCount(teacherCareerScope),
   ]);
 
   return (
@@ -29,6 +31,7 @@ export default async function TeacherDashboardPage() {
       <TeacherSimulatorSettings
         career={teacherCareerScope}
         initialSettings={simulatorSettings}
+        totalQuestionCount={totalQuestionCount}
       />
 
       <TeacherDashboardClient
