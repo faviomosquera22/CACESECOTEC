@@ -7,7 +7,8 @@ export type SimulatorPhaseKey =
   | "fase-2"
   | "fase-3"
   | "fase-4"
-  | "fase-5";
+  | "fase-5"
+  | "componente-fantasma";
 
 export type SimulatorSettings = {
   enabledDifficulties: SimulatorDifficultyKey[];
@@ -74,6 +75,12 @@ const nursingComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
       key: "fase-5",
       label: "Componente 5: Bases profesionales y epidemiología",
       description: "Educación, administración, investigación y epidemiología.",
+    },
+    {
+      key: "componente-fantasma",
+      label: "Componente Fantasma",
+      description:
+        "Banco adicional. Al activarlo, el simulador mostrará únicamente sus preguntas.",
     },
   ];
 
@@ -338,6 +345,13 @@ function getPhaseKey(
   question: Question,
 ): SimulatorPhaseKey {
   if (career === "enfermeria") {
+    if (normalize(question.phase ?? "") === "componente-fantasma") {
+      return "componente-fantasma";
+    }
+
+    if (normalize(question.category ?? "") === "enfermeria - componente fantasma") {
+      return "componente-fantasma";
+    }
     const categoryKey = getNursingCategoryKey(question);
     const nursingPhaseByCategory: Record<string, SimulatorPhaseKey> = {
       "procedimientos-clinicos": "fase-1",
@@ -371,7 +385,11 @@ export function getDefaultSimulatorSettings(
   return {
     enabledDifficulties: catalog.difficulties.map((option) => option.key),
     enabledCategories: catalog.categories.map((option) => option.key),
-    enabledPhases: catalog.phases.map((option) => option.key),
+    // El componente adicional se habilita expresamente para no cambiar los
+    // intentos existentes de Enfermería.
+    enabledPhases: catalog.phases
+      .filter((option) => option.key !== "componente-fantasma")
+      .map((option) => option.key),
     updatedAt: null,
   };
 }
@@ -449,6 +467,14 @@ export function filterQuestionsForSimulatorSettings(
     selectedCategories.size === catalog.categories.length;
   const allDifficultiesSelected =
     selectedDifficulties.size === catalog.difficulties.length;
+
+  // El componente fantasma funciona como un banco exclusivo: una vez activo,
+  // no se mezclan preguntas de las categorías o componentes habituales.
+  if (career === "enfermeria" && selectedPhases.has("componente-fantasma")) {
+    return questions.filter(
+      (question) => getPhaseKey(career, question) === "componente-fantasma",
+    );
+  }
 
   return questions.filter((question) => {
     if (!selectedPhases.has(getPhaseKey(career, question))) {

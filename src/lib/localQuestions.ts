@@ -1,6 +1,7 @@
 import type { Question } from "@/lib/database.types";
 import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
 import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
+import componenteFantasmaQuestions from "@/data/enfermeriaComponenteFantasmaQuestions.json";
 import {
   filterQuestionsForSimulatorSettings,
   type SimulatorSettings,
@@ -591,6 +592,13 @@ export function selectQuestionsForExam(
       : questions;
 
   if (examType === "enfermeria") {
+    if (settings?.enabledPhases.includes("componente-fantasma")) {
+      return shuffleQuestions(
+        filteredQuestions.map(repairQuestionText).filter(isUsableQuestion),
+        getRandomSource(attemptSeed),
+      ).slice(0, 100);
+    }
+
     return selectNursingExamQuestions(filteredQuestions, attemptSeed);
   }
 
@@ -610,6 +618,15 @@ export async function getLocalQuestionsForExam(
   settings?: SimulatorSettings,
 ) {
   if (examType === "enfermeria") {
+    if (settings?.enabledPhases.includes("componente-fantasma")) {
+      return selectQuestionsForExam(
+        examType,
+        componenteFantasmaQuestions as Question[],
+        attemptSeed,
+        settings,
+      );
+    }
+
     const { default: enfermeriaQuestions } = await import(
       "@/data/enfermeriaQuestions.json"
     );

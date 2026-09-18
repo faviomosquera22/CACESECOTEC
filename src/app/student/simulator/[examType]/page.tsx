@@ -93,10 +93,13 @@ export default async function StudentExamSimulatorPage({
 
   const examDistribution = examDistributionBySlug[exam.slug] ?? [];
   const shouldUsePsychiatryBank = exam.slug === "psicologia";
+  const shouldUseGhostComponent =
+    exam.slug === "enfermeria" &&
+    simulatorSettings.enabledPhases.includes("componente-fantasma");
   let supabaseQuestions: Question[] = [];
   let questionLoadError = false;
 
-  if (!shouldUsePsychiatryBank) {
+  if (!shouldUsePsychiatryBank && !shouldUseGhostComponent) {
     const categoryFilter = exam.categoryKeywords
       .map((keyword) => `category.ilike.%${keyword}%`)
       .join(",");
@@ -114,7 +117,7 @@ export default async function StudentExamSimulatorPage({
     questionLoadError = Boolean(error);
   }
 
-  const questions = shouldUsePsychiatryBank
+  const questions = shouldUsePsychiatryBank || shouldUseGhostComponent
     ? await getLocalQuestionsForExam(
         exam.slug,
         attemptSeed,
