@@ -1,44 +1,17 @@
--- Ejecutar una vez en Supabase SQL Editor después de
--- student_simulator_access.sql.
--- La configuración se comparte por carrera y solo puede modificarla un docente
--- de esa misma carrera a través del backend administrativo.
+-- Ejecutar en Supabase SQL Editor para habilitar el guardado del
+-- Componente Fantasma en instalaciones que ya tenían el simulador.
 
 create table if not exists public.teacher_simulator_settings (
   career_slug text primary key
     check (career_slug in ('enfermeria', 'psicologia')),
   enabled_difficulties text[] not null
     default array['facil', 'media', 'dificil']::text[],
-  enabled_categories text[] not null,
+  enabled_categories text[] not null default array['procedimientos-clinicos']::text[],
   enabled_phases text[] not null default array['fase-1']::text[],
   updated_at timestamp with time zone not null default now(),
-  updated_by uuid references public.profiles(id) on delete set null,
-  constraint teacher_simulator_settings_difficulties_not_empty
-    check (cardinality(enabled_difficulties) > 0),
-  constraint teacher_simulator_settings_difficulties_valid
-    check (
-      enabled_difficulties
-      <@ array['facil', 'media', 'dificil']::text[]
-    ),
-  constraint teacher_simulator_settings_categories_not_empty
-    check (cardinality(enabled_categories) > 0),
-  constraint teacher_simulator_settings_phases_not_empty
-    check (cardinality(enabled_phases) > 0),
-  constraint teacher_simulator_settings_phases_valid
-    check (
-      enabled_phases
-      <@ array[
-        'fase-1',
-        'fase-2',
-        'fase-3',
-        'fase-4',
-        'fase-5',
-        'componente-fantasma'
-      ]::text[]
-    )
+  updated_by uuid references public.profiles(id) on delete set null
 );
 
--- Permite volver a ejecutar esta migración en instalaciones donde la tabla ya
--- existía antes de incorporar el filtro por fases.
 alter table public.teacher_simulator_settings
 add column if not exists enabled_phases text[] not null
 default array['fase-1']::text[];
@@ -52,8 +25,7 @@ add constraint teacher_simulator_settings_phases_not_empty
 check (cardinality(enabled_phases) > 0),
 add constraint teacher_simulator_settings_phases_valid
 check (
-  enabled_phases
-  <@ array[
+  enabled_phases <@ array[
     'fase-1',
     'fase-2',
     'fase-3',
@@ -65,34 +37,23 @@ check (
 
 insert into public.teacher_simulator_settings (
   career_slug,
-  enabled_categories
+  enabled_categories,
+  enabled_phases
 )
-values
-  (
-    'enfermeria',
-    array[
-      'procedimientos-clinicos',
-      'mujer-recien-nacido',
-      'adulto-mayor',
-      'comunitario',
-      'bases-profesionales'
-    ]::text[]
-  ),
-  (
-    'psicologia',
-    array[
-      'crisis',
-      'grupal',
-      'asesoramiento',
-      'proceso',
-      'encuadre',
-      'psicoterapia'
-    ]::text[]
-  )
+values (
+  'enfermeria',
+  array[
+    'procedimientos-clinicos',
+    'mujer-recien-nacido',
+    'adulto-mayor',
+    'comunitario',
+    'bases-profesionales'
+  ]::text[],
+  array['fase-1', 'fase-2', 'fase-3', 'fase-4', 'fase-5']::text[]
+)
 on conflict (career_slug) do nothing;
 
 alter table public.teacher_simulator_settings enable row level security;
-
 grant select on table public.teacher_simulator_settings to authenticated;
 grant all on table public.teacher_simulator_settings to service_role;
 revoke insert, update, delete on table public.teacher_simulator_settings
