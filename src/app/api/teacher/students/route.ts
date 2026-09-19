@@ -152,14 +152,17 @@ export async function POST(request: Request) {
     .upsert(
       {
         id: authUser.id,
-        full_name: fullName,
-        email,
-        role: "student",
-        career: career.label,
+      full_name: fullName,
+      email,
+      role: "student",
+      career: career.label,
+      created_by_teacher_id: authContext.profile.id,
       },
       { onConflict: "id" },
     )
-    .select("id, full_name, email, role, career, created_at")
+    .select(
+      "id, full_name, email, role, career, created_by_teacher_id, created_at",
+    )
     .single<Profile>();
 
   if (profileError || !profile) {

@@ -76,7 +76,11 @@ export default async function StudentExamSimulatorPage({
       .eq("student_id", profile.id)
       .eq("exam_slug", exam.slug)
       .maybeSingle<{ draft: Json }>(),
-    getCareerSimulatorSettings(supabase, exam.slug),
+    getCareerSimulatorSettings(
+      supabase,
+      exam.slug,
+      profile.created_by_teacher_id,
+    ),
   ]);
   const storedAttemptSeed = getStoredAttemptSeed(storedDraft?.draft);
   const attemptSeed = storedAttemptSeed

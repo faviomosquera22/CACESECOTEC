@@ -90,6 +90,7 @@ export async function PATCH(request: Request) {
     .from("teacher_simulator_settings")
     .upsert(
       {
+        teacher_id: authContext.profile.id,
         career_slug: teacherCareerScope,
         enabled_difficulties: savedDifficulties,
         enabled_categories: savedCategories,
@@ -97,7 +98,7 @@ export async function PATCH(request: Request) {
         updated_at: updatedAt,
         updated_by: authContext.profile.id,
       },
-      { onConflict: "career_slug" },
+      { onConflict: "teacher_id,career_slug" },
     );
 
   if (error) {

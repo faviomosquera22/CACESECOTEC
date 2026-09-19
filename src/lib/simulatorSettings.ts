@@ -10,6 +10,7 @@ import {
 } from "@/lib/simulatorSettingsCatalog";
 
 type SimulatorSettingsRow = {
+  teacher_id: string;
   career_slug: StudentCareerSlug;
   enabled_difficulties: SimulatorDifficultyKey[];
   enabled_categories: string[];
@@ -20,22 +21,29 @@ type SimulatorSettingsRow = {
 export async function getCareerSimulatorSettings(
   supabase: SupabaseServerClient,
   career: StudentCareerSlug,
+  teacherId: string | null | undefined,
 ) {
+  if (!teacherId) {
+    return getDefaultSimulatorSettings(career);
+  }
+
   const { data, error } = await supabase
     .from("teacher_simulator_settings")
     .select(
-      "career_slug, enabled_difficulties, enabled_categories, enabled_phases, updated_at",
+      "teacher_id, career_slug, enabled_difficulties, enabled_categories, enabled_phases, updated_at",
     )
     .eq("career_slug", career)
+    .eq("teacher_id", teacherId)
     .maybeSingle<SimulatorSettingsRow>();
 
   if (error) {
     const { data: legacyData } = await supabase
       .from("teacher_simulator_settings")
       .select(
-        "career_slug, enabled_difficulties, enabled_categories, updated_at",
+        "teacher_id, career_slug, enabled_difficulties, enabled_categories, updated_at",
       )
       .eq("career_slug", career)
+      .eq("teacher_id", teacherId)
       .maybeSingle<Omit<SimulatorSettingsRow, "enabled_phases">>();
 
     if (legacyData) {

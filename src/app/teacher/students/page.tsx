@@ -5,10 +5,12 @@ import { getTeacherStudentCards } from "@/lib/teacherStudents";
 export const dynamic = "force-dynamic";
 
 export default async function TeacherStudentsPage() {
-  const { supabase, teacherCareerScope } = await requireTeacherCareerScope();
+  const { supabase, profile, teacherCareerScope } =
+    await requireTeacherCareerScope();
   const studentCards = await getTeacherStudentCards(
     supabase,
     teacherCareerScope,
+    profile.id,
   );
 
   return (

@@ -19,6 +19,7 @@ export interface Database {
           email: string | null;
           role: ProfileRole;
           career: string | null;
+          created_by_teacher_id: string | null;
           created_at: string | null;
         };
         Insert: {
@@ -27,6 +28,7 @@ export interface Database {
           email?: string | null;
           role: ProfileRole;
           career?: string | null;
+          created_by_teacher_id?: string | null;
           created_at?: string | null;
         };
         Update: {
@@ -35,6 +37,7 @@ export interface Database {
           email?: string | null;
           role?: ProfileRole;
           career?: string | null;
+          created_by_teacher_id?: string | null;
           created_at?: string | null;
         };
         Relationships: [];
@@ -62,6 +65,7 @@ export interface Database {
       };
       teacher_simulator_settings: {
         Row: {
+          teacher_id: string;
           career_slug: string;
           enabled_difficulties: string[];
           enabled_categories: string[];
@@ -70,6 +74,7 @@ export interface Database {
           updated_by: string | null;
         };
         Insert: {
+          teacher_id: string;
           career_slug: string;
           enabled_difficulties?: string[];
           enabled_categories?: string[];
@@ -78,6 +83,7 @@ export interface Database {
           updated_by?: string | null;
         };
         Update: {
+          teacher_id?: string;
           career_slug?: string;
           enabled_difficulties?: string[];
           enabled_categories?: string[];

@@ -11,10 +11,12 @@ import type { TeacherAttemptAnalytics } from "@/lib/teacherAnalyticsReport";
 export const dynamic = "force-dynamic";
 
 export default async function TeacherAnalyticsPage() {
-  const { supabase, teacherCareerScope } = await requireTeacherCareerScope();
+  const { supabase, profile, teacherCareerScope } =
+    await requireTeacherCareerScope();
   const studentCards = await getTeacherStudentCards(
     supabase,
     teacherCareerScope,
+    profile.id,
   );
   const studentIds = studentCards.map((student) => student.id);
   const studentCareerById = new Map(

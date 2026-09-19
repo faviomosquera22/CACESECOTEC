@@ -8,10 +8,11 @@ import { getTeacherStudentCards } from "@/lib/teacherStudents";
 export const dynamic = "force-dynamic";
 
 export default async function TeacherDashboardPage() {
-  const { supabase, teacherCareerScope } = await requireTeacherCareerScope();
+  const { supabase, profile, teacherCareerScope } =
+    await requireTeacherCareerScope();
   const [studentCards, simulatorSettings, totalQuestionCount] = await Promise.all([
-    getTeacherStudentCards(supabase, teacherCareerScope),
-    getCareerSimulatorSettings(supabase, teacherCareerScope),
+    getTeacherStudentCards(supabase, teacherCareerScope, profile.id),
+    getCareerSimulatorSettings(supabase, teacherCareerScope, profile.id),
     getLocalQuestionBankCount(teacherCareerScope),
   ]);
 

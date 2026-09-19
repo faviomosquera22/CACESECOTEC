@@ -48,7 +48,9 @@ export const getCurrentAuthContext = cache(
 
     const { data: profile } = await supabase
       .from("profiles")
-      .select("id, full_name, email, role, career, created_at")
+      .select(
+        "id, full_name, email, role, career, created_by_teacher_id, created_at",
+      )
       .eq("id", user.id)
       .maybeSingle();
 

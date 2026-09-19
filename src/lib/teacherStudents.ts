@@ -2,10 +2,8 @@ import type { StudentCardData } from "@/components/StudentCard";
 import type { SimulationHistoryRecord } from "@/components/SimulationHistoryTable";
 import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
 import type { Profile, Simulation } from "@/lib/database.types";
-import { demoStudentProfiles } from "@/lib/demoStudents";
 import { average } from "@/lib/format";
 import {
-  getExactStudentCareerOption,
   getStudentCareerOption,
   type StudentCareerSlug,
 } from "@/lib/studentCareer";
@@ -30,24 +28,21 @@ function getBestScore(simulations: SimulationHistoryRecord[]) {
 export async function getTeacherStudentCards(
   supabase: SupabaseServerClient,
   teacherCareerScope: StudentCareerSlug,
+  teacherId: string,
 ) {
   const teacherCareer = getStudentCareerOption(teacherCareerScope);
   const { data: studentProfiles } = await supabase
     .from("profiles")
-    .select("id, full_name, email, role, career, created_at")
+    .select(
+      "id, full_name, email, role, career, created_by_teacher_id, created_at",
+    )
     .eq("role", "student")
     .eq("career", teacherCareer?.label ?? teacherCareerScope)
+    .eq("created_by_teacher_id", teacherId)
     .order("full_name", { ascending: true })
     .returns<Profile[]>();
 
-  const students =
-    studentProfiles && studentProfiles.length > 0
-      ? studentProfiles
-      : demoStudentProfiles.filter(
-          (student) =>
-            getExactStudentCareerOption(student.career)?.slug ===
-            teacherCareerScope,
-        );
+  const students = studentProfiles ?? [];
   const studentIds = students.map((student) => student.id);
 
   const [accessResult, simulationResult, attemptResult] = await Promise.all([

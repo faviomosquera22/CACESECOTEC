@@ -7,6 +7,7 @@ export const demoStudentProfiles: Profile[] = [
     email: "tester.student@caces.local",
     role: "student",
     career: "Enfermería",
+    created_by_teacher_id: null,
     created_at: null,
   },
 ];
