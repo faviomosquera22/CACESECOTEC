@@ -8,7 +8,7 @@ export type SimulatorPhaseKey =
   | "fase-3"
   | "fase-4"
   | "fase-5"
-  | "componente-fantasma";
+  | "componente-integral";
 
 export type SimulatorSettings = {
   enabledDifficulties: SimulatorDifficultyKey[];
@@ -77,10 +77,10 @@ const nursingComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
       description: "Educación, administración, investigación y epidemiología.",
     },
     {
-      key: "componente-fantasma",
-      label: "Componente Fantasma",
+      key: "componente-integral",
+      label: "Componente Integral",
       description:
-        "Banco adicional. Al activarlo, el simulador mostrará únicamente sus preguntas.",
+        "Banco integrado de administración y cuidado materno infantil.",
     },
   ];
 
@@ -203,10 +203,6 @@ function normalize(value: string) {
     .trim();
 }
 
-function includesAny(value: string, keywords: string[]) {
-  return keywords.some((keyword) => value.includes(keyword));
-}
-
 function getNursingCategoryKey(question: Question) {
   const category = normalize(question.category ?? "");
 
@@ -237,120 +233,17 @@ function getNursingCategoryKey(question: Question) {
   return null;
 }
 
-function getPsychologyCategoryKey(question: Question) {
-  const subcomponent = normalize(question.subcomponent ?? "");
-
-  if (subcomponent.startsWith("2.1")) {
-    return "pruebas-evaluacion-clinica";
-  }
-
-  if (subcomponent.startsWith("2.2")) {
-    return "psicodiagnostico-etapas";
-  }
-
-  if (subcomponent.startsWith("2.3")) {
-    return "formulacion-casos";
-  }
-
-  const source = normalize(
-    `${question.category ?? ""} ${question.question_text ?? ""}`,
-  );
-
-  if (
-    includesAny(source, [
-      "crisis",
-      "urgencia",
-      "suicid",
-      "autolesion",
-      "riesgo",
-      "plan de seguridad",
-      "trauma",
-      "violencia",
-    ])
-  ) {
-    return "crisis";
-  }
-
-  if (
-    includesAny(source, [
-      "grupo",
-      "grupal",
-      "psicoeducativo",
-      "participante",
-      "facilitador",
-    ])
-  ) {
-    return "grupal";
-  }
-
-  if (includesAny(source, ["asesoramiento", "orientacion psicologica"])) {
-    return "asesoramiento";
-  }
-
-  if (
-    includesAny(source, [
-      "fase inicial",
-      "fase media",
-      "fase final",
-      "proceso psicoterapeutico",
-      "alianza",
-      "adherencia",
-      "monitoreo",
-      "seguimiento",
-      "cierre",
-      "terminacion",
-    ])
-  ) {
-    return "proceso";
-  }
-
-  if (
-    includesAny(source, [
-      "encuadre",
-      "demanda",
-      "motivo de consulta",
-      "objetivo",
-      "consentimiento",
-      "confidencialidad",
-      "informe",
-      "etica",
-    ])
-  ) {
-    return "encuadre";
-  }
-
-  return "psicoterapia";
-}
-
-function getDifficultyKey(value: string | null) {
-  const difficulty = normalize(value ?? "");
-
-  if (includesAny(difficulty, ["baja", "basico", "facil"])) {
-    return "facil";
-  }
-
-  if (includesAny(difficulty, ["media", "intermedio"])) {
-    return "media";
-  }
-
-  if (includesAny(difficulty, ["alta", "avanzado", "dificil"])) {
-    return "dificil";
-  }
-
-  return null;
-}
-
 function getPhaseKey(
   career: StudentCareerSlug,
   question: Question,
 ): SimulatorPhaseKey {
   if (career === "enfermeria") {
-    if (normalize(question.phase ?? "") === "componente-fantasma") {
-      return "componente-fantasma";
+    if (normalize(question.phase ?? "") === "componente-integral") {
+      return "componente-integral";
     }
 
-    if (normalize(question.category ?? "") === "enfermeria - componente fantasma") {
-      return "componente-fantasma";
+    if (normalize(question.category ?? "") === "enfermeria - componente integral") {
+      return "componente-integral";
     }
     const categoryKey = getNursingCategoryKey(question);
     const nursingPhaseByCategory: Record<string, SimulatorPhaseKey> = {
@@ -388,7 +281,7 @@ export function getDefaultSimulatorSettings(
     // El componente adicional se habilita expresamente para no cambiar los
     // intentos existentes de Enfermería.
     enabledPhases: catalog.phases
-      .filter((option) => option.key !== "componente-fantasma")
+      .filter((option) => option.key !== "componente-integral")
       .map((option) => option.key),
     updatedAt: null,
   };
@@ -459,48 +352,17 @@ export function filterQuestionsForSimulatorSettings(
   questions: Question[],
   settings: SimulatorSettings,
 ) {
-  const catalog = getSimulatorSettingsCatalog(career);
-  const selectedCategories = new Set(settings.enabledCategories);
-  const selectedDifficulties = new Set(settings.enabledDifficulties);
   const selectedPhases = new Set(settings.enabledPhases);
-  const allCategoriesSelected =
-    selectedCategories.size === catalog.categories.length;
-  const allDifficultiesSelected =
-    selectedDifficulties.size === catalog.difficulties.length;
 
-  // El componente fantasma funciona como un banco exclusivo: una vez activo,
+  // El componente integral funciona como un banco exclusivo: una vez activo,
   // no se mezclan preguntas de las categorías o componentes habituales.
-  if (career === "enfermeria" && selectedPhases.has("componente-fantasma")) {
+  if (career === "enfermeria" && selectedPhases.has("componente-integral")) {
     return questions.filter(
-      (question) => getPhaseKey(career, question) === "componente-fantasma",
+      (question) => getPhaseKey(career, question) === "componente-integral",
     );
   }
 
-  return questions.filter((question) => {
-    if (!selectedPhases.has(getPhaseKey(career, question))) {
-      return false;
-    }
-
-    const categoryKey =
-      career === "enfermeria"
-        ? getNursingCategoryKey(question)
-        : getPsychologyCategoryKey(question);
-
-    if (
-      !allCategoriesSelected &&
-      (!categoryKey || !selectedCategories.has(categoryKey))
-    ) {
-      return false;
-    }
-
-    if (!catalog.supportsDifficulty || allDifficultiesSelected) {
-      return true;
-    }
-
-    const difficultyKey = getDifficultyKey(question.difficulty);
-
-    return Boolean(
-      difficultyKey && selectedDifficulties.has(difficultyKey),
-    );
-  });
+  return questions.filter((question) =>
+    selectedPhases.has(getPhaseKey(career, question)),
+  );
 }

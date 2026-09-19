@@ -3,13 +3,10 @@ import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
 import {
   getSimulatorSettingsCatalog,
-  type SimulatorDifficultyKey,
   type SimulatorPhaseKey,
 } from "@/lib/simulatorSettingsCatalog";
 
 type UpdateSimulatorSettingsBody = {
-  enabledDifficulties?: unknown;
-  enabledCategories?: unknown;
   enabledPhases?: unknown;
 };
 
@@ -42,42 +39,9 @@ export async function PATCH(request: Request) {
     .json()
     .catch(() => ({}))) as UpdateSimulatorSettingsBody;
   const catalog = getSimulatorSettingsCatalog(teacherCareerScope);
-  const allowedDifficulties = new Set(
-    catalog.difficulties.map((option) => option.key),
-  );
-  const allowedCategories = new Set(
-    catalog.categories.map((option) => option.key),
-  );
   const allowedPhases = new Set(
     catalog.phases.map((option) => option.key),
   );
-
-  if (
-    !Array.isArray(body.enabledDifficulties) ||
-    !body.enabledDifficulties.every(
-      (item): item is SimulatorDifficultyKey =>
-        typeof item === "string" &&
-        allowedDifficulties.has(item as SimulatorDifficultyKey),
-    )
-  ) {
-    return Response.json(
-      { error: "La selección de dificultades no es válida." },
-      { status: 400 },
-    );
-  }
-
-  if (
-    !Array.isArray(body.enabledCategories) ||
-    !body.enabledCategories.every(
-      (item): item is string =>
-        typeof item === "string" && allowedCategories.has(item),
-    )
-  ) {
-    return Response.json(
-      { error: "La selección de categorías no es válida." },
-      { status: 400 },
-    );
-  }
 
   if (
     !Array.isArray(body.enabledPhases) ||
@@ -93,31 +57,17 @@ export async function PATCH(request: Request) {
     );
   }
 
-  const enabledDifficulties = Array.from(
-    new Set(body.enabledDifficulties),
-  );
-  const enabledCategories = Array.from(new Set(body.enabledCategories));
   const enabledPhases = Array.from(new Set(body.enabledPhases));
 
-  if (
-    (catalog.supportsDifficulty && enabledDifficulties.length === 0) ||
-    enabledCategories.length === 0 ||
-    enabledPhases.length === 0
-  ) {
+  if (enabledPhases.length === 0) {
     return Response.json(
-      {
-        error:
-          catalog.supportsDifficulty
-            ? "Selecciona al menos una dificultad, una categoría y un componente antes de guardar."
-            : "Selecciona al menos una categoría y un componente antes de guardar.",
-      },
+      { error: "Selecciona al menos un componente antes de guardar." },
       { status: 400 },
     );
   }
 
-  const savedDifficulties = catalog.supportsDifficulty
-    ? enabledDifficulties
-    : catalog.difficulties.map((option) => option.key);
+  const savedDifficulties = catalog.difficulties.map((option) => option.key);
+  const savedCategories = catalog.categories.map((option) => option.key);
   const updatedAt = new Date().toISOString();
 
   let adminClient: ReturnType<typeof getSupabaseAdminClient>;
@@ -142,7 +92,7 @@ export async function PATCH(request: Request) {
       {
         career_slug: teacherCareerScope,
         enabled_difficulties: savedDifficulties,
-        enabled_categories: enabledCategories,
+        enabled_categories: savedCategories,
         enabled_phases: enabledPhases,
         updated_at: updatedAt,
         updated_by: authContext.profile.id,
@@ -164,7 +114,7 @@ export async function PATCH(request: Request) {
   return Response.json({
     settings: {
       enabledDifficulties: savedDifficulties,
-      enabledCategories,
+      enabledCategories: savedCategories,
       enabledPhases,
       updatedAt,
     },

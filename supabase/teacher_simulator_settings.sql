@@ -32,7 +32,7 @@ create table if not exists public.teacher_simulator_settings (
         'fase-3',
         'fase-4',
         'fase-5',
-        'componente-fantasma'
+        'componente-integral'
       ]::text[]
     )
 );
@@ -59,7 +59,7 @@ check (
     'fase-3',
     'fase-4',
     'fase-5',
-    'componente-fantasma'
+    'componente-integral'
   ]::text[]
 );
 

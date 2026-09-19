@@ -93,13 +93,13 @@ export default async function StudentExamSimulatorPage({
 
   const examDistribution = examDistributionBySlug[exam.slug] ?? [];
   const shouldUsePsychiatryBank = exam.slug === "psicologia";
-  const shouldUseGhostComponent =
+  const shouldUseIntegralComponent =
     exam.slug === "enfermeria" &&
-    simulatorSettings.enabledPhases.includes("componente-fantasma");
+    simulatorSettings.enabledPhases.includes("componente-integral");
   let supabaseQuestions: Question[] = [];
   let questionLoadError = false;
 
-  if (!shouldUsePsychiatryBank && !shouldUseGhostComponent) {
+  if (!shouldUsePsychiatryBank && !shouldUseIntegralComponent) {
     const categoryFilter = exam.categoryKeywords
       .map((keyword) => `category.ilike.%${keyword}%`)
       .join(",");
@@ -117,7 +117,7 @@ export default async function StudentExamSimulatorPage({
     questionLoadError = Boolean(error);
   }
 
-  const questions = shouldUsePsychiatryBank || shouldUseGhostComponent
+  const questions = shouldUsePsychiatryBank || shouldUseIntegralComponent
     ? await getLocalQuestionsForExam(
         exam.slug,
         attemptSeed,
@@ -140,18 +140,8 @@ export default async function StudentExamSimulatorPage({
   const settingsCatalog = getSimulatorSettingsCatalog(exam.slug);
   const defaultSettings = getDefaultSimulatorSettings(exam.slug);
   const hasCustomSettings =
-    simulatorSettings.enabledCategories.length !==
-      defaultSettings.enabledCategories.length ||
     [...simulatorSettings.enabledPhases].sort().join("|") !==
-      [...defaultSettings.enabledPhases].sort().join("|") ||
-    (settingsCatalog.supportsDifficulty &&
-      simulatorSettings.enabledDifficulties.length !==
-        defaultSettings.enabledDifficulties.length);
-  const activeCategoryLabels = settingsCatalog.categories
-    .filter((category) =>
-      simulatorSettings.enabledCategories.includes(category.key),
-    )
-    .map((category) => category.label);
+    [...defaultSettings.enabledPhases].sort().join("|");
   const activePhaseLabels = settingsCatalog.phases
     .filter((phase) => simulatorSettings.enabledPhases.includes(phase.key))
     .map((phase) => phase.label);
@@ -175,8 +165,8 @@ export default async function StudentExamSimulatorPage({
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
           La configuración docente actual no coincide con preguntas disponibles
-          del banco de {exam.shortTitle}. Pide a tu docente que habilite otra
-          componente o categoría.
+          del banco de {exam.shortTitle}. Pide a tu docente que habilite otro
+          componente.
         </p>
         <Link
           href="/student/dashboard"
@@ -243,8 +233,7 @@ export default async function StudentExamSimulatorPage({
             <p className="text-sm font-semibold">Configuración del docente</p>
             <p className="mt-1 text-sm leading-6 text-violet-800">
               Este intento tiene {questions.length} pregunta
-              {questions.length === 1 ? "" : "s"} de:{" "}
-              {activeCategoryLabels.join(", ")}.
+              {questions.length === 1 ? "" : "s"}.
               {` Componentes activos: ${activePhaseLabels.join(", ")}.`}
             </p>
           </div>

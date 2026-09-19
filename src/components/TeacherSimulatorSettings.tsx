@@ -4,9 +4,7 @@ import { useMemo, useState } from "react";
 import {
   AlertCircle,
   CheckCircle2,
-  Gauge,
   Flag,
-  Layers3,
   Loader2,
   Save,
   SlidersHorizontal,
@@ -15,7 +13,6 @@ import type { StudentCareerSlug } from "@/lib/studentCareer";
 import {
   getSimulatorSettingsCatalog,
   sanitizeSimulatorSettings,
-  type SimulatorDifficultyKey,
   type SimulatorPhaseKey,
   type SimulatorSettings,
 } from "@/lib/simulatorSettingsCatalog";
@@ -100,12 +97,6 @@ export function TeacherSimulatorSettings({
     () => sanitizeSimulatorSettings(career, initialSettings),
     [career, initialSettings],
   );
-  const [enabledDifficulties, setEnabledDifficulties] = useState<
-    SimulatorDifficultyKey[]
-  >(sanitizedInitialSettings.enabledDifficulties);
-  const [enabledCategories, setEnabledCategories] = useState<string[]>(
-    sanitizedInitialSettings.enabledCategories,
-  );
   const [enabledPhases, setEnabledPhases] = useState<SimulatorPhaseKey[]>(
     sanitizedInitialSettings.enabledPhases,
   );
@@ -115,36 +106,9 @@ export function TeacherSimulatorSettings({
   const [error, setError] = useState("");
 
   const hasUnsavedChanges =
-    [...enabledDifficulties].sort().join("|") !==
-      [...savedSettings.enabledDifficulties].sort().join("|") ||
-    [...enabledCategories].sort().join("|") !==
-      [...savedSettings.enabledCategories].sort().join("|") ||
     [...enabledPhases].sort().join("|") !==
       [...savedSettings.enabledPhases].sort().join("|");
-  const hasValidSelection =
-    enabledCategories.length > 0 &&
-    enabledPhases.length > 0 &&
-    (!catalog.supportsDifficulty || enabledDifficulties.length > 0);
-
-  function toggleDifficulty(difficulty: SimulatorDifficultyKey) {
-    setEnabledDifficulties((current) =>
-      current.includes(difficulty)
-        ? current.filter((item) => item !== difficulty)
-        : [...current, difficulty],
-    );
-    setMessage("");
-    setError("");
-  }
-
-  function toggleCategory(category: string) {
-    setEnabledCategories((current) =>
-      current.includes(category)
-        ? current.filter((item) => item !== category)
-        : [...current, category],
-    );
-    setMessage("");
-    setError("");
-  }
+  const hasValidSelection = enabledPhases.length > 0;
 
   function togglePhase(phase: SimulatorPhaseKey) {
     setEnabledPhases((current) =>
@@ -170,8 +134,6 @@ export function TeacherSimulatorSettings({
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          enabledDifficulties,
-          enabledCategories,
           enabledPhases,
         }),
       });
@@ -189,8 +151,6 @@ export function TeacherSimulatorSettings({
         career,
         payload.settings,
       );
-      setEnabledDifficulties(nextSettings.enabledDifficulties);
-      setEnabledCategories(nextSettings.enabledCategories);
       setEnabledPhases(nextSettings.enabledPhases);
       setSavedSettings(nextSettings);
       setMessage(
@@ -232,11 +192,6 @@ export function TeacherSimulatorSettings({
           <span className="mx-1 text-slate-300" aria-hidden="true">
             ·
           </span>
-          {enabledCategories.length} de {catalog.categories.length} categorías
-          activas
-          {catalog.supportsDifficulty
-            ? ` · ${enabledDifficulties.length} de ${catalog.difficulties.length} dificultades`
-            : ""}
           {` · ${enabledPhases.length} de ${catalog.phases.length} componentes`}
         </div>
       </div>
@@ -267,82 +222,6 @@ export function TeacherSimulatorSettings({
           </div>
         </div>
 
-        <div>
-          <div className="flex items-center gap-2">
-            <Gauge className="h-4 w-4 text-sky-700" aria-hidden="true" />
-            <h3 className="text-sm font-semibold text-slate-950">
-              Dificultades permitidas
-            </h3>
-          </div>
-          {catalog.supportsDifficulty ? (
-            <div className="mt-3 grid gap-3 md:grid-cols-3">
-              {catalog.difficulties.map((difficulty) => (
-                <SwitchControl
-                  key={difficulty.key}
-                  checked={enabledDifficulties.includes(difficulty.key)}
-                  disabled={isSaving}
-                  label={difficulty.label}
-                  description={difficulty.description}
-                  onChange={() => toggleDifficulty(difficulty.key)}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600">
-              El banco de Enfermería está clasificado por convocatoria, no por
-              dificultad. Puedes controlar sus categorías mientras se completa
-              esa clasificación.
-            </div>
-          )}
-        </div>
-
-        <div>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2">
-              <Layers3 className="h-4 w-4 text-sky-700" aria-hidden="true" />
-              <h3 className="text-sm font-semibold text-slate-950">
-                Categorías permitidas
-              </h3>
-            </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() =>
-                  setEnabledCategories(
-                    catalog.categories.map((category) => category.key),
-                  )
-                }
-                disabled={isSaving}
-                className="text-xs font-semibold text-sky-700 transition hover:text-sky-900 disabled:opacity-60"
-              >
-                Seleccionar todas
-              </button>
-              <span className="text-slate-300" aria-hidden="true">
-                ·
-              </span>
-              <button
-                type="button"
-                onClick={() => setEnabledCategories([])}
-                disabled={isSaving}
-                className="text-xs font-semibold text-slate-500 transition hover:text-slate-800 disabled:opacity-60"
-              >
-                Limpiar
-              </button>
-            </div>
-          </div>
-          <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-            {catalog.categories.map((category) => (
-              <SwitchControl
-                key={category.key}
-                checked={enabledCategories.includes(category.key)}
-                disabled={isSaving}
-                label={category.label}
-                description={category.description}
-                onChange={() => toggleCategory(category.key)}
-              />
-            ))}
-          </div>
-        </div>
       </div>
 
       {!hasValidSelection ? (
@@ -351,9 +230,7 @@ export function TeacherSimulatorSettings({
             className="mt-0.5 h-4 w-4 shrink-0"
             aria-hidden="true"
           />
-          {catalog.supportsDifficulty
-            ? "Selecciona al menos una dificultad, una categoría y un componente."
-            : "Selecciona al menos una categoría y un componente."}
+          Selecciona al menos un componente.
         </div>
       ) : null}
 
