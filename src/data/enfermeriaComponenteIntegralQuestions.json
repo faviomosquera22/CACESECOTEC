@@ -1,13 +1,13 @@
 [
   {
     "id": "local-enfermeria-integral-administrativas-001",
-    "question_text": "Un estudio de la situación de la enfermería en 2020 reconoció la necesidad de invertir en educación y un privilegiado para este grupo de profesionales, así como también la importancia de fortalecer esta disciplina y los servicios en los sistemas de salud. ¿Cuál de las siguientes líneas de acción orienta la gobernanza de la enfermería?",
-    "option_a": "Fortalecer la calidad de la educación en enfermería para responder las necesidades de los sistemas de salud orientados al acceso universal a la salud y a la cobertura universal de salud y a los ODS.",
-    "option_b": "Abordar las condiciones de trabajo y las capacidades de los enfermeros y enfermeras para expandir el acceso y la cobertura con equidad y calidad",
-    "option_c": "Promover un modelo de atención centrado en las personas, las familias y las comunidades y el fortalecimiento tanto del primer nivel de atención como de las redes integradas de servicio de salud.",
-    "option_d": "Fortalecer y consolidar el liderazgo y la gestión estrategia de la enfermería en el contexto de los sistemas de salud y en la formulación y monitoreo del mismo.",
+    "question_text": "El informe sobre la situación de la enfermería en 2020 identificó la necesidad de invertir en educación, empleo y liderazgo. ¿Cuál de las siguientes líneas de acción se orienta específicamente a la gobernanza de la enfermería?",
+    "option_a": "Fortalecer la calidad de la educación en enfermería para responder a las necesidades de los sistemas de salud, al acceso universal y a la cobertura universal de salud, así como a los ODS.",
+    "option_b": "Abordar las condiciones de trabajo y las capacidades de las y los profesionales de enfermería para ampliar el acceso y la cobertura con equidad y calidad.",
+    "option_c": "Promover un modelo de atención centrado en las personas, las familias y las comunidades, fortaleciendo el primer nivel de atención y las redes integradas de servicios de salud.",
+    "option_d": "Fortalecer y consolidar el liderazgo y la gestión estratégica de la enfermería en los sistemas de salud y en la formulación y el seguimiento de las políticas.",
     "correct_option": "D",
-    "explanation": "La respuesta correcta es D porque «Fortalecer y consolidar el liderazgo y la gestión estrategia de la enfermería en el contexto de los sistemas de salud y en la formulación y monitoreo del mismo.» corresponde al concepto, procedimiento o intervención solicitado en el caso.",
+    "explanation": "La respuesta correcta es D porque «Fortalecer y consolidar el liderazgo y la gestión estratégica de la enfermería en los sistemas de salud y en la formulación y el seguimiento de las políticas.» corresponde al concepto, procedimiento o intervención solicitado en el caso.",
     "category": "Enfermería - Componente Integral",
     "difficulty": "Bases administrativas",
     "phase": "componente-integral",
@@ -31,7 +31,7 @@
   },
   {
     "id": "local-enfermeria-integral-administrativas-003",
-    "question_text": "Como Profesionales de enfermería, ustedes están en contacto con la población de su comunidad en un espacio público para difundir estrategias y servicios de salud, relacionados con actividades educativas sobre alimentación saludable. Como invitados se encuentran las autoridades de la Dirección Provincial de Salud, que técnica de aprendizaje cooperativo se está realizando",
+    "question_text": "Profesionales de enfermería difunden, junto con la comunidad y en un espacio público, estrategias y servicios relacionados con la alimentación saludable. Participan autoridades de la Dirección Provincial de Salud. ¿Qué técnica de aprendizaje cooperativo se está realizando?",
     "option_a": "Murgas por la salud",
     "option_b": "Talleres de salud",
     "option_c": "Ferias de salud",
@@ -166,7 +166,7 @@
   },
   {
     "id": "local-enfermeria-integral-administrativas-012",
-    "question_text": "En un hospital de tercer nivel durante los últimos meses se ha producido un brote inesperado de Serratia Marquesis microorganismo que ha causado la estancia prolongada de los pacientes, complicaciones y en menor medida la muerte de algunos de ellos. Entre los factores que presumiblemente han facilitado el brote se hayan. incumplimiento de las medidas de bioseguridad el acceso de terceros a la unidad de salud, las modificaciones en lencería del personal y la disponibilidad de insumos de hospitales por lo que es necesario realizar un estudio de investigación en un solo lapso de tiempo prudencial que abarque todos estos factores para posteriormente determinar su porcentaje de vinculación con el brote de microorganismos ¿Qué tipo de investigación sí debe realizar en base a las variables y el tiempo determinado?",
+    "question_text": "En un hospital de tercer nivel se presenta un brote inesperado de Serratia marcescens. Se requiere estudiar, en un único momento, los factores posiblemente relacionados con el brote para estimar su asociación. ¿Qué tipo de investigación corresponde según las variables y el tiempo de medición?",
     "option_a": "Descriptiva",
     "option_b": "Transversal",
     "option_c": "cualitativa",
@@ -211,7 +211,7 @@
   },
   {
     "id": "local-enfermeria-integral-administrativas-015",
-    "question_text": "¿Cuál es una medida de tendencia central frecuentemente utilizado cuando las variables son severamente juzgados?",
+    "question_text": "¿Qué medida de tendencia central se utiliza con mayor frecuencia cuando las variables están severamente sesgadas?",
     "option_a": "Media",
     "option_b": "Moda",
     "option_c": "Rango",
@@ -241,7 +241,7 @@
   },
   {
     "id": "local-enfermeria-integral-administrativas-017",
-    "question_text": "En la casa de salud el profesional de enfermería Ha detectado un aumento de pacientes fallecidos con cáncer hepático, que indica responde a la situación de la población que padece esta patología.",
+    "question_text": "En una casa de salud, el profesional de enfermería detecta un aumento de pacientes fallecidos por cáncer hepático. ¿Qué indicador describe esta situación en la población afectada?",
     "option_a": "Morbilidad",
     "option_b": "Mortalidad",
     "option_c": "Letalidad",
@@ -271,7 +271,7 @@
   },
   {
     "id": "local-enfermeria-integral-administrativas-019",
-    "question_text": "En un centro de salud de primer nivel se identifica un caso sospechoso de una enfermedad de notificación obligatoria e inmediata (por ejemplo, sarampión o parálisis flácida aguda). De acuerdo con el Sistema Integrado de Vigilancia Epidemiológica (SIVE-Alerta) del Ecuador, ¿en qué instrumento debe registrarse este caso para su notificación?",
+    "question_text": "En un centro de salud de primer nivel se identifica un caso sospechoso de una enfermedad de notificación obligatoria e inmediata, como sarampión o parálisis flácida aguda. De acuerdo con el SIVE-Alerta del Ecuador, ¿en qué instrumento debe registrarse el caso para su notificación?",
     "option_a": "Formulario EPI-1",
     "option_b": "Historia clínica única (formulario 008)",
     "option_c": "Carné de vacunación",
@@ -346,13 +346,13 @@
   },
   {
     "id": "local-enfermeria-integral-materno-infantil-005",
-    "question_text": "Un recién nacido de 24 horas de vida presenta secreción escasa y mal olor en la región periumbilical. ¿Cuál es la actuación de enfermería correspondiente?",
+    "question_text": "Un recién nacido de 24 horas de vida presenta secreción escasa y mal olor en la región periumbilical. ¿Cuál es la actuación inicial de enfermería más adecuada?",
     "option_a": "Realizar limpieza con agua oxigenada y aplicar una crema.",
-    "option_b": "Realizar aseo con solución fisiológica y aplicar yodopovidona.",
-    "option_c": "Realizar limpieza y colocar ungüento antibiótico.",
+    "option_b": "Realizar aseo con solución fisiológica, valorar signos de onfalitis y comunicar al profesional responsable para el tratamiento indicado.",
+    "option_c": "Realizar limpieza y colocar ungüento antibiótico sin valoración adicional.",
     "option_d": "Realizar limpieza con alcohol y aplicar una crema.",
     "correct_option": "B",
-    "explanation": "La respuesta correcta es B porque «Realizar aseo con solución fisiológica y aplicar yodopovidona.» corresponde al concepto, procedimiento o intervención solicitado en el caso.",
+    "explanation": "La respuesta correcta es B porque «Realizar aseo con solución fisiológica, valorar signos de onfalitis y comunicar al profesional responsable para el tratamiento indicado.» corresponde al concepto, procedimiento o intervención solicitado en el caso.",
     "category": "Enfermería - Componente Integral",
     "difficulty": "Materno infantil",
     "phase": "componente-integral",
@@ -436,7 +436,7 @@
   },
   {
     "id": "local-enfermeria-integral-materno-infantil-011",
-    "question_text": "RN prematuro de 36 semanas de gestación ingresa al servicio de neonatología, no regula temperatura 36°C, succión débil, con un peso de 1900 gramos, a la valoración de 12 horas de vida. Presenta ictericia zona Kramer grado 1, bilirrubina total de 11 mg/dl. Se encuentra con líquidos intravenosos ¿Cuáles son las intervenciones de enfermería a realizar según el caso?",
+    "question_text": "Una mujer de 20 años llega a la emergencia de un hospital provincial. Refiere agresiones físicas y verbales por parte de su pareja cuando este consume alcohol y drogas; presenta equimosis, deformidad nasal y una fractura del tabique nasal. Además, se identifica una cicatriz de quemadura en el brazo derecho. ¿Cuál es el lineamiento de atención que debe seguir el profesional de enfermería?",
     "option_a": "Identificar la zona de ictericia, zona de Kramer, alimentación temprana con adecuada ingesta calórica, control de las temperaturas de piel y del incubador, solicitar examen.",
     "option_b": "Mantener en NPO de 4 a 6 horas para la preparación de la exanguinotransfusión y solicitar la sangre de la Cruz Roja para pruebas, para las pruebas cruzadas, solicitar el consentimiento informado.",
     "option_c": "Mantener la lactancia materna exclusiva por intervalos no frecuentes, cada 1 a 2 horas. Se procede a contrarreferencia a un nivel mayor de complejidad y se programa una cita para control.",
@@ -496,7 +496,7 @@
   },
   {
     "id": "local-enfermeria-integral-materno-infantil-015",
-    "question_text": "Mujer de 20 años que decidió iniciar su actividad sexual acude a la consulta externa buscando información sobre los métodos anticonceptivos. A la valoración de enfermería se comprueba que se trata de una persona con discapacidad. Al interrogatorio, manifiesta que es joven y no desea quedar embarazada. ¿Qué debe considerar en su asesoría?",
+    "question_text": "Una mujer de 20 años con discapacidad solicita consejería sobre métodos anticonceptivos porque no desea un embarazo. ¿Qué aspecto debe considerar el profesional de enfermería durante la asesoría?",
     "option_a": "Debido a su condición física, las personas con discapacidad no tienen deseo sexual ni un modo de expresarlos ni satisfacerlos.",
     "option_b": "Reconocer que los derechos sexuales y reproductivos de las personas con discapacidad son diferentes de los de cualquier otra persona.",
     "option_c": "Reconocer que las personas con discapacidad tienen menos probabilidades de embarazarse o de embarazar.",
@@ -541,7 +541,7 @@
   },
   {
     "id": "local-enfermeria-integral-materno-infantil-018",
-    "question_text": "Mujer de 40 años, multípara, con 36 semanas de gestación, permanece en la sala de ginecología tras presentar convulsiones tónico-clónicas generalizadas. Recibió sulfato de magnesio en dosis de impregnación y se encuentra en tratamiento farmacológico de instancia con dosis de mantenimiento de sulfato de magnesio. ¿Cuáles son los principales cuidados para prevenir la toxicidad por la administración del medicamento?",
+    "question_text": "Una mujer de 40 años, multípara, con 36 semanas de gestación presenta convulsiones tónico-clónicas generalizadas y recibe sulfato de magnesio en dosis de impregnación y mantenimiento. ¿Cuáles son los cuidados principales para prevenir la toxicidad del medicamento?",
     "option_a": "Realizar la dilución correcta, control de diuresis de al menos 30 ml/hora, valorar la frecuencia respiratoria y reflejos rotulianos cada 30 minutos.",
     "option_b": "Control de signos vitales, realizar la dilución con la prescripción de apoyo de 20 miligramos, correspondientemente al 20%, pasar en bolo.",
     "option_c": "Control en tira reactiva de orina para la determinación de proteína. Recolección de orina en 24 horas, administrar directamente.",
@@ -571,7 +571,7 @@
   },
   {
     "id": "local-enfermeria-integral-materno-infantil-020",
-    "question_text": "Recién nacido a término con un peso de menor a 1500 g acaba de nacer, para prevenir la enfermedad hemorrágica del recién nacido el personal de enfermería, administra una dosis de vitamina k por una sola vez, la dosis es de 1 mg y se administra dentro de las primeras 6 horas después del nacimiento ¿Cuál es las siguientes opciones es la afirmación correcta?",
+    "question_text": "Un recién nacido con peso menor de 1 500 g recibe vitamina K en dosis única para prevenir la enfermedad hemorrágica del recién nacido. ¿Cuál afirmación es correcta?",
     "option_a": "La administración por vía intramuscular de vitamina K es más efectiva que la vía oral para prevenir enfermedades.",
     "option_b": "La administración de vitamina K solo es necesaria en recién nacido con un peso menor a 1500 gramos",
     "option_c": "La administración de vitamina K por vía oral es más efectiva que la vía intramuscular para prevenir la enfermedad hemorrágica del recién nacido",
@@ -616,7 +616,7 @@
   },
   {
     "id": "local-enfermeria-integral-materno-infantil-023",
-    "question_text": "Niño de 2 años por presentar desde hace 5 días un cuadro de deposiciones diarreicas en número de 6 que no mejora con el ayuno, en los exámenes solicitados destaca en heces, características liquidas, acidas con sustancias productoras, aumento de la osmolaridad, hiato aniónico de mayos de 100 mmol/kg ¿Cuál es el mecanismo fisiopatológico de acuerdo a las características de la diarrea",
+    "question_text": "Un niño de 2 años presenta diarrea durante cinco días, con seis deposiciones al día que no mejoran con el ayuno. El examen de heces evidencia características líquidas y ácidas, sustancias reductoras, aumento de la osmolaridad y una brecha osmótica mayor de 100 mmol/kg. ¿Cuál es el mecanismo fisiopatológico más probable?",
     "option_a": "Invasión a la mucosa",
     "option_b": "Diarrea secretora",
     "option_c": "Diarrea Osmótica",
@@ -631,7 +631,7 @@
   },
   {
     "id": "local-enfermeria-integral-materno-infantil-024",
-    "question_text": "Mujer de 20 años de edad, con 30 semanas de gestación, acude al hospital por presentar cólicos menstruales con sangrado. A la valoración presenta contracciones irregulares y sangrado escaso. Se indica maduración pulmonar con betametasona. ¿Cuál es la dosis y frecuencia de administración?",
+    "question_text": "Una mujer de 20 años, con 30 semanas de gestación, presenta cólicos y sangrado escaso con contracciones irregulares. Se indica maduración pulmonar fetal con betametasona. ¿Cuál es la dosis y frecuencia de administración recomendada?",
     "option_a": "12 mg intramuscular cada 24 horas por 2 dosis.",
     "option_b": "4 mg intramuscular cada 12 horas por 4 dosis.",
     "option_c": "8 mg intramuscular cada 24 horas por 3 dosis.",
