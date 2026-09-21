@@ -45,10 +45,10 @@ def parse_docx(filename: str) -> list[tuple[str, list[str]]]:
 
 # Respuestas revisadas a partir del contenido académico de cada reactivo.
 BASES_ADMINISTRATIVAS_KEYS = [
-    "D", "A", "C", "B", "D", "D", "A", "A", "A", "A", "A", "B", "A", "B", "D", "D", "B", "B", "A",
+    "D", "A", "C", "B", "D", "D", "A", "A", "A", "A", "A", "B", "A", "B", "D", "D", "C", "B", "A",
 ]
 MATERNO_INFANTIL_KEYS = [
-    "C", "C", "C", "B", "B", "B", "C", "B", "B", "A", "D", "C", "A", "A", "D", "B", "D", "A", "C", "A", "D", "A", "C", "A",
+    "C", "C", "C", "B", "C", "B", "C", "B", "B", "A", "D", "C", "A", "A", "D", "B", "D", "A", "C", "A", "D", "A", "C", "A",
 ]
 
 BASES_REPAIRS = {
@@ -85,8 +85,8 @@ PROMPT_REPAIRS = {
 OPTION_REPAIRS = {
     ("infantil", 5): [
         "Realizar limpieza con agua oxigenada y aplicar una crema.",
-        "Realizar aseo con solución fisiológica, valorar signos de onfalitis y comunicar al profesional responsable para el tratamiento indicado.",
-        "Realizar limpieza y colocar ungüento antibiótico sin valoración adicional.",
+        "Realizar aseo con solución fisiológica y aplicar yodopovidona.",
+        "Realizar limpieza y colocar ungüento antibiótico.",
         "Realizar limpieza con alcohol y aplicar una crema.",
     ],
     ("infantil", 11): [
@@ -121,7 +121,7 @@ EXPLANATIONS = {
         "La ausencia de casos también se comunica mediante la notificación de silencio epidemiológico semanal.",
         "La mediana es más representativa que la media cuando la distribución presenta sesgo o valores extremos.",
         "La hipótesis plantea un efecto esperado de la intervención; por ello es una hipótesis alternativa, no nula.",
-        "El aumento de personas fallecidas por una causa describe mortalidad por esa causa en la población.",
+        "La clave marcada en el documento fuente es letalidad, indicador que expresa la proporción de personas fallecidas entre quienes presentan la enfermedad.",
         "La rotación, las quejas por trato y el incumplimiento de protocolos son indicadores de problemas en la gestión del talento humano.",
         "El formulario EPI-1 se utiliza para registrar y notificar casos sujetos a vigilancia epidemiológica inmediata.",
     ],
@@ -130,7 +130,7 @@ EXPLANATIONS = {
         "La producción de calostro es fisiológica; se debe mantener la lactancia frecuente para favorecer la producción de leche.",
         "Un Apgar de 7 al minuto indica una condición neonatal generalmente adecuada, aunque requiere observación y cuidados rutinarios.",
         "El pinzamiento tardío recomendado se realiza entre uno y tres minutos, salvo que exista una indicación clínica para hacerlo antes.",
-        "La secreción maloliente requiere higiene suave, valoración de signos de onfalitis y comunicación al profesional responsable; no se indican cremas o antibióticos por rutina.",
+        "La clave marcada en el documento fuente indica limpieza y aplicación de ungüento antibiótico ante secreción y mal olor periumbilical.",
         "En una multípara, la fase activa del trabajo de parto suele ser más breve; el tiempo aproximado planteado es cinco horas.",
         "Las medidas no farmacológicas, como respiración, relajación, apoyo continuo y cambios de posición, son la primera estrategia de enfermería para aliviar el dolor.",
         "La analgesia epidural puede prolongar la segunda etapa del parto; en una multípara puede durar hasta tres horas según el escenario planteado.",
