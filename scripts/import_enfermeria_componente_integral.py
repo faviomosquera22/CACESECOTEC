@@ -48,7 +48,7 @@ BASES_ADMINISTRATIVAS_KEYS = [
     "D", "A", "C", "B", "D", "D", "A", "A", "A", "A", "A", "B", "A", "B", "D", "D", "C", "B", "A",
 ]
 MATERNO_INFANTIL_KEYS = [
-    "C", "C", "C", "B", "C", "B", "C", "B", "B", "A", "D", "C", "A", "A", "D", "B", "D", "A", "C", "A", "D", "A", "C", "A",
+    "C", "C", "C", "B", "C", "B", "C", "B", "B", "A", "D", "C", "A", "A", "B", "B", "D", "A", "C", "A", "D", "A", "C", "A",
 ]
 
 BASES_REPAIRS = {
@@ -140,7 +140,7 @@ EXPLANATIONS = {
         "La atención a una presunta víctima de violencia debe ser confidencial, sin intimidación ni revictimización, con consentimiento y activación de la ruta de protección correspondiente.",
         "En niños menores de dos años se controla el perímetro cefálico junto con peso y talla para vigilar el crecimiento neurológico.",
         "El ácido acetilsalicílico en población pediátrica se asocia al síndrome de Reye, caracterizado por vómitos, alteración neurológica y compromiso hepático.",
-        "La consejería debe reconocer la autonomía y derechos sexuales; la forma de apoyo puede adaptarse al tipo y grado de discapacidad.",
+        "La clave marcada en el documento fuente es B: reconoce un enfoque diferenciado en la consejería de derechos sexuales y reproductivos para personas con discapacidad.",
         "Mamas tensas, dolorosas, con abundante leche y sin fiebre son compatibles con ingurgitación mamaria.",
         "La Libreta Integral de Salud registra controles, crecimiento, desarrollo, vacunas y otras atenciones del niño.",
         "La toxicidad por sulfato de magnesio se vigila mediante diuresis, frecuencia respiratoria y reflejos osteotendinosos, además de una dilución y administración correctas.",
@@ -177,7 +177,7 @@ def make_question(identifier: str, prompt: str, options: list[str], key: str, so
 
 def main() -> None:
     administrativas = parse_docx("Bases Adm.docx")
-    materno = parse_docx("PREGUNTAS MATERNO INFANTIL (1).docx")
+    materno = parse_docx("PREGUNTAS MATERNO INFANTIL.docx")
     if len(administrativas) != 19 or len(materno) != 24:
         raise ValueError(f"Conteos inesperados: administrativas={len(administrativas)}, materno={len(materno)}")
     for number, options in BASES_REPAIRS.items():
