@@ -95,3 +95,30 @@ test('API no informa éxito al editar pregunta inexistente ni al fallar el guard
   assert.equal((await api(profile, { data: null, error: null }).routes.PATCH(request({ ...valid, id: row().id }, 'PATCH'))).status, 404);
   assert.equal((await api(profile, { data: null, error: { message: 'db failure' } }).routes.POST(request(valid))).status, 500);
 });
+
+test('PDF octubre: las 30 preguntas completas conservan claves y entran al banco remoto', () => {
+  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaOctubreDocumentoQuestions.json'), 'utf8'));
+  const { withNursingOctoberQuestions, isUsableQuestion } = load('src/lib/localQuestions.ts');
+  assert.equal(bank.length, 30);
+  assert.deepEqual(bank.filter(q => !isUsableQuestion(q)).map(q => ({id:q.id,prompt:q.question_text})), []);
+  const pool = withNursingOctoberQuestions([]);
+  assert.equal(withNursingOctoberQuestions(pool).length, 30);
+  for (const [phase, count] of [['fase-1', 8], ['fase-3', 22], ['fase-2', 0], ['componente-integral', 0]]) {
+    const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: [phase] };
+    const selected = selectQuestionsForExam('enfermeria', pool, 'octubre-source', settings);
+    assert.equal(selected.length, count);
+    for (const question of selected) {
+      const original = bank.find(q => q.id === question.id);
+      assert.equal(question.correct_option, original.correct_option);
+      assert.equal(question['option_' + question.correct_option.toLowerCase()], original['option_' + original.correct_option.toLowerCase()]);
+    }
+  }
+});
+
+test('cuadro clínico no requiere imagen; una referencia a una tabla sí', () => {
+  const { isUsableQuestion } = load('src/lib/localQuestions.ts');
+  const question = manualQuestionForSimulator(row());
+  assert.equal(isUsableQuestion({ ...question, question_text: 'Un paciente presenta tos. ¿Qué intervención corresponde según el cuadro clínico?' }), true);
+  assert.equal(isUsableQuestion({ ...question, question_text: 'Según el cuadro siguiente, ¿qué resultado corresponde?' }), false);
+  assert.equal(isUsableQuestion({ ...question, question_text: 'Según la tabla, ¿qué resultado corresponde?' }), false);
+});

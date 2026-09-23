@@ -1,0 +1,702 @@
+{
+  "source": "CACES OCTUBRE..pdf",
+  "sha256": "77b05637fc44dd8e1ca2b2e235391b6efea02b8663664e86af6eefe93f0f26ab",
+  "total": 39,
+  "incorporated": 30,
+  "pending": 9,
+  "by_phase": {
+    "fase-3": 22,
+    "fase-1": 8
+  },
+  "items": [
+    {
+      "number": 1,
+      "page": 1,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "D"
+      ],
+      "question_text": "Paciente femenina de aproximadamente 49 años se encuentra hospitalizada, con antecedente o diagnóstico relacionado con insuficiencia renal aguda con 3 meses de evolución. Al tratamiento compensatorio de electrolitos y diuréticos, Durante la valoración presenta somnolencia con esfuerzo respiratorio, fiebre de 38,5 °C, edema de miembros inferiores una cruz, el profesional enfermero planifica y ejecuta cuidados inmediatos de acuerdos con los signos y síntomas para evitar complicaciones. ¿Cuál es la intervención de enfermería prioritaria de acuerdo con los signos y síntomas presentados?",
+      "options": {
+        "A": "Disminución de la tasa metabólica.",
+        "B": "Provisión de cuidados cutáneos.",
+        "C": "Vigilancia del electrolítico",
+        "D": "Atención a la función pulmonar."
+      },
+      "notes": []
+    },
+    {
+      "number": 2,
+      "page": 1,
+      "status": "pendiente",
+      "reason": "Una o más alternativas son notas de transcripción incompleta.",
+      "phase": "fase-3",
+      "marked_options": [
+        "A"
+      ],
+      "question_text": "Paciente masculino de 38 años de edad con diagnóstico de VIH se encuentra hospitalizado en el servicio de medicina interna desde hace 15 días por presentar cuadro afebril de 39 grados, diarrea frecuente con presencia intematico a causa de su patología, probablemente secundario a medicación antirretroviral. Al momento cuadro afebril controlado sin embargo persiste dolor abdominal y diarrea, la misma que necesario controlar. ¿Cuál de las siguientes intervenciones de enfermería está contraindicado?",
+      "options": {
+        "A": "Alternativa relacionada con restricción de alimentos.",
+        "B": "Alternativa relacionada con restricción de la ingesta de líquidos.",
+        "C": "Alternativa relacionada con tratamiento antiespasmódico.",
+        "D": "No se logra definir correctamente en la transcripción."
+      },
+      "notes": []
+    },
+    {
+      "number": 3,
+      "page": 1,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente de 52 años con antecedentes de fibrosis hepática, se encuentra ingresado en el hospital por presentar ascitis, a la valoración de enfermería se observa un aumento del perímetro abdominal con la presencia de venas distendidas en la pared del abdomen y estreñimiento ¿cuál de las siguientes intervenciones es la más adecuada en este caso?",
+      "options": {
+        "A": "Preparar al paciente para un drenaje",
+        "B": "Administrar diuréticos según prescripción medica",
+        "C": "realizar ejercicios físicos intensos",
+        "D": "fomentar la ingesta alta de sodio y liquido"
+      },
+      "notes": []
+    },
+    {
+      "number": 4,
+      "page": 2,
+      "status": "pendiente",
+      "reason": "Solo hay 0 opciones; se necesitan cuatro alternativas completas.",
+      "phase": "fase-3",
+      "marked_options": [],
+      "question_text": "En sala de urgencia se recibe 5 adultos mayores funcionales sin patología asociadas de un centro geriátrico con edades de 75 y 80 años que comparten la misma habitación, por presentar sintomatología similar de emesis frecuentes, deposiciones diarreicas fétidas de 8 en 24 horas, malestar generalizado y dolor abdominal. ¿Qué tipo de líquido se requiere aplicar para mejorar el estilo hidroelectrolítico en estos pacientes?",
+      "options": {},
+      "notes": [
+        "NO SE ESCUCHAN LITERALES"
+      ]
+    },
+    {
+      "number": 5,
+      "page": 2,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-1",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "En el área de aislamiento se encuentra un paciente de 33 años por presentar diagnóstico de VIH enpasticida, hemodinamicamente inestable permanece con oxigenoterapia a 4 litros por minutos monitorizado para control constante se signos vitales y conducción eléctrica del corazón, tiene insertada una sonda vesical por inducción endovenosa, se mantiene hidratado y recibe tratamiento farmacológico prescrito, nivel de zona sacra se evidencia ulcera por presión ¿Qué tipo de aislamiento requiere prioritariamente este paciente?",
+      "options": {
+        "A": "aislamiento respiratorio",
+        "B": "aislamiento protector",
+        "C": "Aislamiento Entérico",
+        "D": "Aislamiento Por contacto"
+      },
+      "notes": []
+    },
+    {
+      "number": 6,
+      "page": 2,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente de 49 años diagnosticada con diabetes mellitus tipo ll acude a la consulta de enfermería presentando los siguientes signos y síntomas poliuria, polidipsia y perdida de peso inexplicada y visión borrosa, la enfermera realiza una evolución y registra un nivel de glucosa en ayunas de 200mg/gl ¿cuál de las siguientes intervenciones de enfermería es la mas apropiada para el cuidado de este paciente?",
+      "options": {
+        "A": "administrar insulina de acción rápida antes de cada comida y después de la administración, control permanente.",
+        "B": "Educar al paciente en el autocontrol de la glucosa en sangre y la importancia de seguir una dieta balanceada.",
+        "C": "iniciar una infusión de solución salina para corregir la deshidratación ocurrida por la hiperglucemia",
+        "D": "Proporcionar al paciente una lista de alimentos prohibidos y restringidos de acuerdo con la patología"
+      },
+      "notes": []
+    },
+    {
+      "number": 7,
+      "page": 3,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "A"
+      ],
+      "question_text": "Paciente de 65 años es atendida por presentar dificultad respiratoria, fatiga y edema en miembros inferiores, se auscultan crepitantes pulmonares bilaterales y estertores en bases pulmonares, se constatan signos vitales como presión arterial 160/100 FC: 100lpm FR:18rpm S;80%, el paciente tiene antecedentes de hipertensión arterial y ah sido diagnosticado con insufiencia cardiaca congestiva ¿cómo parte de los cuidados de enfermería cuál son las intervenciones de enfermería para este paciente ?",
+      "options": {
+        "A": "Monitorización de signos vitales",
+        "B": "Administración de oxigeno",
+        "C": "Control de ingesta e eliminación",
+        "D": "Colocar al paciente en trendelenburg y administrar oxigeno"
+      },
+      "notes": []
+    },
+    {
+      "number": 8,
+      "page": 3,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente de 88 años con diagnósticos de hipotiroidismo, se encuentra hospitalizada, se encuentra en reposo relativo con buena adherencia al tratamiento, durante la valoración presenta los siguientes signos vitales: presión arterial 90/60mmhg Fc: 80lpm Fr:18rpm T:35.6 grados S: 95%, presenta abdomen globuloso doloroso a la palpación, asténica, piel seca, ¿cuál es la intervención de enfermería indicada para esta paciente ?",
+      "options": {
+        "A": "Administración de levotiroxina",
+        "B": "Vigilar los procesos cognitivos",
+        "C": "Monitorizar la temperatura corporal y la tensión arterial frecuentemente",
+        "D": "fomentar la actividad física"
+      },
+      "notes": []
+    },
+    {
+      "number": 9,
+      "page": 3,
+      "status": "pendiente",
+      "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "phase": "fase-3",
+      "marked_options": [
+        "A"
+      ],
+      "question_text": "Paciente femenina de 60 años ingresada hospitalizada que, después de alrededor de tres días hospitalizada, desarrolla tos productiva, secreciones de características amarillentas purulentas en enumeradas cantidades, fiebre cercana a 39 °C, % perdida de la movilidad física, a la valoración física la paciente esta inconsciente con escala de Glasgow 14/15 dificultad para movilizarse, presenta taquicardia, saturación de oxígeno de 84 % se realiza radiografía de tórax la cual se confirma neumonía ¿ cuál de las siguiente pruebas de enfermería seria incorrecta en este caso?",
+      "options": {
+        "A": "Alternativa orientada a mejorar la permeabilidad de la vía aérea.",
+        "B": "No se logra definir correctamente.",
+        "C": "Alternativa relacionada con nutrición, posteriormente cuestionada."
+      },
+      "notes": []
+    },
+    {
+      "number": 10,
+      "page": 4,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-1",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente masculino de 25 años que sufre accidente en motocicleta, ingresa al servicio de urgencia por presentar politraumatismo, trauma cráneo encefálico y fractura expuesta de fémur y hemotórax, al momento con una escala de Glasgow de 7/15, Taquicardia, taquipnea, dificultad para respirar por lo que se procede a entubación endotracreal, vía aérea difícil, paciente en ventilación mecánica controlada bajo efecto de sedo analgesia Que cuidado de enfermería es prioritario en este paciente",
+      "options": {
+        "A": "Vigilancia del equilibrio hidroelectrolítico",
+        "B": "Mantener vía respiratorita permeable",
+        "C": "Iniciar nutrición.",
+        "D": "Conservar la temperatura."
+      },
+      "notes": []
+    },
+    {
+      "number": 11,
+      "page": 4,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-1",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente varón de 50 años se encuentra en el periodo post operatorio después de someterse a una cirugía abdominal para extirpar un tumor, durante la valoración post operatoria el paciente presenta sintomatología sugestiva de atelectasia y dolor en el área quirúrgica. ¿Cuál es la intervención de enfermería más adecuada?",
+      "options": {
+        "A": "Aspiración.",
+        "B": "Drenaje postural.",
+        "C": "Espirometría incentivada.",
+        "D": "Percusión torácica."
+      },
+      "notes": []
+    },
+    {
+      "number": 12,
+      "page": 4,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente de 75 años acude al servicio de emergencia con insuficiencia cardíaca izquierda grave. A la valoración de enfermería el profesional de enfermería sospecha el inicio de congestión pulmonar. ¿Cuál de los siguientes ruidos pulmonares adventicios se esperaría encontrar a la auscultación del paciente?",
+      "options": {
+        "A": "Crepitantes solamente en el ápice pulmonar.",
+        "B": "Crepitantes inspiratorios en las bases pulmonares.",
+        "C": "Sibilancias sonoros en la parte inferior del pulmón izquierdo.",
+        "D": "Roncos mediastínicos."
+      },
+      "notes": []
+    },
+    {
+      "number": 13,
+      "page": 5,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Un paciente de 68 años de edad pasa al servicio de emergencia por un dolor torácico agudo opresivo irradiado hacia brazo izquierdo y la mandíbula, sudoración, náuseas, ansiedad e inquietud. Se constan parámetros vitales: Tensión arterial: 130/90 Fc: 110lpm Fr:24rpm S:90% el electro cardiograma muestra inversión de la onda T, la elevación del segmento St y el desarrollo de una onda Q anómala, el medico diagnostica infarto agudo de miocardio con elevación del segmento ST y se decide su ingreso. ¿Basándose en este caso cual es el diagnostico de enfermería prioritario para este paciente?",
+      "options": {
+        "A": "Riesgo de la disminución de la perfusión tisular cardiaca",
+        "B": "Riesgo de perfusión tisular periférica ineficaz relacionado con disminución del gasto cardíaco.",
+        "C": "Dolor agudo relacionado con agentes lesivos biológicos.",
+        "D": "Dolor agudo relacionado con agentes lesivos físicos"
+      },
+      "notes": []
+    },
+    {
+      "number": 14,
+      "page": 5,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente de 65 años llega al servicio de emergencia con fuerte dolor abdominal intenso, refiere presentar heces de color oscuros, a la valoración manifiesta haber presentado mareos, y debilidad. Al examen físico palidez de pies y mucosas, se sospecha un posible sangrado gastrointestinal agudo ¿Ante el caso planteado el profesional de enfermería que medicamento administraría con prioridad?",
+      "options": {
+        "A": "Analgésicos opioides",
+        "B": "antieméticos",
+        "C": "inhibidores de la bomba de protones",
+        "D": "agentes antidiarreicos"
+      },
+      "notes": []
+    },
+    {
+      "number": 15,
+      "page": 5,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "D"
+      ],
+      "question_text": "Paciente de 38 años que presenta ictericia, fatiga, náuseas, orina oscura, los resultados de análisis de laboratorio revelan la presencia del antígeno del virus de la hepatitis B y la elevación de las enzimas hepáticas. El paciente es diagnóstico con hepatitis B. ¿Qué intervención de enfermería es adecuada?",
+      "options": {
+        "A": "Fomentar una dieta baja en proteínas.",
+        "B": "Administrar vacuna contra la hepatitis.",
+        "C": "Administrar antivirales específicos para hepatitis.",
+        "D": "Educar al paciente y a su familia sobre las precauciones para evitar la transmisión."
+      },
+      "notes": []
+    },
+    {
+      "number": 16,
+      "page": 6,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente femenina de 67 años es atendida en emergencia, a la valoración presenta diaforesis, mucosas orales secas, fiebre, dolor abdominal, diarrea aguda, náuseas y vómitos. El médico sospecha una infección por salmonela Como profesional de enfermería, ¿cuál es la intervención prioritaria para esta paciente?",
+      "options": {
+        "A": "Administrar antibióticos de amplio espectro según prescripción.",
+        "B": "Administrar fluidos intravenosos según prescripción.",
+        "C": "Administrar antipiréticos según prescripción.",
+        "D": "Educar sobre la importancia de la higiene de manos."
+      },
+      "notes": []
+    },
+    {
+      "number": 17,
+      "page": 6,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "D"
+      ],
+      "question_text": "Paciente de 80 años acude a la consulta externa, se queda solo en su casa desde que es viudo hace 5 años, a sido diagnosticado con diabetes mellitus tipo ll y tiene hipertensión arterial, al momento presenta una depresión leve, ¿En qué modelo del protocolo de atención se basa el cuidado a los adultos mayores?",
+      "options": {
+        "A": "Modelo de atención en el área de salud",
+        "B": "Modelo de atención biopsicosocial",
+        "C": "Modelo de atención integral de salud familiar, comunitaria e intercultural",
+        "D": "Modelo de atención centrada en la persona"
+      },
+      "notes": []
+    },
+    {
+      "number": 18,
+      "page": 6,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente de 85 años acude a la consulta externa por presentar dolor articular, a la valoración refiere dolor a nivel de las articulaciones de las rodillas y de las manos, las mismas que han estado presente aproximadamente 6 meses. El paciente describe el dolor como constante y de intensidad moderada a severa que empeora con la actividad física y mejora con el reposo ¿Cuál es el post consulta que el profesional de enfermería le indica sobre la medicación??",
+      "options": {
+        "A": "Acetaminofén 500 mg hasta 2 g, con máximo de 3 g al día.",
+        "B": "Acetaminofén 500 mg a 1 g, con máximo de 4 g al día.",
+        "C": "Acetaminofén 500 mg a 1 g, con máximo de 3 g al día.",
+        "D": "Acetaminofén 500 mg a 2 g, con máximo de 4 g al día."
+      },
+      "notes": []
+    },
+    {
+      "number": 19,
+      "page": 7,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-1",
+      "marked_options": [
+        "A"
+      ],
+      "question_text": "Paciente de 56 años acude a consulta externa por presentar hipertensión arterial no controlada, a la valoración física presenta obesidad con un índice de masa corporal de 45 kg/m² y presión arterial de 150/90 mmHg. ¿A cuál de los siguientes grupos de estado físico corresponde?",
+      "options": {
+        "A": "ASA III.",
+        "B": "ASA. II",
+        "C": "ASA IV.",
+        "D": "ADA I."
+      },
+      "notes": []
+    },
+    {
+      "number": 20,
+      "page": 7,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-1",
+      "marked_options": [
+        "A"
+      ],
+      "question_text": "Paciente de 52 años que ingresa al servicio de urgencias con antecedente de trauma abdominal cerrado y presenta dolor y distensión abdominal, como profesional de enfermería ¿Cuál de las siguientes intervenciones es prioritaria en este caso?",
+      "options": {
+        "A": "Realizar una evaluación primaria según protocolo ABCDE.",
+        "B": "Administrar analgésicos por vía oral.",
+        "C": "Colocar una sonda nasogástrica.",
+        "D": "Administrar fluidos intravenosos según prescripción."
+      },
+      "notes": []
+    },
+    {
+      "number": 21,
+      "page": 7,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "A"
+      ],
+      "question_text": "Paciente de 58 años con antecedente de consumo excesivo de alcohol es atendido en el servicio de emergencia, a la valoración presenta debilidad muscular generalizada, parestesias en manos y pies, los resultados de laboratorio muestran un nivel sérico de calcio aproximado de 7,5 mg/dL, como profesional de enfermería ¿Cuál es la intervención de enfermería en este caso?",
+      "options": {
+        "A": "Valorar al paciente en busca de signos de tetania y convulsiones.",
+        "B": "Limitar el consumo de alimentos ricos en calcio.",
+        "C": "Proporcionar suplementos de vitamina D.",
+        "D": "Administrar fosfato de calcio oral según prescripción."
+      },
+      "notes": []
+    },
+    {
+      "number": 22,
+      "page": 7,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "A"
+      ],
+      "question_text": "Paciente de 60 años con diagnóstico de insuficiencia renal crónica que ingresa a una unidad de cuidados intensivos a la valoración presenta hipotensión, respiración superficial, somnolencia, debilidad muscular, disminución de los reflejos osteotendinosos, los resultados de laboratorio muestran un nivel sérico de magnesio aproximado de 10,2 mEq/L. ¿Cuál es la intervención de enfermería prioritaria en este caso?",
+      "options": {
+        "A": "Preparar al paciente para hemodiálisis.",
+        "B": "Proporcionar una dieta baja en magnesio.",
+        "C": "Administrar furosemida según prescripción.",
+        "D": "Administrar sulfato de magnesio intravenoso."
+      },
+      "notes": []
+    },
+    {
+      "number": 23,
+      "page": 8,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-1",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "El personal de enfermería brinda cuidados a una Paciente femenina de 55 años con diabetes mellitus tipo 2 se encuentra hospitalizada por una infección respiratoria el plan de tratamiento con insulinoterapia subcutánea para el control de la glucemia. En la última glucemia registrada es aproximadamente 320 mg/dL y la paciente refiere hambre constante y leve visión borrosa. Como enfermera encargada se prepara para administración de insulina de acción breve regular. ¿Cuál es la acción más adecuada?",
+      "options": {
+        "A": "Administrar la insulina inmediatamente antes de la comida.",
+        "B": "Administrar la insulina entre 20 y 30 minutos antes de la comida.",
+        "C": "Administrar la insulina por vía intravenosa debido a su efectividad.",
+        "D": "Realizar una nueva medición de glucosa para ajustar la dosis."
+      },
+      "notes": []
+    },
+    {
+      "number": 24,
+      "page": 8,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente de 40 años diagnosticado con diabetes mellitus tipo 1 que utiliza insulina basal de larga duración e insulina rápida antes de las comidas. Refiere mareos y sudoración por las mañanas, especialmente antes del desayuno, y los registros muestran hipoglucemias matutinas frecuentes. ¿Cuál es la mejor intervención para abordar este problema?",
+      "options": {
+        "A": "Recomendar una fuente concentrada de carbohidratos de acción rápida para tratar la hipoglucemia.",
+        "B": "Sugerir reducción de la dosis de insulina rápida antes de la cena para evitar hipoglucemias nocturnas.",
+        "C": "Recomendar ejercicio físico intenso por la mañana.",
+        "D": "Aumentar la dosis de insulina basal durante la noche."
+      },
+      "notes": []
+    },
+    {
+      "number": 25,
+      "page": 8,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente de aproximadamente 45 años con diagnóstico de cáncer de pulmón en estadio IV en tratamiento oncológico paliativo que ingresa a la casa de salud debido a la dificultad para descansar, ocasionada por la disnea y la tos persistente. ¿Qué intervención debe implementar el profesional de enfermería según el cuadro clínico?",
+      "options": {
+        "A": "Colocar al paciente en ventilación mecánica.",
+        "B": "Valorar la dificultad respiratoria para identificar cómo afecta su vida.",
+        "C": "Preparar al paciente para una radiografía.",
+        "D": "Realizar pruebas gasométricas para detectar alteraciones."
+      },
+      "notes": []
+    },
+    {
+      "number": 26,
+      "page": 9,
+      "status": "pendiente",
+      "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente de 60 años que ingresa a la sala de emergencia por presentar alteración del estado de conciencia, dificultad para hablar, adormecimiento en la cara, brazos, piernas y compromiso del brazo izquierdo que dificulta la circulación. Después de los exámenes médicos se determina que el paciente presenta un evento cerebrovascular isquémico con un tiempo de evolución de 4 horas ¿Cuál de las siguientes intervenciones sería apropiada para este paciente?",
+      "options": {
+        "A": "preparar al paciente para realizarle un eco-cardiograma computarizado",
+        "B": "Tomografía computarizada",
+        "C": "Administrar silvinoliticos"
+      },
+      "notes": []
+    },
+    {
+      "number": 27,
+      "page": 9,
+      "status": "pendiente",
+      "reason": "Una o más alternativas son notas de transcripción incompleta.",
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente de 65 años ingresado en una unidad de cuidados intensivos con diagnóstico de síndrome de dificultad respiratoria aguda secundario a neumonía. Al examen físico Presenta disnea, taquipnea, taquicardia, ligeramente hipotenso, cianosis periférica, a la auscultación pulmonar se escuchan estertores crepitantes bilaterales y disminución del murmullo vesicular en ambas bases pulmonares, los resultados de gasometría arterial muestran hipoxemia. ¿Cuál de las siguientes intervenciones es la más apropiada?",
+      "options": {
+        "A": "Administrar bloqueadores betaadrenérgicos.",
+        "B": "Intubación y ventilación mecánica con PEEP.",
+        "C": "Colocar al paciente en una posición cuyo nombre no se comprende correctamente.",
+        "D": "Administrar oxígeno mediante cánula nasal."
+      },
+      "notes": []
+    },
+    {
+      "number": 28,
+      "page": 9,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente adulto mayor con antecedentes de fibromialgias bajo tratamiento hace un mes con gabapentina 900 mg cada 8 horas, acude a consulta externa por dificultad para evacuar desde hace aproximadamente dos días, malestar abdominal y flatulencia. El paciente indica que vive solo, y tiene dificultad para preparar sus alimentos, como personal de enfermería ¿Cuál es la principal recomendación de enfermería?",
+      "options": {
+        "A": "Administrar laxantes diariamente.",
+        "B": "Realizar una colonoscopia por posible obstrucción intestinal.",
+        "C": "Sugerir una dieta rica en fibra e ingerir abundantes líquidos.",
+        "D": "Administrar enemas evacuantes de manera profiláctica."
+      },
+      "notes": []
+    },
+    {
+      "number": 29,
+      "page": 10,
+      "status": "pendiente",
+      "reason": "Solo hay 0 opciones; se necesitan cuatro alternativas completas.",
+      "phase": "fase-3",
+      "marked_options": [],
+      "question_text": "Paciente femenina de 68 años con diagnostico de cáncer de páncreas en etapa terminal que ingresa a una unidad de cuidados paliativos por dolor abdominal intenso, con EVA 9/10. El medico prescribe analgesia para manejo del dolor, sin embargo, tras la administración del medicamento se observa que la paciente desarrolla hipotensión postural, acompañado de retención urinaria. ¿Cuál es el medicamento que ocasiona esta alteración?",
+      "options": {},
+      "notes": [
+        "Respuesta: (opioide) Morfina"
+      ]
+    },
+    {
+      "number": 30,
+      "page": 10,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "D"
+      ],
+      "question_text": "Paciente masculino de 60 años con dolor crónico y diagnóstico de diabetes mellitus tipo II, Diagnosticado hace diez años, refiere mareos, visión borrosa, debilidad generalizada, polidipsia y poliuria desde hace 3 días, esta en tratamiento con metformina, aunque menciona que a veces se olvida de tomárselas. Al examen físico signos vitales de presión arterial de 130/85mmhg FC:96lpm, Los estudios de laboratorio muestran los siguientes resultados, glucosa plasmática de 356 mg/dL y hemoglobina glucosilada de 10 %. ¿Cuál es el tratamiento más adecuado para regularizar los niveles de glucosa?",
+      "options": {
+        "A": "Educación al paciente y modificación de hábitos saludables.",
+        "B": "Asociación de metformina con glibenclamida según prescripción médica.",
+        "C": "Metformina 500 mg más modificaciones del estilo de vida.",
+        "D": "Insulina de acción intermedia, aproximadamente 10 unidades al día."
+      },
+      "notes": []
+    },
+    {
+      "number": 31,
+      "page": 10,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente de 65 años desde hace 2 meses fue diagnosticado con hipertensión arterial grado 2, acude a la consulta de control, refiere que ha estado tomando puntualmente su medicación antihipertensiva, su presión arterial actual es de 150/80mmhg, no presenta otros antecedentes patológicos y mantiene hábitos y de vida saludable. ¿Cuál es la intervención de enfermería correcta con a las cifras de presión arterial?",
+      "options": {
+        "A": "Dar instrucciones adecuadas sobre cómo tomar el antihipertensivo para evitar complicaciones cardiovasculares.",
+        "B": "Brindar educación sobre la importancia de incluir hábitos de vida saludables, para mantener niveles óptimos de presión arterial.",
+        "C": "Se felicita al paciente por su compromiso en la gestión de su cuidado, que se refleja en la disminución de la presión arterial.",
+        "D": "Informar sobre la importancia de reducir el peso para disminuir el riesgo cardiovascular."
+      },
+      "notes": []
+    },
+    {
+      "number": 32,
+      "page": 11,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-1",
+      "marked_options": [
+        "D"
+      ],
+      "question_text": "Paciente de 40 años que ingresa al servicio de urgencias después de un accidente de tránsito a su llegada se evalúa una Glasgow aproximado de 8/15, agitación, manifestaciones de dolor y compromiso del estado de conciencia. Para su manejo inicial y estabilización del paciente el médico tratante indica administrar una benzodiacepina. ¿Cuál de los siguientes fármacos corresponde?",
+      "options": {
+        "A": "Fenitoína.",
+        "B": "Fentanilo.",
+        "C": "Propofol.",
+        "D": "Midazolam."
+      },
+      "notes": []
+    },
+    {
+      "number": 33,
+      "page": 11,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente masculino de 58 años con diagnóstico médico de cirrosis hepática compensada, fue hospitalizado hace siete días, refiere ligero cansancio y molestias abdominales. A la valoración de enfermería los signos vitales están dentro de los valores normales se observa eritema palmar y edema en tobillos, los resultados de laboratorio muestran tiempo de protrombina prolongado. ¿Cuál es la intervención de enfermería ante un riesgo de lesión debido de alteraciones en los mecanismos de coagulación?",
+      "options": {
+        "A": "Valorar la integridad de la piel cada cuatro a ocho horas.",
+        "B": "Educar al paciente para utilizar un cepillo dental de cerdas suaves y evitar el hilo dental.",
+        "C": "Supervisar la dieta prescrita.",
+        "D": "Fomentar la ingesta de líquidos y el ejercicio de acuerdo con la tolerancia."
+      },
+      "notes": []
+    },
+    {
+      "number": 34,
+      "page": 11,
+      "status": "pendiente",
+      "reason": "Una o más alternativas son notas de transcripción incompleta.",
+      "phase": "fase-1",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Usted participa como instrumentista en una cirugía de laparotomía exploratoria por obstrucción intestinal, el cirujano identifica un tejido sospechoso y procede a tomar una muestra para estudio histopatológico, como instrumentista su rol primordial en el campo estéril es reducir esta muestra, la cual es entregada al personal circulante. ¿Cuál es la responsabilidad del enfermero circulante en el manejo de esta muestra?",
+      "options": {
+        "A": "Almacenar la muestra en un lugar seguro dentro del quirófano hasta finalizar la cirugía.",
+        "B": "Verificar la correcta identificación del recipiente con los datos del paciente y del cirujano con su adecuada preservación.",
+        "C": "Colocar la muestra directamente en un recipiente seco sin preservante.",
+        "D": "No se logra definir la cuarta alternativa."
+      },
+      "notes": []
+    },
+    {
+      "number": 35,
+      "page": 12,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-1",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente de 25 años será intervenido de una apendicitis aguda, la enfermera circulante esta realizando conteo inicial de gasas y compresas junto con la enfermera instrumentista. ¿Cuál es la razón prioritaria para realizar este control?",
+      "options": {
+        "A": "Evaluar la competencia de la enfermera instrumentista en la preparación quirúrgica.",
+        "B": "Cumplir con la normativa institucional sin implicaciones en la seguridad del paciente.",
+        "C": "Prevenir la retención inadvertida de material quirúrgico dentro del paciente.",
+        "D": "Asegurar la disponibilidad de todo el material quirúrgico necesario para la cirugía."
+      },
+      "notes": []
+    },
+    {
+      "number": 36,
+      "page": 12,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "A"
+      ],
+      "question_text": "Paciente de 68 años con cáncer de pulmón avanzado que desarrolla una obstrucción de la vía aérea superior debido a un tumor que comprime la tráquea. Presenta estridor inspiratorio y espiratorio, dolor, disnea severa, retracción intercostal y saturación de oxígeno de 80 %. ¿Cuál es la intervención de enfermería prioritaria para manejar la condición del paciente?",
+      "options": {
+        "A": "Administrar oxígeno mediante mascarilla de Venturi.",
+        "B": "Realizar fisioterapia respiratoria y técnicas de tos.",
+        "C": "Administrar analgésicos opioides para controlar el dolor.",
+        "D": "Administrar corticosteroides intravenosos en bolo."
+      },
+      "notes": []
+    },
+    {
+      "number": 37,
+      "page": 12,
+      "status": "pendiente",
+      "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "phase": "fase-3",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente de 68 años con una ostomía realizada hace seis semanas debido a un cáncer de colon. Durante la valoración del estoma el profesional de enfermería observa enrojecimiento y de la piel periostomal acompañado de pequeñas lesiones erosivas acompañadas de ardor y picazón, referidos por el paciente. ¿Cuál es la alteración que presenta el paciente?",
+      "options": {
+        "A": "Infección bacteriana del estoma.",
+        "B": "Prolapso del estoma.",
+        "C": "Dermatitis periostomal."
+      },
+      "notes": []
+    },
+    {
+      "number": 38,
+      "page": 12,
+      "status": "pendiente",
+      "reason": "Una o más alternativas son notas de transcripción incompleta.",
+      "phase": "fase-3",
+      "marked_options": [
+        "C"
+      ],
+      "question_text": "Paciente de 65 años con diagnóstico de obstrucción intestinal alta se coloca una sonda nasogástrica para descompresión. A las Dos horas de la colocación la enfermera aspira aproximadamente 450 mL de líquido bilioso oscuro, el paciente refiere náuseas persistentes y distensión abdominal. ¿Cuál es la intervención prioritaria de enfermería en este caso?",
+      "options": {
+        "A": "Retirar la sonda nasogástrica porque se ha drenado una cantidad significativa de líquido.",
+        "B": "Elevar la cabecera de la cama a 90 grados.",
+        "C": "Asegurar la permeabilidad y el correcto funcionamiento de la sonda nasogástrica.",
+        "D": "No se logra definir la cuarta alternativa."
+      },
+      "notes": []
+    },
+    {
+      "number": 39,
+      "page": 13,
+      "status": "incorporada",
+      "reason": null,
+      "phase": "fase-3",
+      "marked_options": [
+        "B"
+      ],
+      "question_text": "Paciente de 25 años se encuentra hospitalizado con un diagnóstico de dengue, durante el examen físico se identifican los siguientes signos y síntomas, cefalea intensa, irritabilidad, taquipnea, llenado capilar mayor a 2 segundos temperatura 39.5, FC:110lpm, Presión arterial 90/60mmhg. ¿Cuál de las siguientes intervenciones debe realizarse prioritariamente?",
+      "options": {
+        "A": "Realizar curva térmica para controlar la temperatura.",
+        "B": "Administrar líquidos cristaloides bajo prescripción médica.",
+        "C": "Administrar antibióticos de amplio espectro.",
+        "D": "Administrar diclofenaco bajo prescripción para el manejo del dolor."
+      },
+      "notes": []
+    }
+  ]
+}

@@ -11,6 +11,7 @@ import {
   isLocalQuestionSet,
   legacyFixedPsychologyAttemptSeed,
   selectQuestionsForExam,
+  withNursingOctoberQuestions,
 } from "@/lib/localQuestions";
 import { getSimulatorExam } from "@/lib/simulatorCatalog";
 import { getCareerSimulatorSettings } from "@/lib/simulatorSettings";
@@ -146,7 +147,9 @@ export default async function StudentExamSimulatorPage({
         )
       : selectQuestionsForExam(
           exam.slug,
-          [...supabaseQuestions, ...manualQuestions],
+          exam.slug === "enfermeria"
+            ? withNursingOctoberQuestions([...supabaseQuestions, ...manualQuestions])
+            : [...supabaseQuestions, ...manualQuestions],
           attemptSeed,
           simulatorSettings,
         );

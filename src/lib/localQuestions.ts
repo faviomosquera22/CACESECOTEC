@@ -2,6 +2,7 @@ import type { Question } from "@/lib/database.types";
 import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
 import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
 import componenteIntegralQuestions from "@/data/enfermeriaComponenteIntegralQuestions.json";
+import octubreDocumentoQuestions from "@/data/enfermeriaOctubreDocumentoQuestions.json";
 import {
   filterQuestionsForSimulatorSettings,
   type SimulatorSettings,
@@ -225,7 +226,7 @@ const questionMediaByText = new Map<string, QuestionMedia>([
 ]);
 
 const missingRequiredVisualPattern =
-  /(?:\b(?:seg[uú]n|de acuerdo (?:con|al)|con base en|observe|observa|analice|interprete|revise)\s+(?:el|la|los|las)?\s*(?:gr[aá]fic[oa]|figura|imagen|tabla|cuadro|diagrama|familiograma)\b|\bobserve\s+(?:el|la)\s+curva\b|\brepresenta (?:el|la) gr[aá]fic[oa]\b|\brepresentaci[oó]n gr[aá]fica del familiograma\b)/i;
+  /(?:\b(?:seg[uú]n|de acuerdo (?:con|al)|con base en|observe|observa|analice|interprete|revise)\s+(?:el|la|los|las)?\s*(?:gr[aá]fic[oa]|figura|imagen|tabla|cuadro(?!\s+cl[ií]nico\b)|diagrama|familiograma)\b|\bobserve\s+(?:el|la)\s+curva\b|\brepresenta (?:el|la) gr[aá]fic[oa]\b|\brepresentaci[oó]n gr[aá]fica del familiograma\b)/i;
 const missingPriorContextPattern =
   /\b(?:en|del|seg[uú]n) (?:el )?caso anterior\b|\b(?:pregunta|informaci[oó]n|situaci[oó]n|enunciado) anterior\b/i;
 
@@ -615,6 +616,11 @@ export function selectQuestionsForExam(
   ).slice(0, 100);
 }
 
+// Complemento disponible también cuando el banco principal viene de Supabase.
+export function withNursingOctoberQuestions(questions: Question[]) {
+  return dedupeQuestions([...questions, ...octubreDocumentoQuestions as Question[]]);
+}
+
 export async function getLocalQuestionsForExam(
   examType: string,
   attemptSeed?: string,
@@ -637,7 +643,7 @@ export async function getLocalQuestionsForExam(
 
     return selectQuestionsForExam(
       examType,
-      [...enfermeriaQuestions as Question[], ...additionalQuestions],
+      withNursingOctoberQuestions([...enfermeriaQuestions as Question[], ...additionalQuestions]),
       attemptSeed,
       settings,
     );
@@ -665,7 +671,7 @@ export async function getLocalQuestionBankCount(career: StudentCareerSlug) {
       "@/data/enfermeriaQuestions.json"
     );
 
-    return (enfermeriaQuestions as Question[]).length;
+    return withNursingOctoberQuestions(enfermeriaQuestions as Question[]).length;
   }
 
   const { default: psicologiaQuestions } = await import(
