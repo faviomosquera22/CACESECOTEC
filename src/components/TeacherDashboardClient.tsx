@@ -731,7 +731,7 @@ export function TeacherDashboardClient({
         [student.id]: enabled,
       }));
       setAccessMessage(
-        `${student.fullName} ahora tiene el simulador ${
+        `${student.fullName} ahora tiene el acceso al sitio ${
           enabled ? "habilitado" : "bloqueado"
         }.`,
       );
@@ -740,7 +740,7 @@ export function TeacherDashboardClient({
       setAccessError(
         caughtError instanceof Error
           ? caughtError.message
-          : "No se pudo cambiar el acceso al simulador.",
+          : "No se pudo cambiar el acceso al sitio.",
       );
     } finally {
       setSavingAccessStudentId(null);
@@ -777,7 +777,7 @@ export function TeacherDashboardClient({
         return nextOverrides;
       });
       setAccessMessage(
-        `Simulador ${enabled ? "habilitado" : "bloqueado"} para ${
+        `Acceso al sitio ${enabled ? "habilitado" : "bloqueado"} para ${
           payload?.updatedCount ?? studentsState.length
         } estudiante(s) de ${teacherCareer?.label ?? "tu carrera"}.`,
       );
@@ -925,7 +925,7 @@ export function TeacherDashboardClient({
             </div>
 
             <label className="text-sm font-semibold text-slate-600">
-              Acceso al simulador
+              Acceso al sitio
               <div className="mt-2 flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 shadow-sm">
                 <LockKeyhole
                   className="h-4 w-4 text-slate-400"
@@ -1005,7 +1005,7 @@ export function TeacherDashboardClient({
         {sortedStudents.length === 0 ? (
           <div className="mt-5 rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
             No hay estudiantes para mostrar con los filtros actuales. Revisa la
-            búsqueda, el acceso al simulador o el estado de actividad.
+            búsqueda, el acceso al sitio o el estado de actividad.
           </div>
         ) : (
           <div className="mt-5 overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
@@ -1015,7 +1015,7 @@ export function TeacherDashboardClient({
                   <th className="px-4 py-3">Estudiante</th>
                   <th className="px-4 py-3">Carrera</th>
                   <th className="px-4 py-3">Estado</th>
-                  <th className="px-4 py-3">Acceso simulador</th>
+                  <th className="px-4 py-3">Acceso al sitio</th>
                   <th className="px-4 py-3 text-right">Simulaciones</th>
                   <th className="px-4 py-3 text-right">Promedio</th>
                   <th className="px-4 py-3 text-right">Mejor</th>

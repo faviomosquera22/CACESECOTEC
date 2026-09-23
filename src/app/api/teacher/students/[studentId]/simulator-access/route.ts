@@ -32,7 +32,7 @@ export async function PATCH(
 
   if (authContext.profile.role !== "teacher") {
     return Response.json(
-      { error: "Solo docentes pueden cambiar el acceso al simulador." },
+      { error: "Solo docentes pueden cambiar el acceso al sitio." },
       { status: 403 },
     );
   }
@@ -122,7 +122,7 @@ export async function PATCH(
   if (accessError) {
     return Response.json(
       {
-        error: "No se pudo actualizar el acceso al simulador.",
+        error: "No se pudo actualizar el acceso al sitio.",
         details: accessError.message,
       },
       { status: 500 },

@@ -17,6 +17,7 @@ Los usuarios deben crearse manualmente en Supabase Auth. Cada usuario necesita u
 ## Rutas
 
 - `/login`
+- `/access-blocked`
 - `/student/dashboard`
 - `/student/simulator`
 - `/student/results/[simulationId]`
@@ -67,3 +68,26 @@ En **Banco de preguntas**, cada docente puede crear y editar preguntas de su car
 La persistencia requiere ejecutar `supabase/teacher_questions.sql` antes del despliegue. RLS restringe la edición al docente propietario y la lectura estudiantil a preguntas publicadas de su docente y carrera. `supabase/verify_teacher_questions.sql` verifica estos permisos dentro de una transacción que se revierte; requiere un docente con estudiante asignado.
 
 Pruebas del formulario, API y selección del banco: `node --test scripts/test_manual_questions.mjs`.
+
+## Bloqueo completo del estudiante
+
+El control **Acceso al sitio** del panel docente utiliza el estado existente
+`student_simulator_access.enabled`. Si está deshabilitado o no existe, el
+estudiante no puede entrar al dashboard, perfil, historial, simulador ni a los
+reportes (incluidos los guardados localmente). Solo puede ver el aviso de bloqueo,
+verificar si el docente habilitó su acceso o cerrar sesión. Las páginas abiertas
+verifican el estado cada 15 segundos, al recuperar el foco y al navegar.
+
+Antes de publicar esta versión, ejecutar `supabase/student_site_access.sql`
+después de `supabase/student_simulator_access.sql` y las migraciones de contenido.
+Sus políticas RLS restrictivas también deniegan lecturas y escrituras directas de
+un estudiante bloqueado en Supabase. Conservan los permisos previos de los docentes
+y los registros del estudiante. Si se añaden nuevas tablas de contenido, deben
+incluir la misma restricción.
+
+Pruebas de rutas, reportes, API y pestañas abiertas:
+`node --test scripts/test_student_site_access.mjs`.
+
+La prueba de RLS usa PostgreSQL en memoria con `@electric-sql/pglite`, sin tocar
+producción. Con el paquete instalado en una carpeta temporal, ejecutar
+`PGLITE_MODULE=/ruta/al/paquete/dist/index.js node scripts/test_student_site_access_rls.mjs`.

@@ -8,6 +8,7 @@ import {
   type SupabaseServerClient,
 } from "@/lib/supabaseServer";
 import { isSupportedStudentCareer } from "@/lib/studentCareer";
+import { getStudentSiteAccess, STUDENT_BLOCKED_PATH } from "@/lib/studentAccess";
 
 export type AuthContext = {
   supabase: SupabaseServerClient;
@@ -18,6 +19,8 @@ export type AuthContext = {
 export type AuthenticatedContext = AuthContext & {
   profile: Profile;
 };
+
+export const hasStudentSiteAccess = cache(getStudentSiteAccess);
 
 export function isStudentProfileComplete(profile: Profile) {
   if (profile.role !== "student") {
@@ -70,6 +73,13 @@ export async function requireProfile(
   if (!context.profile) {
     await context.supabase.auth.signOut();
     redirect("/login?error=missing-profile");
+  }
+
+  if (
+    context.profile.role === "student" &&
+    !(await hasStudentSiteAccess(context.supabase, context.profile.id))
+  ) {
+    redirect(STUDENT_BLOCKED_PATH);
   }
 
   if (allowedRoles && !allowedRoles.includes(context.profile.role)) {

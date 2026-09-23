@@ -18,7 +18,7 @@ export async function PATCH(request: Request) {
 
   if (authContext.profile.role !== "teacher") {
     return Response.json(
-      { error: "Solo docentes pueden cambiar el acceso al simulador." },
+      { error: "Solo docentes pueden cambiar el acceso al sitio." },
       { status: 403 },
     );
   }

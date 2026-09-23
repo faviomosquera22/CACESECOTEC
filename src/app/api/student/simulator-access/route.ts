@@ -1,5 +1,5 @@
 import { getCurrentAuthContext } from "@/lib/auth";
-import { getStudentSimulatorAccess } from "@/lib/studentSimulatorAccess";
+import { getStudentSiteAccess, STUDENT_BLOCKED_MESSAGE } from "@/lib/studentAccess";
 
 export const dynamic = "force-dynamic";
 
@@ -17,13 +17,16 @@ export async function GET() {
     );
   }
 
-  const enabled = await getStudentSimulatorAccess(
+  const enabled = await getStudentSiteAccess(
     authContext.supabase,
     authContext.profile.id,
   );
 
   return Response.json(
-    { enabled },
-    { headers: { "Cache-Control": "no-store" } },
+    enabled ? { enabled } : { enabled, error: STUDENT_BLOCKED_MESSAGE },
+    {
+      status: enabled ? 200 : 403,
+      headers: { "Cache-Control": "private, no-store" },
+    },
   );
 }

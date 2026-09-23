@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AlertCircle, LockKeyhole, LogIn, Mail } from "lucide-react";
 import { getRoleHomePath } from "@/lib/routes";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
+import { getStudentSiteAccess, STUDENT_BLOCKED_MESSAGE } from "@/lib/studentAccess";
 
 type LoginFormProps = {
   initialError?: string;
@@ -70,6 +71,14 @@ export function LoginForm({ initialError }: LoginFormProps) {
       if (profile.role !== "student" && profile.role !== "teacher") {
         await supabase.auth.signOut();
         throw new Error("El perfil no tiene un rol válido.");
+      }
+
+      if (
+        profile.role === "student" &&
+        !(await getStudentSiteAccess(supabase, profile.id))
+      ) {
+        await supabase.auth.signOut();
+        throw new Error(STUDENT_BLOCKED_MESSAGE);
       }
 
       await supabase.auth.updateUser({
