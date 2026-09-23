@@ -20,6 +20,8 @@ import {
 } from "@/lib/simulatorSettingsCatalog";
 import { getStudentCareerOption } from "@/lib/studentCareer";
 import { requireStudentSimulatorAccess } from "@/lib/studentSimulatorAccess";
+import { getManualQuestions } from "@/lib/manualQuestionsServer";
+import { manualQuestionForSimulator } from "@/lib/manualQuestions";
 
 type StudentExamSimulatorPageProps = {
   params: Promise<{
@@ -96,6 +98,13 @@ export default async function StudentExamSimulatorPage({
   }
 
   const examDistribution = examDistributionBySlug[exam.slug] ?? [];
+  let manualQuestions: Question[] = [];
+  try {
+    const rows = await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);
+    manualQuestions = rows.map(manualQuestionForSimulator);
+  } catch {
+    return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudo cargar el banco de tu docente. Recarga la página para iniciar el intento con las preguntas actualizadas.</section>;
+  }
   const shouldUsePsychiatryBank = exam.slug === "psicologia";
   const shouldUseIntegralComponent =
     exam.slug === "enfermeria" &&
@@ -126,16 +135,18 @@ export default async function StudentExamSimulatorPage({
         exam.slug,
         attemptSeed,
         simulatorSettings,
+        manualQuestions,
       )
     : questionLoadError || supabaseQuestions.length === 0
       ? await getLocalQuestionsForExam(
           exam.slug,
           attemptSeed,
           simulatorSettings,
+          manualQuestions,
         )
       : selectQuestionsForExam(
           exam.slug,
-          supabaseQuestions,
+          [...supabaseQuestions, ...manualQuestions],
           attemptSeed,
           simulatorSettings,
         );

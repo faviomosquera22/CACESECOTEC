@@ -557,7 +557,9 @@ export function selectPsychologyExamQuestions(
   questions: Question[],
   attemptSeed?: string,
 ) {
-  const qualityPool = questions.filter(isBalancedPsychologyQuestion);
+  const qualityPool = questions.filter(question =>
+    question.id.startsWith("local-manual-") ? isUsableQuestion(question) : isBalancedPsychologyQuestion(question),
+  );
   const questionPool =
     qualityPool.length >= psychologyExamQuestionCount
       ? qualityPool
@@ -593,10 +595,11 @@ export function selectQuestionsForExam(
 
   if (examType === "enfermeria") {
     if (settings) {
-      return shuffleQuestions(
+      const selected = shuffleQuestions(
         filteredQuestions.map(repairQuestionText).filter(isUsableQuestion),
         getRandomSource(attemptSeed),
-      ).slice(0, 100);
+      );
+      return settings.enabledPhases.includes("componente-integral") ? selected : selected.slice(0, 100);
     }
 
     return selectNursingExamQuestions(filteredQuestions, attemptSeed);
@@ -616,12 +619,13 @@ export async function getLocalQuestionsForExam(
   examType: string,
   attemptSeed?: string,
   settings?: SimulatorSettings,
+  additionalQuestions: Question[] = [],
 ) {
   if (examType === "enfermeria") {
     if (settings?.enabledPhases.includes("componente-integral")) {
       return selectQuestionsForExam(
         examType,
-        componenteIntegralQuestions as Question[],
+        [...componenteIntegralQuestions as Question[], ...additionalQuestions],
         attemptSeed,
         settings,
       );
@@ -633,7 +637,7 @@ export async function getLocalQuestionsForExam(
 
     return selectQuestionsForExam(
       examType,
-      enfermeriaQuestions as Question[],
+      [...enfermeriaQuestions as Question[], ...additionalQuestions],
       attemptSeed,
       settings,
     );
@@ -646,7 +650,7 @@ export async function getLocalQuestionsForExam(
 
     return selectQuestionsForExam(
       examType,
-      psicologiaQuestions as Question[],
+      [...psicologiaQuestions as Question[], ...additionalQuestions],
       attemptSeed,
       settings,
     );

@@ -53,3 +53,17 @@ instalación existente, ejecuta
 La misma migración es reutilizable: si la tabla ya existe, vuelve a ejecutarla
 para incorporar el selector de fases. Todas las preguntas sin una fase
 explícita se consideran parte de `fase-1`.
+
+## Preguntas manuales del docente
+
+En **Banco de preguntas**, cada docente puede crear y editar preguntas de su carrera:
+
+- Enunciado, cuatro opciones distintas, clave explícita A–D y explicación obligatoria.
+- Componente y dificultad; guardado en borrador o publicación para sus estudiantes.
+- Para retirar una pregunta de próximos intentos, editarla y desmarcar «Publicar para mis estudiantes».
+- Las preguntas publicadas participan solo si su componente está habilitado en el Dashboard. El Componente Integral incluye todo su banco en orden aleatorio; los otros componentes mantienen la muestra habitual.
+- Los resultados terminados conservan su copia histórica de preguntas y respuestas.
+
+La persistencia requiere ejecutar `supabase/teacher_questions.sql` antes del despliegue. RLS restringe la edición al docente propietario y la lectura estudiantil a preguntas publicadas de su docente y carrera. `supabase/verify_teacher_questions.sql` verifica estos permisos dentro de una transacción que se revierte; requiere un docente con estudiante asignado.
+
+Pruebas del formulario, API y selección del banco: `node --test scripts/test_manual_questions.mjs`.

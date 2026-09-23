@@ -1,4 +1,5 @@
 import { TeacherScenarioEditor } from "@/components/TeacherScenarioEditor";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +16,12 @@ export default function TeacherScenariosPage() {
           escenarios de práctica.
         </p>
       </section>
+
+      <p className="rounded-lg border border-sky-200 bg-sky-50 p-4 text-sm text-sky-900">
+        Para agregar preguntas al simulador de tus estudiantes, usa el{" "}
+        <Link href="/teacher/questions" className="font-semibold underline">Banco de preguntas</Link>.
+        {" "}Los escenarios de esta página se conservan solo en este navegador.
+      </p>
 
       <TeacherScenarioEditor />
     </div>

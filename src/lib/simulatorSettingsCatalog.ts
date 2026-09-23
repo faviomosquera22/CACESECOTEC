@@ -237,6 +237,10 @@ function getPhaseKey(
   career: StudentCareerSlug,
   question: Question,
 ): SimulatorPhaseKey {
+  const explicitPhase = settingsCatalogByCareer[career].phases.find(
+    option => option.key === question.phase,
+  );
+  if (question.id.startsWith("local-manual-") && explicitPhase) return explicitPhase.key;
   if (career === "enfermeria") {
     if (normalize(question.phase ?? "") === "componente-integral") {
       return "componente-integral";

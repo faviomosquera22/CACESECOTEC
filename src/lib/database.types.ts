@@ -1,3 +1,5 @@
+import type { ManualQuestionRow } from "@/lib/manualQuestions";
+
 export type Json =
   | string
   | number
@@ -12,6 +14,12 @@ export type OptionLetter = "A" | "B" | "C" | "D";
 export interface Database {
   public: {
     Tables: {
+      teacher_questions: {
+        Row: ManualQuestionRow;
+        Insert: Omit<ManualQuestionRow, "id" | "created_at" | "updated_at"> & { id?: string; created_at?: string; updated_at?: string };
+        Update: Partial<Omit<ManualQuestionRow, "id" | "created_at">>;
+        Relationships: [];
+      };
       profiles: {
         Row: {
           id: string;

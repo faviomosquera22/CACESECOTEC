@@ -5,6 +5,11 @@ import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
 
 const teacherNavItems: NavItem[] = [
   {
+    href: "/teacher/questions",
+    label: "Banco de preguntas",
+    icon: <ClipboardList className="h-4 w-4" aria-hidden="true" />,
+  },
+  {
     href: "/teacher/dashboard",
     label: "Dashboard",
     icon: <LayoutDashboard className="h-4 w-4" aria-hidden="true" />,
