@@ -52,7 +52,7 @@ test('integral incluye todas las manuales, supera 100 y mantiene exclusividad', 
   additions.push(manualQuestionForSimulator(row({ id: 'other', phase: 'fase-2' })));
   const first = await getLocalQuestionsForExam('enfermeria', 'seed-a', settings, additions);
   const second = await getLocalQuestionsForExam('enfermeria', 'seed-b', settings, additions);
-  assert.equal(first.length, 123); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
+  assert.equal(first.length, 153); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
   assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
   for (const question of first.filter(q => q.id.startsWith('local-manual-'))) { assert.equal(question.correct_option, 'C'); assert.equal(question.option_c, valid.option_c); }
 });
@@ -96,14 +96,14 @@ test('API no informa éxito al editar pregunta inexistente ni al fallar el guard
   assert.equal((await api(profile, { data: null, error: { message: 'db failure' } }).routes.POST(request(valid))).status, 500);
 });
 
-test('PDF octubre: las 30 preguntas completas conservan claves y entran al banco remoto', () => {
+test('PDF octubre: las 30 preguntas completas conservan claves y aparecen solo en Integral', async () => {
   const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaOctubreDocumentoQuestions.json'), 'utf8'));
   const { withNursingOctoberQuestions, isUsableQuestion } = load('src/lib/localQuestions.ts');
   assert.equal(bank.length, 30);
   assert.deepEqual(bank.filter(q => !isUsableQuestion(q)).map(q => ({id:q.id,prompt:q.question_text})), []);
   const pool = withNursingOctoberQuestions([]);
   assert.equal(withNursingOctoberQuestions(pool).length, 30);
-  for (const [phase, count] of [['fase-1', 8], ['fase-3', 22], ['fase-2', 0], ['componente-integral', 0]]) {
+  for (const [phase, count] of [['fase-1', 0], ['fase-3', 0], ['fase-2', 0], ['componente-integral', 30]]) {
     const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: [phase] };
     const selected = selectQuestionsForExam('enfermeria', pool, 'octubre-source', settings);
     assert.equal(selected.length, count);
@@ -113,6 +113,15 @@ test('PDF octubre: las 30 preguntas completas conservan claves y entran al banco
       assert.equal(question['option_' + question.correct_option.toLowerCase()], original['option_' + original.correct_option.toLowerCase()]);
     }
   }
+  const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1', 'fase-3'] };
+  const first = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-a', settings);
+  const second = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-b', settings);
+  assert.equal(first.length, 73);
+  assert.equal(first.filter(q => q.id.startsWith('local-enfermeria-octubre-documento-')).length, 30);
+  assert.ok(first.every(q => q.phase === 'componente-integral'));
+  assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
+  assert.ok(!first.some(q => q.id === 'local-enfermeria-octubre-documento-004'));
+
 });
 
 test('cuadro clínico no requiere imagen; una referencia a una tabla sí', () => {

@@ -3,10 +3,10 @@
   "sha256": "77b05637fc44dd8e1ca2b2e235391b6efea02b8663664e86af6eefe93f0f26ab",
   "total": 39,
   "incorporated": 30,
-  "pending": 9,
+  "pending": 8,
+  "excluded": 1,
   "by_phase": {
-    "fase-3": 22,
-    "fase-1": 8
+    "componente-integral": 30
   },
   "items": [
     {
@@ -14,7 +14,7 @@
       "page": 1,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "D"
       ],
@@ -32,7 +32,7 @@
       "page": 1,
       "status": "pendiente",
       "reason": "Una o más alternativas son notas de transcripción incompleta.",
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "A"
       ],
@@ -50,7 +50,7 @@
       "page": 1,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -66,9 +66,9 @@
     {
       "number": 4,
       "page": 2,
-      "status": "pendiente",
-      "reason": "Solo hay 0 opciones; se necesitan cuatro alternativas completas.",
-      "phase": "fase-3",
+      "status": "excluida",
+      "reason": "Excluida por solicitud expresa del usuario.",
+      "phase": "componente-integral",
       "marked_options": [],
       "question_text": "En sala de urgencia se recibe 5 adultos mayores funcionales sin patología asociadas de un centro geriátrico con edades de 75 y 80 años que comparten la misma habitación, por presentar sintomatología similar de emesis frecuentes, deposiciones diarreicas fétidas de 8 en 24 horas, malestar generalizado y dolor abdominal. ¿Qué tipo de líquido se requiere aplicar para mejorar el estilo hidroelectrolítico en estos pacientes?",
       "options": {},
@@ -81,7 +81,7 @@
       "page": 2,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -99,7 +99,7 @@
       "page": 2,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -117,7 +117,7 @@
       "page": 3,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "A"
       ],
@@ -135,7 +135,7 @@
       "page": 3,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -153,7 +153,7 @@
       "page": 3,
       "status": "pendiente",
       "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "A"
       ],
@@ -170,7 +170,7 @@
       "page": 4,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -188,7 +188,7 @@
       "page": 4,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -206,7 +206,7 @@
       "page": 4,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -224,7 +224,7 @@
       "page": 5,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -242,7 +242,7 @@
       "page": 5,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -260,7 +260,7 @@
       "page": 5,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "D"
       ],
@@ -278,7 +278,7 @@
       "page": 6,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -296,7 +296,7 @@
       "page": 6,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "D"
       ],
@@ -314,7 +314,7 @@
       "page": 6,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -332,7 +332,7 @@
       "page": 7,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "A"
       ],
@@ -350,7 +350,7 @@
       "page": 7,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "A"
       ],
@@ -368,7 +368,7 @@
       "page": 7,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "A"
       ],
@@ -386,7 +386,7 @@
       "page": 7,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "A"
       ],
@@ -404,7 +404,7 @@
       "page": 8,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -422,7 +422,7 @@
       "page": 8,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -440,7 +440,7 @@
       "page": 8,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -458,7 +458,7 @@
       "page": 9,
       "status": "pendiente",
       "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -475,7 +475,7 @@
       "page": 9,
       "status": "pendiente",
       "reason": "Una o más alternativas son notas de transcripción incompleta.",
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -493,7 +493,7 @@
       "page": 9,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -511,7 +511,7 @@
       "page": 10,
       "status": "pendiente",
       "reason": "Solo hay 0 opciones; se necesitan cuatro alternativas completas.",
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [],
       "question_text": "Paciente femenina de 68 años con diagnostico de cáncer de páncreas en etapa terminal que ingresa a una unidad de cuidados paliativos por dolor abdominal intenso, con EVA 9/10. El medico prescribe analgesia para manejo del dolor, sin embargo, tras la administración del medicamento se observa que la paciente desarrolla hipotensión postural, acompañado de retención urinaria. ¿Cuál es el medicamento que ocasiona esta alteración?",
       "options": {},
@@ -524,7 +524,7 @@
       "page": 10,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "D"
       ],
@@ -542,7 +542,7 @@
       "page": 10,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -560,7 +560,7 @@
       "page": 11,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "D"
       ],
@@ -578,7 +578,7 @@
       "page": 11,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -596,7 +596,7 @@
       "page": 11,
       "status": "pendiente",
       "reason": "Una o más alternativas son notas de transcripción incompleta.",
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],
@@ -614,7 +614,7 @@
       "page": 12,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-1",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -632,7 +632,7 @@
       "page": 12,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "A"
       ],
@@ -650,7 +650,7 @@
       "page": 12,
       "status": "pendiente",
       "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -667,7 +667,7 @@
       "page": 12,
       "status": "pendiente",
       "reason": "Una o más alternativas son notas de transcripción incompleta.",
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "C"
       ],
@@ -685,7 +685,7 @@
       "page": 13,
       "status": "incorporada",
       "reason": null,
-      "phase": "fase-3",
+      "phase": "componente-integral",
       "marked_options": [
         "B"
       ],

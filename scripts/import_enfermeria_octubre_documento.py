@@ -85,8 +85,12 @@ def build():
             reason = f'No hay una clave resaltada única: {marks}.'
         elif len(set(option.casefold().rstrip('.') for option in options.values())) != 4:
             reason = 'Hay opciones repetidas.'
-        phase = 'fase-1' if number in CLINICAL_PROCEDURES else 'fase-3'
-        audit.append({'number': number, 'page': block['page'], 'status': 'pendiente' if reason else 'incorporada', 'reason': reason, 'phase': phase, 'marked_options': marks, 'question_text': prompt, 'options': options, 'notes': block['notes']})
+        source_phase = 'fase-1' if number in CLINICAL_PROCEDURES else 'fase-3'
+        phase = 'componente-integral'
+        if number == 4:
+            reason = 'Excluida por solicitud expresa del usuario.'
+        status = 'excluida' if number == 4 else 'pendiente' if reason else 'incorporada'
+        audit.append({'number': number, 'page': block['page'], 'status': status, 'reason': reason, 'phase': phase, 'marked_options': marks, 'question_text': prompt, 'options': options, 'notes': block['notes']})
         if reason:
             continue
         key = marks[0]
@@ -96,22 +100,22 @@ def build():
             **{f'option_{letter.lower()}': options[letter] for letter in 'ABCD'},
             'correct_option': key,
             'explanation': f'Según la respuesta resaltada en el documento CACES OCTUBRE, pregunta {number}, página {block["page"]}, la clave es {key}: {options[key]}',
-            'category': f'Enfermería - {CATEGORIES[phase]}',
+            'category': f'Enfermería - {CATEGORIES[source_phase]}',
             'difficulty': 'Banco CACES OCTUBRE - documento resaltado',
             'phase': phase,
-            'component': 'Componente 1: Cuidado y procedimientos clínicos' if phase == 'fase-1' else 'Componente 3: Adulto y adulto mayor',
+            'component': 'Componente Integral',
             'created_at': None,
         })
-    return questions, {'source': SOURCE.name, 'sha256': hashlib.sha256(SOURCE.read_bytes()).hexdigest(), 'total': len(audit), 'incorporated': len(questions), 'pending': len(audit) - len(questions), 'by_phase': dict(Counter(q['phase'] for q in questions)), 'items': audit}
+    return questions, {'source': SOURCE.name, 'sha256': hashlib.sha256(SOURCE.read_bytes()).hexdigest(), 'total': len(audit), 'incorporated': len(questions), 'pending': sum(row['status'] == 'pendiente' for row in audit), 'excluded': sum(row['status'] == 'excluida' for row in audit), 'by_phase': dict(Counter(q['phase'] for q in questions)), 'items': audit}
 
 
 def report(audit):
     lines = ['# Incorporación del PDF CACES OCTUBRE', '',
              f"Fuente: `{audit['source']}`. SHA-256: `{audit['sha256']}`.", '',
-             f"Se revisaron {audit['total']} reactivos: {audit['incorporated']} incorporados y {audit['pending']} pendientes de completar en el documento original.", '',
+             f"Se revisaron {audit['total']} reactivos: {audit['incorporated']} incorporados, {audit['pending']} pendientes y {audit['excluded']} excluido por solicitud del usuario (reactivo 4).", '',
              'Las claves se extraen del resaltado amarillo por la posición de los caracteres dentro de los rectángulos del PDF. Se conservan enunciados, opciones y letras de origen; solo se normalizan saltos de línea y espacios. Las explicaciones atribuyen la clave al PDF y no constituyen una validación clínica independiente.', '',
-             'Clasificación por el objetivo del reactivo: componente 1 para aislamiento, procedimiento respiratorio o perioperatorio, valoración inicial del trauma, administración o identificación de fármacos; componente 3 para patologías, atención geriátrica y cuidado del adulto. No hay reactivos completos de los componentes 2, 4 o 5.', '',
-             'El banco se agrega tanto a las cargas desde Supabase como a la carga local. Participa en los componentes normales habilitados; no se mezcla con el Componente Integral exclusivo.', '',
+             'Por solicitud del usuario, todo este banco pertenece al Componente Integral. La categoría temática conserva la clasificación clínica del reactivo.', '',
+             'El banco se agrega a la carga del Componente Integral, completo y en orden aleatorio por intento. Ya no participa en los componentes 1 ni 3.', '',
              '| Reactivo | Página | Estado | Componente | Clave marcada | Motivo si queda pendiente |',
              '| --- | --- | --- | --- | --- | --- |']
     for row in audit['items']:

@@ -8,8 +8,9 @@ class OctoberSourceTests(unittest.TestCase):
         expected = {1:'D',3:'B',5:'B',6:'B',7:'A',8:'C',10:'B',11:'C',12:'B',13:'C',14:'C',15:'D',16:'B',17:'D',18:'C',19:'A',20:'A',21:'A',22:'A',23:'B',24:'B',25:'B',28:'C',30:'D',31:'C',32:'D',33:'B',35:'C',36:'A',39:'B'}
         actual = {int(q['id'].rsplit('-',1)[1]):q['correct_option'] for q in questions}
         self.assertEqual(actual, expected)
-        self.assertEqual([q['number'] for q in audit['items'] if q['status']=='pendiente'], [2,4,9,26,27,29,34,37,38])
-        self.assertEqual(audit['by_phase'], {'fase-3':22,'fase-1':8})
+        self.assertEqual([q['number'] for q in audit['items'] if q['status']=='pendiente'], [2,9,26,27,29,34,37,38])
+        self.assertEqual(audit['by_phase'], {'componente-integral':30})
+        self.assertEqual([q['number'] for q in audit['items'] if q['status']=='excluida'], [4])
         for question in questions:
             self.assertEqual(len({question['option_'+k] for k in 'abcd'}),4)
             self.assertNotIn('Voz ', question['question_text'])

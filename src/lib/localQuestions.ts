@@ -631,7 +631,7 @@ export async function getLocalQuestionsForExam(
     if (settings?.enabledPhases.includes("componente-integral")) {
       return selectQuestionsForExam(
         examType,
-        [...componenteIntegralQuestions as Question[], ...additionalQuestions],
+        [...withNursingOctoberQuestions(componenteIntegralQuestions as Question[]), ...additionalQuestions],
         attemptSeed,
         settings,
       );

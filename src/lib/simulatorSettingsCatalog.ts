@@ -80,7 +80,7 @@ const nursingComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
       key: "componente-integral",
       label: "Componente Integral",
       description:
-        "Banco integrado de administración y cuidado materno infantil.",
+        "Banco integrado de administración, cuidado materno infantil y preguntas de octubre.",
     },
   ];
 
