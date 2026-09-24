@@ -24,7 +24,7 @@ function getOptionText(question: Question | null, option?: OptionLetter | null) 
     D: question.option_d,
   }[option];
 
-  return `${option}. ${optionText}`;
+  return question.source_format === "answer-only" ? optionText : `${option}. ${optionText}`;
 }
 
 function punctuate(sentence: string) {
@@ -145,6 +145,10 @@ function getIncorrectReason(
   correctOption: OptionLetter | null,
 ) {
   const correctText = getOptionText(question, correctOption);
+
+  if (question?.source_format) {
+    return `La calificación conserva la respuesta marcada en el documento: ${correctText}. El reactivo mantiene el enunciado y las alternativas disponibles en la transcripción original.`;
+  }
 
   if (!selectedOption) {
     return `No marcaste una alternativa. Los datos del enunciado sustentan ${correctText}, por eso esa era la respuesta que debías seleccionar.`;

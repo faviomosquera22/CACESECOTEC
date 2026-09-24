@@ -2,9 +2,9 @@
 
 Fuente: `CACES OCTUBRE..pdf`. SHA-256: `77b05637fc44dd8e1ca2b2e235391b6efea02b8663664e86af6eefe93f0f26ab`.
 
-Se revisaron 39 reactivos: 30 incorporados, 8 pendientes y 1 excluido por solicitud del usuario (reactivo 4).
+Se revisaron 39 reactivos: 38 incorporados, 0 pendientes y 1 excluido por solicitud del usuario (reactivo 4).
 
-Las claves se extraen del resaltado amarillo por la posición de los caracteres dentro de los rectángulos del PDF. Se conservan enunciados, opciones y letras de origen; solo se normalizan saltos de línea y espacios. Las explicaciones atribuyen la clave al PDF y no constituyen una validación clínica independiente.
+Las claves se extraen del resaltado amarillo por la posición de los caracteres dentro de los rectángulos del PDF. Se conservan enunciados, opciones y letras de origen; solo se normalizan saltos de línea y espacios. Por indicación expresa del usuario se incluyen los ocho reactivos incompletos tal como aparecen, sin inventar alternativas. Las explicaciones atribuyen la clave al PDF y no constituyen una validación clínica independiente.
 
 Por solicitud del usuario, todo este banco pertenece al Componente Integral. La categoría temática conserva la clasificación clínica del reactivo.
 
@@ -13,14 +13,14 @@ El banco se agrega a la carga del Componente Integral, completo y en orden aleat
 | Reactivo | Página | Estado | Componente | Clave marcada | Motivo si queda pendiente |
 | --- | --- | --- | --- | --- | --- |
 | 1 | 1 | incorporada | componente-integral | D | — |
-| 2 | 1 | pendiente | componente-integral | A | Una o más alternativas son notas de transcripción incompleta. |
+| 2 | 1 | incorporada | componente-integral | A | — |
 | 3 | 1 | incorporada | componente-integral | B | — |
 | 4 | 2 | excluida | componente-integral | Sin letra marcada | Excluida por solicitud expresa del usuario. |
 | 5 | 2 | incorporada | componente-integral | B | — |
 | 6 | 2 | incorporada | componente-integral | B | — |
 | 7 | 3 | incorporada | componente-integral | A | — |
 | 8 | 3 | incorporada | componente-integral | C | — |
-| 9 | 3 | pendiente | componente-integral | A | Solo hay 3 opciones; se necesitan cuatro alternativas completas. |
+| 9 | 3 | incorporada | componente-integral | A | — |
 | 10 | 4 | incorporada | componente-integral | B | — |
 | 11 | 4 | incorporada | componente-integral | C | — |
 | 12 | 4 | incorporada | componente-integral | B | — |
@@ -37,21 +37,21 @@ El banco se agrega a la carga del Componente Integral, completo y en orden aleat
 | 23 | 8 | incorporada | componente-integral | B | — |
 | 24 | 8 | incorporada | componente-integral | B | — |
 | 25 | 8 | incorporada | componente-integral | B | — |
-| 26 | 9 | pendiente | componente-integral | B | Solo hay 3 opciones; se necesitan cuatro alternativas completas. |
-| 27 | 9 | pendiente | componente-integral | B | Una o más alternativas son notas de transcripción incompleta. |
+| 26 | 9 | incorporada | componente-integral | B | — |
+| 27 | 9 | incorporada | componente-integral | B | — |
 | 28 | 9 | incorporada | componente-integral | C | — |
-| 29 | 10 | pendiente | componente-integral | Sin letra marcada | Solo hay 0 opciones; se necesitan cuatro alternativas completas. |
+| 29 | 10 | incorporada | componente-integral | Sin letra marcada | — |
 | 30 | 10 | incorporada | componente-integral | D | — |
 | 31 | 10 | incorporada | componente-integral | C | — |
 | 32 | 11 | incorporada | componente-integral | D | — |
 | 33 | 11 | incorporada | componente-integral | B | — |
-| 34 | 11 | pendiente | componente-integral | B | Una o más alternativas son notas de transcripción incompleta. |
+| 34 | 11 | incorporada | componente-integral | B | — |
 | 35 | 12 | incorporada | componente-integral | C | — |
 | 36 | 12 | incorporada | componente-integral | A | — |
-| 37 | 12 | pendiente | componente-integral | C | Solo hay 3 opciones; se necesitan cuatro alternativas completas. |
-| 38 | 12 | pendiente | componente-integral | C | Una o más alternativas son notas de transcripción incompleta. |
+| 37 | 12 | incorporada | componente-integral | C | — |
+| 38 | 12 | incorporada | componente-integral | C | — |
 | 39 | 13 | incorporada | componente-integral | B | — |
 
-Los pendientes conservan el texto completo disponible en `AUDITORIA.json`, incluida la respuesta abierta «Morfina» del reactivo 29. No se inventaron distractores para convertirlos en preguntas completas.
+Los reactivos 2, 9, 26, 27, 29, 34, 37 y 38 conservan el texto disponible en el PDF. Las alternativas ausentes no se muestran. El reactivo 29 muestra «(opioide) Morfina» como respuesta del documento, sin letra visible ni distractores nuevos; se guarda internamente en A para compatibilidad con los intentos. Las limitaciones originales se registran en `source_issue` de `AUDITORIA.json`. El reactivo 4 permanece excluido.
 
 Reproducir con Python y pdfplumber: `python3 scripts/import_enfermeria_octubre_documento.py --check`.

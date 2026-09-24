@@ -61,14 +61,14 @@ export function SimulationQuestion({
       ) : null}
 
       <div className="mt-6 grid gap-3">
-        {optionKeys.map((option) => {
+        {optionKeys.filter((option) => options[option]?.trim()).map((option) => {
           const isSelected = selectedOption === option;
 
           return (
             <button
               key={option}
               type="button"
-              aria-label={`Opción ${option}: ${options[option]}`}
+              aria-label={question.source_format === "answer-only" ? `Respuesta del documento: ${options[option]}` : `Opción ${option}: ${options[option]}`}
               data-option={option}
               onClick={() => onSelect(option)}
               className={`flex min-h-14 w-full items-start gap-4 rounded-lg border px-4 py-3 text-left transition ${
@@ -77,7 +77,7 @@ export function SimulationQuestion({
                   : "border-slate-200 bg-white text-slate-700 hover:border-sky-200 hover:bg-sky-50"
               }`}
             >
-              <span
+              {question.source_format !== "answer-only" ? <span
                 className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm font-semibold ${
                   isSelected
                     ? "bg-sky-700 text-white"
@@ -85,8 +85,11 @@ export function SimulationQuestion({
                 }`}
               >
                 {option}
+              </span> : null}
+              <span className="pt-1 text-sm leading-6">
+                {question.source_format === "answer-only" ? <span className="mb-1 block font-semibold">Respuesta del documento</span> : null}
+                {options[option]}
               </span>
-              <span className="pt-1 text-sm leading-6">{options[option]}</span>
             </button>
           );
         })}

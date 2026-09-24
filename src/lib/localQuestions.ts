@@ -239,6 +239,8 @@ function cleanImportedOptionText(value: string) {
 }
 
 function repairQuestionText(question: Question) {
+  // This source must retain its wording and marked answers verbatim.
+  if (question.id.startsWith("local-enfermeria-octubre-documento-")) return question;
   const sourceText = question.question_text.trim();
   const importedQuestionRepair = nursingQuestionRepairsBySource.get(
     getNursingQuestionRepairKey(question.difficulty ?? "", sourceText),
@@ -316,6 +318,18 @@ export function isUsableQuestion(question: Question) {
     question.option_c,
     question.option_d,
   ].map((option) => option?.trim() ?? "");
+
+  // Only these source reactivos were explicitly authorized with missing options.
+  // Empty slots are not displayed; the marked answer must still exist.
+  if (
+    question.source_format &&
+    /^local-enfermeria-octubre-documento-(002|009|026|027|029|034|037|038)$/.test(question.id)
+  ) {
+    const correctIndex = ["A", "B", "C", "D"].indexOf(question.correct_option);
+    const availableOptions = options.filter(Boolean);
+    return Boolean(questionText && correctIndex >= 0 && options[correctIndex]) &&
+      new Set(availableOptions.map(normalizeOptionText)).size === availableOptions.length;
+  }
 
   if (!questionText || options.some((option) => !option)) {
     return false;

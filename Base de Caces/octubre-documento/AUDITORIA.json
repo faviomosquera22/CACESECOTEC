@@ -2,11 +2,11 @@
   "source": "CACES OCTUBRE..pdf",
   "sha256": "77b05637fc44dd8e1ca2b2e235391b6efea02b8663664e86af6eefe93f0f26ab",
   "total": 39,
-  "incorporated": 30,
-  "pending": 8,
+  "incorporated": 38,
+  "pending": 0,
   "excluded": 1,
   "by_phase": {
-    "componente-integral": 30
+    "componente-integral": 38
   },
   "items": [
     {
@@ -14,6 +14,8 @@
       "page": 1,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "D"
@@ -30,8 +32,10 @@
     {
       "number": 2,
       "page": 1,
-      "status": "pendiente",
-      "reason": "Una o más alternativas son notas de transcripción incompleta.",
+      "status": "incorporada",
+      "reason": null,
+      "source_issue": "Una o más alternativas son notas de transcripción incompleta.",
+      "source_format": "partial-options",
       "phase": "componente-integral",
       "marked_options": [
         "A"
@@ -50,6 +54,8 @@
       "page": 1,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -68,6 +74,8 @@
       "page": 2,
       "status": "excluida",
       "reason": "Excluida por solicitud expresa del usuario.",
+      "source_issue": "Solo hay 0 opciones; se necesitan cuatro alternativas completas.",
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [],
       "question_text": "En sala de urgencia se recibe 5 adultos mayores funcionales sin patología asociadas de un centro geriátrico con edades de 75 y 80 años que comparten la misma habitación, por presentar sintomatología similar de emesis frecuentes, deposiciones diarreicas fétidas de 8 en 24 horas, malestar generalizado y dolor abdominal. ¿Qué tipo de líquido se requiere aplicar para mejorar el estilo hidroelectrolítico en estos pacientes?",
@@ -81,6 +89,8 @@
       "page": 2,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -99,6 +109,8 @@
       "page": 2,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -117,6 +129,8 @@
       "page": 3,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "A"
@@ -135,6 +149,8 @@
       "page": 3,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -151,8 +167,10 @@
     {
       "number": 9,
       "page": 3,
-      "status": "pendiente",
-      "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "status": "incorporada",
+      "reason": null,
+      "source_issue": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "source_format": "partial-options",
       "phase": "componente-integral",
       "marked_options": [
         "A"
@@ -170,6 +188,8 @@
       "page": 4,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -188,6 +208,8 @@
       "page": 4,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -206,6 +228,8 @@
       "page": 4,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -224,6 +248,8 @@
       "page": 5,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -242,6 +268,8 @@
       "page": 5,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -260,6 +288,8 @@
       "page": 5,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "D"
@@ -278,6 +308,8 @@
       "page": 6,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -296,6 +328,8 @@
       "page": 6,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "D"
@@ -314,6 +348,8 @@
       "page": 6,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -332,6 +368,8 @@
       "page": 7,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "A"
@@ -350,6 +388,8 @@
       "page": 7,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "A"
@@ -368,6 +408,8 @@
       "page": 7,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "A"
@@ -386,6 +428,8 @@
       "page": 7,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "A"
@@ -404,6 +448,8 @@
       "page": 8,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -422,6 +468,8 @@
       "page": 8,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -440,6 +488,8 @@
       "page": 8,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -456,8 +506,10 @@
     {
       "number": 26,
       "page": 9,
-      "status": "pendiente",
-      "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "status": "incorporada",
+      "reason": null,
+      "source_issue": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "source_format": "partial-options",
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -473,8 +525,10 @@
     {
       "number": 27,
       "page": 9,
-      "status": "pendiente",
-      "reason": "Una o más alternativas son notas de transcripción incompleta.",
+      "status": "incorporada",
+      "reason": null,
+      "source_issue": "Una o más alternativas son notas de transcripción incompleta.",
+      "source_format": "partial-options",
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -493,6 +547,8 @@
       "page": 9,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -509,8 +565,10 @@
     {
       "number": 29,
       "page": 10,
-      "status": "pendiente",
-      "reason": "Solo hay 0 opciones; se necesitan cuatro alternativas completas.",
+      "status": "incorporada",
+      "reason": null,
+      "source_issue": "Solo hay 0 opciones; se necesitan cuatro alternativas completas.",
+      "source_format": "answer-only",
       "phase": "componente-integral",
       "marked_options": [],
       "question_text": "Paciente femenina de 68 años con diagnostico de cáncer de páncreas en etapa terminal que ingresa a una unidad de cuidados paliativos por dolor abdominal intenso, con EVA 9/10. El medico prescribe analgesia para manejo del dolor, sin embargo, tras la administración del medicamento se observa que la paciente desarrolla hipotensión postural, acompañado de retención urinaria. ¿Cuál es el medicamento que ocasiona esta alteración?",
@@ -524,6 +582,8 @@
       "page": 10,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "D"
@@ -542,6 +602,8 @@
       "page": 10,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -560,6 +622,8 @@
       "page": 11,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "D"
@@ -578,6 +642,8 @@
       "page": 11,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -594,8 +660,10 @@
     {
       "number": 34,
       "page": 11,
-      "status": "pendiente",
-      "reason": "Una o más alternativas son notas de transcripción incompleta.",
+      "status": "incorporada",
+      "reason": null,
+      "source_issue": "Una o más alternativas son notas de transcripción incompleta.",
+      "source_format": "partial-options",
       "phase": "componente-integral",
       "marked_options": [
         "B"
@@ -614,6 +682,8 @@
       "page": 12,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -632,6 +702,8 @@
       "page": 12,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "A"
@@ -648,8 +720,10 @@
     {
       "number": 37,
       "page": 12,
-      "status": "pendiente",
-      "reason": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "status": "incorporada",
+      "reason": null,
+      "source_issue": "Solo hay 3 opciones; se necesitan cuatro alternativas completas.",
+      "source_format": "partial-options",
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -665,8 +739,10 @@
     {
       "number": 38,
       "page": 12,
-      "status": "pendiente",
-      "reason": "Una o más alternativas son notas de transcripción incompleta.",
+      "status": "incorporada",
+      "reason": null,
+      "source_issue": "Una o más alternativas son notas de transcripción incompleta.",
+      "source_format": "partial-options",
       "phase": "componente-integral",
       "marked_options": [
         "C"
@@ -685,6 +761,8 @@
       "page": 13,
       "status": "incorporada",
       "reason": null,
+      "source_issue": null,
+      "source_format": null,
       "phase": "componente-integral",
       "marked_options": [
         "B"

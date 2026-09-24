@@ -321,6 +321,8 @@ export type Inserts<T extends keyof Database["public"]["Tables"]> =
 export type Profile = Tables<"profiles">;
 export type StudentSimulatorAccess = Tables<"student_simulator_access">;
 export type Question = Tables<"questions"> & {
+  /** Formato incompleto del documento original, conservado por petición docente. */
+  source_format?: "partial-options" | "answer-only";
   /**
    * Recurso visual opcional recuperado del banco fuente. Estos campos no
    * forman parte de la tabla `questions`; se añaden al preparar el intento.

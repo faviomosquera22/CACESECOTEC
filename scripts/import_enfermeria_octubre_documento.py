@@ -21,6 +21,7 @@ CATEGORIES = {
     'fase-3': 'Cuidados del Adulto y Adulto Mayor',
 }
 MISSING = re.compile(r'no se logra definir|no se comprende|no se escuchan|alternativa relacionada|alternativa orientada', re.I)
+PRESERVE_INCOMPLETE = {2, 9, 26, 27, 29, 34, 37, 38}
 
 
 def clean(text):
@@ -85,21 +86,47 @@ def build():
             reason = f'No hay una clave resaltada única: {marks}.'
         elif len(set(option.casefold().rstrip('.') for option in options.values())) != 4:
             reason = 'Hay opciones repetidas.'
+        source_issue = reason
+        source_format = None
+        published_options = dict(options)
+        key = marks[0] if len(marks) == 1 else None
+        if number in PRESERVE_INCOMPLETE:
+            # Explicit instruction: retain the original, not an adapted question.
+            source_format = 'partial-options'
+            if number == 29:
+                answers = [clean(note.removeprefix('Respuesta:')) for note in block['notes'] if note.startswith('Respuesta:')]
+                if len(answers) != 1 or not answers[0]:
+                    raise ValueError('El reactivo 29 debe conservar una respuesta explícita del documento')
+                published_options = {'A': answers[0]}
+                key = 'A'  # Internal storage only; no invented option letter is displayed.
+                source_format = 'answer-only'
+            if not key or not published_options.get(key):
+                raise ValueError(f'Falta la respuesta original del reactivo {number}')
+            reason = None
         source_phase = 'fase-1' if number in CLINICAL_PROCEDURES else 'fase-3'
         phase = 'componente-integral'
         if number == 4:
             reason = 'Excluida por solicitud expresa del usuario.'
         status = 'excluida' if number == 4 else 'pendiente' if reason else 'incorporada'
-        audit.append({'number': number, 'page': block['page'], 'status': status, 'reason': reason, 'phase': phase, 'marked_options': marks, 'question_text': prompt, 'options': options, 'notes': block['notes']})
+        audit.append({'number': number, 'page': block['page'], 'status': status, 'reason': reason, 'source_issue': source_issue, 'source_format': source_format, 'phase': phase, 'marked_options': marks, 'question_text': prompt, 'options': options, 'notes': block['notes']})
         if reason:
             continue
-        key = marks[0]
+        if not key:
+            raise ValueError(f'Falta clave para el reactivo {number}')
+        explanation = (
+            f'Según la respuesta resaltada en el documento CACES OCTUBRE, pregunta {number}, página {block["page"]}, la respuesta es: {published_options[key]}'
+            if source_format == 'answer-only' else
+            f'Según la respuesta resaltada en el documento CACES OCTUBRE, pregunta {number}, página {block["page"]}, la clave es {key}: {published_options[key]}'
+        )
+        if source_format:
+            explanation += ' Se conserva la transcripción original por solicitud del docente, sin completar ni inventar alternativas.'
         questions.append({
             'id': f'local-enfermeria-octubre-documento-{number:03}',
             'question_text': prompt,
-            **{f'option_{letter.lower()}': options[letter] for letter in 'ABCD'},
+            **{f'option_{letter.lower()}': published_options.get(letter, '') for letter in 'ABCD'},
             'correct_option': key,
-            'explanation': f'Según la respuesta resaltada en el documento CACES OCTUBRE, pregunta {number}, página {block["page"]}, la clave es {key}: {options[key]}',
+            'explanation': explanation,
+            **({'source_format': source_format} if source_format else {}),
             'category': f'Enfermería - {CATEGORIES[source_phase]}',
             'difficulty': 'Banco CACES OCTUBRE - documento resaltado',
             'phase': phase,
@@ -113,14 +140,14 @@ def report(audit):
     lines = ['# Incorporación del PDF CACES OCTUBRE', '',
              f"Fuente: `{audit['source']}`. SHA-256: `{audit['sha256']}`.", '',
              f"Se revisaron {audit['total']} reactivos: {audit['incorporated']} incorporados, {audit['pending']} pendientes y {audit['excluded']} excluido por solicitud del usuario (reactivo 4).", '',
-             'Las claves se extraen del resaltado amarillo por la posición de los caracteres dentro de los rectángulos del PDF. Se conservan enunciados, opciones y letras de origen; solo se normalizan saltos de línea y espacios. Las explicaciones atribuyen la clave al PDF y no constituyen una validación clínica independiente.', '',
+             'Las claves se extraen del resaltado amarillo por la posición de los caracteres dentro de los rectángulos del PDF. Se conservan enunciados, opciones y letras de origen; solo se normalizan saltos de línea y espacios. Por indicación expresa del usuario se incluyen los ocho reactivos incompletos tal como aparecen, sin inventar alternativas. Las explicaciones atribuyen la clave al PDF y no constituyen una validación clínica independiente.', '',
              'Por solicitud del usuario, todo este banco pertenece al Componente Integral. La categoría temática conserva la clasificación clínica del reactivo.', '',
              'El banco se agrega a la carga del Componente Integral, completo y en orden aleatorio por intento. Ya no participa en los componentes 1 ni 3.', '',
              '| Reactivo | Página | Estado | Componente | Clave marcada | Motivo si queda pendiente |',
              '| --- | --- | --- | --- | --- | --- |']
     for row in audit['items']:
         lines.append(f"| {row['number']} | {row['page']} | {row['status']} | {row['phase']} | {', '.join(row['marked_options']) or 'Sin letra marcada'} | {row['reason'] or '—'} |")
-    lines += ['', 'Los pendientes conservan el texto completo disponible en `AUDITORIA.json`, incluida la respuesta abierta «Morfina» del reactivo 29. No se inventaron distractores para convertirlos en preguntas completas.', '',
+    lines += ['', 'Los reactivos 2, 9, 26, 27, 29, 34, 37 y 38 conservan el texto disponible en el PDF. Las alternativas ausentes no se muestran. El reactivo 29 muestra «(opioide) Morfina» como respuesta del documento, sin letra visible ni distractores nuevos; se guarda internamente en A para compatibilidad con los intentos. Las limitaciones originales se registran en `source_issue` de `AUDITORIA.json`. El reactivo 4 permanece excluido.', '',
               'Reproducir con Python y pdfplumber: `python3 scripts/import_enfermeria_octubre_documento.py --check`.', '']
     return '\n'.join(lines)
 

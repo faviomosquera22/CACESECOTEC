@@ -14,7 +14,7 @@ function loader(mocks = {}) {
     if (cache.has(file)) return cache.get(file);
     if (file.endsWith('.json')) return JSON.parse(fs.readFileSync(file, 'utf8'));
     const compiled = { exports: {} }; cache.set(file, compiled.exports);
-    const code = ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true } }).outputText;
+    const code = ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true, jsx: ts.JsxEmit.ReactJSX } }).outputText;
     const resolve = name => {
       if (name in mocks) return mocks[name];
       if (name === 'server-only') return {};
@@ -52,7 +52,7 @@ test('integral incluye todas las manuales, supera 100 y mantiene exclusividad', 
   additions.push(manualQuestionForSimulator(row({ id: 'other', phase: 'fase-2' })));
   const first = await getLocalQuestionsForExam('enfermeria', 'seed-a', settings, additions);
   const second = await getLocalQuestionsForExam('enfermeria', 'seed-b', settings, additions);
-  assert.equal(first.length, 153); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
+  assert.equal(first.length, 161); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
   assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
   for (const question of first.filter(q => q.id.startsWith('local-manual-'))) { assert.equal(question.correct_option, 'C'); assert.equal(question.option_c, valid.option_c); }
 });
@@ -96,19 +96,20 @@ test('API no informa éxito al editar pregunta inexistente ni al fallar el guard
   assert.equal((await api(profile, { data: null, error: { message: 'db failure' } }).routes.POST(request(valid))).status, 500);
 });
 
-test('PDF octubre: las 30 preguntas completas conservan claves y aparecen solo en Integral', async () => {
+test('PDF octubre: las 38 preguntas originales conservan claves y aparecen solo en Integral', async () => {
   const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaOctubreDocumentoQuestions.json'), 'utf8'));
   const { withNursingOctoberQuestions, isUsableQuestion } = load('src/lib/localQuestions.ts');
-  assert.equal(bank.length, 30);
+  assert.equal(bank.length, 38);
   assert.deepEqual(bank.filter(q => !isUsableQuestion(q)).map(q => ({id:q.id,prompt:q.question_text})), []);
   const pool = withNursingOctoberQuestions([]);
-  assert.equal(withNursingOctoberQuestions(pool).length, 30);
-  for (const [phase, count] of [['fase-1', 0], ['fase-3', 0], ['fase-2', 0], ['componente-integral', 30]]) {
+  assert.equal(withNursingOctoberQuestions(pool).length, 38);
+  for (const [phase, count] of [['fase-1', 0], ['fase-3', 0], ['fase-2', 0], ['componente-integral', 38]]) {
     const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: [phase] };
     const selected = selectQuestionsForExam('enfermeria', pool, 'octubre-source', settings);
     assert.equal(selected.length, count);
     for (const question of selected) {
       const original = bank.find(q => q.id === question.id);
+      assert.equal(question.question_text, original.question_text);
       assert.equal(question.correct_option, original.correct_option);
       assert.equal(question['option_' + question.correct_option.toLowerCase()], original['option_' + original.correct_option.toLowerCase()]);
     }
@@ -116,8 +117,8 @@ test('PDF octubre: las 30 preguntas completas conservan claves y aparecen solo e
   const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1', 'fase-3'] };
   const first = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-a', settings);
   const second = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-b', settings);
-  assert.equal(first.length, 73);
-  assert.equal(first.filter(q => q.id.startsWith('local-enfermeria-octubre-documento-')).length, 30);
+  assert.equal(first.length, 81);
+  assert.equal(first.filter(q => q.id.startsWith('local-enfermeria-octubre-documento-')).length, 38);
   assert.ok(first.every(q => q.phase === 'componente-integral'));
   assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
   assert.ok(!first.some(q => q.id === 'local-enfermeria-octubre-documento-004'));
@@ -130,4 +131,28 @@ test('cuadro clínico no requiere imagen; una referencia a una tabla sí', () =>
   assert.equal(isUsableQuestion({ ...question, question_text: 'Un paciente presenta tos. ¿Qué intervención corresponde según el cuadro clínico?' }), true);
   assert.equal(isUsableQuestion({ ...question, question_text: 'Según el cuadro siguiente, ¿qué resultado corresponde?' }), false);
   assert.equal(isUsableQuestion({ ...question, question_text: 'Según la tabla, ¿qué resultado corresponde?' }), false);
+});
+
+test('octubre original: solo muestra alternativas presentes y no inventa letras para la respuesta abierta', () => {
+  const React = require('react');
+  const { renderToStaticMarkup } = require('react-dom/server');
+  const { SimulationQuestion } = load('src/components/SimulationQuestion.tsx');
+  const { isUsableQuestion } = load('src/lib/localQuestions.ts');
+  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaOctubreDocumentoQuestions.json'), 'utf8'));
+  for (const number of [2, 9, 26, 27, 29, 34, 37, 38]) {
+    const question = bank.find(q => q.id.endsWith(String(number).padStart(3, '0')));
+    const html = renderToStaticMarkup(React.createElement(SimulationQuestion, { question, onSelect: () => {} }));
+    const available = ['A','B','C','D'].filter(letter => question['option_' + letter.toLowerCase()]);
+    assert.equal((html.match(/data-option=/g) ?? []).length, available.length);
+    for (const letter of ['A','B','C','D']) assert.equal(html.includes(`data-option="${letter}"`), available.includes(letter));
+    if (number === 29) {
+      assert.ok(html.includes('Respuesta del documento'));
+      assert.ok(html.includes('(opioide) Morfina'));
+      assert.ok(!html.includes('Opción A'));
+    }
+    assert.equal(isUsableQuestion(question), true);
+  }
+  const incomplete = bank.find(q => q.id.endsWith('-026'));
+  assert.equal(isUsableQuestion({ ...incomplete, id: 'other-source' }), false);
+  assert.equal(isUsableQuestion({ ...incomplete, correct_option: 'D' }), false);
 });
