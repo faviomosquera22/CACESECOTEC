@@ -352,5 +352,6 @@ export type SimulationDraftRow = Tables<"simulation_drafts">;
 export type SimulationAttempt = Tables<"simulation_attempts">;
 
 export type SimulationAnswerWithQuestion = SimulationAnswer & {
+  written_answer?: string | null;
   questions: Question | null;
 };

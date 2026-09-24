@@ -142,12 +142,13 @@ test('octubre original: solo muestra alternativas presentes y no inventa letras 
   for (const number of [2, 9, 26, 27, 29, 34, 37, 38]) {
     const question = bank.find(q => q.id.endsWith(String(number).padStart(3, '0')));
     const html = renderToStaticMarkup(React.createElement(SimulationQuestion, { question, onSelect: () => {} }));
-    const available = ['A','B','C','D'].filter(letter => question['option_' + letter.toLowerCase()]);
+    const available = (number === 29 ? [] : ['A','B','C','D']).filter(letter => question['option_' + letter.toLowerCase()]);
     assert.equal((html.match(/data-option=/g) ?? []).length, available.length);
     for (const letter of ['A','B','C','D']) assert.equal(html.includes(`data-option="${letter}"`), available.includes(letter));
     if (number === 29) {
-      assert.ok(html.includes('Respuesta del documento'));
-      assert.ok(html.includes('(opioide) Morfina'));
+      assert.ok(html.includes('Escribe tu respuesta'));
+      assert.ok(html.includes('Confirmar respuesta'));
+      assert.ok(!html.includes('Morfina'));
       assert.ok(!html.includes('Opción A'));
     }
     assert.equal(isUsableQuestion(question), true);
@@ -155,4 +156,59 @@ test('octubre original: solo muestra alternativas presentes y no inventa letras 
   const incomplete = bank.find(q => q.id.endsWith('-026'));
   assert.equal(isUsableQuestion({ ...incomplete, id: 'other-source' }), false);
   assert.equal(isUsableQuestion({ ...incomplete, correct_option: 'D' }), false);
+});
+
+
+test('respuesta escrita: califica variantes de la clave sin aceptar otros fármacos o negaciones', () => {
+  const { gradeWrittenAnswer, parseWrittenAnswers } = load('src/lib/writtenAnswers.ts');
+  const question = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaOctubreDocumentoQuestions.json'), 'utf8')).find(q => q.source_format === 'answer-only');
+  for (const text of ['Morfina', '  MORFINA  ', 'morfína.', '(opioide) Morfina', 'Morfina (opioide)']) assert.equal(gradeWrittenAnswer(question, text), 'A');
+  for (const text of ['opioide', 'no morfina', 'Morfina o paracetamol', 'fentanilo']) assert.equal(gradeWrittenAnswer(question, text), 'B');
+  assert.equal(gradeWrittenAnswer(question, '   '), undefined);
+  assert.deepEqual(parseWrittenAnswers({ [question.id]: 'Morfina', other: 'x', invalid: 3 }, new Set([question.id, 'invalid'])), { [question.id]: 'Morfina' });
+});
+
+test('respuesta escrita: persiste en nube, reporte y migración local con calificación correcta', () => {
+  const { gradeWrittenAnswer } = load('src/lib/writtenAnswers.ts');
+  const { buildSimulationAttemptInsert, simulationAttemptToAnswers, buildSimulationAttemptInsertFromLocalPayload } = load('src/lib/supabaseSimulationAttempts.ts');
+  const { ResultReviewList } = load('src/components/ResultReviewList.tsx');
+  const React = require('react');
+  const { renderToStaticMarkup } = require('react-dom/server');
+  const question = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaOctubreDocumentoQuestions.json'), 'utf8')).find(q => q.source_format === 'answer-only');
+  for (const text of ['MORFINA', 'fentanilo', '']) {
+    const option = gradeWrittenAnswer(question, text);
+    const insert = buildSimulationAttemptInsert({ studentId: 'student', examSlug: 'enfermeria', startedAt: '2026-09-23T00:00:00Z', finishedAt: '2026-09-23T01:00:00Z', totalQuestions: 1, correctAnswers: option === 'A' ? 1 : 0, incorrectAnswers: option === 'B' ? 1 : 0, score: option === 'A' ? 100 : 0, timeUsedSeconds: 60, questions: [question], selectedAnswers: { [question.id]: option }, writtenAnswers: { [question.id]: text } });
+    const answers = simulationAttemptToAnswers({ id: 'attempt', answers: JSON.parse(JSON.stringify(insert.answers)) });
+    assert.equal(answers[0].written_answer, text || null);
+    assert.equal(answers[0].is_correct, text ? option === 'A' : null);
+    assert.equal(answers[0].questions.source_format, 'answer-only');
+    const html = renderToStaticMarkup(React.createElement(ResultReviewList, { answers }));
+    if (text) assert.ok(html.includes(text));
+    assert.ok(html.includes('(opioide) Morfina'));
+    const migrated = buildSimulationAttemptInsertFromLocalPayload('student', { simulation: { ...insert, id: 'local-1' }, answers });
+    assert.equal(migrated.answers[0].written_answer, text || null);
+    assert.equal(migrated.answers[0].is_correct, answers[0].is_correct);
+  }
+});
+
+
+test('respuesta escrita: confirmar requiere texto y bloquea un segundo envío', () => {
+  const { SimulationQuestion } = load('src/components/SimulationQuestion.tsx');
+  const question = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaOctubreDocumentoQuestions.json'), 'utf8')).find(q => q.source_format === 'answer-only');
+  function findForm(element) {
+    if (!element || typeof element !== 'object') return null;
+    if (element.type === 'form') return element;
+    for (const child of [element.props?.children].flat(Infinity)) {
+      const found = findForm(child);
+      if (found) return found;
+    }
+    return null;
+  }
+  let confirmed = 0;
+  for (const props of [ { writtenAnswer: '' }, { writtenAnswer: '   ' }, { writtenAnswer: 'Morfina', disabled: true }, { writtenAnswer: 'Morfina', selectedOption: 'A' } ]) {
+    findForm(SimulationQuestion({ question, onSelect() {}, onConfirmWritten() { confirmed++; }, ...props })).props.onSubmit({ preventDefault() {} });
+  }
+  assert.equal(confirmed, 0);
+  findForm(SimulationQuestion({ question, writtenAnswer: 'Morfina', onSelect() {}, onConfirmWritten() { confirmed++; } })).props.onSubmit({ preventDefault() {} });
+  assert.equal(confirmed, 1);
 });

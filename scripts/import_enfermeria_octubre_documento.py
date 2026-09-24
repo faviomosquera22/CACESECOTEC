@@ -147,7 +147,7 @@ def report(audit):
              '| --- | --- | --- | --- | --- | --- |']
     for row in audit['items']:
         lines.append(f"| {row['number']} | {row['page']} | {row['status']} | {row['phase']} | {', '.join(row['marked_options']) or 'Sin letra marcada'} | {row['reason'] or '—'} |")
-    lines += ['', 'Los reactivos 2, 9, 26, 27, 29, 34, 37 y 38 conservan el texto disponible en el PDF. Las alternativas ausentes no se muestran. El reactivo 29 muestra «(opioide) Morfina» como respuesta del documento, sin letra visible ni distractores nuevos; se guarda internamente en A para compatibilidad con los intentos. Las limitaciones originales se registran en `source_issue` de `AUDITORIA.json`. El reactivo 4 permanece excluido.', '',
+    lines += ['', 'Los reactivos 2, 9, 26, 27, 29, 34, 37 y 38 conservan el texto disponible en el PDF. Las alternativas ausentes no se muestran. El reactivo 29 solicita una respuesta escrita y conserva «(opioide) Morfina» como clave del documento, visible al revisar el resultado. Acepta Morfina sin el descriptor opcional, ignorando mayúsculas, tildes, espacios exteriores y puntuación final. El texto del estudiante se conserva en borradores y resultados; una letra interna mantiene la compatibilidad de la calificación. Las limitaciones originales se registran en `source_issue` de `AUDITORIA.json`. El reactivo 4 permanece excluido.', '',
               'Reproducir con Python y pdfplumber: `python3 scripts/import_enfermeria_octubre_documento.py --check`.', '']
     return '\n'.join(lines)
 

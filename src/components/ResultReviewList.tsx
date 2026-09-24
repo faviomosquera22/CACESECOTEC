@@ -210,7 +210,7 @@ function ReviewCard({
   const selectedOption = answer.selected_option;
   const isUnanswered = !selectedOption;
   const correctOption = question?.correct_option ?? null;
-  const selectedText = getOptionText(question, selectedOption);
+  const selectedText = answer.written_answer ?? getOptionText(question, selectedOption);
   const correctText = getOptionText(question, correctOption);
   const explanation = getAnswerExplanation(
     question,

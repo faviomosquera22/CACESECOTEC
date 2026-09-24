@@ -17,6 +17,7 @@ import type { Json, OptionLetter, Question } from "@/lib/database.types";
 import { writeLocalSimulationSummary } from "@/lib/localSimulationStorage";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import { buildSimulationAttemptInsert } from "@/lib/supabaseSimulationAttempts";
+import { gradeWrittenAnswer, parseWrittenAnswers } from "@/lib/writtenAnswers";
 import { SimulationQuestion } from "@/components/SimulationQuestion";
 
 type SimulatorClientProps = {
@@ -37,6 +38,7 @@ const LEGACY_DRAFT_DONE_PREFIX = "draft_done";
 
 type SimulationDraft = {
   version: number;
+  writtenAnswers?: Record<string, string>;
   answers: Partial<Record<string, OptionLetter>>;
   comments: Record<string, string>;
   currentIndex: number;
@@ -159,6 +161,7 @@ function parseLocalDraft(
 
     return {
       answers,
+      writtenAnswers: parseWrittenAnswers(draft.writtenAnswers, questionIds),
       comments,
       startedAt: draft.startedAt ? new Date(draft.startedAt) : new Date(),
       timeLeft: normalizeDraftTimeLeft(draft),
@@ -204,6 +207,7 @@ function parseStoredDraft(
 
   return {
     answers,
+    writtenAnswers: parseWrittenAnswers(draft.writtenAnswers, questionIds),
     comments,
     startedAt,
     timeLeft,
@@ -288,6 +292,7 @@ export function SimulatorClient({
   const [answers, setAnswers] = useState<Partial<Record<string, OptionLetter>>>(
     {},
   );
+  const [writtenAnswers, setWrittenAnswers] = useState<Record<string, string>>({});
   const [questionComments, setQuestionComments] = useState<
     Record<string, string>
   >({});
@@ -357,6 +362,7 @@ export function SimulatorClient({
               timeUsedSeconds,
               questions,
               selectedAnswers: answers,
+              writtenAnswers,
               comments,
             }),
           )
@@ -398,6 +404,7 @@ export function SimulatorClient({
             simulation_id: simulationId,
             question_id: question.id,
             selected_option: selectedOption,
+            written_answer: question.source_format === "answer-only" && selectedOption ? writtenAnswers[question.id] ?? null : null,
             is_correct: selectedOption
               ? selectedOption === question.correct_option
               : null,
@@ -537,6 +544,7 @@ export function SimulatorClient({
       setIsSubmitting(false);
     }
   }, [
+    writtenAnswers,
     answers,
     isSubmitting,
     persistenceMode,
@@ -562,14 +570,22 @@ export function SimulatorClient({
         restoredComments: Record<string, string>,
         restoredStartedAt: Date,
         restoredTimeLeft: number,
+        restoredWrittenAnswers: Record<string, string> = {},
       ) {
         if (!isMounted) {
           return;
         }
 
-        setAnswers(restoredAnswers);
+        const compatibleAnswers = { ...restoredAnswers };
+        for (const question of questions) {
+          if (question.source_format === "answer-only" && !restoredWrittenAnswers[question.id]?.trim()) {
+            delete compatibleAnswers[question.id];
+          }
+        }
+        setAnswers(compatibleAnswers);
+        setWrittenAnswers(restoredWrittenAnswers);
         setQuestionComments(restoredComments);
-        setCurrentIndex(getFirstUnansweredIndex(questions, restoredAnswers));
+        setCurrentIndex(getFirstUnansweredIndex(questions, compatibleAnswers));
         setTimeLeft(restoredTimeLeft);
         startedAtRef.current = restoredStartedAt;
       }
@@ -594,6 +610,7 @@ export function SimulatorClient({
             parsedRemoteDraft.comments,
             parsedRemoteDraft.startedAt,
             getRemainingSeconds(parsedRemoteDraft.startedAt),
+            parsedRemoteDraft.writtenAnswers,
           );
           setAutoSaveStatus("Progreso sincronizado");
 
@@ -665,6 +682,7 @@ export function SimulatorClient({
             legacyDraft.comments,
             legacyDraft.startedAt,
             getRemainingSeconds(legacyDraft.startedAt),
+            legacyDraft.writtenAnswers,
           );
           setAutoSaveStatus("Progreso sincronizado");
 
@@ -684,6 +702,7 @@ export function SimulatorClient({
             localDraft.comments,
             localDraft.startedAt,
             localDraft.timeLeft,
+            localDraft.writtenAnswers,
           );
           setAutoSaveStatus("Borrador recuperado");
         } else if (rawDraft) {
@@ -795,6 +814,7 @@ export function SimulatorClient({
           localDraft?.comments ?? {},
           migratedStartedAt,
           migratedTimeLeft,
+          localDraft?.writtenAnswers,
         );
         setAutoSaveStatus(
           localDraft ? "Borrador sincronizado" : "Progreso sincronizado",
@@ -806,6 +826,7 @@ export function SimulatorClient({
             localDraft.comments,
             localDraft.startedAt,
             localDraft.timeLeft,
+            localDraft.writtenAnswers,
           );
           setAutoSaveStatus("Borrador local recuperado");
         } else if (rawDraft) {
@@ -838,6 +859,7 @@ export function SimulatorClient({
 
     const draft: SimulationDraft = {
       version: DRAFT_VERSION,
+      writtenAnswers,
       answers,
       comments: questionComments,
       currentIndex,
@@ -851,6 +873,7 @@ export function SimulatorClient({
     window.localStorage.setItem(draftStorageKey, JSON.stringify(draft));
   }, [
     answers,
+    writtenAnswers,
     attemptSeed,
     currentIndex,
     draftStorageKey,
@@ -876,6 +899,7 @@ export function SimulatorClient({
       const draft: SimulationDraft = {
         version: DRAFT_VERSION,
         answers: persistedAnswers,
+        writtenAnswers,
         comments: persistedComments,
         currentIndex,
         timeLeft: getRemainingSeconds(startedAtRef.current),
@@ -933,6 +957,7 @@ export function SimulatorClient({
     return () => window.clearTimeout(timer);
   }, [
     answers,
+    writtenAnswers,
     attemptSeed,
     currentIndex,
     examSlug,
@@ -1136,6 +1161,17 @@ export function SimulatorClient({
             question={currentQuestion}
             selectedOption={answers[currentQuestion.id]}
             onSelect={selectAnswer}
+            writtenAnswer={writtenAnswers[currentQuestion.id] ?? ""}
+            disabled={isSubmitting}
+            onWrite={(value) => {
+              if (!answers[currentQuestion.id] && !isSubmitting) {
+                setWrittenAnswers(current => ({ ...current, [currentQuestion.id]: value }));
+              }
+            }}
+            onConfirmWritten={() => {
+              const option = gradeWrittenAnswer(currentQuestion, writtenAnswers[currentQuestion.id] ?? "");
+              if (option) selectAnswer(option);
+            }}
           />
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

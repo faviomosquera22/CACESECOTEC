@@ -11,6 +11,7 @@ import type {
 
 type AttemptAnswerSnapshot = {
   question_id: string;
+  written_answer: string | null;
   selected_option: OptionLetter | null;
   is_correct: boolean | null;
   answered_at: string | null;
@@ -73,6 +74,7 @@ function normalizeQuestion(value: unknown): Question | null {
 
   return {
     id: question.id,
+    source_format: question.source_format,
     question_text: question.question_text,
     option_a: asString(question.option_a),
     option_b: asString(question.option_b),
@@ -110,6 +112,7 @@ function parseAnswerSnapshots(value: Json): AttemptAnswerSnapshot[] {
 
       return {
         question_id: asString(snapshot.question_id),
+        written_answer: typeof snapshot.written_answer === "string" ? snapshot.written_answer : null,
         selected_option: isOptionLetter(selectedOption) ? selectedOption : null,
         is_correct:
           typeof snapshot.is_correct === "boolean"
@@ -166,6 +169,7 @@ export function simulationAttemptToAnswers(
     simulation_id: attempt.id,
     question_id: answer.question_id,
     selected_option: answer.selected_option,
+    written_answer: answer.written_answer,
     is_correct: answer.is_correct,
     answered_at: answer.answered_at,
     questions: answer.question,
@@ -185,6 +189,7 @@ export function buildSimulationAttemptInsert({
   timeUsedSeconds,
   questions,
   selectedAnswers,
+  writtenAnswers = {},
   comments = {},
   clientAttemptId,
 }: {
@@ -200,6 +205,7 @@ export function buildSimulationAttemptInsert({
   timeUsedSeconds: number;
   questions: Question[];
   selectedAnswers: Partial<Record<string, OptionLetter>>;
+  writtenAnswers?: Record<string, string>;
   comments?: Record<string, string>;
   clientAttemptId?: string | null;
 }): Inserts<"simulation_attempts"> {
@@ -221,6 +227,7 @@ export function buildSimulationAttemptInsert({
       return {
         question_id: question.id,
         selected_option: selectedOption,
+        written_answer: question.source_format === "answer-only" && selectedOption ? writtenAnswers[question.id] ?? null : null,
         is_correct: selectedOption
           ? selectedOption === question.correct_option
           : null,
@@ -270,6 +277,7 @@ export function buildSimulationAttemptInsertFromLocalPayload(
     timeUsedSeconds: simulation.time_used_seconds ?? 0,
     questions,
     selectedAnswers,
+    writtenAnswers: Object.fromEntries(payload.answers.filter(answer => typeof answer.written_answer === "string").map(answer => [answer.question_id, answer.written_answer!])),
     comments: payload.comments ?? {},
     clientAttemptId: simulation.id,
   });

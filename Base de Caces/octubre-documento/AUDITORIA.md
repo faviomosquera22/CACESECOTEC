@@ -52,6 +52,6 @@ El banco se agrega a la carga del Componente Integral, completo y en orden aleat
 | 38 | 12 | incorporada | componente-integral | C | — |
 | 39 | 13 | incorporada | componente-integral | B | — |
 
-Los reactivos 2, 9, 26, 27, 29, 34, 37 y 38 conservan el texto disponible en el PDF. Las alternativas ausentes no se muestran. El reactivo 29 muestra «(opioide) Morfina» como respuesta del documento, sin letra visible ni distractores nuevos; se guarda internamente en A para compatibilidad con los intentos. Las limitaciones originales se registran en `source_issue` de `AUDITORIA.json`. El reactivo 4 permanece excluido.
+Los reactivos 2, 9, 26, 27, 29, 34, 37 y 38 conservan el texto disponible en el PDF. Las alternativas ausentes no se muestran. El reactivo 29 solicita una respuesta escrita y conserva «(opioide) Morfina» como clave del documento, visible al revisar el resultado. Acepta Morfina sin el descriptor opcional, ignorando mayúsculas, tildes, espacios exteriores y puntuación final. El texto del estudiante se conserva en borradores y resultados; una letra interna mantiene la compatibilidad de la calificación. Las limitaciones originales se registran en `source_issue` de `AUDITORIA.json`. El reactivo 4 permanece excluido.
 
 Reproducir con Python y pdfplumber: `python3 scripts/import_enfermeria_octubre_documento.py --check`.
