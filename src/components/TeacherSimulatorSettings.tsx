@@ -21,6 +21,7 @@ type TeacherSimulatorSettingsProps = {
   career: StudentCareerSlug;
   initialSettings: SimulatorSettings;
   totalQuestionCount: number;
+  integralQuestionCount: number | null;
 };
 
 type SettingsResponse = {
@@ -91,6 +92,7 @@ export function TeacherSimulatorSettings({
   career,
   initialSettings,
   totalQuestionCount,
+  integralQuestionCount,
 }: TeacherSimulatorSettingsProps) {
   const catalog = getSimulatorSettingsCatalog(career);
   const sanitizedInitialSettings = useMemo(
@@ -193,6 +195,11 @@ export function TeacherSimulatorSettings({
             ·
           </span>
           {` · ${enabledPhases.length} de ${catalog.phases.length} componentes`}
+          {career === "enfermeria" && (
+            <p className="mt-1">
+              C. integra: {integralQuestionCount?.toLocaleString("es-EC") ?? "No disponible"}
+            </p>
+          )}
         </div>
       </div>
 
