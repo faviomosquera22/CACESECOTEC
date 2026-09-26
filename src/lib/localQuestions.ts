@@ -3,6 +3,7 @@ import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
 import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
 import componenteIntegralQuestions from "@/data/enfermeriaComponenteIntegralQuestions.json";
 import octubreDocumentoQuestions from "@/data/enfermeriaOctubreDocumentoQuestions.json";
+import fundamentosDocumentoQuestions from "@/data/enfermeriaFundamentosDocumentoQuestions.json";
 import {
   filterQuestionsForSimulatorSettings,
   type SimulatorSettings,
@@ -239,8 +240,8 @@ function cleanImportedOptionText(value: string) {
 }
 
 function repairQuestionText(question: Question) {
-  // This source must retain its wording and marked answers verbatim.
-  if (question.id.startsWith("local-enfermeria-octubre-documento-")) return question;
+  // These documents must retain their wording and source answers verbatim.
+  if (/^local-enfermeria-(octubre|fundamentos)-documento-/.test(question.id)) return question;
   const sourceText = question.question_text.trim();
   const importedQuestionRepair = nursingQuestionRepairsBySource.get(
     getNursingQuestionRepairKey(question.difficulty ?? "", sourceText),
@@ -323,7 +324,11 @@ export function isUsableQuestion(question: Question) {
   // Empty slots are not displayed; the marked answer must still exist.
   if (
     question.source_format &&
-    /^local-enfermeria-octubre-documento-(002|009|026|027|029|034|037|038)$/.test(question.id)
+    (
+      /^local-enfermeria-octubre-documento-(002|009|026|027|029|034|037|038)$/.test(question.id) ||
+      (question.source_format === "answer-only" &&
+        /^local-enfermeria-fundamentos-documento-(005|014|015|022|026|036)$/.test(question.id))
+    )
   ) {
     const correctIndex = ["A", "B", "C", "D"].indexOf(question.correct_option);
     const availableOptions = options.filter(Boolean);
@@ -645,7 +650,11 @@ export async function getLocalQuestionsForExam(
     if (settings?.enabledPhases.includes("componente-integral")) {
       return selectQuestionsForExam(
         examType,
-        [...withNursingOctoberQuestions(componenteIntegralQuestions as Question[]), ...additionalQuestions],
+        [
+          ...withNursingOctoberQuestions(componenteIntegralQuestions as Question[]),
+          ...fundamentosDocumentoQuestions as Question[],
+          ...additionalQuestions,
+        ],
         attemptSeed,
         settings,
       );

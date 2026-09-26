@@ -52,7 +52,7 @@ test('integral incluye todas las manuales, supera 100 y mantiene exclusividad', 
   additions.push(manualQuestionForSimulator(row({ id: 'other', phase: 'fase-2' })));
   const first = await getLocalQuestionsForExam('enfermeria', 'seed-a', settings, additions);
   const second = await getLocalQuestionsForExam('enfermeria', 'seed-b', settings, additions);
-  assert.equal(first.length, 161); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
+  assert.equal(first.length, 192); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
   assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
   for (const question of first.filter(q => q.id.startsWith('local-manual-'))) { assert.equal(question.correct_option, 'C'); assert.equal(question.option_c, valid.option_c); }
 });
@@ -117,12 +117,55 @@ test('PDF octubre: las 38 preguntas originales conservan claves y aparecen solo 
   const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1', 'fase-3'] };
   const first = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-a', settings);
   const second = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-b', settings);
-  assert.equal(first.length, 81);
+  assert.equal(first.length, 112);
   assert.equal(first.filter(q => q.id.startsWith('local-enfermeria-octubre-documento-')).length, 38);
   assert.ok(first.every(q => q.phase === 'componente-integral'));
   assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
   assert.ok(!first.some(q => q.id === 'local-enfermeria-octubre-documento-004'));
 
+});
+
+test('Fundamentos: incorpora 31 originales solo en Integral y excluye las seis marcas ELIMINAR', async () => {
+  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaFundamentosDocumentoQuestions.json'), 'utf8'));
+  const excluded = [7, 9, 12, 16, 31, 32];
+  const prefix = 'local-enfermeria-fundamentos-documento-';
+  const expectedIds = Array.from({ length: 37 }, (_, i) => i + 1).filter(n => !excluded.includes(n)).map(n => prefix + String(n).padStart(3, '0'));
+  assert.deepEqual(bank.map(q => q.id), expectedIds);
+  for (const seed of ['fundamentos-a', 'fundamentos-b']) {
+    const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1'] };
+    const selected = await getLocalQuestionsForExam('enfermeria', seed, settings);
+    const imported = selected.filter(q => q.id.startsWith(prefix));
+    assert.equal(selected.length, 112);
+    assert.deepEqual(imported.map(q => q.id).sort(), expectedIds);
+    for (const question of imported) assert.deepEqual(question, bank.find(q => q.id === question.id));
+  }
+  for (const phase of ['fase-1', 'fase-2', 'fase-3', 'fase-4', 'fase-5']) {
+    const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: [phase] };
+    const selected = await getLocalQuestionsForExam('enfermeria', 'other-component', settings);
+    assert.ok(!selected.some(q => q.id.startsWith(prefix)));
+  }
+});
+
+test('Fundamentos: las seis respuestas escritas conservan sus claves y no revelan la solución', () => {
+  const React = require('react');
+  const { renderToStaticMarkup } = require('react-dom/server');
+  const { SimulationQuestion } = load('src/components/SimulationQuestion.tsx');
+  const { gradeWrittenAnswer } = load('src/lib/writtenAnswers.ts');
+  const { isUsableQuestion } = load('src/lib/localQuestions.ts');
+  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaFundamentosDocumentoQuestions.json'), 'utf8'));
+  const written = bank.filter(q => q.source_format === 'answer-only');
+  assert.deepEqual(written.map(q => Number(q.id.slice(-3))), [5, 14, 15, 22, 26, 36]);
+  for (const question of written) {
+    const answer = question['option_' + question.correct_option.toLowerCase()];
+    const html = renderToStaticMarkup(React.createElement(SimulationQuestion, { question, onSelect: () => {} }));
+    assert.ok(html.includes('Escribe tu respuesta') && html.includes('Confirmar respuesta'));
+    assert.ok(!html.includes('data-option=') && !html.includes(answer));
+    assert.equal(isUsableQuestion(question), true);
+    assert.equal(gradeWrittenAnswer(question, answer), question.correct_option);
+    assert.notEqual(gradeWrittenAnswer(question, 'No corresponde a la respuesta del documento'), question.correct_option);
+    assert.equal(isUsableQuestion({ ...question, id: 'other-source' }), false);
+    assert.equal(isUsableQuestion({ ...question, ['option_' + question.correct_option.toLowerCase()]: '' }), false);
+  }
 });
 
 test('cuadro clínico no requiere imagen; una referencia a una tabla sí', () => {
