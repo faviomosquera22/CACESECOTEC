@@ -85,6 +85,7 @@ export async function PATCH(
     .select("id, career")
     .eq("id", studentId)
     .eq("role", "student")
+    .eq("created_by_teacher_id", authContext.profile.id)
     .maybeSingle<AssignStudentCareerResult>();
 
   if (studentError) {
@@ -99,7 +100,7 @@ export async function PATCH(
     !isStudentInTeacherCareerScope(studentProfile.career, teacherCareerScope)
   ) {
     return Response.json(
-      { error: "No puedes modificar estudiantes de otra carrera." },
+      { error: "No puedes modificar estudiantes ajenos a tu cuenta o carrera." },
       { status: 403 },
     );
   }
@@ -109,6 +110,7 @@ export async function PATCH(
     .update({ career: career.label })
     .eq("id", studentId)
     .eq("role", "student")
+    .eq("created_by_teacher_id", authContext.profile.id)
     .select("id, career")
     .single<AssignStudentCareerResult>();
 

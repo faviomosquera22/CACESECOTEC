@@ -74,12 +74,13 @@ export async function PATCH(request: Request) {
     .select("id")
     .eq("role", "student")
     .eq("career", teacherCareer.label)
+    .eq("created_by_teacher_id", teacherId)
     .returns<{ id: string }[]>();
 
   if (studentsError) {
     return Response.json(
       {
-        error: "No se pudieron consultar los estudiantes de tu carrera.",
+        error: "No se pudieron consultar los estudiantes de tu cuenta.",
         details: studentsError.message,
       },
       { status: 500 },

@@ -45,10 +45,12 @@ function getUpdateEmailErrorMessage(message: string) {
 async function getEditableStudent({
   adminClient,
   studentId,
+  teacherId,
   teacherCareerScope,
 }: {
   adminClient: ReturnType<typeof getSupabaseAdminClient>;
   studentId: string;
+  teacherId: string;
   teacherCareerScope: NonNullable<ReturnType<typeof getTeacherCareerScope>>;
 }) {
   const { data: studentProfile, error: profileError } = await adminClient
@@ -56,6 +58,7 @@ async function getEditableStudent({
     .select("id, full_name, email, role, career")
     .eq("id", studentId)
     .eq("role", "student")
+    .eq("created_by_teacher_id", teacherId)
     .maybeSingle<DeleteStudentProfile>();
 
   if (profileError) {
@@ -161,6 +164,7 @@ export async function PATCH(
   const { response, studentProfile } = await getEditableStudent({
     adminClient,
     studentId,
+    teacherId: authContext.profile.id,
     teacherCareerScope,
   });
 
@@ -227,6 +231,7 @@ export async function PATCH(
     .from("profiles")
     .update({ email })
     .eq("id", studentId)
+    .eq("created_by_teacher_id", authContext.profile.id)
     .eq("role", "student")
     .select("id, full_name, email, role, career")
     .single<DeleteStudentProfile>();
@@ -306,6 +311,7 @@ export async function DELETE(
   const { response, studentProfile } = await getEditableStudent({
     adminClient,
     studentId,
+    teacherId: authContext.profile.id,
     teacherCareerScope,
   });
 

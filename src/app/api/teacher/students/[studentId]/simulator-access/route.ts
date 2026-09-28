@@ -81,6 +81,7 @@ export async function PATCH(
     .select("id, role, career")
     .eq("id", studentId)
     .eq("role", "student")
+    .eq("created_by_teacher_id", authContext.profile.id)
     .maybeSingle<StudentScopeProfile>();
 
   if (studentError) {
