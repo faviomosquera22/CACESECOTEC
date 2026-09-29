@@ -22,6 +22,7 @@ function getOptionText(question: Question | null, option?: OptionLetter | null) 
     B: question.option_b,
     C: question.option_c,
     D: question.option_d,
+    E: question.option_e ?? "",
   }[option];
 
   return question.source_format === "answer-only" ? optionText : `${option}. ${optionText}`;

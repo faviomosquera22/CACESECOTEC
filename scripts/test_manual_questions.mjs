@@ -52,7 +52,7 @@ test('integral incluye todas las manuales, supera 100 y mantiene exclusividad', 
   additions.push(manualQuestionForSimulator(row({ id: 'other', phase: 'fase-2' })));
   const first = await getLocalQuestionsForExam('enfermeria', 'seed-a', settings, additions);
   const second = await getLocalQuestionsForExam('enfermeria', 'seed-b', settings, additions);
-  assert.equal(first.length, 192); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
+  assert.equal(first.length, 249); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
   assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
   for (const question of first.filter(q => q.id.startsWith('local-manual-'))) { assert.equal(question.correct_option, 'C'); assert.equal(question.option_c, valid.option_c); }
 });
@@ -117,7 +117,7 @@ test('PDF octubre: las 38 preguntas originales conservan claves y aparecen solo 
   const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1', 'fase-3'] };
   const first = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-a', settings);
   const second = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-b', settings);
-  assert.equal(first.length, 112);
+  assert.equal(first.length, 169);
   assert.equal(first.filter(q => q.id.startsWith('local-enfermeria-octubre-documento-')).length, 38);
   assert.ok(first.every(q => q.phase === 'componente-integral'));
   assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
@@ -135,7 +135,7 @@ test('Fundamentos: incorpora 31 originales solo en Integral y excluye las seis m
     const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1'] };
     const selected = await getLocalQuestionsForExam('enfermeria', seed, settings);
     const imported = selected.filter(q => q.id.startsWith(prefix));
-    assert.equal(selected.length, 112);
+    assert.equal(selected.length, 169);
     assert.deepEqual(imported.map(q => q.id).sort(), expectedIds);
     for (const question of imported) assert.deepEqual(question, bank.find(q => q.id === question.id));
   }
@@ -254,4 +254,75 @@ test('respuesta escrita: confirmar requiere texto y bloquea un segundo envío', 
   assert.equal(confirmed, 0);
   findForm(SimulationQuestion({ question, writtenAnswer: 'Morfina', onSelect() {}, onConfirmWritten() { confirmed++; } })).props.onSubmit({ preventDefault() {} });
   assert.equal(confirmed, 1);
+});
+
+test('septiembre: 57 reactivos fieles, completos y exclusivos; ningún ID perdido ni duplicado', async () => {
+  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaIntegralSeptiembreQuestions.json'), 'utf8'));
+  const prefix = 'local-enfermeria-integral-septiembre-';
+  assert.equal(bank.length, 57);
+  const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1'] };
+  const { isUsableQuestion } = load('src/lib/localQuestions.ts');
+  for (const seed of ['pdf-september-a', 'pdf-september-b']) {
+    const selected = await getLocalQuestionsForExam('enfermeria', seed, settings);
+    assert.equal(selected.length, 169);
+    assert.equal(new Set(selected.map(q => q.id)).size, 169);
+    const imported = selected.filter(q => q.id.startsWith(prefix));
+    assert.deepEqual(imported.map(q => q.id).sort(), bank.map(q => q.id).sort());
+    for (const question of imported) {
+      assert.deepEqual(question, bank.find(q => q.id === question.id));
+      assert.equal(isUsableQuestion(question), true);
+      assert.equal(isUsableQuestion({ ...question, correct_option: 'F' }), false);
+      assert.equal(isUsableQuestion({ ...question, option_b: '' }), false);
+    }
+  }
+  for (const phase of ['fase-1', 'fase-2', 'fase-3', 'fase-4', 'fase-5', 'componente-fantasma']) {
+    const selected = await getLocalQuestionsForExam('enfermeria', 'outside-integral', { ...settings, enabledPhases: [phase] });
+    assert.ok(!selected.some(q => q.id.startsWith(prefix)));
+  }
+});
+
+test('septiembre: muestra exactamente las 3-5 alternativas de cada documento', () => {
+  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaIntegralSeptiembreQuestions.json'), 'utf8'));
+  const { SimulationQuestion } = load('src/components/SimulationQuestion.tsx');
+  const React = require('react');
+  const { renderToStaticMarkup } = require('react-dom/server');
+  for (const question of bank) {
+    const html = renderToStaticMarkup(React.createElement(SimulationQuestion, { question, onSelect: () => {} }));
+    const count = 'abcde'.split('').filter(k => question['option_' + k]).length;
+    assert.equal((html.match(/<button /g) ?? []).length, count, question.id);
+    assert.ok(!html.includes('Escribe tu respuesta'));
+  }
+});
+
+test('quinta opción: selección, calificación, historial y migración conservan E y su texto', () => {
+  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaIntegralSeptiembreQuestions.json'), 'utf8'));
+  const source = bank.find(q => q.option_e);
+  const { buildSimulationAttemptInsert, simulationAttemptToAnswers, buildSimulationAttemptInsertFromLocalPayload } = load('src/lib/supabaseSimulationAttempts.ts');
+  const { ResultReviewList } = load('src/components/ResultReviewList.tsx');
+  const { SimulationQuestion } = load('src/components/SimulationQuestion.tsx');
+  const React = require('react');
+  const { renderToStaticMarkup } = require('react-dom/server');
+  for (const correct of ['C', 'E']) {
+    const question = { ...source, correct_option: correct };
+    const insert = buildSimulationAttemptInsert({ studentId: 'student', examSlug: 'enfermeria', startedAt: '2026-09-28T00:00:00Z', finishedAt: '2026-09-28T01:00:00Z', totalQuestions: 1, correctAnswers: correct === 'E' ? 1 : 0, incorrectAnswers: correct === 'E' ? 0 : 1, score: correct === 'E' ? 100 : 0, timeUsedSeconds: 60, questions: [question], selectedAnswers: { [question.id]: 'E' } });
+    const answers = simulationAttemptToAnswers({ id: 'attempt', answers: JSON.parse(JSON.stringify(insert.answers)) });
+    assert.equal(answers[0].selected_option, 'E');
+    assert.equal(answers[0].is_correct, correct === 'E');
+    assert.equal(answers[0].questions.option_e, question.option_e);
+    const html = renderToStaticMarkup(React.createElement(ResultReviewList, { answers }));
+    assert.ok(html.includes(question.option_e));
+    const migrated = buildSimulationAttemptInsertFromLocalPayload('student', { simulation: { ...insert, id: 'local-1' }, answers });
+    assert.equal(migrated.answers[0].selected_option, 'E');
+    assert.equal(migrated.answers[0].question.option_e, question.option_e);
+    const selected = [];
+    const tree = SimulationQuestion({ question, onSelect: option => selected.push(option) });
+    const walk = node => {
+      if (!node || typeof node !== 'object') return;
+      if (Array.isArray(node)) return node.forEach(walk);
+      if (node.type === 'button' && node.key === 'E') node.props.onClick();
+      walk(node.props?.children);
+    };
+    walk(tree);
+    assert.deepEqual(selected, ['E']);
+  }
 });

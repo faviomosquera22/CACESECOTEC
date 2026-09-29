@@ -9,7 +9,7 @@ export type Json =
   | Json[];
 
 export type ProfileRole = "student" | "teacher";
-export type OptionLetter = "A" | "B" | "C" | "D";
+export type OptionLetter = "A" | "B" | "C" | "D" | "E";
 
 export interface Database {
   public: {
@@ -323,6 +323,8 @@ export type StudentSimulatorAccess = Tables<"student_simulator_access">;
 export type Question = Tables<"questions"> & {
   /** Formato incompleto del documento original, conservado por petición docente. */
   source_format?: "partial-options" | "answer-only";
+  /** Optional fifth alternative from local source banks; saved in attempt snapshots. */
+  option_e?: string;
   /**
    * Recurso visual opcional recuperado del banco fuente. Estos campos no
    * forman parte de la tabla `questions`; se añaden al preparar el intento.

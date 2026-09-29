@@ -13,7 +13,7 @@ type SimulationQuestionProps = {
   disabled?: boolean;
 };
 
-const optionKeys: OptionLetter[] = ["A", "B", "C", "D"];
+const optionKeys: OptionLetter[] = ["A", "B", "C", "D", "E"];
 
 export function SimulationQuestion({
   question,
@@ -29,6 +29,7 @@ export function SimulationQuestion({
     B: question.option_b,
     C: question.option_c,
     D: question.option_d,
+    E: question.option_e ?? "",
   };
 
   return (

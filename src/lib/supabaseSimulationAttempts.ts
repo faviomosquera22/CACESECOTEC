@@ -40,7 +40,7 @@ export const simulationAttemptHistorySelect =
   "id, finished_at, created_at, total_questions, correct_answers, incorrect_answers, score, time_used_seconds";
 
 function isOptionLetter(value: unknown): value is OptionLetter {
-  return ["A", "B", "C", "D"].includes(String(value));
+  return ["A", "B", "C", "D", "E"].includes(String(value));
 }
 
 function asString(value: unknown) {
@@ -80,6 +80,7 @@ function normalizeQuestion(value: unknown): Question | null {
     option_b: asString(question.option_b),
     option_c: asString(question.option_c),
     option_d: asString(question.option_d),
+    ...(question.option_e ? { option_e: asString(question.option_e) } : {}),
     correct_option: isOptionLetter(question.correct_option)
       ? question.correct_option
       : "A",

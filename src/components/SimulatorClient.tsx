@@ -190,7 +190,7 @@ function parseStoredDraft(
     Object.entries(draft.answers ?? {}).filter(
       ([questionId, option]) =>
         questionIds.has(questionId) &&
-        ["A", "B", "C", "D"].includes(String(option)),
+        ["A", "B", "C", "D", "E"].includes(String(option)),
     ),
   ) as Partial<Record<string, OptionLetter>>;
   const comments = Object.fromEntries(

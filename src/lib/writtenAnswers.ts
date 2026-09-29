@@ -8,7 +8,7 @@ function normalize(text: string) {
 export function gradeWrittenAnswer(question: Question, response: string): OptionLetter | undefined {
   const value = normalize(response);
   if (!value) return undefined;
-  const expected = { A: question.option_a, B: question.option_b, C: question.option_c, D: question.option_d }[question.correct_option];
+  const expected = { A: question.option_a, B: question.option_b, C: question.option_c, D: question.option_d, E: question.option_e ?? "" }[question.correct_option];
   const accepted = [expected];
   // The source's parenthetical drug class is optional; the drug name is required.
   if (question.id === "local-enfermeria-octubre-documento-029") {

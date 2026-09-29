@@ -4,6 +4,7 @@ import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs
 import componenteIntegralQuestions from "@/data/enfermeriaComponenteIntegralQuestions.json";
 import octubreDocumentoQuestions from "@/data/enfermeriaOctubreDocumentoQuestions.json";
 import fundamentosDocumentoQuestions from "@/data/enfermeriaFundamentosDocumentoQuestions.json";
+import septiembreIntegralQuestions from "@/data/enfermeriaIntegralSeptiembreQuestions.json";
 import {
   filterQuestionsForSimulatorSettings,
   type SimulatorSettings,
@@ -320,6 +321,17 @@ export function isUsableQuestion(question: Question) {
     question.option_d,
   ].map((option) => option?.trim() ?? "");
 
+  // These reviewed PDF items have 3-5 supplied alternatives and one source key.
+  if (/^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
+    const supplied = [...options, question.option_e?.trim() ?? ""];
+    const available = supplied.filter(Boolean);
+    const key = ["A", "B", "C", "D", "E"].indexOf(question.correct_option);
+    return Boolean(questionText && key >= 0 && supplied[key]) &&
+      available.length >= 3 &&
+      supplied.slice(0, available.length).every(Boolean) &&
+      new Set(available.map(normalizeOptionText)).size === available.length;
+  }
+
   // Only these source reactivos were explicitly authorized with missing options.
   // Empty slots are not displayed; the marked answer must still exist.
   if (
@@ -433,8 +445,9 @@ function dedupeQuestions(questions: Question[]) {
       question.option_b,
       question.option_c,
       question.option_d,
+      ...(question.option_e ? [question.option_e] : []),
     ];
-    const correctOptionIndex = ["A", "B", "C", "D"].indexOf(
+    const correctOptionIndex = ["A", "B", "C", "D", "E"].indexOf(
       question.correct_option,
     );
     const contentKey = [
@@ -471,6 +484,7 @@ function isBalancedPsychologyQuestion(question: Question) {
   const longestLength = Math.max(...lengths);
   const averageLength =
     lengths.reduce((total, length) => total + length, 0) / lengths.length;
+  if (question.correct_option === "E") return false;
   const correctLength = options[question.correct_option].length;
   const correctLengthRatio = correctLength / averageLength;
 
@@ -653,6 +667,7 @@ export async function getLocalQuestionsForExam(
         [
           ...withNursingOctoberQuestions(componenteIntegralQuestions as Question[]),
           ...fundamentosDocumentoQuestions as Question[],
+          ...septiembreIntegralQuestions as Question[],
           ...additionalQuestions,
         ],
         attemptSeed,
