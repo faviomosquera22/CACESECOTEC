@@ -89,6 +89,7 @@ begin
     execute 'create policy "Teachers can read owned simulation answers" on public.simulation_answers for select to authenticated using (exists (select 1 from public.simulations where simulations.id = simulation_answers.simulation_id and public.teacher_can_access_student(simulations.student_id)))';
   end if;
   if to_regclass('public.simulation_attempts') is not null then
+    execute 'drop policy if exists "Teachers can read simulation attempts" on public.simulation_attempts';
     execute 'drop policy if exists "Teachers can read simulations attempts" on public.simulation_attempts';
     execute 'drop policy if exists "Teachers can read scoped simulation attempts" on public.simulation_attempts';
     execute 'drop policy if exists "Teachers can read owned simulation attempts" on public.simulation_attempts';
