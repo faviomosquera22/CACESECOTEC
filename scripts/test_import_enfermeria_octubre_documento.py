@@ -5,7 +5,7 @@ from import_enfermeria_octubre_documento import build, highlighted
 class OctoberSourceTests(unittest.TestCase):
     def test_marks_and_missing_options_match_visual_review(self):
         questions, audit = build()
-        expected = {1:'D',2:'A',9:'A',26:'B',27:'B',29:'A',34:'B',37:'C',38:'C',3:'B',5:'B',6:'B',7:'A',8:'C',10:'B',11:'C',12:'B',13:'C',14:'C',15:'D',16:'B',17:'D',18:'C',19:'A',20:'A',21:'A',22:'A',23:'B',24:'B',25:'B',28:'C',30:'D',31:'C',32:'D',33:'B',35:'C',36:'A',39:'B'}
+        expected = {1:'D',2:'A',9:'A',26:'B',27:'B',29:'A',34:'B',37:'C',38:'C',3:'B',5:'B',6:'B',7:'B',8:'C',10:'B',11:'C',12:'B',13:'C',14:'C',15:'D',16:'B',17:'D',18:'C',19:'A',20:'A',21:'A',22:'A',23:'B',24:'B',25:'B',28:'C',30:'D',31:'C',32:'D',33:'B',35:'C',36:'A',39:'B'}
         actual = {int(q['id'].rsplit('-',1)[1]):q['correct_option'] for q in questions}
         self.assertEqual(actual, expected)
         self.assertEqual([q['number'] for q in audit['items'] if q['status']=='pendiente'], [])
@@ -19,7 +19,14 @@ class OctoberSourceTests(unittest.TestCase):
                 self.assertEqual(question['source_format'], 'answer-only')
                 self.assertEqual([question['option_'+k] for k in 'bcd'], ['', '', ''])
             else:
-                self.assertEqual(question['correct_option'], source['marked_options'][0])
+                if source['number'] == 7:
+                    self.assertEqual(source['marked_options'], ['A'])
+                    self.assertEqual(source['answer_correction']['corrected_key'], 'B')
+                    self.assertEqual(question['correct_option'], 'B')
+                    self.assertEqual(question['option_b'], 'Administración de oxigeno')
+                    self.assertIn('Clave corregida', question['explanation'])
+                else:
+                    self.assertEqual(question['correct_option'], source['marked_options'][0])
                 self.assertEqual({k: question['option_'+k.lower()] for k in 'ABCD' if question['option_'+k.lower()]}, source['options'])
             if not question.get('source_format'):
                 self.assertEqual(len({question['option_'+k] for k in 'abcd'}),4)

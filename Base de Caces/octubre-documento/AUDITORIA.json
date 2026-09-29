@@ -142,7 +142,13 @@
         "C": "Control de ingesta e eliminación",
         "D": "Colocar al paciente en trendelenburg y administrar oxigeno"
       },
-      "notes": []
+      "notes": [],
+      "answer_correction": {
+        "date": "2026-09-29",
+        "source_key": "A",
+        "corrected_key": "B",
+        "reason": "Solicitud expresa del docente: B, administración de oxígeno."
+      }
     },
     {
       "number": 8,

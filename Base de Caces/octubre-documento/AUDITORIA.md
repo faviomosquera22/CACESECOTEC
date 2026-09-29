@@ -6,6 +6,8 @@ Se revisaron 39 reactivos: 38 incorporados, 0 pendientes y 1 excluido por solici
 
 Las claves se extraen del resaltado amarillo por la posición de los caracteres dentro de los rectángulos del PDF. Se conservan enunciados, opciones y letras de origen; solo se normalizan saltos de línea y espacios. Por indicación expresa del usuario se incluyen los ocho reactivos incompletos tal como aparecen, sin inventar alternativas. Las explicaciones atribuyen la clave al PDF y no constituyen una validación clínica independiente.
 
+Corrección docente del 29/09/2026: el reactivo 7 se publica con clave B (Administración de oxigeno), por instrucción expresa del usuario. La marca A del PDF se conserva únicamente como evidencia de origen en la auditoría.
+
 Por solicitud del usuario, todo este banco pertenece al Componente Integral. La categoría temática conserva la clasificación clínica del reactivo.
 
 El banco se agrega a la carga del Componente Integral, completo y en orden aleatorio por intento. Ya no participa en los componentes 1 ni 3.

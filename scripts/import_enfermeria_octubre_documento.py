@@ -118,6 +118,16 @@ def build():
             if source_format == 'answer-only' else
             f'Según la respuesta resaltada en el documento CACES OCTUBRE, pregunta {number}, página {block["page"]}, la clave es {key}: {published_options[key]}'
         )
+        if number == 7:
+            # Explicit teacher correction, 2026-09-29; supersedes the PDF's A mark.
+            if marks != ['A'] or published_options.get('B') != 'Administración de oxigeno':
+                raise ValueError('La fuente del reactivo 7 cambió; revisar la corrección docente')
+            key = 'B'
+            explanation = f'Clave corregida por indicación del docente el 29/09/2026: B. {published_options[key]}.'
+            audit[-1]['answer_correction'] = {
+                'date': '2026-09-29', 'source_key': 'A', 'corrected_key': key,
+                'reason': 'Solicitud expresa del docente: B, administración de oxígeno.',
+            }
         if source_format:
             explanation += ' Se conserva la transcripción original por solicitud del docente, sin completar ni inventar alternativas.'
         questions.append({
@@ -141,6 +151,7 @@ def report(audit):
              f"Fuente: `{audit['source']}`. SHA-256: `{audit['sha256']}`.", '',
              f"Se revisaron {audit['total']} reactivos: {audit['incorporated']} incorporados, {audit['pending']} pendientes y {audit['excluded']} excluido por solicitud del usuario (reactivo 4).", '',
              'Las claves se extraen del resaltado amarillo por la posición de los caracteres dentro de los rectángulos del PDF. Se conservan enunciados, opciones y letras de origen; solo se normalizan saltos de línea y espacios. Por indicación expresa del usuario se incluyen los ocho reactivos incompletos tal como aparecen, sin inventar alternativas. Las explicaciones atribuyen la clave al PDF y no constituyen una validación clínica independiente.', '',
+             'Corrección docente del 29/09/2026: el reactivo 7 se publica con clave B (Administración de oxigeno), por instrucción expresa del usuario. La marca A del PDF se conserva únicamente como evidencia de origen en la auditoría.', '',
              'Por solicitud del usuario, todo este banco pertenece al Componente Integral. La categoría temática conserva la clasificación clínica del reactivo.', '',
              'El banco se agrega a la carga del Componente Integral, completo y en orden aleatorio por intento. Ya no participa en los componentes 1 ni 3.', '',
              '| Reactivo | Página | Estado | Componente | Clave marcada | Motivo si queda pendiente |',
