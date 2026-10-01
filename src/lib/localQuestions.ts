@@ -1,3 +1,4 @@
+import reviewedCorrections from "@/data/reviewedQuestionCorrections.json";
 import type { Question } from "@/lib/database.types";
 import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
 import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
@@ -240,7 +241,10 @@ function cleanImportedOptionText(value: string) {
   return value.replace(/\s+(?:[a-f]\.\s*){3,}$/i, "").trim();
 }
 
-function repairQuestionText(question: Question) {
+export function repairQuestionText(question: Question): Question {
+  if (question.bank_revision) return question;
+  const correction = (reviewedCorrections as Record<string, { correct_option: Question["correct_option"]; explanation: string }>)[question.id];
+  if (correction) return { ...question, correct_option: correction.correct_option, explanation: correction.explanation, option_explanations: undefined };
   // These documents must retain their wording and source answers verbatim.
   if (/^local-enfermeria-(octubre|fundamentos)-documento-/.test(question.id)) return question;
   const sourceText = question.question_text.trim();
@@ -659,17 +663,18 @@ export async function getLocalQuestionsForExam(
   attemptSeed?: string,
   settings?: SimulatorSettings,
   additionalQuestions: Question[] = [],
+  transform: (questions: Question[]) => Question[] = questions => questions,
 ) {
   if (examType === "enfermeria") {
     if (settings?.enabledPhases.includes("componente-integral")) {
       return selectQuestionsForExam(
         examType,
-        [
+        transform([
           ...withNursingOctoberQuestions(componenteIntegralQuestions as Question[]),
           ...fundamentosDocumentoQuestions as Question[],
           ...septiembreIntegralQuestions as Question[],
           ...additionalQuestions,
-        ],
+        ]),
         attemptSeed,
         settings,
       );
@@ -681,7 +686,7 @@ export async function getLocalQuestionsForExam(
 
     return selectQuestionsForExam(
       examType,
-      withNursingOctoberQuestions([...enfermeriaQuestions as Question[], ...additionalQuestions]),
+      transform(withNursingOctoberQuestions([...enfermeriaQuestions as Question[], ...additionalQuestions])),
       attemptSeed,
       settings,
     );
@@ -694,7 +699,7 @@ export async function getLocalQuestionsForExam(
 
     return selectQuestionsForExam(
       examType,
-      [...psicologiaQuestions as Question[], ...additionalQuestions],
+      transform([...psicologiaQuestions as Question[], ...additionalQuestions]),
       attemptSeed,
       settings,
     );

@@ -1,3 +1,5 @@
+import { getBankOverrides } from "@/lib/questionBankServer";
+import { applyBankOverrides } from "@/lib/questionBank";
 import { randomUUID } from "node:crypto";
 import Link from "next/link";
 import { ArrowLeft, ClipboardList, SlidersHorizontal } from "lucide-react";
@@ -106,6 +108,10 @@ export default async function StudentExamSimulatorPage({
   } catch {
     return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudo cargar el banco de tu docente. Recarga la página para iniciar el intento con las preguntas actualizadas.</section>;
   }
+  let overrides;
+  try { overrides = await getBankOverrides(exam.slug); }
+  catch { return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudieron cargar las correcciones del banco. Recarga la página para iniciar con las respuestas actualizadas.</section>; }
+  const applyCorrections = (pool: Question[]) => applyBankOverrides(pool, overrides);
   const shouldUsePsychiatryBank = exam.slug === "psicologia";
   const shouldUseIntegralComponent =
     exam.slug === "enfermeria" &&
@@ -137,6 +143,7 @@ export default async function StudentExamSimulatorPage({
         attemptSeed,
         simulatorSettings,
         manualQuestions,
+        applyCorrections,
       )
     : questionLoadError || supabaseQuestions.length === 0
       ? await getLocalQuestionsForExam(
@@ -144,16 +151,17 @@ export default async function StudentExamSimulatorPage({
           attemptSeed,
           simulatorSettings,
           manualQuestions,
+          applyCorrections,
         )
       : selectQuestionsForExam(
           exam.slug,
-          exam.slug === "enfermeria"
+          applyCorrections(exam.slug === "enfermeria"
             ? withNursingOctoberQuestions([...supabaseQuestions, ...manualQuestions])
-            : [...supabaseQuestions, ...manualQuestions],
+            : [...supabaseQuestions, ...manualQuestions]),
           attemptSeed,
           simulatorSettings,
         );
-  const persistenceMode = isLocalQuestionSet(questions) ? "local" : "supabase";
+  const persistenceMode = isLocalQuestionSet(questions) || questions.some(q => q.bank_revision) ? "local" : "supabase";
   const Icon = exam.icon;
   const settingsCatalog = getSimulatorSettingsCatalog(exam.slug);
   const defaultSettings = getDefaultSimulatorSettings(exam.slug);

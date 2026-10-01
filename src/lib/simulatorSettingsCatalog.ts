@@ -233,7 +233,7 @@ function getNursingCategoryKey(question: Question) {
   return null;
 }
 
-function getPhaseKey(
+export function getPhaseKey(
   career: StudentCareerSlug,
   question: Question,
 ): SimulatorPhaseKey {

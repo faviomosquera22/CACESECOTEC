@@ -14,6 +14,12 @@ export type OptionLetter = "A" | "B" | "C" | "D" | "E";
 export interface Database {
   public: {
     Tables: {
+      question_bank_overrides: {
+        Row: { question_id: string; career_slug: string; question: Json; updated_by: string; updated_at: string };
+        Insert: { question_id: string; career_slug: string; question: Json; updated_by: string; updated_at?: string };
+        Update: { question?: Json; updated_by?: string; updated_at?: string };
+        Relationships: [];
+      };
       teacher_questions: {
         Row: ManualQuestionRow;
         Insert: Omit<ManualQuestionRow, "id" | "created_at" | "updated_at"> & { id?: string; created_at?: string; updated_at?: string };
@@ -321,6 +327,7 @@ export type Inserts<T extends keyof Database["public"]["Tables"]> =
 export type Profile = Tables<"profiles">;
 export type StudentSimulatorAccess = Tables<"student_simulator_access">;
 export type Question = Tables<"questions"> & {
+  bank_revision?: string;
   /** Formato incompleto del documento original, conservado por petición docente. */
   source_format?: "partial-options" | "answer-only";
   /** Optional fifth alternative from local source banks; saved in attempt snapshots. */

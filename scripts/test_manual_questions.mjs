@@ -269,7 +269,7 @@ test('septiembre: 57 reactivos fieles, completos y exclusivos; ningún ID perdid
     const imported = selected.filter(q => q.id.startsWith(prefix));
     assert.deepEqual(imported.map(q => q.id).sort(), bank.map(q => q.id).sort());
     for (const question of imported) {
-      assert.deepEqual(question, bank.find(q => q.id === question.id));
+      assert.deepEqual(question, load('src/lib/localQuestions.ts').repairQuestionText(bank.find(q => q.id === question.id)));
       assert.equal(isUsableQuestion(question), true);
       assert.equal(isUsableQuestion({ ...question, correct_option: 'F' }), false);
       assert.equal(isUsableQuestion({ ...question, option_b: '' }), false);
