@@ -11,3 +11,7 @@ Las correcciones se aplican antes de seleccionar las preguntas del próximo inte
 Las revisiones de espejos (C → B) y posición post mortem (B → A, incluyendo su copia en el banco general) están en `src/data/reviewedQuestionCorrections.json`. Este registro mantiene la clave fuente y la explicación, y se aplica después de importar los bancos: regenerarlos no restaura las claves erróneas. Las ediciones posteriores guardadas por docentes tienen prioridad.
 
 Validación: `node --test scripts/test_question_bank.mjs scripts/test_manual_questions.mjs scripts/test_teacher_student_ownership.mjs` y `npm run build -- --webpack`.
+
+## Retiro del Componente Integral (05/10/2026)
+
+Se retiró del catálogo activo, contador, editor compartido, preguntas manuales y selección de nuevos intentos. Las configuraciones antiguas descartan esta fase; si no quedan fases válidas, se usan los cinco componentes habituales. Los documentos fuente, correcciones y snapshots históricos se conservan como archivo, sin incorporarse a nuevos intentos. No se requiere borrar datos de Supabase.

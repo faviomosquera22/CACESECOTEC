@@ -10,7 +10,7 @@ const inputClass = "mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 
 
 export function TeacherQuestionEditor({ initialQuestions, career }: { initialQuestions: ManualQuestionRow[]; career: StudentCareerSlug }) {
   const catalog = getSimulatorSettingsCatalog(career);
-  const blank = (): Form => ({ question_text: "", option_a: "", option_b: "", option_c: "", option_d: "", correct_option: "", explanation: "", phase: career === "enfermeria" ? "componente-integral" : "fase-1", difficulty: "Media", published: false });
+  const blank = (): Form => ({ question_text: "", option_a: "", option_b: "", option_c: "", option_d: "", correct_option: "", explanation: "", phase: "fase-1", difficulty: "Media", published: false });
   const [questions, setQuestions] = useState(initialQuestions);
   const [form, setForm] = useState<Form>(blank);
   const [editingId, setEditingId] = useState<string | null>(null);

@@ -76,12 +76,6 @@ const nursingComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
       label: "Componente 5: Bases profesionales y epidemiología",
       description: "Educación, administración, investigación y epidemiología.",
     },
-    {
-      key: "componente-integral",
-      label: "Componente Integral",
-      description:
-        "Banco integrado de administración, cuidado materno infantil y preguntas de octubre.",
-    },
   ];
 
 const psychologyComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
@@ -282,11 +276,7 @@ export function getDefaultSimulatorSettings(
   return {
     enabledDifficulties: catalog.difficulties.map((option) => option.key),
     enabledCategories: catalog.categories.map((option) => option.key),
-    // El componente adicional se habilita expresamente para no cambiar los
-    // intentos existentes de Enfermería.
-    enabledPhases: catalog.phases
-      .filter((option) => option.key !== "componente-integral")
-      .map((option) => option.key),
+    enabledPhases: catalog.phases.map((option) => option.key),
     updatedAt: null,
   };
 }
@@ -358,15 +348,14 @@ export function filterQuestionsForSimulatorSettings(
 ) {
   const selectedPhases = new Set(settings.enabledPhases);
 
-  // El componente integral funciona como un banco exclusivo: una vez activo,
-  // no se mezclan preguntas de las categorías o componentes habituales.
-  if (career === "enfermeria" && selectedPhases.has("componente-integral")) {
-    return questions.filter(
-      (question) => getPhaseKey(career, question) === "componente-integral",
-    );
-  }
-
   return questions.filter((question) =>
-    selectedPhases.has(getPhaseKey(career, question)),
+    !isRetiredQuestion(question) && selectedPhases.has(getPhaseKey(career, question)),
   );
+}
+
+// Conservar la clasificación histórica evita reclasificar estos reactivos como fase 1.
+export function isRetiredQuestion(question: Partial<Pick<Question, "phase" | "category" | "component">>) {
+  return normalize(question.phase ?? "") === "componente-integral" ||
+    normalize(question.category ?? "") === "enfermeria - componente integral" ||
+    normalize(question.component ?? "") === "componente integral";
 }

@@ -1,3 +1,4 @@
+import { isRetiredQuestion } from "@/lib/simulatorSettingsCatalog";
 import "server-only";
 import type { SupabaseServerClient } from "@/lib/supabaseServer";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
@@ -13,7 +14,7 @@ export async function getManualQuestions(supabase: SupabaseServerClient, teacher
     if (publishedOnly) query = query.eq("published", true);
     const { data, error } = await query;
     if (error) throw new Error("No se pudo cargar el banco docente. Intenta nuevamente o contacta al administrador.");
-    rows.push(...data);
+    rows.push(...data.filter(row => !isRetiredQuestion(row)));
     if (data.length < 500) return rows;
   }
 }

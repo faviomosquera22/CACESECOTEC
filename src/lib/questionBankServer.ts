@@ -1,3 +1,4 @@
+import { isRetiredQuestion } from "@/lib/simulatorSettingsCatalog";
 import "server-only";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { repairQuestionText } from "@/lib/localQuestions";
@@ -17,12 +18,7 @@ export async function getBankOverrides(career: StudentCareerSlug): Promise<BankO
 export async function getSharedBank(career: StudentCareerSlug): Promise<BankQuestion[]> {
   const source: Question[] = [];
   if (career === "enfermeria") {
-    const banks = await Promise.all([
-      import("@/data/enfermeriaQuestions.json"), import("@/data/enfermeriaComponenteIntegralQuestions.json"),
-      import("@/data/enfermeriaOctubreDocumentoQuestions.json"), import("@/data/enfermeriaFundamentosDocumentoQuestions.json"),
-      import("@/data/enfermeriaIntegralSeptiembreQuestions.json"),
-    ]);
-    for (const bank of banks) source.push(...bank.default as Question[]);
+    source.push(...(await import("@/data/enfermeriaQuestions.json")).default as Question[]);
   } else source.push(...(await import("@/data/psicologiaQuestions.json")).default as Question[]);
   const categoryFilter = (career === "enfermeria" ? ["enfermeria", "enfermería", "nursing"] : ["psicologia", "psicología", "psychology", "clinica"]).map(word => `category.ilike.%${word}%`).join(",");
   for (let offset = 0; ; offset += 500) {
@@ -32,5 +28,5 @@ export async function getSharedBank(career: StudentCareerSlug): Promise<BankQues
     if (data.length < 500) break;
   }
   const unique = [...new Map(source.map(q => [q.id, repairQuestionText(q)])).values()];
-  return applyBankOverrides(unique, await getBankOverrides(career)).map(q => ({ ...q, revision: q.bank_revision ?? null }));
+  return applyBankOverrides(unique, await getBankOverrides(career)).filter(q => !isRetiredQuestion(q)).map(q => ({ ...q, revision: q.bank_revision ?? null }));
 }

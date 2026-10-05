@@ -30,7 +30,7 @@ const load = loader();
 const { validateManualQuestion, manualQuestionForSimulator } = load('src/lib/manualQuestions.ts');
 const { getLocalQuestionsForExam, selectQuestionsForExam, isLocalQuestionSet } = load('src/lib/localQuestions.ts');
 const { getDefaultSimulatorSettings, filterQuestionsForSimulatorSettings } = load('src/lib/simulatorSettingsCatalog.ts');
-const valid = { question_text: '¿Cuál de las siguientes opciones corresponde al caso descrito?', option_a: 'Primera alternativa', option_b: 'Segunda alternativa', option_c: 'Tercera alternativa', option_d: 'Cuarta alternativa', correct_option: 'C', explanation: 'La tercera alternativa es la respuesta marcada en el documento.', phase: 'componente-integral', difficulty: 'Media', published: true };
+const valid = { question_text: '¿Cuál de las siguientes opciones corresponde al caso descrito?', option_a: 'Primera alternativa', option_b: 'Segunda alternativa', option_c: 'Tercera alternativa', option_d: 'Cuarta alternativa', correct_option: 'C', explanation: 'La tercera alternativa es la respuesta marcada en el documento.', phase: 'fase-3', difficulty: 'Media', published: true };
 const row = (values = {}) => ({ ...valid, id: '00000000-0000-4000-8000-000000000001', teacher_id: 'teacher-one', career_slug: 'enfermeria', created_at: '2026-09-22T00:00:00Z', updated_at: '2026-09-22T00:00:00Z', ...values });
 
 test('valida pregunta completa y elimina campos de propiedad inyectados', () => {
@@ -45,16 +45,6 @@ test('conserva letra y texto correctos al transformar la pregunta', () => {
   const question = manualQuestionForSimulator(row());
   assert.equal(question.correct_option, 'C'); assert.equal(question.option_c, valid.option_c);
   assert.equal(isLocalQuestionSet([question]), true);
-});
-test('integral incluye todas las manuales, supera 100 y mantiene exclusividad', async () => {
-  const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-2'] };
-  const additions = Array.from({ length: 80 }, (_, i) => manualQuestionForSimulator(row({ id: String(i) })));
-  additions.push(manualQuestionForSimulator(row({ id: 'other', phase: 'fase-2' })));
-  const first = await getLocalQuestionsForExam('enfermeria', 'seed-a', settings, additions);
-  const second = await getLocalQuestionsForExam('enfermeria', 'seed-b', settings, additions);
-  assert.equal(first.length, 249); assert.equal(first.every(q => q.phase === 'componente-integral'), true);
-  assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
-  for (const question of first.filter(q => q.id.startsWith('local-manual-'))) { assert.equal(question.correct_option, 'C'); assert.equal(question.option_c, valid.option_c); }
 });
 test('filtra manuales por componente elegido en ambas carreras', () => {
   for (const career of ['enfermeria', 'psicologia']) {
@@ -96,55 +86,7 @@ test('API no informa éxito al editar pregunta inexistente ni al fallar el guard
   assert.equal((await api(profile, { data: null, error: { message: 'db failure' } }).routes.POST(request(valid))).status, 500);
 });
 
-test('PDF octubre: las 38 preguntas originales conservan claves y aparecen solo en Integral', async () => {
-  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaOctubreDocumentoQuestions.json'), 'utf8'));
-  const { withNursingOctoberQuestions, isUsableQuestion } = load('src/lib/localQuestions.ts');
-  assert.equal(bank.length, 38);
-  assert.deepEqual(bank.filter(q => !isUsableQuestion(q)).map(q => ({id:q.id,prompt:q.question_text})), []);
-  const pool = withNursingOctoberQuestions([]);
-  assert.equal(withNursingOctoberQuestions(pool).length, 38);
-  for (const [phase, count] of [['fase-1', 0], ['fase-3', 0], ['fase-2', 0], ['componente-integral', 38]]) {
-    const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: [phase] };
-    const selected = selectQuestionsForExam('enfermeria', pool, 'octubre-source', settings);
-    assert.equal(selected.length, count);
-    for (const question of selected) {
-      const original = bank.find(q => q.id === question.id);
-      assert.equal(question.question_text, original.question_text);
-      assert.equal(question.correct_option, original.correct_option);
-      assert.equal(question['option_' + question.correct_option.toLowerCase()], original['option_' + original.correct_option.toLowerCase()]);
-    }
-  }
-  const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1', 'fase-3'] };
-  const first = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-a', settings);
-  const second = await getLocalQuestionsForExam('enfermeria', 'octubre-integral-b', settings);
-  assert.equal(first.length, 169);
-  assert.equal(first.filter(q => q.id.startsWith('local-enfermeria-octubre-documento-')).length, 38);
-  assert.ok(first.every(q => q.phase === 'componente-integral'));
-  assert.notDeepEqual(first.map(q => q.id), second.map(q => q.id));
-  assert.ok(!first.some(q => q.id === 'local-enfermeria-octubre-documento-004'));
 
-});
-
-test('Fundamentos: incorpora 31 originales solo en Integral y excluye las seis marcas ELIMINAR', async () => {
-  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaFundamentosDocumentoQuestions.json'), 'utf8'));
-  const excluded = [7, 9, 12, 16, 31, 32];
-  const prefix = 'local-enfermeria-fundamentos-documento-';
-  const expectedIds = Array.from({ length: 37 }, (_, i) => i + 1).filter(n => !excluded.includes(n)).map(n => prefix + String(n).padStart(3, '0'));
-  assert.deepEqual(bank.map(q => q.id), expectedIds);
-  for (const seed of ['fundamentos-a', 'fundamentos-b']) {
-    const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1'] };
-    const selected = await getLocalQuestionsForExam('enfermeria', seed, settings);
-    const imported = selected.filter(q => q.id.startsWith(prefix));
-    assert.equal(selected.length, 169);
-    assert.deepEqual(imported.map(q => q.id).sort(), expectedIds);
-    for (const question of imported) assert.deepEqual(question, bank.find(q => q.id === question.id));
-  }
-  for (const phase of ['fase-1', 'fase-2', 'fase-3', 'fase-4', 'fase-5']) {
-    const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: [phase] };
-    const selected = await getLocalQuestionsForExam('enfermeria', 'other-component', settings);
-    assert.ok(!selected.some(q => q.id.startsWith(prefix)));
-  }
-});
 
 test('Fundamentos: las seis respuestas escritas conservan sus claves y no revelan la solución', () => {
   const React = require('react');
@@ -256,30 +198,6 @@ test('respuesta escrita: confirmar requiere texto y bloquea un segundo envío', 
   assert.equal(confirmed, 1);
 });
 
-test('septiembre: 57 reactivos fieles, completos y exclusivos; ningún ID perdido ni duplicado', async () => {
-  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaIntegralSeptiembreQuestions.json'), 'utf8'));
-  const prefix = 'local-enfermeria-integral-septiembre-';
-  assert.equal(bank.length, 57);
-  const settings = { ...getDefaultSimulatorSettings('enfermeria'), enabledPhases: ['componente-integral', 'fase-1'] };
-  const { isUsableQuestion } = load('src/lib/localQuestions.ts');
-  for (const seed of ['pdf-september-a', 'pdf-september-b']) {
-    const selected = await getLocalQuestionsForExam('enfermeria', seed, settings);
-    assert.equal(selected.length, 169);
-    assert.equal(new Set(selected.map(q => q.id)).size, 169);
-    const imported = selected.filter(q => q.id.startsWith(prefix));
-    assert.deepEqual(imported.map(q => q.id).sort(), bank.map(q => q.id).sort());
-    for (const question of imported) {
-      assert.deepEqual(question, load('src/lib/localQuestions.ts').repairQuestionText(bank.find(q => q.id === question.id)));
-      assert.equal(isUsableQuestion(question), true);
-      assert.equal(isUsableQuestion({ ...question, correct_option: 'F' }), false);
-      assert.equal(isUsableQuestion({ ...question, option_b: '' }), false);
-    }
-  }
-  for (const phase of ['fase-1', 'fase-2', 'fase-3', 'fase-4', 'fase-5', 'componente-fantasma']) {
-    const selected = await getLocalQuestionsForExam('enfermeria', 'outside-integral', { ...settings, enabledPhases: [phase] });
-    assert.ok(!selected.some(q => q.id.startsWith(prefix)));
-  }
-});
 
 test('septiembre: muestra exactamente las 3-5 alternativas de cada documento', () => {
   const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaIntegralSeptiembreQuestions.json'), 'utf8'));
@@ -325,4 +243,25 @@ test('quinta opción: selección, calificación, historial y migración conserva
     walk(tree);
     assert.deepEqual(selected, ['E']);
   }
+});
+
+
+test('Integral retirado: no aparece en catálogo ni acepta preguntas manuales nuevas', () => {
+  const { getSimulatorSettingsCatalog, sanitizeSimulatorSettings } = load('src/lib/simulatorSettingsCatalog.ts');
+  assert.equal(getSimulatorSettingsCatalog('enfermeria').phases.length, 5);
+  assert.throws(() => validateManualQuestion({ ...valid, phase: 'componente-integral' }, 'enfermeria'));
+  assert.deepEqual(sanitizeSimulatorSettings('enfermeria', { enabledPhases: ['componente-integral','fase-2'] }).enabledPhases, ['fase-2']);
+  assert.deepEqual(sanitizeSimulatorSettings('enfermeria', { enabledPhases: ['componente-integral'] }).enabledPhases, ['fase-1','fase-2','fase-3','fase-4','fase-5']);
+});
+test('Integral retirado: ni ajustes antiguos ni banco remoto reintroducen sus preguntas', async () => {
+  const retired = JSON.parse(fs.readFileSync(path.join(root,'src/data/enfermeriaIntegralSeptiembreQuestions.json')));
+  const normal = manualQuestionForSimulator(row());
+  for (const phases of [['componente-integral'],['componente-integral','fase-3'],['fase-1','fase-2','fase-3','fase-4','fase-5']]) {
+    const settings = {...getDefaultSimulatorSettings('enfermeria'),enabledPhases:phases};
+    const selected = await getLocalQuestionsForExam('enfermeria','retired',settings,retired);
+    assert.ok(selected.every(q => q.phase !== 'componente-integral'));
+    const direct = selectQuestionsForExam('enfermeria',[...retired,normal],'retired',settings);
+    assert.ok(direct.every(q => q.phase !== 'componente-integral'));
+  }
+  assert.equal(selectQuestionsForExam('enfermeria',retired,'retired').length,0);
 });

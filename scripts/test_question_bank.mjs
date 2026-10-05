@@ -76,8 +76,9 @@ test('valida formatos parciales, respuesta escrita y quinta alternativa',()=>{
   const written={...q,source_format:'answer-only',option_b:'',option_c:'',option_d:'',correct_option:'A'};assert.doesNotThrow(()=>validateBankEdit(written,written));
 });
 test('corrección persistida prevalece al generar nuevos intentos y no muta snapshots',async()=>{
-  const before=structuredClone(q);const overrides=[{question_id:q.id,question:{...q,explanation:'Nueva explicación documentada',correct_option:'D'},updated_at:'v2'}];
+  const active = { ...q, id: 'local-manual-active', phase: 'fase-1', category: 'Enfermería - Cuidado y Procedimientos Clínicos de Enfermería', component: 'Cuidado y procedimientos clínicos' };
+  const before=structuredClone(q);const overrides=[{question_id:active.id,question:{...active,explanation:'Nueva explicación documentada',correct_option:'D'},updated_at:'v2'}];
   const {getDefaultSimulatorSettings}=load('src/lib/simulatorSettingsCatalog.ts');
-  const questions=await getLocalQuestionsForExam('enfermeria','test-bank',{...getDefaultSimulatorSettings('enfermeria'),enabledPhases:['componente-integral']},[],pool=>applyBankOverrides(pool,overrides));
-  assert.equal(questions.find(item=>item.id===q.id).correct_option,'D');assert.deepEqual(q,before);
+  const questions=await getLocalQuestionsForExam('enfermeria','test-bank',{...getDefaultSimulatorSettings('enfermeria'),enabledPhases:['fase-1']},[active],pool=>applyBankOverrides(pool.filter(item=>item.id===active.id),overrides));
+  assert.equal(questions.find(item=>item.id===active.id).correct_option,'D');assert.deepEqual(q,before);
 });

@@ -2,12 +2,9 @@ import reviewedCorrections from "@/data/reviewedQuestionCorrections.json";
 import type { Question } from "@/lib/database.types";
 import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
 import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
-import componenteIntegralQuestions from "@/data/enfermeriaComponenteIntegralQuestions.json";
-import octubreDocumentoQuestions from "@/data/enfermeriaOctubreDocumentoQuestions.json";
-import fundamentosDocumentoQuestions from "@/data/enfermeriaFundamentosDocumentoQuestions.json";
-import septiembreIntegralQuestions from "@/data/enfermeriaIntegralSeptiembreQuestions.json";
 import {
   filterQuestionsForSimulatorSettings,
+  isRetiredQuestion,
   type SimulatorSettings,
 } from "@/lib/simulatorSettingsCatalog";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
@@ -622,6 +619,8 @@ export function selectQuestionsForExam(
   attemptSeed?: string,
   settings?: SimulatorSettings,
 ) {
+  questions = questions.filter(question => !isRetiredQuestion(question));
+  if (examType === "enfermeria") questions = dedupeQuestions(questions);
   const filteredQuestions =
     settings && (examType === "enfermeria" || examType === "psicologia")
       ? filterQuestionsForSimulatorSettings(
@@ -637,7 +636,7 @@ export function selectQuestionsForExam(
         filteredQuestions.map(repairQuestionText).filter(isUsableQuestion),
         getRandomSource(attemptSeed),
       );
-      return settings.enabledPhases.includes("componente-integral") ? selected : selected.slice(0, 100);
+      return selected.slice(0, 100);
     }
 
     return selectNursingExamQuestions(filteredQuestions, attemptSeed);
@@ -653,11 +652,6 @@ export function selectQuestionsForExam(
   ).slice(0, 100);
 }
 
-// Complemento disponible también cuando el banco principal viene de Supabase.
-export function withNursingOctoberQuestions(questions: Question[]) {
-  return dedupeQuestions([...questions, ...octubreDocumentoQuestions as Question[]]);
-}
-
 export async function getLocalQuestionsForExam(
   examType: string,
   attemptSeed?: string,
@@ -666,27 +660,13 @@ export async function getLocalQuestionsForExam(
   transform: (questions: Question[]) => Question[] = questions => questions,
 ) {
   if (examType === "enfermeria") {
-    if (settings?.enabledPhases.includes("componente-integral")) {
-      return selectQuestionsForExam(
-        examType,
-        transform([
-          ...withNursingOctoberQuestions(componenteIntegralQuestions as Question[]),
-          ...fundamentosDocumentoQuestions as Question[],
-          ...septiembreIntegralQuestions as Question[],
-          ...additionalQuestions,
-        ]),
-        attemptSeed,
-        settings,
-      );
-    }
-
     const { default: enfermeriaQuestions } = await import(
       "@/data/enfermeriaQuestions.json"
     );
 
     return selectQuestionsForExam(
       examType,
-      transform(withNursingOctoberQuestions([...enfermeriaQuestions as Question[], ...additionalQuestions])),
+      transform([...enfermeriaQuestions as Question[], ...additionalQuestions]),
       attemptSeed,
       settings,
     );
@@ -714,7 +694,7 @@ export async function getLocalQuestionBankCount(career: StudentCareerSlug) {
       "@/data/enfermeriaQuestions.json"
     );
 
-    return withNursingOctoberQuestions(enfermeriaQuestions as Question[]).length;
+    return dedupeQuestions(enfermeriaQuestions as Question[]).filter(question => !isRetiredQuestion(question)).length;
   }
 
   const { default: psicologiaQuestions } = await import(

@@ -13,7 +13,6 @@ import {
   isLocalQuestionSet,
   legacyFixedPsychologyAttemptSeed,
   selectQuestionsForExam,
-  withNursingOctoberQuestions,
 } from "@/lib/localQuestions";
 import { getSimulatorExam } from "@/lib/simulatorCatalog";
 import { getCareerSimulatorSettings } from "@/lib/simulatorSettings";
@@ -113,13 +112,10 @@ export default async function StudentExamSimulatorPage({
   catch { return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudieron cargar las correcciones del banco. Recarga la página para iniciar con las respuestas actualizadas.</section>; }
   const applyCorrections = (pool: Question[]) => applyBankOverrides(pool, overrides);
   const shouldUsePsychiatryBank = exam.slug === "psicologia";
-  const shouldUseIntegralComponent =
-    exam.slug === "enfermeria" &&
-    simulatorSettings.enabledPhases.includes("componente-integral");
   let supabaseQuestions: Question[] = [];
   let questionLoadError = false;
 
-  if (!shouldUsePsychiatryBank && !shouldUseIntegralComponent) {
+  if (!shouldUsePsychiatryBank) {
     const categoryFilter = exam.categoryKeywords
       .map((keyword) => `category.ilike.%${keyword}%`)
       .join(",");
@@ -137,7 +133,7 @@ export default async function StudentExamSimulatorPage({
     questionLoadError = Boolean(error);
   }
 
-  const questions = shouldUsePsychiatryBank || shouldUseIntegralComponent
+  const questions = shouldUsePsychiatryBank
     ? await getLocalQuestionsForExam(
         exam.slug,
         attemptSeed,
@@ -155,9 +151,7 @@ export default async function StudentExamSimulatorPage({
         )
       : selectQuestionsForExam(
           exam.slug,
-          applyCorrections(exam.slug === "enfermeria"
-            ? withNursingOctoberQuestions([...supabaseQuestions, ...manualQuestions])
-            : [...supabaseQuestions, ...manualQuestions]),
+          applyCorrections([...supabaseQuestions, ...manualQuestions]),
           attemptSeed,
           simulatorSettings,
         );
