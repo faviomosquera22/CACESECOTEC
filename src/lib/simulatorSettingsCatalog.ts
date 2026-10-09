@@ -267,9 +267,9 @@ export function getPhaseKey(
   return matchingPhase?.key ?? "fase-1";
 }
 
-export function getSimulatorSettingsCatalog(career: StudentCareerSlug, custom: CustomComponent[] = []) {
+export function getSimulatorSettingsCatalog(career: StudentCareerSlug, custom: CustomComponent[] = [], removedComponents: string[] = []) {
   const base = settingsCatalogByCareer[career];
-  return { ...base, phases: [...base.phases, ...custom] };
+  return { ...base, phases: [...base.phases, ...custom].filter(phase => !removedComponents.includes(phase.key)) };
 }
 
 export function getDefaultSimulatorSettings(
@@ -297,9 +297,10 @@ export function sanitizeSimulatorSettings(
     | null
     | undefined,
   custom: CustomComponent[] = [],
+  removedComponents: string[] = [],
 ) {
   const defaults = getDefaultSimulatorSettings(career);
-  const catalog = getSimulatorSettingsCatalog(career, custom);
+  const catalog = getSimulatorSettingsCatalog(career, custom, removedComponents);
   const allowedDifficultyKeys = new Set(
     catalog.difficulties.map((option) => option.key),
   );
@@ -340,7 +341,7 @@ export function sanitizeSimulatorSettings(
         ? enabledCategories
         : defaults.enabledCategories,
     enabledPhases:
-      enabledPhases.length > 0 ? enabledPhases : defaults.enabledPhases,
+      enabledPhases.length > 0 ? enabledPhases : Array.isArray(value?.enabledPhases) && value.enabledPhases.some(item => removedComponents.includes(item)) ? [] : defaults.enabledPhases.filter(phase => !removedComponents.includes(phase)),
     updatedAt:
       typeof value?.updatedAt === "string" ? value.updatedAt : defaults.updatedAt,
   } satisfies SimulatorSettings;

@@ -9,6 +9,7 @@ import ts from 'typescript';
 const require = createRequire(import.meta.url);
 const root = path.resolve(import.meta.dirname, '..');
 function loader(mocks = {}) {
+  mocks = { "@/lib/bankRemovalsServer": { getBankRemovals: async () => [] }, ...mocks };
   const cache = new Map();
   function load(file) {
     if (cache.has(file)) return cache.get(file);

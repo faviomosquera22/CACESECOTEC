@@ -1,3 +1,5 @@
+import { getBankRemovals } from "@/lib/bankRemovalsServer";
+import { removedComponentIds } from "@/lib/bankRemovals";
 import { getCustomComponents } from "@/lib/customComponentsServer";
 import "server-only";
 
@@ -24,8 +26,9 @@ export async function getCareerSimulatorSettings(
   career: StudentCareerSlug,
   teacherId: string | null | undefined,
 ) {
+  const removedComponents = removedComponentIds(await getBankRemovals(career));
   if (!teacherId) {
-    return getDefaultSimulatorSettings(career);
+    return sanitizeSimulatorSettings(career, getDefaultSimulatorSettings(career), [], removedComponents);
   }
 
   const custom = await getCustomComponents(career);
@@ -54,12 +57,12 @@ export async function getCareerSimulatorSettings(
         enabledCategories: legacyData.enabled_categories,
         enabledPhases: ["fase-1"],
         updatedAt: legacyData.updated_at,
-      }, custom);
+      }, custom, removedComponents);
     }
   }
 
   if (!data) {
-    return getDefaultSimulatorSettings(career);
+    return sanitizeSimulatorSettings(career, getDefaultSimulatorSettings(career), [], removedComponents);
   }
 
   return sanitizeSimulatorSettings(career, {
@@ -67,5 +70,5 @@ export async function getCareerSimulatorSettings(
     enabledCategories: data.enabled_categories,
     enabledPhases: data.enabled_phases,
     updatedAt: data.updated_at,
-  }, custom);
+  }, custom, removedComponents);
 }

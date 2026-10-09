@@ -1,3 +1,5 @@
+import { getBankRemovals } from "@/lib/bankRemovalsServer";
+import { filterActiveBank, removedComponentIds } from "@/lib/bankRemovals";
 import { getCustomComponents, getImportedQuestions } from "@/lib/customComponentsServer";
 import { getBankOverrides } from "@/lib/questionBankServer";
 import { applyBankOverrides } from "@/lib/questionBank";
@@ -110,9 +112,10 @@ export default async function StudentExamSimulatorPage({
     return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudo cargar el banco de tu docente. Recarga la página para iniciar el intento con las preguntas actualizadas.</section>;
   }
   let overrides;
-  try { overrides = await getBankOverrides(exam.slug); }
+  let removals;
+  try { [overrides, removals] = await Promise.all([getBankOverrides(exam.slug), getBankRemovals(exam.slug)]); }
   catch { return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudieron cargar las correcciones del banco. Recarga la página para iniciar con las respuestas actualizadas.</section>; }
-  const applyCorrections = (pool: Question[]) => applyBankOverrides(pool, overrides);
+  const applyCorrections = (pool: Question[]) => filterActiveBank(exam.slug, applyBankOverrides(pool, overrides), removals);
   const shouldUsePsychiatryBank = exam.slug === "psicologia";
   let supabaseQuestions: Question[] = [];
   let questionLoadError = false;
@@ -159,7 +162,7 @@ export default async function StudentExamSimulatorPage({
         );
   const persistenceMode = isLocalQuestionSet(questions) || questions.some(q => q.bank_revision) ? "local" : "supabase";
   const Icon = exam.icon;
-  const settingsCatalog = getSimulatorSettingsCatalog(exam.slug, customComponents);
+  const settingsCatalog = getSimulatorSettingsCatalog(exam.slug, customComponents, removedComponentIds(removals));
   const defaultSettings = getDefaultSimulatorSettings(exam.slug);
   const hasCustomSettings =
     [...simulatorSettings.enabledPhases].sort().join("|") !==

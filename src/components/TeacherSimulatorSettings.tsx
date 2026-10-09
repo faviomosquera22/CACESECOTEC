@@ -21,6 +21,7 @@ import {
 type TeacherSimulatorSettingsProps = {
   career: StudentCareerSlug;
   customComponents?: CustomComponent[];
+  removedComponents?: string[];
   initialSettings: SimulatorSettings;
   totalQuestionCount: number;
 };
@@ -93,12 +94,13 @@ export function TeacherSimulatorSettings({
   career,
   initialSettings,
   customComponents = [],
+  removedComponents = [],
   totalQuestionCount,
 }: TeacherSimulatorSettingsProps) {
-  const catalog = getSimulatorSettingsCatalog(career, customComponents);
+  const catalog = getSimulatorSettingsCatalog(career, customComponents, removedComponents);
   const sanitizedInitialSettings = useMemo(
-    () => sanitizeSimulatorSettings(career, initialSettings, customComponents),
-    [career, initialSettings, customComponents],
+    () => sanitizeSimulatorSettings(career, initialSettings, customComponents, removedComponents),
+    [career, initialSettings, customComponents, removedComponents],
   );
   const [enabledPhases, setEnabledPhases] = useState<SimulatorPhaseKey[]>(
     sanitizedInitialSettings.enabledPhases,
@@ -154,6 +156,7 @@ export function TeacherSimulatorSettings({
         career,
         payload.settings,
         customComponents,
+        removedComponents,
       );
       setEnabledPhases(nextSettings.enabledPhases);
       setSavedSettings(nextSettings);

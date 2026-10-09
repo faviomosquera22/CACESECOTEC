@@ -1,3 +1,5 @@
+import { getBankRemovals } from "@/lib/bankRemovalsServer";
+import { removedComponentIds } from "@/lib/bankRemovals";
 import { getCustomComponents } from "@/lib/customComponentsServer";
 import { getCurrentAuthContext } from "@/lib/auth";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
@@ -39,7 +41,7 @@ export async function PATCH(request: Request) {
   const body = (await request
     .json()
     .catch(() => ({}))) as UpdateSimulatorSettingsBody;
-  const catalog = getSimulatorSettingsCatalog(teacherCareerScope, await getCustomComponents(teacherCareerScope));
+  const catalog = getSimulatorSettingsCatalog(teacherCareerScope, await getCustomComponents(teacherCareerScope), removedComponentIds(await getBankRemovals(teacherCareerScope)));
   const allowedPhases = new Set(
     catalog.phases.map((option) => option.key),
   );

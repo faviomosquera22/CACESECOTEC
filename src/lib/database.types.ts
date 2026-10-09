@@ -14,6 +14,12 @@ export type OptionLetter = "A" | "B" | "C" | "D" | "E";
 export interface Database {
   public: {
     Tables: {
+      question_bank_removals: {
+        Row: import("@/lib/bankRemovals").BankRemoval;
+        Insert: Omit<import("@/lib/bankRemovals").BankRemoval, "updated_at"> & { updated_at?: string };
+        Update: { removed?: boolean; label?: string; owner_id?: string | null; updated_by?: string };
+        Relationships: [];
+      };
       question_components: {
         Row: { key: string; career_slug: string; label: string; description: string; created_by: string; created_at: string };
         Insert: { key?: string; career_slug: string; label: string; description?: string; created_by: string; created_at?: string };

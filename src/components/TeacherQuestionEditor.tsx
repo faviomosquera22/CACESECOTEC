@@ -1,5 +1,7 @@
 "use client";
 
+import { BankRemovalButton } from "@/components/BankRemovalButton";
+import { removedComponentIds, type BankRemoval } from "@/lib/bankRemovals";
 import { useState, type FormEvent } from "react";
 import { getSimulatorSettingsCatalog } from "@/lib/simulatorSettingsCatalog";
 import { validateManualQuestion, type ManualQuestionInput, type ManualQuestionRow } from "@/lib/manualQuestions";
@@ -8,9 +10,9 @@ import type { StudentCareerSlug } from "@/lib/studentCareer";
 type Form = Omit<ManualQuestionInput, "correct_option"> & { correct_option: ManualQuestionInput["correct_option"] | "" };
 const inputClass = "mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-sm text-slate-950 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100";
 
-export function TeacherQuestionEditor({ initialQuestions, career }: { initialQuestions: ManualQuestionRow[]; career: StudentCareerSlug }) {
-  const catalog = getSimulatorSettingsCatalog(career);
-  const blank = (): Form => ({ question_text: "", option_a: "", option_b: "", option_c: "", option_d: "", correct_option: "", explanation: "", phase: "fase-1", difficulty: "Media", published: false });
+export function TeacherQuestionEditor({ initialQuestions, career, removals = [] }: { initialQuestions: ManualQuestionRow[]; career: StudentCareerSlug; removals?: BankRemoval[] }) {
+  const catalog = getSimulatorSettingsCatalog(career, [], removedComponentIds(removals));
+  const blank = (): Form => ({ question_text: "", option_a: "", option_b: "", option_c: "", option_d: "", correct_option: "", explanation: "", phase: catalog.phases[0]?.key ?? "fase-1", difficulty: "Media", published: false });
   const [questions, setQuestions] = useState(initialQuestions);
   const [form, setForm] = useState<Form>(blank);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -41,7 +43,7 @@ export function TeacherQuestionEditor({ initialQuestions, career }: { initialQue
   return <div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
     <form onSubmit={save} className="space-y-5 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
       <h3 className="text-xl font-semibold">{editingId ? "Editar pregunta" : "Agregar pregunta manual"}</h3>
-      <fieldset disabled={busy} className="space-y-5 disabled:opacity-60">
+      <fieldset disabled={busy || !catalog.phases.length} className="space-y-5 disabled:opacity-60">
         <label className="block text-sm font-semibold">Componente
           <select className={inputClass} value={form.phase} onChange={e => setForm({ ...form, phase: e.target.value as Form["phase"] })}>
             {catalog.phases.map(phase => <option key={phase.key} value={phase.key}>{phase.label}</option>)}
@@ -96,6 +98,7 @@ export function TeacherQuestionEditor({ initialQuestions, career }: { initialQue
         </div>
         <p className="text-xs text-slate-500">{catalog.phases.find(phase => phase.key === question.phase)?.label} · {question.difficulty}</p>
         <p className="whitespace-pre-wrap text-sm font-medium">{question.question_text}</p>
+        <BankRemovalButton kind="question" id={`local-manual-${question.id}`} label={question.question_text} personal version={removals.find(row => row.kind === "question" && row.target_id === `local-manual-${question.id}`)?.updated_at ?? null} />
         <details className="text-sm"><summary className="cursor-pointer text-sky-700">Ver opciones y explicación</summary>
           <ul className="mt-3 space-y-2">{(["a", "b", "c", "d"] as const).map(letter => <li key={letter} className={question.correct_option === letter.toUpperCase() ? "font-semibold text-emerald-700" : "text-slate-600"}>{letter.toUpperCase()}. {question[`option_${letter}`]}{question.correct_option === letter.toUpperCase() ? " ✓ Correcta" : ""}</li>)}</ul>
           <p className="mt-3 whitespace-pre-wrap border-t pt-3">{question.explanation}</p>

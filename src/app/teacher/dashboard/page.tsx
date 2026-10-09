@@ -1,8 +1,10 @@
-import { getCustomComponents, getImportedQuestions } from "@/lib/customComponentsServer";
+import { getBankRemovals } from "@/lib/bankRemovalsServer";
+import { removedComponentIds } from "@/lib/bankRemovals";
+import { getSharedBank } from "@/lib/questionBankServer";
+import { getCustomComponents } from "@/lib/customComponentsServer";
 import { TeacherDashboardClient } from "@/components/TeacherDashboardClient";
 import { TeacherSimulatorSettings } from "@/components/TeacherSimulatorSettings";
 import { getCareerSimulatorSettings } from "@/lib/simulatorSettings";
-import { getLocalQuestionBankCount } from "@/lib/localQuestions";
 import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
 import { getTeacherStudentCards } from "@/lib/teacherStudents";
 
@@ -11,12 +13,12 @@ export const dynamic = "force-dynamic";
 export default async function TeacherDashboardPage() {
   const { supabase, profile, teacherCareerScope } =
     await requireTeacherCareerScope();
-  const [studentCards, simulatorSettings, totalQuestionCount, customComponents, importedQuestions] = await Promise.all([
+  const [studentCards, simulatorSettings, sharedQuestions, customComponents, removals] = await Promise.all([
     getTeacherStudentCards(supabase, teacherCareerScope, profile.id),
     getCareerSimulatorSettings(supabase, teacherCareerScope, profile.id),
-    getLocalQuestionBankCount(teacherCareerScope),
+    getSharedBank(teacherCareerScope),
     getCustomComponents(teacherCareerScope),
-    getImportedQuestions(teacherCareerScope),
+    getBankRemovals(teacherCareerScope),
   ]);
 
   return (
@@ -35,7 +37,8 @@ export default async function TeacherDashboardPage() {
       <TeacherSimulatorSettings
         career={teacherCareerScope}
         initialSettings={simulatorSettings}
-        totalQuestionCount={totalQuestionCount + importedQuestions.length}
+        totalQuestionCount={sharedQuestions.length}
+        removedComponents={removedComponentIds(removals)}
         customComponents={customComponents}
       />
 

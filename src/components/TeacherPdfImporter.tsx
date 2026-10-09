@@ -9,7 +9,7 @@ import { optionLetters, validateImportedQuestion, type PdfCandidate } from "@/li
 const field="mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-sm text-slate-950";
 type Candidate=PdfCandidate & { selected:boolean; reviewed:boolean };
 type Preview={importId:string;filename:string;pages:number;warnings:string[];candidates:Candidate[]};
-export function TeacherPdfImporter({career,initialComponents}:{career:StudentCareerSlug;initialComponents:CustomComponent[]}) {
+export function TeacherPdfImporter({career,initialComponents,removedComponents=[]}:{removedComponents?:string[];career:StudentCareerSlug;initialComponents:CustomComponent[]}) {
   const router=useRouter();
   const [custom,setCustom]=useState(initialComponents);
   const [phase,setPhase]=useState("");
@@ -19,7 +19,7 @@ export function TeacherPdfImporter({career,initialComponents}:{career:StudentCar
   const [busy,setBusy]=useState(false);
   const [error,setError]=useState("");
   const [notice,setNotice]=useState("");
-  const catalog=getSimulatorSettingsCatalog(career,custom);
+  const catalog=getSimulatorSettingsCatalog(career,custom,removedComponents);
   const selected=preview?.candidates.filter(q=>q.selected)??[];
   function edit(index:number,patch:Partial<Candidate>) {setPreview(current=>current?{...current,candidates:current.candidates.map(q=>q.index===index?{...q,...patch}:q)}:null);}
   async function createComponent(event:FormEvent) {

@@ -22,7 +22,7 @@ export async function POST(request:Request) {
   let extracted;
   try{extracted=await extractPdfQuestions(bytes);}catch(error){return Response.json({error:error instanceof Error ? error.message : "No se pudo leer el PDF."},{status:422});}
   try {
-    const existing=new Set((await getSharedBank(auth.career)).map(questionIdentity));
+    const existing=new Set((await getSharedBank(auth.career, true)).map(questionIdentity));
     const candidates=extracted.candidates.map(q=>{const identity=questionIdentity(q);const duplicate=existing.has(identity);existing.add(identity);return {...q,duplicate};});
     const preview={...extracted,candidates};
     const filename=file.name.replace(/[\u0000-\u001f]/g,"").slice(0,180);

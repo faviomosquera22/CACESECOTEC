@@ -1,4 +1,6 @@
 "use client";
+import { BankRemovalButton } from "@/components/BankRemovalButton";
+import { removedComponentIds, type BankRemoval } from "@/lib/bankRemovals";
 import type { CustomComponent } from "@/lib/customComponents";
 import { useState, type FormEvent } from "react";
 import { getPhaseKey, getSimulatorSettingsCatalog } from "@/lib/simulatorSettingsCatalog";
@@ -6,7 +8,7 @@ import { validateBankEdit, type BankQuestion } from "@/lib/questionBank";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
 const field = "mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-sm text-slate-950";
 const letters = ["a", "b", "c", "d", "e"] as const;
-export function SharedQuestionBankEditor({ initialQuestions, career, customComponents = [] }: { initialQuestions: BankQuestion[]; career: StudentCareerSlug; customComponents?: CustomComponent[] }) {
+export function SharedQuestionBankEditor({ initialQuestions, career, customComponents = [], removals = [] }: { initialQuestions: BankQuestion[]; career: StudentCareerSlug; customComponents?: CustomComponent[]; removals?: BankRemoval[] }) {
   const [questions, setQuestions] = useState(initialQuestions);
   const [search, setSearch] = useState("");
   const [phase, setPhase] = useState("");
@@ -15,7 +17,7 @@ export function SharedQuestionBankEditor({ initialQuestions, career, customCompo
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const catalog = getSimulatorSettingsCatalog(career, customComponents);
+  const catalog = getSimulatorSettingsCatalog(career, customComponents, removedComponentIds(removals));
   const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es");
   const visible = questions.filter(q => (!phase || getPhaseKey(career, q) === phase) && normalize(`${q.question_text} ${q.id}`).includes(normalize(search)));
   async function save(event: FormEvent) {
@@ -60,6 +62,7 @@ export function SharedQuestionBankEditor({ initialQuestions, career, customCompo
     {visible.slice(page * 30, (page + 1) * 30).map(q => <article key={q.id} className="space-y-3 rounded-xl border border-slate-200 bg-white p-5">
       <div className="flex items-start justify-between gap-3"><p className="text-xs text-slate-500">{catalog.phases.find(item => item.key === getPhaseKey(career, q))?.label} · {q.revision ? "Corregida por docente" : "Banco base"}</p><button disabled={busy} className="font-semibold text-sky-700" onClick={() => { setEditing({ ...q }); setError(""); setNotice(""); window.scrollTo({ top: 0, behavior: "smooth" }); }}>Corregir</button></div>
       <p className="whitespace-pre-wrap text-sm font-medium">{q.question_text}</p>
+      <BankRemovalButton kind="question" id={q.id} label={q.question_text} revision={q.revision} version={removals.find(row => row.kind === "question" && row.target_id === q.id)?.updated_at ?? null} />
       <details><summary className="cursor-pointer text-sm text-sky-700">Ver opciones, respuesta y explicación</summary><ul className="mt-3 space-y-2 text-sm">{letters.filter(letter => q[`option_${letter}`]).map(letter => <li key={letter} className={q.correct_option === letter.toUpperCase() ? "font-semibold text-emerald-700" : "text-slate-600"}>{letter.toUpperCase()}. {q[`option_${letter}`]}{q.correct_option === letter.toUpperCase() ? " ✓ Correcta" : ""}</li>)}</ul><p className="mt-3 whitespace-pre-wrap text-sm">{q.explanation || "Sin explicación en el banco original."}</p><p className="mt-3 break-all text-xs text-slate-500">{q.id}</p></details>
     </article>)}
     {!visible.length && <p className="p-5 text-slate-500">No hay preguntas con estos filtros.</p>}

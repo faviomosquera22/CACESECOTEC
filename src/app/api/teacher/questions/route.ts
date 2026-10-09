@@ -1,3 +1,5 @@
+import { getBankRemovals } from "@/lib/bankRemovalsServer";
+import { removedComponentIds } from "@/lib/bankRemovals";
 import { getCurrentAuthContext } from "@/lib/auth";
 import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
 import { validateManualQuestion } from "@/lib/manualQuestions";
@@ -18,6 +20,12 @@ async function save(request: Request, editing: boolean) {
   if (editing && (typeof body.id !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.id))) {
     return Response.json({ error: "Identificador de pregunta inválido." }, { status: 400 });
   }
+  try {
+    const removals = await getBankRemovals(career);
+    if (removedComponentIds(removals).includes(input.phase) || (editing && removals.some(row => row.removed && row.kind === "question" && row.target_id === `local-manual-${body.id}`))) {
+      return Response.json({ error: "La pregunta o su componente fueron eliminados. Restaura el contenido antes de editarlo." }, { status: 409 });
+    }
+  } catch { return Response.json({ error: "No se pudo verificar el banco activo. Reintenta." }, { status: 500 }); }
   const table = context.supabase.from("teacher_questions");
   const query = editing
     ? table.update({ ...input, updated_at: new Date().toISOString() }).eq("id", body.id).eq("teacher_id", context.profile.id).eq("career_slug", career)

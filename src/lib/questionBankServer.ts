@@ -1,3 +1,5 @@
+import { getBankRemovals } from "@/lib/bankRemovalsServer";
+import { filterActiveBank } from "@/lib/bankRemovals";
 import { getImportedQuestions } from "@/lib/customComponentsServer";
 import { isRetiredQuestion } from "@/lib/simulatorSettingsCatalog";
 import "server-only";
@@ -16,7 +18,7 @@ export async function getBankOverrides(career: StudentCareerSlug): Promise<BankO
     if (data.length < 500) return rows;
   }
 }
-export async function getSharedBank(career: StudentCareerSlug): Promise<BankQuestion[]> {
+export async function getSharedBank(career: StudentCareerSlug, includeRemoved = false): Promise<BankQuestion[]> {
   const source: Question[] = [];
   if (career === "enfermeria") {
     source.push(...(await import("@/data/enfermeriaQuestions.json")).default as Question[]);
@@ -30,5 +32,6 @@ export async function getSharedBank(career: StudentCareerSlug): Promise<BankQues
   }
   source.push(...await getImportedQuestions(career));
   const unique = [...new Map(source.map(q => [q.id, repairQuestionText(q)])).values()];
-  return applyBankOverrides(unique, await getBankOverrides(career)).filter(q => !isRetiredQuestion(q)).map(q => ({ ...q, revision: q.bank_revision ?? null }));
+  const questions = applyBankOverrides(unique, await getBankOverrides(career)).filter(q => !isRetiredQuestion(q)).map(q => ({ ...q, revision: q.bank_revision ?? null }));
+  return includeRemoved ? questions : filterActiveBank(career, questions, await getBankRemovals(career));
 }
