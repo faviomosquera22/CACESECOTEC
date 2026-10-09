@@ -1,11 +1,12 @@
 "use client";
+import type { CustomComponent } from "@/lib/customComponents";
 import { useState, type FormEvent } from "react";
 import { getPhaseKey, getSimulatorSettingsCatalog } from "@/lib/simulatorSettingsCatalog";
 import { validateBankEdit, type BankQuestion } from "@/lib/questionBank";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
 const field = "mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-sm text-slate-950";
 const letters = ["a", "b", "c", "d", "e"] as const;
-export function SharedQuestionBankEditor({ initialQuestions, career }: { initialQuestions: BankQuestion[]; career: StudentCareerSlug }) {
+export function SharedQuestionBankEditor({ initialQuestions, career, customComponents = [] }: { initialQuestions: BankQuestion[]; career: StudentCareerSlug; customComponents?: CustomComponent[] }) {
   const [questions, setQuestions] = useState(initialQuestions);
   const [search, setSearch] = useState("");
   const [phase, setPhase] = useState("");
@@ -14,7 +15,7 @@ export function SharedQuestionBankEditor({ initialQuestions, career }: { initial
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const catalog = getSimulatorSettingsCatalog(career);
+  const catalog = getSimulatorSettingsCatalog(career, customComponents);
   const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es");
   const visible = questions.filter(q => (!phase || getPhaseKey(career, q) === phase) && normalize(`${q.question_text} ${q.id}`).includes(normalize(search)));
   async function save(event: FormEvent) {

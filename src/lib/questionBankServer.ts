@@ -1,3 +1,4 @@
+import { getImportedQuestions } from "@/lib/customComponentsServer";
 import { isRetiredQuestion } from "@/lib/simulatorSettingsCatalog";
 import "server-only";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
@@ -27,6 +28,7 @@ export async function getSharedBank(career: StudentCareerSlug): Promise<BankQues
     source.push(...data);
     if (data.length < 500) break;
   }
+  source.push(...await getImportedQuestions(career));
   const unique = [...new Map(source.map(q => [q.id, repairQuestionText(q)])).values()];
   return applyBankOverrides(unique, await getBankOverrides(career)).filter(q => !isRetiredQuestion(q)).map(q => ({ ...q, revision: q.bank_revision ?? null }));
 }

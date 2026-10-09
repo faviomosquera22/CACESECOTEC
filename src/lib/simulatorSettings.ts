@@ -1,3 +1,4 @@
+import { getCustomComponents } from "@/lib/customComponentsServer";
 import "server-only";
 
 import type { SupabaseServerClient } from "@/lib/supabaseServer";
@@ -27,6 +28,7 @@ export async function getCareerSimulatorSettings(
     return getDefaultSimulatorSettings(career);
   }
 
+  const custom = await getCustomComponents(career);
   const { data, error } = await supabase
     .from("teacher_simulator_settings")
     .select(
@@ -52,7 +54,7 @@ export async function getCareerSimulatorSettings(
         enabledCategories: legacyData.enabled_categories,
         enabledPhases: ["fase-1"],
         updatedAt: legacyData.updated_at,
-      });
+      }, custom);
     }
   }
 
@@ -65,5 +67,5 @@ export async function getCareerSimulatorSettings(
     enabledCategories: data.enabled_categories,
     enabledPhases: data.enabled_phases,
     updatedAt: data.updated_at,
-  });
+  }, custom);
 }

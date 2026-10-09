@@ -1,5 +1,6 @@
 "use client";
 
+import type { CustomComponent } from "@/lib/customComponents";
 import { useMemo, useState } from "react";
 import {
   AlertCircle,
@@ -19,6 +20,7 @@ import {
 
 type TeacherSimulatorSettingsProps = {
   career: StudentCareerSlug;
+  customComponents?: CustomComponent[];
   initialSettings: SimulatorSettings;
   totalQuestionCount: number;
 };
@@ -90,12 +92,13 @@ function SwitchControl({
 export function TeacherSimulatorSettings({
   career,
   initialSettings,
+  customComponents = [],
   totalQuestionCount,
 }: TeacherSimulatorSettingsProps) {
-  const catalog = getSimulatorSettingsCatalog(career);
+  const catalog = getSimulatorSettingsCatalog(career, customComponents);
   const sanitizedInitialSettings = useMemo(
-    () => sanitizeSimulatorSettings(career, initialSettings),
-    [career, initialSettings],
+    () => sanitizeSimulatorSettings(career, initialSettings, customComponents),
+    [career, initialSettings, customComponents],
   );
   const [enabledPhases, setEnabledPhases] = useState<SimulatorPhaseKey[]>(
     sanitizedInitialSettings.enabledPhases,
@@ -150,6 +153,7 @@ export function TeacherSimulatorSettings({
       const nextSettings = sanitizeSimulatorSettings(
         career,
         payload.settings,
+        customComponents,
       );
       setEnabledPhases(nextSettings.enabledPhases);
       setSavedSettings(nextSettings);

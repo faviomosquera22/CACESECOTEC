@@ -14,6 +14,24 @@ export type OptionLetter = "A" | "B" | "C" | "D" | "E";
 export interface Database {
   public: {
     Tables: {
+      question_components: {
+        Row: { key: string; career_slug: string; label: string; description: string; created_by: string; created_at: string };
+        Insert: { key?: string; career_slug: string; label: string; description?: string; created_by: string; created_at?: string };
+        Update: { label?: string; description?: string };
+        Relationships: [];
+      };
+      imported_questions: {
+        Row: { id: string; career_slug: string; phase: string; question: Json; fingerprint: string; import_id: string; created_by: string; created_at: string };
+        Insert: { id?: string; career_slug: string; phase: string; question: Json; fingerprint: string; import_id: string; created_by: string; created_at?: string };
+        Update: { question?: Json };
+        Relationships: [];
+      };
+      pdf_question_imports: {
+        Row: { id: string; teacher_id: string; career_slug: string; filename: string; file_hash: string; preview: Json; status: string; result: Json | null; created_at: string };
+        Insert: { id?: string; teacher_id: string; career_slug: string; filename: string; file_hash: string; preview: Json };
+        Update: { status?: string; result?: Json };
+        Relationships: [];
+      };
       question_bank_overrides: {
         Row: { question_id: string; career_slug: string; question: Json; updated_by: string; updated_at: string };
         Insert: { question_id: string; career_slug: string; question: Json; updated_by: string; updated_at?: string };
@@ -302,6 +320,10 @@ export interface Database {
     };
     Views: Record<string, never>;
     Functions: {
+      complete_pdf_question_import: {
+        Args: { p_import_id: string; p_teacher_id: string; p_phase: string; p_questions: Json };
+        Returns: Json;
+      };
       assign_student_career: {
         Args: {
           target_student_id: string;

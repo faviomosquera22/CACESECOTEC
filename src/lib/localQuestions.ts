@@ -242,6 +242,7 @@ export function repairQuestionText(question: Question): Question {
   if (question.bank_revision) return question;
   const correction = (reviewedCorrections as Record<string, { correct_option: Question["correct_option"]; explanation: string }>)[question.id];
   if (correction) return { ...question, correct_option: correction.correct_option, explanation: correction.explanation, option_explanations: undefined };
+  if (question.id.startsWith("local-pdf-")) return question;
   // These documents must retain their wording and source answers verbatim.
   if (/^local-enfermeria-(octubre|fundamentos)-documento-/.test(question.id)) return question;
   const sourceText = question.question_text.trim();
@@ -323,7 +324,7 @@ export function isUsableQuestion(question: Question) {
   ].map((option) => option?.trim() ?? "");
 
   // These reviewed PDF items have 3-5 supplied alternatives and one source key.
-  if (/^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
+  if (question.id.startsWith("local-pdf-") || /^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
     const supplied = [...options, question.option_e?.trim() ?? ""];
     const available = supplied.filter(Boolean);
     const key = ["A", "B", "C", "D", "E"].indexOf(question.correct_option);
@@ -593,7 +594,7 @@ export function selectPsychologyExamQuestions(
   attemptSeed?: string,
 ) {
   const qualityPool = questions.filter(question =>
-    question.id.startsWith("local-manual-") ? isUsableQuestion(question) : isBalancedPsychologyQuestion(question),
+    (question.id.startsWith("local-manual-") || question.id.startsWith("local-pdf-")) ? isUsableQuestion(question) : isBalancedPsychologyQuestion(question),
   );
   const questionPool =
     qualityPool.length >= psychologyExamQuestionCount

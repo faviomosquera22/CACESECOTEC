@@ -1,3 +1,4 @@
+import { getCustomComponents } from "@/lib/customComponentsServer";
 import { getCurrentAuthContext } from "@/lib/auth";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
@@ -38,7 +39,7 @@ export async function PATCH(request: Request) {
   const body = (await request
     .json()
     .catch(() => ({}))) as UpdateSimulatorSettingsBody;
-  const catalog = getSimulatorSettingsCatalog(teacherCareerScope);
+  const catalog = getSimulatorSettingsCatalog(teacherCareerScope, await getCustomComponents(teacherCareerScope));
   const allowedPhases = new Set(
     catalog.phases.map((option) => option.key),
   );

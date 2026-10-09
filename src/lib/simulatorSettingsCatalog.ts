@@ -1,3 +1,4 @@
+import type { CustomComponent } from "@/lib/customComponents";
 import type { Question } from "@/lib/database.types";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
 
@@ -8,7 +9,8 @@ export type SimulatorPhaseKey =
   | "fase-3"
   | "fase-4"
   | "fase-5"
-  | "componente-integral";
+  | "componente-integral"
+  | `custom-${string}`;
 
 export type SimulatorSettings = {
   enabledDifficulties: SimulatorDifficultyKey[];
@@ -231,10 +233,11 @@ export function getPhaseKey(
   career: StudentCareerSlug,
   question: Question,
 ): SimulatorPhaseKey {
+  if (question.phase?.startsWith("custom-")) return question.phase as SimulatorPhaseKey;
   const explicitPhase = settingsCatalogByCareer[career].phases.find(
     option => option.key === question.phase,
   );
-  if (question.id.startsWith("local-manual-") && explicitPhase) return explicitPhase.key;
+  if ((question.id.startsWith("local-manual-") || question.id.startsWith("local-pdf-")) && explicitPhase) return explicitPhase.key;
   if (career === "enfermeria") {
     if (normalize(question.phase ?? "") === "componente-integral") {
       return "componente-integral";
@@ -264,8 +267,9 @@ export function getPhaseKey(
   return matchingPhase?.key ?? "fase-1";
 }
 
-export function getSimulatorSettingsCatalog(career: StudentCareerSlug) {
-  return settingsCatalogByCareer[career];
+export function getSimulatorSettingsCatalog(career: StudentCareerSlug, custom: CustomComponent[] = []) {
+  const base = settingsCatalogByCareer[career];
+  return { ...base, phases: [...base.phases, ...custom] };
 }
 
 export function getDefaultSimulatorSettings(
@@ -292,9 +296,10 @@ export function sanitizeSimulatorSettings(
       }
     | null
     | undefined,
+  custom: CustomComponent[] = [],
 ) {
   const defaults = getDefaultSimulatorSettings(career);
-  const catalog = getSimulatorSettingsCatalog(career);
+  const catalog = getSimulatorSettingsCatalog(career, custom);
   const allowedDifficultyKeys = new Set(
     catalog.difficulties.map((option) => option.key),
   );

@@ -1,3 +1,4 @@
+import { getCustomComponents, getImportedQuestions } from "@/lib/customComponentsServer";
 import { getBankOverrides } from "@/lib/questionBankServer";
 import { applyBankOverrides } from "@/lib/questionBank";
 import { randomUUID } from "node:crypto";
@@ -100,10 +101,11 @@ export default async function StudentExamSimulatorPage({
   }
 
   const examDistribution = examDistributionBySlug[exam.slug] ?? [];
+  const customComponents = await getCustomComponents(exam.slug);
   let manualQuestions: Question[] = [];
   try {
     const rows = await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);
-    manualQuestions = rows.map(manualQuestionForSimulator);
+    manualQuestions = [...rows.map(manualQuestionForSimulator), ...await getImportedQuestions(exam.slug, customComponents)];
   } catch {
     return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudo cargar el banco de tu docente. Recarga la página para iniciar el intento con las preguntas actualizadas.</section>;
   }
@@ -157,7 +159,7 @@ export default async function StudentExamSimulatorPage({
         );
   const persistenceMode = isLocalQuestionSet(questions) || questions.some(q => q.bank_revision) ? "local" : "supabase";
   const Icon = exam.icon;
-  const settingsCatalog = getSimulatorSettingsCatalog(exam.slug);
+  const settingsCatalog = getSimulatorSettingsCatalog(exam.slug, customComponents);
   const defaultSettings = getDefaultSimulatorSettings(exam.slug);
   const hasCustomSettings =
     [...simulatorSettings.enabledPhases].sort().join("|") !==
