@@ -4,7 +4,7 @@ import { getImportedQuestions } from "@/lib/customComponentsServer";
 import { isRetiredQuestion } from "@/lib/simulatorSettingsCatalog";
 import "server-only";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
-import { repairQuestionText } from "@/lib/localQuestions";
+import { getIntegral18And19Questions, repairQuestionText } from "@/lib/localQuestions";
 import { applyBankOverrides, type BankOverride, type BankQuestion } from "@/lib/questionBank";
 import type { Question } from "@/lib/database.types";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
@@ -22,6 +22,7 @@ export async function getSharedBank(career: StudentCareerSlug, includeRemoved = 
   const source: Question[] = [];
   if (career === "enfermeria") {
     source.push(...(await import("@/data/enfermeriaQuestions.json")).default as Question[]);
+    source.push(...await getIntegral18And19Questions());
   } else source.push(...(await import("@/data/psicologiaQuestions.json")).default as Question[]);
   const categoryFilter = (career === "enfermeria" ? ["enfermeria", "enfermería", "nursing"] : ["psicologia", "psicología", "psychology", "clinica"]).map(word => `category.ilike.%${word}%`).join(",");
   for (let offset = 0; ; offset += 500) {

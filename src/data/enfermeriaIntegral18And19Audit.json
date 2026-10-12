@@ -1,0 +1,2019 @@
+{
+  "sources": [
+    {
+      "name": "CACES 18.pdf",
+      "sha256": "0e1ef4bdb135b44d646c49865f418627ccc2511358bed5331ebf33bc00f80a76",
+      "total": 100
+    },
+    {
+      "name": "CACES 19.pdf",
+      "sha256": "84948a28f02a6356b93cac53f588a4e54174e5de87bedcdda30256083214be22",
+      "total": 100
+    }
+  ],
+  "items": [
+    {
+      "id": "local-enfermeria-integral-18-19-18-001",
+      "source": "CACES 18.pdf",
+      "number": 1,
+      "page": 1,
+      "correct_option": "A",
+      "explicit_answer": "Patrón respiratorio ineficaz.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-002",
+      "source": "CACES 18.pdf",
+      "number": 2,
+      "page": 1,
+      "correct_option": "C",
+      "explicit_answer": "1 - 2 años.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-003",
+      "source": "CACES 18.pdf",
+      "number": 3,
+      "page": 2,
+      "correct_option": "C",
+      "explicit_answer": "3, 2, 4, 1",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-004",
+      "source": "CACES 18.pdf",
+      "number": 4,
+      "page": 2,
+      "correct_option": "D",
+      "explicit_answer": "Exploratorio.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-005",
+      "source": "CACES 18.pdf",
+      "number": 5,
+      "page": 3,
+      "correct_option": "A",
+      "explicit_answer": "Conservar las muestras en una caja de cartón, protegidas de la luz solar o calor excesivo.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-006",
+      "source": "CACES 18.pdf",
+      "number": 6,
+      "page": 3,
+      "correct_option": "A",
+      "explicit_answer": "Aplicación de calor en el perineo.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-007",
+      "source": "CACES 18.pdf",
+      "number": 7,
+      "page": 4,
+      "correct_option": "C",
+      "explicit_answer": "1, 3, 4, 6, 7",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-008",
+      "source": "CACES 18.pdf",
+      "number": 8,
+      "page": 4,
+      "correct_option": "B",
+      "explicit_answer": "Hipoglicemia .",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-009",
+      "source": "CACES 18.pdf",
+      "number": 9,
+      "page": 5,
+      "correct_option": "C",
+      "explicit_answer": "Medir regularmente la presión arterial y registrar los valores obtenidos.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-010",
+      "source": "CACES 18.pdf",
+      "number": 10,
+      "page": 5,
+      "correct_option": "D",
+      "explicit_answer": "Suero Fisiológico al 0.9%",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-011",
+      "source": "CACES 18.pdf",
+      "number": 11,
+      "page": 6,
+      "correct_option": "D",
+      "explicit_answer": "Magnitud, frecuencia, gravedad, factibilidad de cambio.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-012",
+      "source": "CACES 18.pdf",
+      "number": 12,
+      "page": 6,
+      "correct_option": "B",
+      "explicit_answer": "1 a 2 horas.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-013",
+      "source": "CACES 18.pdf",
+      "number": 13,
+      "page": 7,
+      "correct_option": "A",
+      "explicit_answer": "Deterioro de la ventilación espontánea.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-014",
+      "source": "CACES 18.pdf",
+      "number": 14,
+      "page": 7,
+      "correct_option": "B",
+      "explicit_answer": "1, 4, 6",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-015",
+      "source": "CACES 18.pdf",
+      "number": 15,
+      "page": 8,
+      "correct_option": "A",
+      "explicit_answer": "Diuréticos.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-016",
+      "source": "CACES 18.pdf",
+      "number": 16,
+      "page": 8,
+      "correct_option": "C",
+      "explicit_answer": "La Enfermería es el arte de actuar por la persona incapacitada, ayudarla a actuar por sí misma o ayudarla a aprender a actuar por sí misma.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-017",
+      "source": "CACES 18.pdf",
+      "number": 17,
+      "page": 9,
+      "correct_option": "C",
+      "explicit_answer": "Demencia vascular.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-018",
+      "source": "CACES 18.pdf",
+      "number": 18,
+      "page": 9,
+      "correct_option": "C",
+      "explicit_answer": "Diabetes Mellitus tipo I",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-019",
+      "source": "CACES 18.pdf",
+      "number": 19,
+      "page": 10,
+      "correct_option": "C",
+      "explicit_answer": "1, 3, 5, 6",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-020",
+      "source": "CACES 18.pdf",
+      "number": 20,
+      "page": 10,
+      "correct_option": "C",
+      "explicit_answer": "Diabetes Mellitus tipo 2.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-021",
+      "source": "CACES 18.pdf",
+      "number": 21,
+      "page": 11,
+      "correct_option": "B",
+      "explicit_answer": "Rasure rutinariamente el área genital.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-022",
+      "source": "CACES 18.pdf",
+      "number": 22,
+      "page": 11,
+      "correct_option": "B",
+      "explicit_answer": "Reposición hidroelectrolítica, mejorar los síntomas y controlar la infección.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-023",
+      "source": "CACES 18.pdf",
+      "number": 23,
+      "page": 12,
+      "correct_option": "A",
+      "explicit_answer": "00008 Termorregulación ineficaz.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-024",
+      "source": "CACES 18.pdf",
+      "number": 24,
+      "page": 12,
+      "correct_option": "A",
+      "explicit_answer": "1 cada 4 horas hasta el término de la labor.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-025",
+      "source": "CACES 18.pdf",
+      "number": 25,
+      "page": 13,
+      "correct_option": "A",
+      "explicit_answer": "a, d, e, f",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-026",
+      "source": "CACES 18.pdf",
+      "number": 26,
+      "page": 13,
+      "correct_option": "A",
+      "explicit_answer": "Sangrado.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-027",
+      "source": "CACES 18.pdf",
+      "number": 27,
+      "page": 14,
+      "correct_option": "A",
+      "explicit_answer": "Ficha familiar.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-028",
+      "source": "CACES 18.pdf",
+      "number": 28,
+      "page": 14,
+      "correct_option": "B",
+      "explicit_answer": "Fallas activas.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-029",
+      "source": "CACES 18.pdf",
+      "number": 29,
+      "page": 15,
+      "correct_option": "C",
+      "explicit_answer": "Amenaza de aborto.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-030",
+      "source": "CACES 18.pdf",
+      "number": 30,
+      "page": 15,
+      "correct_option": "B",
+      "explicit_answer": "La termorregulación es eficaz, por el exceso de grasa subcutánea.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-031",
+      "source": "CACES 18.pdf",
+      "number": 31,
+      "page": 16,
+      "correct_option": "B",
+      "explicit_answer": "Transversal.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-032",
+      "source": "CACES 18.pdf",
+      "number": 32,
+      "page": 16,
+      "correct_option": "A",
+      "explicit_answer": "Borramiento y dilatación.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-033",
+      "source": "CACES 18.pdf",
+      "number": 33,
+      "page": 17,
+      "correct_option": "A",
+      "explicit_answer": "Longitud.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-034",
+      "source": "CACES 18.pdf",
+      "number": 34,
+      "page": 17,
+      "correct_option": "D",
+      "explicit_answer": "Problemas con el alcohol, tabaco, drogas.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-035",
+      "source": "CACES 18.pdf",
+      "number": 35,
+      "page": 18,
+      "correct_option": "C",
+      "explicit_answer": "Florence Nightingale.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-036",
+      "source": "CACES 18.pdf",
+      "number": 36,
+      "page": 18,
+      "correct_option": "C",
+      "explicit_answer": "Infarto agudo de miocardio.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-037",
+      "source": "CACES 18.pdf",
+      "number": 37,
+      "page": 19,
+      "correct_option": "D",
+      "explicit_answer": "Demencia.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-038",
+      "source": "CACES 18.pdf",
+      "number": 38,
+      "page": 19,
+      "correct_option": "B",
+      "explicit_answer": "Componentes del producto, instrucciones de uso, precauciones y advertencias del producto, instrucciones de almacenamiento y eliminación.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-039",
+      "source": "CACES 18.pdf",
+      "number": 39,
+      "page": 20,
+      "correct_option": "A",
+      "explicit_answer": "Grupos de enfoque.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-040",
+      "source": "CACES 18.pdf",
+      "number": 40,
+      "page": 20,
+      "correct_option": "C",
+      "explicit_answer": "4 - 11 meses.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-041",
+      "source": "CACES 18.pdf",
+      "number": 41,
+      "page": 21,
+      "correct_option": "A",
+      "explicit_answer": "1cf, 2ad, 3be",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-042",
+      "source": "CACES 18.pdf",
+      "number": 42,
+      "page": 22,
+      "correct_option": "D",
+      "explicit_answer": "Fórmula especializada.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-043",
+      "source": "CACES 18.pdf",
+      "number": 43,
+      "page": 22,
+      "correct_option": "B",
+      "explicit_answer": "Alteración de la absorción intestinal.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-044",
+      "source": "CACES 18.pdf",
+      "number": 44,
+      "page": 23,
+      "correct_option": "D",
+      "explicit_answer": "Mantener una habitación individual con presión negativa; uso de la mascarilla de alta eficiencia (N95).",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-045",
+      "source": "CACES 18.pdf",
+      "number": 45,
+      "page": 23,
+      "correct_option": "A",
+      "explicit_answer": "9HRZE",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-046",
+      "source": "CACES 18.pdf",
+      "number": 46,
+      "page": 24,
+      "correct_option": "B",
+      "explicit_answer": "45 %",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-047",
+      "source": "CACES 18.pdf",
+      "number": 47,
+      "page": 24,
+      "correct_option": "D",
+      "explicit_answer": "1, 3, 4",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-048",
+      "source": "CACES 18.pdf",
+      "number": 48,
+      "page": 25,
+      "correct_option": "B",
+      "explicit_answer": "En los 2 o 3 días anteriores a la prueba debe efectuar una ingesta normocalórica con un aporte diario superior a 150 gr de hidratos de carbono.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-049",
+      "source": "CACES 18.pdf",
+      "number": 49,
+      "page": 25,
+      "correct_option": "D",
+      "explicit_answer": "Implantes, DIU, esterilización femenina, vasectomía.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-050",
+      "source": "CACES 18.pdf",
+      "number": 50,
+      "page": 26,
+      "correct_option": "B",
+      "explicit_answer": "Hipercalemia.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-051",
+      "source": "CACES 18.pdf",
+      "number": 51,
+      "page": 27,
+      "correct_option": "C",
+      "explicit_answer": "2, 3, 5, 6",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-052",
+      "source": "CACES 18.pdf",
+      "number": 52,
+      "page": 28,
+      "correct_option": "A",
+      "explicit_answer": "Atención integral de salud - reorientando los servicios de salud - brindar una atención integral.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-053",
+      "source": "CACES 18.pdf",
+      "number": 53,
+      "page": 28,
+      "correct_option": "C",
+      "explicit_answer": "Lesión de aceleración.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-054",
+      "source": "CACES 18.pdf",
+      "number": 54,
+      "page": 29,
+      "correct_option": "D",
+      "explicit_answer": "Expectante.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-055",
+      "source": "CACES 18.pdf",
+      "number": 55,
+      "page": 29,
+      "correct_option": "C",
+      "explicit_answer": "Convección.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-056",
+      "source": "CACES 18.pdf",
+      "number": 56,
+      "page": 30,
+      "correct_option": "B",
+      "explicit_answer": "Uso de preservativos.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-057",
+      "source": "CACES 18.pdf",
+      "number": 57,
+      "page": 30,
+      "correct_option": "A",
+      "explicit_answer": "Primera.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-058",
+      "source": "CACES 18.pdf",
+      "number": 58,
+      "page": 31,
+      "correct_option": "D",
+      "explicit_answer": "3, 5, 7",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-059",
+      "source": "CACES 18.pdf",
+      "number": 59,
+      "page": 31,
+      "correct_option": "D",
+      "explicit_answer": "Factor contribuyente.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-060",
+      "source": "CACES 18.pdf",
+      "number": 60,
+      "page": 32,
+      "correct_option": "A",
+      "explicit_answer": "Preparado de base alcohólica.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-061",
+      "source": "CACES 18.pdf",
+      "number": 61,
+      "page": 33,
+      "correct_option": "B",
+      "explicit_answer": "1d, 2c, 3b, 4a",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-062",
+      "source": "CACES 18.pdf",
+      "number": 62,
+      "page": 34,
+      "correct_option": "D",
+      "explicit_answer": "1, 3, 5",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-063",
+      "source": "CACES 18.pdf",
+      "number": 63,
+      "page": 34,
+      "correct_option": "A",
+      "explicit_answer": "Aumentar el aporte sanguíneo en la región tratada.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-064",
+      "source": "CACES 18.pdf",
+      "number": 64,
+      "page": 35,
+      "correct_option": "B",
+      "explicit_answer": "La incidencia de la tifoidea en la zona.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-065",
+      "source": "CACES 18.pdf",
+      "number": 65,
+      "page": 35,
+      "correct_option": "D",
+      "explicit_answer": "Desequilibrio nutricional: ingesta inferior a las necesidades.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-066",
+      "source": "CACES 18.pdf",
+      "number": 66,
+      "page": 36,
+      "correct_option": "C",
+      "explicit_answer": "4, 2, 5, 1, 3",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-067",
+      "source": "CACES 18.pdf",
+      "number": 67,
+      "page": 36,
+      "correct_option": "B",
+      "explicit_answer": "Lavado de manos antes y después de la atención de todo paciente.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-068",
+      "source": "CACES 18.pdf",
+      "number": 68,
+      "page": 37,
+      "correct_option": "D",
+      "explicit_answer": "Teoría de la diversidad y de la universalidad de los cuidados culturales.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-069",
+      "source": "CACES 18.pdf",
+      "number": 69,
+      "page": 37,
+      "correct_option": "A",
+      "explicit_answer": "Desconcentrado.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-070",
+      "source": "CACES 18.pdf",
+      "number": 70,
+      "page": 38,
+      "correct_option": "B",
+      "explicit_answer": "Captar y controlar a madres embarazadas y asegurar el tratamiento de las mujeres en riesgo.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-071",
+      "source": "CACES 18.pdf",
+      "number": 71,
+      "page": 38,
+      "correct_option": "A",
+      "explicit_answer": "2.29 ml/hora.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-072",
+      "source": "CACES 18.pdf",
+      "number": 72,
+      "page": 39,
+      "correct_option": "C",
+      "explicit_answer": "A emergencias sanitarias.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-073",
+      "source": "CACES 18.pdf",
+      "number": 73,
+      "page": 39,
+      "correct_option": "A",
+      "explicit_answer": "Promoción del uso del biberón.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-074",
+      "source": "CACES 18.pdf",
+      "number": 74,
+      "page": 40,
+      "correct_option": "A",
+      "explicit_answer": "Frank Gilbreth.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-075",
+      "source": "CACES 18.pdf",
+      "number": 75,
+      "page": 40,
+      "correct_option": "A",
+      "explicit_answer": "En el momento de ingreso al establecimiento de salud, realizar el triaje de los usuarios con tos.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-076",
+      "source": "CACES 18.pdf",
+      "number": 76,
+      "page": 41,
+      "correct_option": "C",
+      "explicit_answer": "Caso previamente tratado.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-077",
+      "source": "CACES 18.pdf",
+      "number": 77,
+      "page": 41,
+      "correct_option": "D",
+      "explicit_answer": "Naturales.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-078",
+      "source": "CACES 18.pdf",
+      "number": 78,
+      "page": 42,
+      "correct_option": "B",
+      "explicit_answer": "Limpieza ineficaz de la vía aérea.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-079",
+      "source": "CACES 18.pdf",
+      "number": 79,
+      "page": 42,
+      "correct_option": "B",
+      "explicit_answer": "Planificar un plan rutinario de ejercicios.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-080",
+      "source": "CACES 18.pdf",
+      "number": 80,
+      "page": 43,
+      "correct_option": "B",
+      "explicit_answer": "Procesos, generalizados, consecuencia, concurrencia, ingreso.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-081",
+      "source": "CACES 18.pdf",
+      "number": 81,
+      "page": 43,
+      "correct_option": "D",
+      "explicit_answer": "El paciente.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-082",
+      "source": "CACES 18.pdf",
+      "number": 82,
+      "page": 44,
+      "correct_option": "B",
+      "explicit_answer": "Altruismo.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-083",
+      "source": "CACES 18.pdf",
+      "number": 83,
+      "page": 45,
+      "correct_option": "A",
+      "explicit_answer": "1c, 2a, 3b, 4d",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-084",
+      "source": "CACES 18.pdf",
+      "number": 84,
+      "page": 46,
+      "correct_option": "A",
+      "explicit_answer": "Dominio Actividad/Reposo.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-085",
+      "source": "CACES 18.pdf",
+      "number": 85,
+      "page": 46,
+      "correct_option": "A",
+      "explicit_answer": "Electrólitos en suero.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-086",
+      "source": "CACES 18.pdf",
+      "number": 86,
+      "page": 47,
+      "correct_option": "A",
+      "explicit_answer": "Operacionalización de variables.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-087",
+      "source": "CACES 18.pdf",
+      "number": 87,
+      "page": 47,
+      "correct_option": "B",
+      "explicit_answer": "Administración de ungüento oftálmico con eritromicina al 0.5% o tetraciclina al 1% y de 1 mg de vitamina K vía intramuscular.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-088",
+      "source": "CACES 18.pdf",
+      "number": 88,
+      "page": 48,
+      "correct_option": "C",
+      "explicit_answer": "Teoría ambientalista.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-089",
+      "source": "CACES 18.pdf",
+      "number": 89,
+      "page": 48,
+      "correct_option": "C",
+      "explicit_answer": "1, 3, 4",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-090",
+      "source": "CACES 18.pdf",
+      "number": 90,
+      "page": 49,
+      "correct_option": "C",
+      "explicit_answer": "Actuar desde perspectivas de promoción de la salud.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-091",
+      "source": "CACES 18.pdf",
+      "number": 91,
+      "page": 49,
+      "correct_option": "C",
+      "explicit_answer": "Desprendimiento placenta normo inserta.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-092",
+      "source": "CACES 18.pdf",
+      "number": 92,
+      "page": 50,
+      "correct_option": "B",
+      "explicit_answer": "Lista de cotejo.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-093",
+      "source": "CACES 18.pdf",
+      "number": 93,
+      "page": 50,
+      "correct_option": "D",
+      "explicit_answer": "Dolor hipocondrial derecho.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-094",
+      "source": "CACES 18.pdf",
+      "number": 94,
+      "page": 51,
+      "correct_option": "B",
+      "explicit_answer": "1, 3, 4",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-095",
+      "source": "CACES 18.pdf",
+      "number": 95,
+      "page": 51,
+      "correct_option": "B",
+      "explicit_answer": "Dos primeros meses de gestación.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-096",
+      "source": "CACES 18.pdf",
+      "number": 96,
+      "page": 52,
+      "correct_option": "B",
+      "explicit_answer": "Verificar que estén rotulados con etiqueta roja.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-097",
+      "source": "CACES 18.pdf",
+      "number": 97,
+      "page": 52,
+      "correct_option": "C",
+      "explicit_answer": "Obesidad I.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-098",
+      "source": "CACES 18.pdf",
+      "number": 98,
+      "page": 53,
+      "correct_option": "B",
+      "explicit_answer": "Confidencialidad.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-099",
+      "source": "CACES 18.pdf",
+      "number": 99,
+      "page": 53,
+      "correct_option": "A",
+      "explicit_answer": "Información del registro, la fecha y la hora de la extirpación.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-18-100",
+      "source": "CACES 18.pdf",
+      "number": 100,
+      "page": 54,
+      "correct_option": "B",
+      "explicit_answer": "Suministra métodos de análisis basados en la argumentación y delibera sobre problemas concretos.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-001",
+      "source": "CACES 19.pdf",
+      "number": 1,
+      "page": 1,
+      "correct_option": "A",
+      "explicit_answer": "1ac, 2bd",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-002",
+      "source": "CACES 19.pdf",
+      "number": 2,
+      "page": 2,
+      "correct_option": "B",
+      "explicit_answer": "Solución Salina al 3%",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-003",
+      "source": "CACES 19.pdf",
+      "number": 3,
+      "page": 2,
+      "correct_option": "C",
+      "explicit_answer": "Educar fomentando una buena succión y lactancia materna exclusiva a libre demanda.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-004",
+      "source": "CACES 19.pdf",
+      "number": 4,
+      "page": 3,
+      "correct_option": "A",
+      "explicit_answer": "Modelo radical.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-005",
+      "source": "CACES 19.pdf",
+      "number": 5,
+      "page": 3,
+      "correct_option": "D",
+      "explicit_answer": "Solución Salina al 3%",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-006",
+      "source": "CACES 19.pdf",
+      "number": 6,
+      "page": 4,
+      "correct_option": "C",
+      "explicit_answer": "Funcional.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-007",
+      "source": "CACES 19.pdf",
+      "number": 7,
+      "page": 4,
+      "correct_option": "D",
+      "explicit_answer": "6 g intravenoso en 20 minutos.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-008",
+      "source": "CACES 19.pdf",
+      "number": 8,
+      "page": 5,
+      "correct_option": "D",
+      "explicit_answer": "Atención extramural, atención intramural, atención en unidades móviles y atención prehospitalaria.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-009",
+      "source": "CACES 19.pdf",
+      "number": 9,
+      "page": 5,
+      "correct_option": "D",
+      "explicit_answer": "Valoración.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-010",
+      "source": "CACES 19.pdf",
+      "number": 10,
+      "page": 6,
+      "correct_option": "B",
+      "explicit_answer": "Citostáticos, cloranfenicol, litio.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-011",
+      "source": "CACES 19.pdf",
+      "number": 11,
+      "page": 6,
+      "correct_option": "A",
+      "explicit_answer": "11.8 g/dl",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-012",
+      "source": "CACES 19.pdf",
+      "number": 12,
+      "page": 7,
+      "correct_option": "A",
+      "explicit_answer": "Hemorragia severa materna.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-013",
+      "source": "CACES 19.pdf",
+      "number": 13,
+      "page": 7,
+      "correct_option": "D",
+      "explicit_answer": "Epidemiológico.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-014",
+      "source": "CACES 19.pdf",
+      "number": 14,
+      "page": 8,
+      "correct_option": "D",
+      "explicit_answer": "3, 4, 5",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-015",
+      "source": "CACES 19.pdf",
+      "number": 15,
+      "page": 9,
+      "correct_option": "D",
+      "explicit_answer": "1, 3, 5, 6",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-016",
+      "source": "CACES 19.pdf",
+      "number": 16,
+      "page": 10,
+      "correct_option": "D",
+      "explicit_answer": "2, 4, 6",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-017",
+      "source": "CACES 19.pdf",
+      "number": 17,
+      "page": 10,
+      "correct_option": "D",
+      "explicit_answer": "3, 4, 6",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-018",
+      "source": "CACES 19.pdf",
+      "number": 18,
+      "page": 11,
+      "correct_option": "B",
+      "explicit_answer": "Deterioro del intercambio de gases.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-019",
+      "source": "CACES 19.pdf",
+      "number": 19,
+      "page": 11,
+      "correct_option": "C",
+      "explicit_answer": "Roce pleural.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-020",
+      "source": "CACES 19.pdf",
+      "number": 20,
+      "page": 12,
+      "correct_option": "B",
+      "explicit_answer": "Demencia.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-021",
+      "source": "CACES 19.pdf",
+      "number": 21,
+      "page": 12,
+      "correct_option": "D",
+      "explicit_answer": "1, 3, 6",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-022",
+      "source": "CACES 19.pdf",
+      "number": 22,
+      "page": 13,
+      "correct_option": "A",
+      "explicit_answer": "Segundo espacio intercostal derecho, borde esternal derecho.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-023",
+      "source": "CACES 19.pdf",
+      "number": 23,
+      "page": 13,
+      "correct_option": "B",
+      "explicit_answer": "Diagnóstico de Enfermería.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-024",
+      "source": "CACES 19.pdf",
+      "number": 24,
+      "page": 14,
+      "correct_option": "C",
+      "explicit_answer": "Actividad - Ejercicio.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-025",
+      "source": "CACES 19.pdf",
+      "number": 25,
+      "page": 14,
+      "correct_option": "B",
+      "explicit_answer": "2, 3, 1",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-026",
+      "source": "CACES 19.pdf",
+      "number": 26,
+      "page": 15,
+      "correct_option": "C",
+      "explicit_answer": "Palpación del pulso pedio izquierdo fuerte y firme.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-027",
+      "source": "CACES 19.pdf",
+      "number": 27,
+      "page": 15,
+      "correct_option": "C",
+      "explicit_answer": "ASA 6",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-028",
+      "source": "CACES 19.pdf",
+      "number": 28,
+      "page": 16,
+      "correct_option": "B",
+      "explicit_answer": "Principios del Modelo de Atención Integral de Salud.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-029",
+      "source": "CACES 19.pdf",
+      "number": 29,
+      "page": 16,
+      "correct_option": "A",
+      "explicit_answer": "1, 2, 4, 5",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-030",
+      "source": "CACES 19.pdf",
+      "number": 30,
+      "page": 17,
+      "correct_option": "B",
+      "explicit_answer": "Proceso organizado y sistemático de recolección y recopilación de datos sobre el estado de salud de la persona.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-031",
+      "source": "CACES 19.pdf",
+      "number": 31,
+      "page": 17,
+      "correct_option": "A",
+      "explicit_answer": "Fracaso inmunológico.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-032",
+      "source": "CACES 19.pdf",
+      "number": 32,
+      "page": 18,
+      "correct_option": "B",
+      "explicit_answer": "b, c, e, f",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-033",
+      "source": "CACES 19.pdf",
+      "number": 33,
+      "page": 18,
+      "correct_option": "A",
+      "explicit_answer": "Complementar mejoras continuas.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-034",
+      "source": "CACES 19.pdf",
+      "number": 34,
+      "page": 19,
+      "correct_option": "B",
+      "explicit_answer": "28 gotas por minuto.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-035",
+      "source": "CACES 19.pdf",
+      "number": 35,
+      "page": 19,
+      "correct_option": "B",
+      "explicit_answer": "Antes de la inducción de la anestesia, antes de la incisión cutánea y antes de que el paciente salga del quirófano.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-036",
+      "source": "CACES 19.pdf",
+      "number": 36,
+      "page": 20,
+      "correct_option": "A",
+      "explicit_answer": "Ampicilina/Sulbactam.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-037",
+      "source": "CACES 19.pdf",
+      "number": 37,
+      "page": 20,
+      "correct_option": "B",
+      "explicit_answer": "Segunda dosis de: fipV, pentavalente, neumococo.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-038",
+      "source": "CACES 19.pdf",
+      "number": 38,
+      "page": 21,
+      "correct_option": "C",
+      "explicit_answer": "Fenilcetonuria.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-039",
+      "source": "CACES 19.pdf",
+      "number": 39,
+      "page": 21,
+      "correct_option": "A",
+      "explicit_answer": "DT.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-040",
+      "source": "CACES 19.pdf",
+      "number": 40,
+      "page": 22,
+      "correct_option": "A",
+      "explicit_answer": "Espumosa.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-041",
+      "source": "CACES 19.pdf",
+      "number": 41,
+      "page": 22,
+      "correct_option": "B",
+      "explicit_answer": "Indicador social.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-042",
+      "source": "CACES 19.pdf",
+      "number": 42,
+      "page": 23,
+      "correct_option": "C",
+      "explicit_answer": "Sobrecarga de líquidos.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-043",
+      "source": "CACES 19.pdf",
+      "number": 43,
+      "page": 23,
+      "correct_option": "D",
+      "explicit_answer": "Medir los líquidos que egresan de cualquier parte del organismo.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-044",
+      "source": "CACES 19.pdf",
+      "number": 44,
+      "page": 24,
+      "correct_option": "D",
+      "explicit_answer": "Objetivos, preguntas directrices, justificación y viabilidad.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-045",
+      "source": "CACES 19.pdf",
+      "number": 45,
+      "page": 24,
+      "correct_option": "B",
+      "explicit_answer": "70 -75%",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-046",
+      "source": "CACES 19.pdf",
+      "number": 46,
+      "page": 25,
+      "correct_option": "B",
+      "explicit_answer": "Crisis por desmembramiento.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-047",
+      "source": "CACES 19.pdf",
+      "number": 47,
+      "page": 25,
+      "correct_option": "D",
+      "explicit_answer": "Control de la saturación de oxígeno.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-048",
+      "source": "CACES 19.pdf",
+      "number": 48,
+      "page": 26,
+      "correct_option": "A",
+      "explicit_answer": "80% a 85%",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-049",
+      "source": "CACES 19.pdf",
+      "number": 49,
+      "page": 26,
+      "correct_option": "A",
+      "explicit_answer": "Notificar a médico de cabecera.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-050",
+      "source": "CACES 19.pdf",
+      "number": 50,
+      "page": 27,
+      "correct_option": "D",
+      "explicit_answer": "Zona 3.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-051",
+      "source": "CACES 19.pdf",
+      "number": 51,
+      "page": 27,
+      "correct_option": "C",
+      "explicit_answer": "Respiración de Biot.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-052",
+      "source": "CACES 19.pdf",
+      "number": 52,
+      "page": 28,
+      "correct_option": "D",
+      "explicit_answer": "Nivel familiar y comunitario.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-053",
+      "source": "CACES 19.pdf",
+      "number": 53,
+      "page": 28,
+      "correct_option": "A",
+      "explicit_answer": "Etapa de disolución.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-054",
+      "source": "CACES 19.pdf",
+      "number": 54,
+      "page": 29,
+      "correct_option": "D",
+      "explicit_answer": "Manejo adecuado de medicamentos de alto riesgo.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-055",
+      "source": "CACES 19.pdf",
+      "number": 55,
+      "page": 29,
+      "correct_option": "D",
+      "explicit_answer": "Estadío III",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-056",
+      "source": "CACES 19.pdf",
+      "number": 56,
+      "page": 30,
+      "correct_option": "B",
+      "explicit_answer": "Hipertensión grado 2",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-057",
+      "source": "CACES 19.pdf",
+      "number": 57,
+      "page": 30,
+      "correct_option": "A",
+      "explicit_answer": "Provocado.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-058",
+      "source": "CACES 19.pdf",
+      "number": 58,
+      "page": 31,
+      "correct_option": "A",
+      "explicit_answer": "Proporcionar alivio del dolor y otros síntomas angustiantes.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-059",
+      "source": "CACES 19.pdf",
+      "number": 59,
+      "page": 31,
+      "correct_option": "B",
+      "explicit_answer": "Al enfermero líder del servicio.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-060",
+      "source": "CACES 19.pdf",
+      "number": 60,
+      "page": 32,
+      "correct_option": "A",
+      "explicit_answer": "Cubrir la herida con apósito estéril.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-061",
+      "source": "CACES 19.pdf",
+      "number": 61,
+      "page": 32,
+      "correct_option": "C",
+      "explicit_answer": "Hemoptisis.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-062",
+      "source": "CACES 19.pdf",
+      "number": 62,
+      "page": 33,
+      "correct_option": "B",
+      "explicit_answer": "Aparece una pequeña úlcera en la zona de la vacuna, aproximadamente 3 semanas después, no se debe manipular ni colocar cremas, alcohol u otras sustancias en el sitio de la vacuna.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-063",
+      "source": "CACES 19.pdf",
+      "number": 63,
+      "page": 33,
+      "correct_option": "B",
+      "explicit_answer": "El endometrio, grueso y congestionado, se vuelve hemorrágico.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-064",
+      "source": "CACES 19.pdf",
+      "number": 64,
+      "page": 34,
+      "correct_option": "B",
+      "explicit_answer": "1 ventilación - 5 a 6 segundos - 2 minutos.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-065",
+      "source": "CACES 19.pdf",
+      "number": 65,
+      "page": 34,
+      "correct_option": "C",
+      "explicit_answer": "Continuidad de los cuidados.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-066",
+      "source": "CACES 19.pdf",
+      "number": 66,
+      "page": 35,
+      "correct_option": "C",
+      "explicit_answer": "Abraham Maslow.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-067",
+      "source": "CACES 19.pdf",
+      "number": 67,
+      "page": 35,
+      "correct_option": "D",
+      "explicit_answer": "1, 3, 6",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-068",
+      "source": "CACES 19.pdf",
+      "number": 68,
+      "page": 36,
+      "correct_option": "D",
+      "explicit_answer": "1d, 2c, 3b, 4a",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-069",
+      "source": "CACES 19.pdf",
+      "number": 69,
+      "page": 37,
+      "correct_option": "B",
+      "explicit_answer": "Ejecución de procedimientos médicos.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-070",
+      "source": "CACES 19.pdf",
+      "number": 70,
+      "page": 38,
+      "correct_option": "C",
+      "explicit_answer": "1bd, 2ac",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-071",
+      "source": "CACES 19.pdf",
+      "number": 71,
+      "page": 39,
+      "correct_option": "C",
+      "explicit_answer": "Salud deficiente de la comunidad.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-072",
+      "source": "CACES 19.pdf",
+      "number": 72,
+      "page": 39,
+      "correct_option": "D",
+      "explicit_answer": "Volumen Sistólico por la frecuencia cardíaca.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-073",
+      "source": "CACES 19.pdf",
+      "number": 73,
+      "page": 40,
+      "correct_option": "A",
+      "explicit_answer": "Deterioro de la integridad cutánea.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-074",
+      "source": "CACES 19.pdf",
+      "number": 74,
+      "page": 40,
+      "correct_option": "B",
+      "explicit_answer": "Grupos de enfoque.",
+      "selected_option": "B",
+      "status": "duplicate",
+      "duplicate_of": "local-enfermeria-integral-18-19-18-039"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-075",
+      "source": "CACES 19.pdf",
+      "number": 75,
+      "page": 41,
+      "correct_option": "C",
+      "explicit_answer": "Diafragma.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-076",
+      "source": "CACES 19.pdf",
+      "number": 76,
+      "page": 41,
+      "correct_option": "D",
+      "explicit_answer": "Espirometría incentivada.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-077",
+      "source": "CACES 19.pdf",
+      "number": 77,
+      "page": 42,
+      "correct_option": "C",
+      "explicit_answer": "42 gotas por minuto.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-078",
+      "source": "CACES 19.pdf",
+      "number": 78,
+      "page": 42,
+      "correct_option": "D",
+      "explicit_answer": "1, 3, 5, 6",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-079",
+      "source": "CACES 19.pdf",
+      "number": 79,
+      "page": 43,
+      "correct_option": "A",
+      "explicit_answer": "Reflejo del moro.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-080",
+      "source": "CACES 19.pdf",
+      "number": 80,
+      "page": 43,
+      "correct_option": "B",
+      "explicit_answer": "Iniciar el día con alimentos secos como tostadas o galletas de sal.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-081",
+      "source": "CACES 19.pdf",
+      "number": 81,
+      "page": 44,
+      "correct_option": "D",
+      "explicit_answer": "II Nivel de Atención.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-082",
+      "source": "CACES 19.pdf",
+      "number": 82,
+      "page": 44,
+      "correct_option": "B",
+      "explicit_answer": "Enfermedad de membrana hialina.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-083",
+      "source": "CACES 19.pdf",
+      "number": 83,
+      "page": 45,
+      "correct_option": "D",
+      "explicit_answer": "Familia en contracción.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-084",
+      "source": "CACES 19.pdf",
+      "number": 84,
+      "page": 45,
+      "correct_option": "B",
+      "explicit_answer": "Corresponde entre los dos y tres días de vida o 24 a 48 horas del alta.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-085",
+      "source": "CACES 19.pdf",
+      "number": 85,
+      "page": 46,
+      "correct_option": "B",
+      "explicit_answer": "8 puntos.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-086",
+      "source": "CACES 19.pdf",
+      "number": 86,
+      "page": 46,
+      "correct_option": "C",
+      "explicit_answer": "Edema 3+",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-087",
+      "source": "CACES 19.pdf",
+      "number": 87,
+      "page": 47,
+      "correct_option": "C",
+      "explicit_answer": "Sonda Foley de tres vías.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-088",
+      "source": "CACES 19.pdf",
+      "number": 88,
+      "page": 47,
+      "correct_option": "D",
+      "explicit_answer": "Reacción inflamatoria a nivel alveolar.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-089",
+      "source": "CACES 19.pdf",
+      "number": 89,
+      "page": 48,
+      "correct_option": "B",
+      "explicit_answer": "2, 4, 3, 5, 1",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-090",
+      "source": "CACES 19.pdf",
+      "number": 90,
+      "page": 49,
+      "correct_option": "A",
+      "explicit_answer": "1, 3, 4",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-091",
+      "source": "CACES 19.pdf",
+      "number": 91,
+      "page": 49,
+      "correct_option": "C",
+      "explicit_answer": "Captar y controlar a madres embarazadas y asegurar el tratamiento de las mujeres en riesgo.",
+      "selected_option": "C",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-092",
+      "source": "CACES 19.pdf",
+      "number": 92,
+      "page": 50,
+      "correct_option": "D",
+      "explicit_answer": "Adrenarquia.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-093",
+      "source": "CACES 19.pdf",
+      "number": 93,
+      "page": 50,
+      "correct_option": "B",
+      "explicit_answer": "Curva estándar de consumo, porcentaje de ocupación, frecuencia de tratamientos.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-094",
+      "source": "CACES 19.pdf",
+      "number": 94,
+      "page": 51,
+      "correct_option": "A",
+      "explicit_answer": "2, 4, 5, 1, 6, 3",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-095",
+      "source": "CACES 19.pdf",
+      "number": 95,
+      "page": 51,
+      "correct_option": "B",
+      "explicit_answer": "Hasta 3 000 ml.",
+      "selected_option": "B",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-096",
+      "source": "CACES 19.pdf",
+      "number": 96,
+      "page": 52,
+      "correct_option": "A",
+      "explicit_answer": "Escala Katz.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-097",
+      "source": "CACES 19.pdf",
+      "number": 97,
+      "page": 52,
+      "correct_option": "D",
+      "explicit_answer": "Dominio Seguridad/protección.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-098",
+      "source": "CACES 19.pdf",
+      "number": 98,
+      "page": 53,
+      "correct_option": "D",
+      "explicit_answer": "La inocuidad del método que viene determinada por la ausencia de riesgos de salud.",
+      "selected_option": "A",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-099",
+      "source": "CACES 19.pdf",
+      "number": 99,
+      "page": 53,
+      "correct_option": "C",
+      "explicit_answer": "Riesgo de perfusión tisular cerebral ineficaz relacionada con la lesión cerebral.",
+      "selected_option": "D",
+      "status": "imported"
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-100",
+      "source": "CACES 19.pdf",
+      "number": 100,
+      "page": 54,
+      "correct_option": "C",
+      "explicit_answer": "Autorregulación.",
+      "selected_option": "C",
+      "status": "imported"
+    }
+  ],
+  "imported": 199,
+  "duplicates": 1
+}

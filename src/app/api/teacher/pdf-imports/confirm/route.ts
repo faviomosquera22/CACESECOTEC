@@ -21,7 +21,7 @@ export async function POST(request:Request) {
   if(Date.now()-Date.parse(batch.created_at)>86400000)return Response.json({error:"La revisión venció. Vuelve a analizar el PDF."},{status:410});
   try {
     const catalog=getSimulatorSettingsCatalog(auth.career,await getCustomComponents(auth.career),removedComponentIds(await getBankRemovals(auth.career)));
-    if(!catalog.phases.some(item=>item.key===body.phase))return Response.json({error:"Selecciona un componente de tu carrera."},{status:400});
+    if(body.phase==="componente-integral" || !catalog.phases.some(item=>item.key===body.phase))return Response.json({error:"Selecciona un componente de tu carrera. El Integral está reservado para CACES 18 y CACES 19."},{status:400});
     const originals=(batch.preview as unknown as {candidates:PdfCandidate[]}).candidates;
     const seenIndices=new Set<number>();
     const known=new Set((await getSharedBank(auth.career, true)).map(questionIdentity));

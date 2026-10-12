@@ -38,7 +38,7 @@ export function validateManualQuestion(value: unknown, career: StudentCareerSlug
   const normalized = "abcd".split("").map(key => text[`option_${key}`].normalize("NFKC").toLocaleLowerCase("es").replace(/\s+/g, " ").replace(/[.!?]+$/, ""));
   if (new Set(normalized).size !== 4) throw new Error("Las cuatro opciones deben ser diferentes.");
   if (!["A", "B", "C", "D"].includes(String(body.correct_option))) throw new Error("Selecciona la respuesta correcta.");
-  if (!getSimulatorSettingsCatalog(career).phases.some(phase => phase.key === body.phase)) throw new Error("Selecciona un componente de tu carrera.");
+  if (body.phase === "componente-integral" || !getSimulatorSettingsCatalog(career).phases.some(phase => phase.key === body.phase)) throw new Error("Selecciona un componente de tu carrera. El Integral está reservado para CACES 18 y CACES 19.");
   if (!["Fácil", "Media", "Difícil"].includes(String(body.difficulty))) throw new Error("Selecciona una dificultad válida.");
   if (typeof body.published !== "boolean") throw new Error("Selecciona si la pregunta estará publicada o en borrador.");
   return {

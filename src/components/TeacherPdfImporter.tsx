@@ -19,7 +19,8 @@ export function TeacherPdfImporter({career,initialComponents,removedComponents=[
   const [busy,setBusy]=useState(false);
   const [error,setError]=useState("");
   const [notice,setNotice]=useState("");
-  const catalog=getSimulatorSettingsCatalog(career,custom,removedComponents);
+  const baseCatalog=getSimulatorSettingsCatalog(career,custom,removedComponents);
+  const catalog={...baseCatalog,phases:baseCatalog.phases.filter(item=>item.key!=="componente-integral")};
   const selected=preview?.candidates.filter(q=>q.selected)??[];
   function edit(index:number,patch:Partial<Candidate>) {setPreview(current=>current?{...current,candidates:current.candidates.map(q=>q.index===index?{...q,...patch}:q)}:null);}
   async function createComponent(event:FormEvent) {

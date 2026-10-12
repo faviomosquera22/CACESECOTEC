@@ -57,8 +57,8 @@ test('la baja comparte solo la carrera autenticada y atribuye el cambio a la ses
  const inserted=calls.find(c=>c[0]==='insert')[1];assert.equal(inserted.career_slug,'enfermeria');assert.equal(inserted.updated_by,teacher.id);assert.equal(inserted.removed,true);
  assert.ok(calls.some(c=>c[0]==='bank'&&c[2]===true));
 });
-test('no elimina preguntas ajenas, componentes inexistentes ni el Integral histórico',async()=>{
- for(const [change,config] of [[{id:'foreign'},{}],[{kind:'component',id:'componente-integral'},{}],[{kind:'component',id:'custom-foreign'},{}],[{id:'local-manual-foreign'},{}]]) {
+test('no elimina preguntas ajenas ni componentes inexistentes',async()=>{
+ for(const [change,config] of [[{id:'foreign'},{}],[{kind:'component',id:'custom-foreign'},{}],[{id:'local-manual-foreign'},{}]]) {
   const {route,calls}=api(config);assert.equal((await route.PATCH(request({...body,...change}))).status,404);assert.ok(!calls.some(c=>c[0]==='insert'||c[0]==='update'));
  }
 });

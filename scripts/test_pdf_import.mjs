@@ -55,15 +55,15 @@ test('alternativas mezcladas en una fila requieren revisión explícita',()=>{
  const input=lines({bold:[2]});input[1].text='A. Primera alternativa B. Texto de otra columna';
  assert.ok(parseQuestionLines(input)[0].issues.some(issue=>issue.includes('misma línea')));
 });
-test('componentes personalizados conservan selección, carrera y no reviven Integral',()=>{
+test('componentes personalizados conservan selección y carrera junto al nuevo Integral',()=>{
  const custom=[{key:'custom-00000000-0000-4000-8000-000000000001',label:'Cuidados intensivos',description:''}];
- assert.equal(getSimulatorSettingsCatalog('enfermeria',custom).phases.length,6);
+ assert.equal(getSimulatorSettingsCatalog('enfermeria',custom).phases.length,7);
  assert.ok(!getDefaultSimulatorSettings('enfermeria').enabledPhases.includes(custom[0].key));
  const settings=sanitizeSimulatorSettings('enfermeria',{enabledPhases:[custom[0].key]},custom);assert.deepEqual(settings.enabledPhases,[custom[0].key]);
  const q={...validateImportedQuestion(valid),id:'local-pdf-test',phase:custom[0].key,component:custom[0].label};assert.equal(getPhaseKey('enfermeria',q),custom[0].key);
  assert.equal(selectQuestionsForExam('enfermeria',[q],'test',settings).length,1);
  assert.equal(selectQuestionsForExam('enfermeria',[q],'test',getDefaultSimulatorSettings('enfermeria')).length,0);
- assert.ok(!getSimulatorSettingsCatalog('enfermeria',custom).phases.some(x=>x.key==='componente-integral'));
+ assert.ok(getSimulatorSettingsCatalog('enfermeria',custom).phases.some(x=>x.key==='componente-integral'));
 });
 test('extrae marcas de un PDF real: negrita, subrayado, fondo resaltado y conflictos',async()=>{
  const {jsPDF}=require('jspdf');const pdf=new jsPDF();

@@ -247,20 +247,20 @@ test('quinta opción: selección, calificación, historial y migración conserva
 });
 
 
-test('Integral retirado: no aparece en catálogo ni acepta preguntas manuales nuevas', () => {
+test('Integral CACES 18/19: aparece en catálogo y conserva la selección; no acepta manuales', () => {
   const { getSimulatorSettingsCatalog, sanitizeSimulatorSettings } = load('src/lib/simulatorSettingsCatalog.ts');
-  assert.equal(getSimulatorSettingsCatalog('enfermeria').phases.length, 5);
+  assert.equal(getSimulatorSettingsCatalog('enfermeria').phases.length, 6);
   assert.throws(() => validateManualQuestion({ ...valid, phase: 'componente-integral' }, 'enfermeria'));
-  assert.deepEqual(sanitizeSimulatorSettings('enfermeria', { enabledPhases: ['componente-integral','fase-2'] }).enabledPhases, ['fase-2']);
-  assert.deepEqual(sanitizeSimulatorSettings('enfermeria', { enabledPhases: ['componente-integral'] }).enabledPhases, ['fase-1','fase-2','fase-3','fase-4','fase-5']);
+  assert.deepEqual(sanitizeSimulatorSettings('enfermeria', { enabledPhases: ['componente-integral','fase-2'] }).enabledPhases, ['componente-integral','fase-2']);
+  assert.deepEqual(sanitizeSimulatorSettings('enfermeria', { enabledPhases: ['componente-integral'] }).enabledPhases, ['componente-integral']);
 });
-test('Integral retirado: ni ajustes antiguos ni banco remoto reintroducen sus preguntas', async () => {
+test('Integral histórico: ni ajustes antiguos ni banco remoto reintroducen sus preguntas', async () => {
   const retired = JSON.parse(fs.readFileSync(path.join(root,'src/data/enfermeriaIntegralSeptiembreQuestions.json')));
   const normal = manualQuestionForSimulator(row());
   for (const phases of [['componente-integral'],['componente-integral','fase-3'],['fase-1','fase-2','fase-3','fase-4','fase-5']]) {
     const settings = {...getDefaultSimulatorSettings('enfermeria'),enabledPhases:phases};
     const selected = await getLocalQuestionsForExam('enfermeria','retired',settings,retired);
-    assert.ok(selected.every(q => q.phase !== 'componente-integral'));
+    assert.ok(selected.every(q => q.phase !== 'componente-integral' || q.id.startsWith('local-enfermeria-integral-18-19-')));
     const direct = selectQuestionsForExam('enfermeria',[...retired,normal],'retired',settings);
     assert.ok(direct.every(q => q.phase !== 'componente-integral'));
   }

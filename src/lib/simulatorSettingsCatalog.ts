@@ -78,6 +78,11 @@ const nursingComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
       label: "Componente 5: Bases profesionales y epidemiología",
       description: "Educación, administración, investigación y epidemiología.",
     },
+    {
+      key: "componente-integral",
+      label: "Componente Integral",
+      description: "Preguntas de los documentos CACES 18 y CACES 19.",
+    },
   ];
 
 const psychologyComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
@@ -359,8 +364,9 @@ export function filterQuestionsForSimulatorSettings(
   );
 }
 
-// Conservar la clasificación histórica evita reclasificar estos reactivos como fase 1.
-export function isRetiredQuestion(question: Partial<Pick<Question, "phase" | "category" | "component">>) {
+// El Integral actual contiene solo CACES 18/19. Los bancos históricos siguen retirados.
+export function isRetiredQuestion(question: Partial<Pick<Question, "id" | "phase" | "category" | "component">>) {
+  if (/^local-enfermeria-integral-18-19-(18|19)-\d{3}$/.test(question.id ?? "")) return false;
   return normalize(question.phase ?? "") === "componente-integral" ||
     normalize(question.category ?? "") === "enfermeria - componente integral" ||
     normalize(question.component ?? "") === "componente integral";

@@ -240,6 +240,7 @@ function cleanImportedOptionText(value: string) {
 
 export function repairQuestionText(question: Question): Question {
   if (question.bank_revision) return question;
+  if (/^local-enfermeria-integral-18-19-(18|19)-\d{3}$/.test(question.id)) return question;
   const correction = (reviewedCorrections as Record<string, { correct_option: Question["correct_option"]; explanation: string }>)[question.id];
   if (correction) return { ...question, correct_option: correction.correct_option, explanation: correction.explanation, option_explanations: undefined };
   if (question.id.startsWith("local-pdf-")) return question;
@@ -323,13 +324,16 @@ export function isUsableQuestion(question: Question) {
     question.option_d,
   ].map((option) => option?.trim() ?? "");
 
-  // These reviewed PDF items have 3-5 supplied alternatives and one source key.
-  if (question.id.startsWith("local-pdf-") || /^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
+  // Reviewed PDF items preserve their supplied options and explicit source key.
+  // CACES 18/19 are complete text questions (including the BMI classification
+  // that mentions the WHO table but supplies all the required values).
+  const isIntegral18And19 = /^local-enfermeria-integral-18-19-(18|19)-\d{3}$/.test(question.id);
+  if (isIntegral18And19 || question.id.startsWith("local-pdf-") || /^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
     const supplied = [...options, question.option_e?.trim() ?? ""];
     const available = supplied.filter(Boolean);
     const key = ["A", "B", "C", "D", "E"].indexOf(question.correct_option);
     return Boolean(questionText && key >= 0 && supplied[key]) &&
-      available.length >= 3 &&
+      available.length >= (isIntegral18And19 ? 4 : 3) &&
       supplied.slice(0, available.length).every(Boolean) &&
       new Set(available.map(normalizeOptionText)).size === available.length;
   }
@@ -621,8 +625,7 @@ export function selectQuestionsForExam(
   settings?: SimulatorSettings,
 ) {
   questions = questions.filter(question => !isRetiredQuestion(question));
-  if (examType === "enfermeria") questions = dedupeQuestions(questions);
-  const filteredQuestions =
+  let filteredQuestions =
     settings && (examType === "enfermeria" || examType === "psicologia")
       ? filterQuestionsForSimulatorSettings(
           examType as StudentCareerSlug,
@@ -630,6 +633,7 @@ export function selectQuestionsForExam(
           settings,
         )
       : questions;
+  if (examType === "enfermeria") filteredQuestions = dedupeQuestions(filteredQuestions);
 
   if (examType === "enfermeria") {
     if (settings) {
@@ -653,6 +657,11 @@ export function selectQuestionsForExam(
   ).slice(0, 100);
 }
 
+export async function getIntegral18And19Questions(): Promise<Question[]> {
+  const { default: questions } = await import("@/data/enfermeriaIntegral18And19Questions.json");
+  return questions as Question[];
+}
+
 export async function getLocalQuestionsForExam(
   examType: string,
   attemptSeed?: string,
@@ -667,7 +676,7 @@ export async function getLocalQuestionsForExam(
 
     return selectQuestionsForExam(
       examType,
-      transform([...enfermeriaQuestions as Question[], ...additionalQuestions]),
+      transform([...enfermeriaQuestions as Question[], ...await getIntegral18And19Questions(), ...additionalQuestions]),
       attemptSeed,
       settings,
     );
@@ -695,7 +704,7 @@ export async function getLocalQuestionBankCount(career: StudentCareerSlug) {
       "@/data/enfermeriaQuestions.json"
     );
 
-    return dedupeQuestions(enfermeriaQuestions as Question[]).filter(question => !isRetiredQuestion(question)).length;
+    return dedupeQuestions([...enfermeriaQuestions as Question[], ...await getIntegral18And19Questions()]).filter(question => !isRetiredQuestion(question)).length;
   }
 
   const { default: psicologiaQuestions } = await import(

@@ -11,7 +11,8 @@ type Form = Omit<ManualQuestionInput, "correct_option"> & { correct_option: Manu
 const inputClass = "mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-sm text-slate-950 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100";
 
 export function TeacherQuestionEditor({ initialQuestions, career, removals = [] }: { initialQuestions: ManualQuestionRow[]; career: StudentCareerSlug; removals?: BankRemoval[] }) {
-  const catalog = getSimulatorSettingsCatalog(career, [], removedComponentIds(removals));
+  const baseCatalog = getSimulatorSettingsCatalog(career, [], removedComponentIds(removals));
+  const catalog = { ...baseCatalog, phases: baseCatalog.phases.filter(phase => phase.key !== "componente-integral") };
   const blank = (): Form => ({ question_text: "", option_a: "", option_b: "", option_c: "", option_d: "", correct_option: "", explanation: "", phase: catalog.phases[0]?.key ?? "fase-1", difficulty: "Media", published: false });
   const [questions, setQuestions] = useState(initialQuestions);
   const [form, setForm] = useState<Form>(blank);

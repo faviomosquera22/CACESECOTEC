@@ -12,6 +12,7 @@ import { SimulatorClient } from "@/components/SimulatorClient";
 import type { Json, Question } from "@/lib/database.types";
 import {
   examDistributionBySlug,
+  getIntegral18And19Questions,
   getLocalQuestionsForExam,
   isLocalQuestionSet,
   legacyFixedPsychologyAttemptSeed,
@@ -107,7 +108,11 @@ export default async function StudentExamSimulatorPage({
   let manualQuestions: Question[] = [];
   try {
     const rows = await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);
-    manualQuestions = [...rows.map(manualQuestionForSimulator), ...await getImportedQuestions(exam.slug, customComponents)];
+    manualQuestions = [
+      ...rows.map(manualQuestionForSimulator),
+      ...await getImportedQuestions(exam.slug, customComponents),
+      ...(exam.slug === "enfermeria" ? await getIntegral18And19Questions() : []),
+    ];
   } catch {
     return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudo cargar el banco de tu docente. Recarga la página para iniciar el intento con las preguntas actualizadas.</section>;
   }
