@@ -1,0 +1,48 @@
+{
+  "sourceText": "Relacione los componentes con sus características: Componente Característica a) Niveles de Atención: Tipología y 1. Componente de homologación de establecimientos de salud, provisión de servicios Organización de los equipos de atención de salud del sistema integral de salud, Organización y nacional de salud. funcionamiento de la Red Pública Integral de Salud y Complementaria. 2. Componente de b) Herramientas de diagnóstico y monitoreo organización del de las condiciones de salud: Análisis Integral sistema nacional de de Salud – ASIS, diagnóstico dinámico, mapa salud. parlante y sala situacional. d) Planes Estratégicos nacionales, zonales, 3. Componente de distritales, provinciales y en circuitos. gestión del sistema Proyectos en salud de las organizaciones que nacional de salud. forman el SNS. c) Elementos; Grupos de población a quienes se entregará la atención, Conjunto de 4. Componente de prestaciones por ciclos de vida, Escenarios financiamiento del de atención, Modalidades de Atención, sistema nacional de Estrategias y herramientas para brindar las salud. prestaciones integrales de salud: visita familiar, ficha familiar.",
+  "introduction": "Relacione los componentes con sus características:",
+  "groups": [
+    {
+      "title": "Componentes",
+      "items": [
+        {
+          "label": "1",
+          "text": "Componente de provisión de servicios de salud del sistema nacional de salud."
+        },
+        {
+          "label": "2",
+          "text": "Componente de organización del sistema nacional de salud."
+        },
+        {
+          "label": "3",
+          "text": "Componente de gestión del sistema nacional de salud."
+        },
+        {
+          "label": "4",
+          "text": "Componente de financiamiento del sistema nacional de salud."
+        }
+      ]
+    },
+    {
+      "title": "Características",
+      "items": [
+        {
+          "label": "a",
+          "text": "Niveles de Atención: Tipología y homologación de establecimientos de salud, Organización de los equipos de atención integral de salud, Organización y funcionamiento de la Red Pública Integral de Salud y Complementaria."
+        },
+        {
+          "label": "b",
+          "text": "Herramientas de diagnóstico y monitoreo de las condiciones de salud: Análisis Integral de Salud – ASIS, diagnóstico dinámico, mapa parlante y sala situacional."
+        },
+        {
+          "label": "d",
+          "text": "Planes Estratégicos nacionales, zonales, distritales, provinciales y en circuitos. Proyectos en salud de las organizaciones que forman el SNS."
+        },
+        {
+          "label": "c",
+          "text": "Elementos; Grupos de población a quienes se entregará la atención, Conjunto de prestaciones por ciclos de vida, Escenarios de atención, Modalidades de Atención, Estrategias y herramientas para brindar las prestaciones integrales de salud: visita familiar, ficha familiar."
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { QuestionStatement } from "@/components/QuestionStatement";
 import type { OptionLetter, Question } from "@/lib/database.types";
 
 type SimulationQuestionProps = {
@@ -52,9 +53,9 @@ export function SimulationQuestion({
         ) : null}
       </div>
 
-      <h2 className="mt-5 text-xl font-semibold leading-8 text-slate-950">
-        {question.question_text}
-      </h2>
+      <div className="mt-5">
+        <QuestionStatement text={question.question_text} />
+      </div>
 
       {question.image_url ? (
         <figure className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-50 p-3">
@@ -86,7 +87,8 @@ export function SimulationQuestion({
             {selectedOption ? "Respuesta confirmada" : "Confirmar respuesta"}
           </button>
         </form>
-      ) : <div className="mt-6 grid gap-3">
+      ) : <div className="mt-6 grid gap-3 border-t border-slate-200 pt-5">
+        <p className="text-sm font-semibold text-slate-600">Selecciona una respuesta</p>
         {optionKeys.filter((option) => options[option]?.trim()).map((option) => {
           const isSelected = selectedOption === option;
 
