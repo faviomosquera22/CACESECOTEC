@@ -1,0 +1,279 @@
+{
+  "reviewedOn": "2026-10-17",
+  "scope": "Se revisan todas las filas de los siete bancos JSON, incluidos bancos anteriores. Las filas de base de datos son una instantánea opcional de solo lectura. Los totales incluyen copias entre fuentes y correcciones; no representan preguntas únicas ni solo preguntas activas.",
+  "databaseSnapshotIncluded": true,
+  "totalRecordsScanned": 4783,
+  "sources": [
+    {
+      "source": "enfermeriaComponenteIntegralQuestions.json",
+      "scanned": 43,
+      "formatted": 0
+    },
+    {
+      "source": "enfermeriaFundamentosDocumentoQuestions.json",
+      "scanned": 31,
+      "formatted": 0
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "scanned": 199,
+      "formatted": 31
+    },
+    {
+      "source": "enfermeriaIntegralSeptiembreQuestions.json",
+      "scanned": 57,
+      "formatted": 0
+    },
+    {
+      "source": "enfermeriaOctubreDocumentoQuestions.json",
+      "scanned": 38,
+      "formatted": 0
+    },
+    {
+      "source": "enfermeriaQuestions.json",
+      "scanned": 3252,
+      "formatted": 0
+    },
+    {
+      "source": "psicologiaQuestions.json",
+      "scanned": 409,
+      "formatted": 0
+    },
+    {
+      "source": "database:imported_questions",
+      "scanned": 100,
+      "formatted": 0
+    },
+    {
+      "source": "database:question_bank_overrides",
+      "scanned": 3,
+      "formatted": 0
+    },
+    {
+      "source": "database:questions",
+      "scanned": 651,
+      "formatted": 0
+    }
+  ],
+  "formattedQuestions": [
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-003",
+      "layout": "list",
+      "introduction": "Paciente cursa embarazo de 5 semanas de gestación, es primigesta y está preocupada sobre el desarrollo y crecimiento de su hijo, solicita al profesional de enfermería información sobre los cuidados que debe tener en este período de gestación. Ordene la educación sanitaria que se debe impartir a la gestante desde la más importante para evitar riesgos en la madre y el niño:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-007",
+      "layout": "list",
+      "introduction": "Seleccione las medidas de control administrativo en el primer nivel de atención con respecto a la Guía clínica de prevención, diagnóstico, tratamiento y control de la tuberculosis 2018:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-014",
+      "layout": "list",
+      "introduction": "Para el año 2015, la ONU aprobó la Agenda 2030 sobre el Desarrollo Sostenible, el primer objetivo es el fin de la pobreza; seleccione las metas de este objetivo:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-019",
+      "layout": "list",
+      "introduction": "¿Cuáles son las intervenciones prioritarias del profesional enfermero/a, para el manejo de la hemorragia en el post parto inmediato?"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-025",
+      "layout": "list",
+      "introduction": "La muerte materna es uno de los problemas de salud más relevantes, el Plan Integral de Salud considera los siguientes factores más influyentes, identifique y señale:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-041",
+      "layout": "two-columns",
+      "introduction": "Relacione las técnicas didácticas que se aplican en la programación educativa con sus respectivas características:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-047",
+      "layout": "list",
+      "introduction": "Seleccione las manifestaciones clínicas que corresponden a la pérdida del tono muscular como cambio característico indicativo de muerte clínica inminente:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-051",
+      "layout": "list",
+      "introduction": "¿Cuáles son los escenarios de atención indicados en el componente de provisión de servicios de salud del Sistema Nacional de Salud?"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-058",
+      "layout": "list",
+      "introduction": "Gestante de 28 años, se encuentra en sala de labor de parto con un embarazo de 39 semanas más ruptura prematura de membranas de 24 horas, más labor de parto fase activa; está recibiendo inducción por infusión con una dextrosa en solución salina más 10 unidades internacionales de oxitocina a 16 gotas por minuto (48ml/h). La administración de este fármaco, requiere una valoración sistemática de enfermería. Si a la valoración presenta: hiperdinamia uterina, dolor permanente y progresivo acompañado de sangrado, ansiedad y además se registra bradicardia fetal. Seleccione 3 intervenciones en enfermería inmediatas en este caso:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-061",
+      "layout": "two-columns",
+      "introduction": "Relacione las zonas elegidas para la medición de la temperatura con las ventajas:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-062",
+      "layout": "list",
+      "introduction": "Seleccione las intervenciones de enfermería a pacientes en recuperación postanestésica:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-066",
+      "layout": "list",
+      "introduction": "Ordene las fases de la gestión interna de los desechos sanitarios:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-083",
+      "layout": "two-columns",
+      "introduction": "Relacione los componentes con sus características:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-089",
+      "layout": "list",
+      "introduction": "Señale los hallazgos de gravedad o afectación de órgano blanco en una embarazada que presenta preeclampsia:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-18-094",
+      "layout": "list",
+      "introduction": "El MSP del Ecuador clasifica la vigilancia epidemiológica de las enfermedades prevenibles por vacuna. Identifique las enfermedades prevenibles por vacuna en el orden de erradicación y eliminación."
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-001",
+      "layout": "two-columns",
+      "introduction": "Relacione el objetivo con el principio de salud reproductiva que corresponda:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-014",
+      "layout": "list",
+      "introduction": "Usted atiende mujer que cursa embarazo de primer trimestre. Seleccione las recomendaciones que se deben informar:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-015",
+      "layout": "list",
+      "introduction": "Paciente acude al centro de salud en labor de parto, el profesional de enfermería le informa sus derechos sobre el parto en libre posición; la parturienta escoge dar a luz en posición vertical. Seleccione las ventajas del parto vertical que informará a la madre:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-016",
+      "layout": "list",
+      "introduction": "Seleccione las características de la Diabetes Mellitus tipo 1:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-017",
+      "layout": "list",
+      "introduction": "Seleccione las prácticas seguras administrativas/asistenciales para la atención de salud:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-021",
+      "layout": "list",
+      "introduction": "Seleccione los métodos físicos para el proceso de desinfección:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-025",
+      "layout": "list",
+      "introduction": "Madre lleva a su hijo de 2 meses al centro de salud, la madre refiere que hace 6 horas, el niño vomita todo lo que come y hace 4 horas no toma el seno. La madre informa haber observado movimientos anormales en todo el cuerpo del niño con una duración de menos de un minuto; Usted observa al niño, el niño no responde esta inconsciente. Ordene. ¿Cuál es el procedimiento a seguir en este caso según el AIEPI clínico 2017?"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-029",
+      "layout": "list",
+      "introduction": "Seleccione los postulados del modelo de Enfermería Comunitaria que se deben aplicar con el objetivo de alcanzar un alto nivel de salud en los miembros de la comunidad:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-032",
+      "layout": "list",
+      "introduction": "Identifique los signos y síntomas del desprendimiento placentario."
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-067",
+      "layout": "list",
+      "introduction": "En la ejecución de una técnica educativa grupal, debe aplicar el aprendizaje de tipo colaborativo y conjunto. Identifique las características de este aprendizaje:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-068",
+      "layout": "two-columns",
+      "introduction": "Relacione la herramienta metodológica con el literal respectivo:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-070",
+      "layout": "two-columns",
+      "introduction": "Relacione los tipos de prácticas seguras y sus procedimientos, que debe aplicar en la unidad hospitalaria, con respecto a la seguridad del paciente."
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-078",
+      "layout": "list",
+      "introduction": "Seleccione las fases del proceso general de investigación:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-089",
+      "layout": "list",
+      "introduction": "Ordene las etapas del Proceso de Atención de Enfermería (PAE) como método científico de la profesión:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-090",
+      "layout": "list",
+      "introduction": "De las siguientes áreas de valoración, identifique las que corresponden a la escala de Morse:"
+    },
+    {
+      "source": "enfermeriaIntegral18And19Questions.json",
+      "id": "local-enfermeria-integral-18-19-19-094",
+      "layout": "list",
+      "introduction": "Usted como enfermero del subcentro de salud, debe planificar un evento educativo para un grupo de mujeres embarazadas primigestas. Ordene en forma secuencial las acciones que debe realizar para desarrollar dicho evento:"
+    }
+  ],
+  "reviewedNonLists": [
+    {
+      "source": "enfermeriaQuestions.json",
+      "id": "local-enfermeria-0247-411b8e3b80a2",
+      "question_text": "Paciente hospitalizado de 58 años, con diagnóstico de cáncer gástrico en fase II-III, tiene indicación de tratamiento con morfina de 2.5 a 5.0 mg IV cada 4 horas. Ha recibido 2.5 mg IV hace 4 horas por un dolor puntuado como 3 en una escala de 0 a 10. Ahora, está viendo la televisión y recibe una visita de sus familiares. Cuando le preguntan por su dolor, le da una puntuación de 5. Sus constantes vitales están estables. ¿Qué intervención de enfermería es la más apropiada?",
+      "reason": "Las cifras 10 y 5 son puntuaciones de dolor dentro del caso, no elementos de una lista."
+    },
+    {
+      "source": "enfermeriaQuestions.json",
+      "id": "local-enfermeria-1931-1b67e4d8516c",
+      "question_text": "Un paciente acude a la sala de emergencias con síntomas de tos, fiebre y dolor de garganta. Después de una evaluación inicial se sospecha que podría tener una infección por el virus de la H. influenzae tipo b. ¿Qué tipo de aislamiento es el más adecuado para este paciente?",
+      "reason": "H. influenzae tipo b. es el nombre del microorganismo, no una lista de literales."
+    },
+    {
+      "source": "enfermeriaQuestions.json",
+      "id": "local-enfermeria-gpc-ivu-embarazo-052-3d206bd779ef",
+      "question_text": "Según la GPC del MSP de Ecuador sobre infección de vías urinarias en el embarazo, ¿existe clara evidencia de que la cistitis se asocie con trabajo de parto pretérmino, de forma similar a lo que ocurre con la BA?",
+      "reason": "Se asocie forma parte de la pregunta clínica; no hay elementos para emparejar."
+    },
+    {
+      "source": "psicologiaQuestions.json",
+      "id": "local-psicologia-componente-2-0114-82c2083e00",
+      "question_text": "Una empresa utiliza una prueba con consistencia interna de 0,94, pero sin evidencia de relación con el desempeño laboral. Se afirma que, por ser confiable, sirve necesariamente para seleccionar. El resultado será utilizado para orientar una decisión clínica o institucional de importancia. Durante el proceso aparecen datos que podrían sostener explicaciones distintas, pero el evaluador no ha definido con claridad qué evidencia confirmaría o debilitaría cada hipótesis. La decisión afectará el acceso a un puesto y no existe evidencia de que el constructo medido se relacione con las tareas reales del cargo. La empresa interpreta la precisión como si demostrara pertinencia y capacidad predictiva. El resultado influirá en una decisión relevante y el evaluador no ha establecido qué evidencia confirmaría o debilitaría su impresión inicial. Tampoco ha diferenciado entre datos, inferencias e hipótesis alternativas. ¿Qué interpretación psicométrica diferencia con mayor precisión la consistencia de las puntuaciones de la pertinencia del uso laboral propuesto?",
+      "reason": "Se relacione con las tareas describe la validez de una prueba; no introduce una lista."
+    },
+    {
+      "source": "database:questions",
+      "id": "78cee290-8bf5-5e33-a5d8-9aa60855bb6c",
+      "question_text": "Según la GPC del MSP de Ecuador sobre infección de vías urinarias en el embarazo, ¿existe clara evidencia de que la cistitis se asocie con trabajo de parto pretérmino, de forma similar a lo que ocurre con la BA?",
+      "reason": "Copia en base de datos del caso de cistitis: se asocie no es una instrucción de emparejamiento."
+    }
+  ],
+  "needsReview": []
+}

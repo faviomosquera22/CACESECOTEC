@@ -1,0 +1,235 @@
+[
+  {
+    "sourceId": "local-enfermeria-integral-18-19-18-041",
+    "sourceText": "Relacione las técnicas didácticas que se aplican en la programación educativa con sus respectivas características: Técnicas didácticas Características 1. Enseñanza teórica a. Educando desarrolla actividades. 2. Enseñanza libre b. Educador toma un papel participativo. 3. Enseñanza práctica c. Educador aporta conocimiento. d. Educador actúa como orientador. e. Educando cambia comportamientos. f. Educando recibe de forma pasiva.",
+    "introduction": "Relacione las técnicas didácticas que se aplican en la programación educativa con sus respectivas características:",
+    "groups": [
+      {
+        "title": "Técnicas didácticas",
+        "items": [
+          {
+            "label": "1",
+            "text": "Enseñanza teórica"
+          },
+          {
+            "label": "2",
+            "text": "Enseñanza libre"
+          },
+          {
+            "label": "3",
+            "text": "Enseñanza práctica"
+          }
+        ]
+      },
+      {
+        "title": "Características",
+        "items": [
+          {
+            "label": "a",
+            "text": "Educando desarrolla actividades."
+          },
+          {
+            "label": "b",
+            "text": "Educador toma un papel participativo."
+          },
+          {
+            "label": "c",
+            "text": "Educador aporta conocimiento."
+          },
+          {
+            "label": "d",
+            "text": "Educador actúa como orientador."
+          },
+          {
+            "label": "e",
+            "text": "Educando cambia comportamientos."
+          },
+          {
+            "label": "f",
+            "text": "Educando recibe de forma pasiva."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourceId": "local-enfermeria-integral-18-19-18-061",
+    "sourceText": "Relacione las zonas elegidas para la medición de la temperatura con las ventajas: ZONA PARA MEDIR LA VENTAJAS TEMPERATURA a. Segura, utilizada en 1. Oral. recién nacidos y pacientes inconscientes. b. Fiable, a menudo es 2. Membrana Timpánica. causa de ansiedad en el paciente. c. Lectura central precisa, 3. Rectal. medición rápida. d. Accesible, cómoda para 4. Axilar. el paciente.",
+    "introduction": "Relacione las zonas elegidas para la medición de la temperatura con las ventajas:",
+    "groups": [
+      {
+        "title": "Zona para medir la temperatura",
+        "items": [
+          {
+            "label": "1",
+            "text": "Oral."
+          },
+          {
+            "label": "2",
+            "text": "Membrana Timpánica."
+          },
+          {
+            "label": "3",
+            "text": "Rectal."
+          },
+          {
+            "label": "4",
+            "text": "Axilar."
+          }
+        ]
+      },
+      {
+        "title": "Ventajas",
+        "items": [
+          {
+            "label": "a",
+            "text": "Segura, utilizada en recién nacidos y pacientes inconscientes."
+          },
+          {
+            "label": "b",
+            "text": "Fiable, a menudo es causa de ansiedad en el paciente."
+          },
+          {
+            "label": "c",
+            "text": "Lectura central precisa, medición rápida."
+          },
+          {
+            "label": "d",
+            "text": "Accesible, cómoda para el paciente."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourceId": "local-enfermeria-integral-18-19-19-001",
+    "sourceText": "Relacione el objetivo con el principio de salud reproductiva que corresponda: Objetivos Principios 1. Mejorar la calidad de a. Desarrollo sustentable basado en vida de la población. equidad social e igualdad de género. 2. Lograr la igualdad b. Garantizar la confidencialidad de entre los géneros y todos los servicios de salud y del equipo empoderar a todas las de salud. mujeres. c. Respeto los principios de bioética respetando los principios, autonomía no maleficencia, beneficencia y justicia. d. Fortalecer y consolidar la salud intercultural, incorporando la medicina ancestral.",
+    "introduction": "Relacione el objetivo con el principio de salud reproductiva que corresponda:",
+    "groups": [
+      {
+        "title": "Objetivos",
+        "items": [
+          {
+            "label": "1",
+            "text": "Mejorar la calidad de vida de la población."
+          },
+          {
+            "label": "2",
+            "text": "Lograr la igualdad entre los géneros y empoderar a todas las mujeres."
+          }
+        ]
+      },
+      {
+        "title": "Principios",
+        "items": [
+          {
+            "label": "a",
+            "text": "Desarrollo sustentable basado en equidad social e igualdad de género."
+          },
+          {
+            "label": "b",
+            "text": "Garantizar la confidencialidad de todos los servicios de salud y del equipo de salud."
+          },
+          {
+            "label": "c",
+            "text": "Respeto los principios de bioética respetando los principios, autonomía no maleficencia, beneficencia y justicia."
+          },
+          {
+            "label": "d",
+            "text": "Fortalecer y consolidar la salud intercultural, incorporando la medicina ancestral."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourceId": "local-enfermeria-integral-18-19-19-068",
+    "sourceText": "Relacione la herramienta metodológica con el literal respectivo: a. Debe de realizarse con la participación de los 1. Diagnóstico actores locales y se orienta a identificar las dinámico necesidades de salud. b. Es un espacio de convergencia donde se dan 2. Mapa aproximaciones al análisis de la situación de salud parlante en una población determinada. c. Son instrumentos técnicos y metodológicos que 3. Sala permiten conocer en forma gráfica el proceso situacional vivido por los actores locales, los factores de riesgo y protección. d. Se orienta la actualización periódica de la 4. Diagnóstico situación inicial e identificar oportunamente a los situacional individuos y familia con posibles y potenciales riesgos.",
+    "introduction": "Relacione la herramienta metodológica con el literal respectivo:",
+    "groups": [
+      {
+        "title": "Herramientas metodológicas",
+        "items": [
+          {
+            "label": "1",
+            "text": "Diagnóstico dinámico"
+          },
+          {
+            "label": "2",
+            "text": "Mapa parlante"
+          },
+          {
+            "label": "3",
+            "text": "Sala situacional"
+          },
+          {
+            "label": "4",
+            "text": "Diagnóstico situacional"
+          }
+        ]
+      },
+      {
+        "title": "Descripciones",
+        "items": [
+          {
+            "label": "a",
+            "text": "Debe de realizarse con la participación de los actores locales y se orienta a identificar las necesidades de salud."
+          },
+          {
+            "label": "b",
+            "text": "Es un espacio de convergencia donde se dan aproximaciones al análisis de la situación de salud en una población determinada."
+          },
+          {
+            "label": "c",
+            "text": "Son instrumentos técnicos y metodológicos que permiten conocer en forma gráfica el proceso vivido por los actores locales, los factores de riesgo y protección."
+          },
+          {
+            "label": "d",
+            "text": "Se orienta la actualización periódica de la situación inicial e identificar oportunamente a los individuos y familia con posibles y potenciales riesgos."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourceId": "local-enfermeria-integral-18-19-19-070",
+    "sourceText": "Relacione los tipos de prácticas seguras y sus procedimientos, que debe aplicar en la unidad hospitalaria, con respecto a la seguridad del paciente. Tipo de práctica segura Procedimiento a. Manejo adecuado de medicamentos de alto riesgo. 1. Prácticas seguras administrativas. b. Mantenimiento preventivo correctivo de equipos biomédicos. 2. Prácticas seguras asistenciales. c. Prevención de úlceras por presión. d. Identificación correcta del paciente.",
+    "introduction": "Relacione los tipos de prácticas seguras y sus procedimientos, que debe aplicar en la unidad hospitalaria, con respecto a la seguridad del paciente.",
+    "groups": [
+      {
+        "title": "Tipo de práctica segura",
+        "items": [
+          {
+            "label": "1",
+            "text": "Prácticas seguras administrativas."
+          },
+          {
+            "label": "2",
+            "text": "Prácticas seguras asistenciales."
+          }
+        ]
+      },
+      {
+        "title": "Procedimiento",
+        "items": [
+          {
+            "label": "a",
+            "text": "Manejo adecuado de medicamentos de alto riesgo."
+          },
+          {
+            "label": "b",
+            "text": "Mantenimiento preventivo correctivo de equipos biomédicos."
+          },
+          {
+            "label": "c",
+            "text": "Prevención de úlceras por presión."
+          },
+          {
+            "label": "d",
+            "text": "Identificación correcta del paciente."
+          }
+        ]
+      }
+    ]
+  }
+]
