@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import type { StudentCardData } from "@/components/StudentCard";
 import { StatCard } from "@/components/StatCard";
+import { StudentTransfer } from "@/components/StudentTransfer";
 import type { SimulationHistoryRecord } from "@/components/SimulationHistoryTable";
 import { average, formatDate, formatScore } from "@/lib/format";
 import {
@@ -826,6 +827,10 @@ export function TeacherDashboardClient({
 
       <section id="estudiantes">
         <div className="flex flex-col gap-4">
+          <StudentTransfer
+            students={studentsState}
+            onTransferred={(ids) => setDeletedStudentIds((current) => [...current, ...ids])}
+          />
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-xl font-semibold tracking-normal text-slate-950">
               Estudiantes

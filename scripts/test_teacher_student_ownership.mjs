@@ -38,7 +38,7 @@ const cases = [
   ['[studentId]/route.ts', 'DELETE', undefined],
   ['[studentId]/career/route.ts', 'PATCH', { careerSlug: 'enfermeria' }],
 ];
-function harness(profile = teacher, rows = [own, foreign, unowned, otherCareer], failRead = false) {
+function harness(profile = teacher, rows = [own, foreign, unowned, otherCareer], failRead = false, beforeUpdate = () => {}) {
   const mutations = [];
   const admin = {
     auth: { admin: {
@@ -58,7 +58,10 @@ function harness(profile = teacher, rows = [own, foreign, unowned, otherCareer],
         select: () => query,
         eq: (key, value) => { filters.push(row => row[key] === value); return query; },
         neq: (key, value) => { filters.push(row => row[key] !== value); return query; },
-        update: input => { update = input; return query; },
+        in: (key, values) => { filters.push(row => values.includes(row[key])); return query; },
+        order: () => query,
+        update: input => { beforeUpdate(); update = input; return query; },
+        then: (resolve, reject) => Promise.resolve(result()).then(resolve, reject),
         maybeSingle: async () => result(true), single: async () => result(true), returns: async () => result(),
         upsert: async input => { mutations.push({ action: table, input }); return { error: null }; },
       };
@@ -118,4 +121,90 @@ test('all actions fail closed without authorization or when database lookup fail
       assert.deepEqual(h.mutations, []);
     }
   }
+});
+
+const transferRoute = basePath + 'transfer/route.ts';
+const receiver = { ...teacher, id: '00000000-0000-4000-8000-000000000010', full_name: 'Receiver', email: 'receiver@example.test' };
+const transferBody = { teacherId: receiver.id, studentIds: [own.id] };
+
+test('transfer keeps student identity, career and history intact, updating only the teacher', async () => {
+  const second = { ...own, id: '00000000-0000-4000-8000-000000000005' };
+  const h = harness(teacher, [own, second, receiver]);
+  const response = await h.load(transferRoute).POST(request('POST', { ...transferBody, studentIds: [own.id, second.id, own.id] }));
+  assert.equal(response.status, 200);
+  assert.deepEqual((await response.json()).studentIds, [own.id, second.id]);
+  assert.equal(h.mutations.length, 2);
+  for (const mutation of h.mutations) {
+    assert.equal(mutation.action, 'profileUpdate');
+    assert.deepEqual(mutation.input, { created_by_teacher_id: receiver.id });
+  }
+});
+
+test('transfer rejects an entire selection containing foreign, unowned, missing or other-career students', async () => {
+  for (const student of [foreign, unowned, otherCareer, { id: receiver.id }]) {
+    const h = harness(teacher, [own, foreign, unowned, otherCareer, receiver]);
+    const response = await h.load(transferRoute).POST(request('POST', { ...transferBody, studentIds: [own.id, student.id] }));
+    assert.equal(response.status, 403);
+    assert.deepEqual(h.mutations, []);
+  }
+});
+
+test('transfer rejects receivers from other careers, students and missing teachers', async () => {
+  for (const target of [{ ...receiver, career: 'Psicología' }, { ...receiver, role: 'student' }, null]) {
+    const h = harness(teacher, [own, ...(target ? [target] : [])]);
+    assert.equal((await h.load(transferRoute).POST(request('POST', transferBody))).status, 403);
+    assert.deepEqual(h.mutations, []);
+  }
+});
+
+test('transfer validates payloads, self transfer, session, role and request origin', async () => {
+  const uuidTeacher = { ...teacher, id: '00000000-0000-4000-8000-000000000011' };
+  for (const body of [null, [], { ...transferBody, studentIds: [] }, { ...transferBody, studentIds: Array(101).fill(own.id) }, { ...transferBody, studentIds: ['invalid'] }, { ...transferBody, teacherId: uuidTeacher.id }]) {
+    const h = harness(uuidTeacher);
+    assert.equal((await h.load(transferRoute).POST(request('POST', body))).status, 400);
+    assert.deepEqual(h.mutations, []);
+  }
+  for (const [profile, expected] of [[null, 401], [{ ...teacher, role: 'student' }, 403], [{ ...teacher, career: null }, 403]]) {
+    const h = harness(profile);
+    for (const method of ['GET', 'POST']) assert.equal((await h.load(transferRoute)[method](request(method, method === 'POST' ? transferBody : undefined))).status, expected);
+    assert.deepEqual(h.mutations, []);
+  }
+  const h = harness();
+  const crossOrigin = new Request('https://example.test/api/teacher/students/transfer', { method: 'POST', headers: { origin: 'https://foreign.test', 'content-type': 'application/json' }, body: JSON.stringify(transferBody) });
+  assert.equal((await h.load(transferRoute).POST(crossOrigin)).status, 403);
+  assert.deepEqual(h.mutations, []);
+});
+
+test('receiver list excludes self, students and other careers', async () => {
+  const h = harness(teacher, [teacher, receiver, own, { ...receiver, id: 'other', career: 'Psicología' }]);
+  const response = await h.load(transferRoute).GET(request('GET'));
+  assert.equal(response.status, 200);
+  assert.deepEqual((await response.json()).teachers, [{ id: receiver.id, name: receiver.full_name, email: receiver.email }]);
+  assert.deepEqual(h.mutations, []);
+});
+
+test('concurrent transfer does not overwrite a new owner', async () => {
+  const student = { ...own };
+  const h = harness(teacher, [student, receiver], false, () => { student.created_by_teacher_id = 'another-teacher'; });
+  const response = await h.load(transferRoute).POST(request('POST', transferBody));
+  assert.equal(response.status, 409);
+  assert.deepEqual(h.mutations, []);
+});
+
+test('transfer database failures fail closed', async () => {
+  const h = harness(teacher, [own, receiver], true);
+  assert.equal((await h.load(transferRoute).POST(request('POST', transferBody))).status, 500);
+  assert.equal((await h.load(transferRoute).GET(request('GET'))).status, 500);
+  assert.deepEqual(h.mutations, []);
+});
+
+test('partial concurrent transfer reports only students that still belong to the sender', async () => {
+  const student = { ...own };
+  const second = { ...own, id: '00000000-0000-4000-8000-000000000005' };
+  const h = harness(teacher, [student, second, receiver], false, () => { student.created_by_teacher_id = 'another-teacher'; });
+  const response = await h.load(transferRoute).POST(request('POST', { ...transferBody, studentIds: [student.id, second.id] }));
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), { studentIds: [second.id], updatedCount: 1 });
+  assert.equal(h.mutations.length, 1);
+  assert.equal(h.mutations[0].id, second.id);
 });

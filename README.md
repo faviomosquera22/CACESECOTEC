@@ -91,3 +91,22 @@ Pruebas de rutas, reportes, API y pestañas abiertas:
 La prueba de RLS usa PostgreSQL en memoria con `@electric-sql/pglite`, sin tocar
 producción. Con el paquete instalado en una carpeta temporal, ejecutar
 `PGLITE_MODULE=/ruta/al/paquete/dist/index.js node scripts/test_student_site_access_rls.mjs`.
+
+## Traslado de estudiantes entre docentes
+
+En la lista de estudiantes, **Trasladar estudiantes** permite buscar y seleccionar
+hasta 100 estudiantes, elegir otro docente de la misma carrera y confirmar.
+El docente emisor solo puede trasladar estudiantes propios. El traslado actualiza
+`profiles.created_by_teacher_id`, conservando cuenta, carrera, historial y estado
+de acceso al sitio. Desde entonces se aplica la configuración del simulador y el
+banco de preguntas del docente receptor.
+
+Usa la configuración existente `SUPABASE_SERVICE_ROLE_KEY` del servidor y la
+columna de propiedad de `supabase/teacher_student_ownership.sql`; no requiere
+nuevas tablas ni políticas. Las validaciones de sesión, carrera y propiedad se
+ejecutan en la API y la actualización vuelve a comprobar el propietario actual.
+Si una asignación cambia durante la operación, la respuesta identifica solo los
+estudiantes efectivamente trasladados.
+
+Pruebas de permisos, selección y concurrencia, sin modificar datos reales:
+`node --test scripts/test_teacher_student_ownership.mjs`.
