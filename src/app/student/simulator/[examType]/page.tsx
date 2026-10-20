@@ -1,7 +1,7 @@
 import { getBankRemovals } from "@/lib/bankRemovalsServer";
 import { filterActiveBank, removedComponentIds } from "@/lib/bankRemovals";
 import { getCustomComponents, getImportedQuestions } from "@/lib/customComponentsServer";
-import { getBankOverrides } from "@/lib/questionBankServer";
+import { getBankOverrides, getSharedBank } from "@/lib/questionBankServer";
 import { applyBankOverrides } from "@/lib/questionBank";
 import { randomUUID } from "node:crypto";
 import Link from "next/link";
@@ -122,25 +122,18 @@ export default async function StudentExamSimulatorPage({
   catch { return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudieron cargar las correcciones del banco. Recarga la página para iniciar con las respuestas actualizadas.</section>; }
   const applyCorrections = (pool: Question[]) => filterActiveBank(exam.slug, applyBankOverrides(pool, overrides), removals);
   const shouldUsePsychiatryBank = exam.slug === "psicologia";
-  let supabaseQuestions: Question[] = [];
+  let bankQuestions: Question[] = [];
   let questionLoadError = false;
 
   if (!shouldUsePsychiatryBank) {
-    const categoryFilter = exam.categoryKeywords
-      .map((keyword) => `category.ilike.%${keyword}%`)
-      .join(",");
-    const { data, error } = await supabase
-      .from("questions")
-      .select(
-        "id, question_text, option_a, option_b, option_c, option_d, correct_option, explanation, category, difficulty, created_at",
-      )
-      .or(categoryFilter)
-      .order("created_at", { ascending: false })
-      .limit(examDistribution.length > 0 ? 300 : 100)
-      .returns<Question[]>();
-
-    supabaseQuestions = data ?? [];
-    questionLoadError = Boolean(error);
+    try {
+      // Use the same complete shared bank as the teacher dashboard. The
+      // student route used to query only recent Supabase rows, which omitted
+      // most local component questions whenever any remote rows existed.
+      bankQuestions = await getSharedBank(exam.slug);
+    } catch {
+      questionLoadError = true;
+    }
   }
 
   const questions = shouldUsePsychiatryBank
@@ -151,7 +144,7 @@ export default async function StudentExamSimulatorPage({
         manualQuestions,
         applyCorrections,
       )
-    : questionLoadError || supabaseQuestions.length === 0
+    : questionLoadError || bankQuestions.length === 0
       ? await getLocalQuestionsForExam(
           exam.slug,
           attemptSeed,
@@ -161,7 +154,7 @@ export default async function StudentExamSimulatorPage({
         )
       : selectQuestionsForExam(
           exam.slug,
-          applyCorrections([...supabaseQuestions, ...manualQuestions]),
+          applyCorrections([...bankQuestions, ...manualQuestions]),
           attemptSeed,
           simulatorSettings,
         );

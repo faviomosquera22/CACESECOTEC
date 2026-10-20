@@ -662,6 +662,32 @@ export async function getIntegral18And19Questions(): Promise<Question[]> {
   return questions as Question[];
 }
 
+export async function getLocalQuestionPoolForExam(examType: string): Promise<Question[]> {
+  if (examType === "enfermeria") {
+    const [{ default: nursingQuestions }, { default: octoberDocumentQuestions }] =
+      await Promise.all([
+        import("@/data/enfermeriaQuestions.json"),
+        import("@/data/enfermeriaOctubreDocumentoQuestions.json"),
+      ]);
+
+    return [
+      ...nursingQuestions as Question[],
+      ...octoberDocumentQuestions as Question[],
+      ...await getIntegral18And19Questions(),
+    ];
+  }
+
+  if (examType === "psicologia") {
+    const { default: psychologyQuestions } = await import(
+      "@/data/psicologiaQuestions.json"
+    );
+
+    return psychologyQuestions as Question[];
+  }
+
+  return [];
+}
+
 export async function getLocalQuestionsForExam(
   examType: string,
   attemptSeed?: string,
@@ -669,49 +695,20 @@ export async function getLocalQuestionsForExam(
   additionalQuestions: Question[] = [],
   transform: (questions: Question[]) => Question[] = questions => questions,
 ) {
-  if (examType === "enfermeria") {
-    const { default: enfermeriaQuestions } = await import(
-      "@/data/enfermeriaQuestions.json"
-    );
-
-    return selectQuestionsForExam(
-      examType,
-      transform([...enfermeriaQuestions as Question[], ...await getIntegral18And19Questions(), ...additionalQuestions]),
-      attemptSeed,
-      settings,
-    );
-  }
-
-  if (examType === "psicologia") {
-    const { default: psicologiaQuestions } = await import(
-      "@/data/psicologiaQuestions.json"
-    );
-
-    return selectQuestionsForExam(
-      examType,
-      transform([...psicologiaQuestions as Question[], ...additionalQuestions]),
-      attemptSeed,
-      settings,
-    );
-  }
-
-  return [];
+  return selectQuestionsForExam(
+    examType,
+    transform([...await getLocalQuestionPoolForExam(examType), ...additionalQuestions]),
+    attemptSeed,
+    settings,
+  );
 }
 
 export async function getLocalQuestionBankCount(career: StudentCareerSlug) {
   if (career === "enfermeria") {
-    const { default: enfermeriaQuestions } = await import(
-      "@/data/enfermeriaQuestions.json"
-    );
-
-    return dedupeQuestions([...enfermeriaQuestions as Question[], ...await getIntegral18And19Questions()]).filter(question => !isRetiredQuestion(question)).length;
+    return dedupeQuestions(await getLocalQuestionPoolForExam(career)).filter(question => !isRetiredQuestion(question)).length;
   }
 
-  const { default: psicologiaQuestions } = await import(
-    "@/data/psicologiaQuestions.json"
-  );
-
-  return (psicologiaQuestions as Question[]).length;
+  return (await getLocalQuestionPoolForExam(career)).length;
 }
 
 export function isLocalQuestionSet(questions: Question[]) {
