@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { QuestionStatement } from "@/components/QuestionStatement";
+import { getCompleteQuestionStatement } from "@/lib/questionStatementRepairs";
 import type { OptionLetter, Question } from "@/lib/database.types";
 
 type SimulationQuestionProps = {
@@ -54,7 +55,7 @@ export function SimulationQuestion({
       </div>
 
       <div className="mt-5">
-        <QuestionStatement text={question.question_text} />
+        <QuestionStatement text={getCompleteQuestionStatement(question)} />
       </div>
 
       {question.image_url ? (

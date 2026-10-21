@@ -1026,7 +1026,9 @@ def parse_google_doc_block(
         and not line.lower().startswith("tipo:")
         and not line.lower().startswith("sección:")
     ]
-    question_text = clean_question_text(" ".join(question_lines))
+    # Google blocks already have explicit boundaries. PDF cleanup can mistake
+    # a short clinical context ending in a period for a bibliographic prefix.
+    question_text = clean_line(" ".join(question_lines))
     options = collect_google_options(lines[options_start:answer_marker])
 
     if set(options) != set(OPTION_LETTERS):

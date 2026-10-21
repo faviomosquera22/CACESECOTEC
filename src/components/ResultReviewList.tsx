@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { QuestionStatement } from "@/components/QuestionStatement";
+import { getCompleteQuestionStatement } from "@/lib/questionStatementRepairs";
 import { CheckCircle2, CircleMinus, XCircle } from "lucide-react";
 import type {
   OptionLetter,
@@ -229,7 +230,7 @@ function ReviewCard({
     <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 flex-1">
-          <QuestionStatement heading="h4" prefix={`${questionNumber}. `} text={question?.question_text ?? "Pregunta no disponible"} />
+          <QuestionStatement heading="h4" prefix={`${questionNumber}. `} text={question ? getCompleteQuestionStatement(question) : "Pregunta no disponible"} />
         </div>
         <span
           className={`inline-flex w-fit shrink-0 items-center gap-2 rounded-lg px-3 py-1 text-sm font-semibold ${

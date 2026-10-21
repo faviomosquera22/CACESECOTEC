@@ -29,6 +29,25 @@ function loader(mocks = {}) {
 const load = loader();
 const { validateBankEdit, applyBankOverrides } = load('src/lib/questionBank.ts');
 const { repairQuestionText, getLocalQuestionsForExam } = load('src/lib/localQuestions.ts');
+const { getCompleteQuestionStatement } = load('src/lib/questionStatementRepairs.ts');
+test('recupera los casos reportados sin modificar opciones, claves ni snapshots', () => {
+  const bank = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaQuestions.json')));
+  for (const [id, context] of [
+    ['local-enfermeria-2403-2b5069b5548e', 'Recién nacido de 2 días'],
+    ['local-enfermeria-2405-34b1843df39e', 'Convulsión tónico-clónica'],
+    ['local-enfermeria-1688-b76a9647d3d0', 'vacunas'],
+  ]) {
+    const original = bank.find(item => item.id === id);
+    const snapshot = structuredClone(original);
+    assert.ok(getCompleteQuestionStatement(original).includes(context));
+    assert.ok(repairQuestionText(original).question_text.includes(context));
+    assert.deepEqual(repairQuestionText(original), { ...original, question_text: getCompleteQuestionStatement(original) });
+    assert.deepEqual(original, snapshot);
+    assert.equal(getCompleteQuestionStatement({ ...original, id: 'another-case' }), original.question_text);
+    assert.equal(getCompleteQuestionStatement({ ...original, bank_revision: 'teacher-revision' }), original.question_text);
+    assert.equal(getCompleteQuestionStatement({ ...original, question_text: 'Caso corregido por docente.' }), 'Caso corregido por docente.');
+  }
+});
 const source = JSON.parse(fs.readFileSync(path.join(root,'src/data/enfermeriaIntegralSeptiembreQuestions.json')));
 const q = { ...repairQuestionText(source.find(q => q.id.endsWith('actualizado-011'))), revision: null };
 const teacher = { id: 'teacher-id', role: 'teacher', career: 'Enfermería' };

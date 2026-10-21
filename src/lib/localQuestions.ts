@@ -1,4 +1,5 @@
 import reviewedCorrections from "@/data/reviewedQuestionCorrections.json";
+import { getCompleteQuestionStatement } from "@/lib/questionStatementRepairs";
 import type { Question } from "@/lib/database.types";
 import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
 import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
@@ -261,7 +262,7 @@ export function repairQuestionText(question: Question): Question {
       ? questionOptionRepairs.get(sourceText)
       : undefined;
   const media = questionMediaByText.get(sourceText);
-  const candidateText = repairedText ?? question.question_text;
+  const candidateText = repairedText ?? getCompleteQuestionStatement(question);
   const cleanedText =
     question.difficulty === "Preguntas referenciales EHEP Mayo"
       ? candidateText.replace(
