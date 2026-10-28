@@ -329,12 +329,15 @@ export function isUsableQuestion(question: Question) {
   // CACES 18/19 are complete text questions (including the BMI classification
   // that mentions the WHO table but supplies all the required values).
   const isIntegral18And19 = /^local-enfermeria-integral-18-19-(18|19)-\d{3}$/.test(question.id);
-  if (isIntegral18And19 || question.id.startsWith("local-pdf-") || /^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
+  // These teacher items quote textbook tables in complete, self-contained cases.
+  // Their four options and explicit keys are verified against the source DOCX.
+  const isTheoriesTeacher = /^local-enfermeria-teorias-docente-\d{3}$/.test(question.id);
+  if (isIntegral18And19 || isTheoriesTeacher || question.id.startsWith("local-pdf-") || /^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
     const supplied = [...options, question.option_e?.trim() ?? ""];
     const available = supplied.filter(Boolean);
     const key = ["A", "B", "C", "D", "E"].indexOf(question.correct_option);
     return Boolean(questionText && key >= 0 && supplied[key]) &&
-      available.length >= (isIntegral18And19 ? 4 : 3) &&
+      available.length >= (isIntegral18And19 || isTheoriesTeacher ? 4 : 3) &&
       supplied.slice(0, available.length).every(Boolean) &&
       new Set(available.map(normalizeOptionText)).size === available.length;
   }
@@ -670,10 +673,14 @@ export async function getLocalQuestionPoolForExam(examType: string): Promise<Que
         import("@/data/enfermeriaQuestions.json"),
         import("@/data/enfermeriaOctubreDocumentoQuestions.json"),
       ]);
+    const { default: theoriesQuestions } = await import(
+      "@/data/enfermeriaTeoriasDocenteQuestions.json"
+    );
 
     return [
       ...nursingQuestions as Question[],
       ...octoberDocumentQuestions as Question[],
+      ...theoriesQuestions as Question[],
       ...await getIntegral18And19Questions(),
     ];
   }

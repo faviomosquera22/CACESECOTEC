@@ -1,0 +1,16 @@
+{
+  "source": "Banco_EHEP_Teorias_Enfermeria_306_DOCENTE.docx",
+  "sha256": "8dd95b9c187a033de51e4843b9151736b2968b535bccd374f3e98b8a9791e9fb",
+  "questions": 306,
+  "keys_matched_to_summary": 306,
+  "options": 1224,
+  "distractor_explanations": 918,
+  "component": "fase-1",
+  "answer_distribution": {
+    "A": 77,
+    "B": 76,
+    "C": 77,
+    "D": 76
+  },
+  "verification": "Transcripción contrastada con el DOCX y su tabla de claves; no es una revisión independiente del libro citado."
+}
