@@ -1,4 +1,5 @@
 import reviewedCorrections from "@/data/reviewedQuestionCorrections.json";
+import { applyReviewedClinicalRepair } from "@/lib/reviewedClinicalQuestionRepairs";
 import { getCompleteQuestionStatement } from "@/lib/questionStatementRepairs";
 import type { Question } from "@/lib/database.types";
 import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
@@ -241,6 +242,8 @@ function cleanImportedOptionText(value: string) {
 
 export function repairQuestionText(question: Question): Question {
   if (question.bank_revision) return question;
+  const reviewed = applyReviewedClinicalRepair(question);
+  if (reviewed !== question) return reviewed;
   if (/^local-enfermeria-integral-18-19-(18|19)-\d{3}$/.test(question.id)) return question;
   const correction = (reviewedCorrections as Record<string, { correct_option: Question["correct_option"]; explanation: string }>)[question.id];
   if (correction) return { ...question, correct_option: correction.correct_option, explanation: correction.explanation, option_explanations: undefined };

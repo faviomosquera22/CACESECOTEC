@@ -1,0 +1,190 @@
+[
+  {
+    "id": "local-enfermeria-0916-6e0459779de3",
+    "original_text": "Paciente de 24 años, se encuentra en la sala de recuperación luego de ser intervenido de una apendicectomía; después de una hora aproximadamente, el paciente mueve solo 2 extremidades, respira profundo y tose, tiene una presión sanguínea 20 % mayor a la cifra preanestésica, está completamente despierto y mantiene su SatO2 en 91 % con aire ambiente. ¿Cuál es el puntaje según la escala de Aldrete?",
+    "difficulty": "CACES 2023",
+    "reason": "Opciones de otro tema en CACES 2023; clave 9 y criterios ambiguos en la copia de 2022.",
+    "sources": [
+      "https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+    ],
+    "patch": {
+      "question_text": "Paciente de 24 años en recuperación tras una apendicectomía. Mueve solo dos extremidades, respira profundamente y tose libremente; su presión arterial es un 30 % mayor que la cifra preanestésica, está completamente despierto y necesita oxígeno suplementario para mantener una SpO₂ del 91 %. ¿Cuál es su puntaje en la escala de Aldrete modificada?",
+      "option_a": "7 puntos.",
+      "option_b": "8 puntos.",
+      "option_c": "9 puntos.",
+      "option_d": "10 puntos.",
+      "correct_option": "A",
+      "explanation": "Revisión clínica del 28/10/2026. Puntaje: actividad 1 + respiración 2 + circulación 1 (variación del 30 %) + conciencia 2 + oxigenación 1 (necesita oxígeno para mantener SpO₂ >90 %) = 7. El enunciado se reformuló editorialmente: se cambió la variación del 20 % al 30 % y se explicitó el oxígeno suplementario para eliminar la ambigüedad del original. No se atribuye el puntaje 7 al enunciado original. Fuente: https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+    }
+  },
+  {
+    "id": "local-enfermeria-1322-c43b47b68eb5",
+    "original_text": "Paciente de 24 años de edad, se encuentra en la sala de recuperación luego de ser intervenido de una apendicectomía; después de una hora aproximadamente, el paciente mueve solo 2 extramidades, respira profundo y tose, tiene una presión sanguínea 20 % mayor a la cifra preanestésica, está completamente despierto y mantiene su SatO2 en 91% con aire ambiente. ¿Cuál es el puntaje según la escala de Aldrete?",
+    "difficulty": "CACES 2022",
+    "reason": "Opciones de otro tema en CACES 2023; clave 9 y criterios ambiguos en la copia de 2022.",
+    "sources": [
+      "https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+    ],
+    "patch": {
+      "question_text": "Paciente de 24 años en recuperación tras una apendicectomía. Mueve solo dos extremidades, respira profundamente y tose libremente; su presión arterial es un 30 % mayor que la cifra preanestésica, está completamente despierto y necesita oxígeno suplementario para mantener una SpO₂ del 91 %. ¿Cuál es su puntaje en la escala de Aldrete modificada?",
+      "option_a": "7 puntos.",
+      "option_b": "8 puntos.",
+      "option_c": "9 puntos.",
+      "option_d": "10 puntos.",
+      "correct_option": "A",
+      "explanation": "Revisión clínica del 28/10/2026. Puntaje: actividad 1 + respiración 2 + circulación 1 (variación del 30 %) + conciencia 2 + oxigenación 1 (necesita oxígeno para mantener SpO₂ >90 %) = 7. El enunciado se reformuló editorialmente: se cambió la variación del 20 % al 30 % y se explicitó el oxígeno suplementario para eliminar la ambigüedad del original. No se atribuye el puntaje 7 al enunciado original. Fuente: https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+    }
+  },
+  {
+    "id": "local-enfermeria-0360-f3d1766a31ae",
+    "original_text": "Un paciente de 50 años postquirúrgico de hernioplastia inguinal, debe ser dado de alta de la unidad de recuperación postanestésica (URPA), en la valoración según la escala de Aldrete se encuentra lo siguiente: mueve las cuatro extremidades voluntariamente, respira profundo y tose libremente, TA: 120/80, FC: 80 lpm, Sat: O2 92 %, y responde cuando es llamado. Según sus conocimientos. ¿Cuál es el puntaje que tiene este paciente y según este puntaje puede ser dado de alta de la URPA?",
+    "difficulty": "CACES 2023",
+    "reason": "No indica presión basal ni si la saturación es al ambiente; reformulación explícita, sin convertir el puntaje en autorización automática de alta.",
+    "sources": [
+      "https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+    ],
+    "patch": {
+      "question_text": "Paciente de 50 años en recuperación tras una hernioplastia inguinal. Mueve las cuatro extremidades, respira profundamente y tose libremente; su presión arterial es 120/80 mmHg, igual a la preanestésica, mantiene SpO₂ del 94 % al aire ambiente y despierta cuando se le llama. ¿Qué puntaje obtiene en la escala de Aldrete modificada y alcanza el umbral habitual de al menos 9 puntos, sin sustituir la valoración clínica para el alta?",
+      "option_a": "10 puntos; alcanza el umbral habitual.",
+      "option_b": "8 puntos; no alcanza el umbral habitual.",
+      "option_c": "9 puntos; alcanza el umbral habitual.",
+      "option_d": "7 puntos; no alcanza el umbral habitual.",
+      "correct_option": "C",
+      "explanation": "Revisión editorial y clínica del 28/10/2026. Actividad 2 + respiración 2 + circulación 2 (igual a la basal) + conciencia 1 (despierta al llamado) + oxigenación 2 (>92 % al aire ambiente) = 9. Se añadieron explícitamente la presión basal y la condición de oxigenación; el 92 % original se sustituyó por 94 % para evitar un valor límite. Alcanzar el umbral no autoriza por sí solo el alta: requiere valoración clínica y criterios institucionales. Fuente: https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+    }
+  },
+  {
+    "id": "local-enfermeria-1924-d4103f781288",
+    "original_text": "Paciente de 55 años postquirúrgico de una apendicectomía ingresa a recuperación, a la valoración del profesional de enfermería observa que el paciente tiene dificultad para respirar y sospecha de una obstrucción de las vías respiratorias superiores. ¿Cuál debe ser el primer accionar del profesional de enfermería?",
+    "difficulty": "CACES 2025/2026 Meducators",
+    "reason": "No ofrece la apertura de la vía aérea entre las opciones y sus copias señalan prioridades diferentes.",
+    "sources": [
+      "https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+    ],
+    "patch": {
+      "question_text": "Paciente de 55 años en recuperación tras una apendicectomía, somnoliento, con respiración ruidosa y sospecha de obstrucción de la vía aérea superior por caída de la lengua. No hay antecedente de traumatismo cervical. Tras pedir ayuda, ¿qué intervención debe priorizar el profesional de enfermería mientras se prepara el soporte de oxigenación?",
+      "option_a": "Abrir la vía aérea mediante elevación del mentón o tracción mandibular y comprobar la ventilación.",
+      "option_b": "Limitarse a observar la saturación sin intervenir sobre la vía aérea.",
+      "option_c": "Esperar una muestra de laboratorio antes de actuar.",
+      "option_d": "Indicar ejercicios respiratorios sin corregir la obstrucción.",
+      "correct_option": "A",
+      "explanation": "Revisión clínica del 28/10/2026. Ante obstrucción por tejidos blandos tras la anestesia se priorizan las maniobras de apertura de la vía aérea y la comprobación de la ventilación, junto con ayuda y soporte de oxigenación según la respuesta. La oximetría monitoriza pero no resuelve la obstrucción. Se especificó el mecanismo y se reemplazaron alternativas incompletas; la fuente original permanece sin cambios. Fuente: https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+    }
+  },
+  {
+    "id": "local-enfermeria-2091-f02fc026d64f",
+    "original_text": "Paciente de 55 años postquirúrgico de una apendicetomía ingresa a recuperación, a la valoración del profesional de enfermería observa que el paciente tiene dificultad para respirar y sospecha de una obstrucción de las vías respiratorias superiores. ¿Cuál debe ser el primer accionar del profesional de enfermería?",
+    "difficulty": "CACES Mayo 2026 intento 7",
+    "reason": "No ofrece la apertura de la vía aérea entre las opciones y sus copias señalan prioridades diferentes.",
+    "sources": [
+      "https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+    ],
+    "patch": {
+      "question_text": "Paciente de 55 años en recuperación tras una apendicectomía, somnoliento, con respiración ruidosa y sospecha de obstrucción de la vía aérea superior por caída de la lengua. No hay antecedente de traumatismo cervical. Tras pedir ayuda, ¿qué intervención debe priorizar el profesional de enfermería mientras se prepara el soporte de oxigenación?",
+      "option_a": "Abrir la vía aérea mediante elevación del mentón o tracción mandibular y comprobar la ventilación.",
+      "option_b": "Limitarse a observar la saturación sin intervenir sobre la vía aérea.",
+      "option_c": "Esperar una muestra de laboratorio antes de actuar.",
+      "option_d": "Indicar ejercicios respiratorios sin corregir la obstrucción.",
+      "correct_option": "A",
+      "explanation": "Revisión clínica del 28/10/2026. Ante obstrucción por tejidos blandos tras la anestesia se priorizan las maniobras de apertura de la vía aérea y la comprobación de la ventilación, junto con ayuda y soporte de oxigenación según la respuesta. La oximetría monitoriza pero no resuelve la obstrucción. Se especificó el mecanismo y se reemplazaron alternativas incompletas; la fuente original permanece sin cambios. Fuente: https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+    }
+  },
+  {
+    "id": "local-enfermeria-integral-18-19-19-047",
+    "original_text": "Paciente de 55 años postquirúrgico de una apendicetomía ingresa a recuperación, a la valoración del profesional de enfermería observa que el paciente tiene dificultad para respirar y sospecha de una obstrucción de las vías respiratorias superiores. ¿Cuál debe ser el primer accionar del profesional de enfermería?",
+    "difficulty": "Banco CACES - Integral - CACES 19",
+    "reason": "No ofrece la apertura de la vía aérea entre las opciones y sus copias señalan prioridades diferentes.",
+    "sources": [
+      "https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+    ],
+    "patch": {
+      "question_text": "Paciente de 55 años en recuperación tras una apendicectomía, somnoliento, con respiración ruidosa y sospecha de obstrucción de la vía aérea superior por caída de la lengua. No hay antecedente de traumatismo cervical. Tras pedir ayuda, ¿qué intervención debe priorizar el profesional de enfermería mientras se prepara el soporte de oxigenación?",
+      "option_a": "Abrir la vía aérea mediante elevación del mentón o tracción mandibular y comprobar la ventilación.",
+      "option_b": "Limitarse a observar la saturación sin intervenir sobre la vía aérea.",
+      "option_c": "Esperar una muestra de laboratorio antes de actuar.",
+      "option_d": "Indicar ejercicios respiratorios sin corregir la obstrucción.",
+      "correct_option": "A",
+      "explanation": "Revisión clínica del 28/10/2026. Ante obstrucción por tejidos blandos tras la anestesia se priorizan las maniobras de apertura de la vía aérea y la comprobación de la ventilación, junto con ayuda y soporte de oxigenación según la respuesta. La oximetría monitoriza pero no resuelve la obstrucción. Se especificó el mecanismo y se reemplazaron alternativas incompletas; la fuente original permanece sin cambios. Fuente: https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+    }
+  },
+  {
+    "id": "local-enfermeria-1967-54906d3d1be6",
+    "original_text": "Paciente de 27 años ingresa al hospital por presentar palidez, taquicardia, presión arterial baja, dolor a nivel de pecho y mareos, con antecedente de enfermedad cardíaca y en los exámenes de laboratorio se reporta: hemoglobina 9 g/dL. El médico confirma el diagnóstico de anemia e indica realizar una transfusión sanguínea para mejorar su estado. ¿Cuál es la intervención de enfermería principal en este paciente?",
+    "difficulty": "CACES 2025/2026 Meducators",
+    "reason": "La copia del mismo caso marca diurético en vez de valoración previa; sin orden ni evaluación no debe convertirse en una intervención universal.",
+    "sources": [
+      "https://profedu.blood.ca/en/transfusion/clinical-guide/blood-administration"
+    ],
+    "patch": {
+      "correct_option": "C",
+      "explanation": "Revisión clínica del 28/10/2026. Entre estas alternativas, corresponde valorar al paciente antes de iniciar la transfusión, registrar signos vitales basales e identificar riesgos, incluido el de sobrecarga circulatoria. Los antecedentes cardíacos requieren evaluación individual; cualquier premedicación debe administrarse según prescripción. No sustituyen la valoración ni justifican por sí solos un diurético en todos los pacientes. Fuente: https://profedu.blood.ca/en/transfusion/clinical-guide/blood-administration"
+    }
+  },
+  {
+    "id": "local-enfermeria-1999-c1e17c260e40",
+    "original_text": "Paciente femenina de 68 años, diagnosticada con diabetes e hipertensión arterial desde hace 10 años, recibe tratamiento con insulina y antihipertensivo, hoy en la consulta se enfatiza los cuidados para mejorar los estilos de vida. Obteniendo una negativa a su cumplimiento no por falta de conocimiento sino por sus actitudes que no le permiten realizar esos cambios. Usted le plantea trabajar en un programa de salud. ¿Cuáles son las técnicas apropiadas a utilizar en este caso?",
+    "difficulty": "CACES 2025/2026 Meducators",
+    "reason": "Dos copias con claves discordantes; se precisa el objetivo educativo para diferenciar expresión de entrenamiento de habilidades.",
+    "sources": [
+      "https://www.navarra.es/NR/rdonlyres/A7EBFCE1-89F0-4406-81A7-7786919A25F7/490341/MANUALEpS2013_sincruces1.pdf"
+    ],
+    "patch": {
+      "question_text": "Paciente de 68 años con diabetes e hipertensión conoce las recomendaciones de autocuidado, pero expresa rechazo a cambiar sus hábitos. La enfermera inicia una entrevista individual con preguntas abiertas y escucha activa para que la paciente describa sus experiencias, sentimientos y actitudes ante esos cambios. ¿Qué tipo de técnica educativa está utilizando?",
+      "correct_option": "C",
+      "explanation": "Revisión editorial y educativa del 28/10/2026. Las técnicas de expresión incluyen preguntas abiertas y escucha activa para que la persona exprese su situación, vivencias y sentimientos. No se describe una demostración ni un ensayo de habilidades. Se precisó la intervención para evitar que la respuesta dependa de interpretar únicamente la palabra actitudes. Fuente: https://www.navarra.es/NR/rdonlyres/A7EBFCE1-89F0-4406-81A7-7786919A25F7/490341/MANUALEpS2013_sincruces1.pdf"
+    }
+  },
+  {
+    "id": "local-enfermeria-2060-b809f105138a",
+    "original_text": "Paciente femenina de 68 años, diagnosticada con diabetes e hipertensión arterial desde hace 10 años, recibe tratamiento con insulina y antihipertensivo, en la consulta se enfatiza los cuidados para mejorar los estilos de vida. Obteniendo una negativa a su cumplimiento no por falta de conocimientos sino por sus actitudes que no le permiten realizar esos cambios. Usted le plantea trabajar en un programa de salud. ¿Cuáles son las técnicas apropiadas a utilizar en este caso?",
+    "difficulty": "CACES Mayo 2026 intento 5",
+    "reason": "Dos copias con claves discordantes; se precisa el objetivo educativo para diferenciar expresión de entrenamiento de habilidades.",
+    "sources": [
+      "https://www.navarra.es/NR/rdonlyres/A7EBFCE1-89F0-4406-81A7-7786919A25F7/490341/MANUALEpS2013_sincruces1.pdf"
+    ],
+    "patch": {
+      "question_text": "Paciente de 68 años con diabetes e hipertensión conoce las recomendaciones de autocuidado, pero expresa rechazo a cambiar sus hábitos. La enfermera inicia una entrevista individual con preguntas abiertas y escucha activa para que la paciente describa sus experiencias, sentimientos y actitudes ante esos cambios. ¿Qué tipo de técnica educativa está utilizando?",
+      "correct_option": "C",
+      "explanation": "Revisión editorial y educativa del 28/10/2026. Las técnicas de expresión incluyen preguntas abiertas y escucha activa para que la persona exprese su situación, vivencias y sentimientos. No se describe una demostración ni un ensayo de habilidades. Se precisó la intervención para evitar que la respuesta dependa de interpretar únicamente la palabra actitudes. Fuente: https://www.navarra.es/NR/rdonlyres/A7EBFCE1-89F0-4406-81A7-7786919A25F7/490341/MANUALEpS2013_sincruces1.pdf"
+    }
+  },
+  {
+    "id": "local-enfermeria-0211-f0f3e5a320e9",
+    "original_text": "En la institución de salud donde usted labora, es responsable del manejo y distribución de las vacunas, para lo cual debe organizarlas según sus características. las siguientes vacunas corresponden a lo solicitado?",
+    "difficulty": "CACES 2023",
+    "reason": "El original perdió la característica que se pregunta; se explicita la categoría bacteriana viva atenuada.",
+    "sources": [
+      "https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+    ],
+    "patch": {
+      "question_text": "Al organizar las vacunas según su composición, el profesional de enfermería debe identificar una vacuna bacteriana viva atenuada. ¿Cuál de las siguientes corresponde a esa característica?",
+      "explanation": "Revisión editorial del 28/10/2026. BCG es una vacuna bacteriana viva atenuada. SRP es viral viva atenuada; las vacunas de hepatitis A de uso habitual son inactivadas y hepatitis B es recombinante. Se restituyó una categoría explícita porque el enunciado original no indicaba qué característica debía identificarse; no se presenta esta redacción como transcripción recuperada del PDF. Fuente: https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+    }
+  },
+  {
+    "id": "local-enfermeria-1178-17346d7ce229",
+    "original_text": "En la institución de salud donde usted labora es la responsable del manejo y distribución de las vacunas, para lo cual debe organizarlas según sus características. las siguientes vacunas corresponden a lo solicitado?",
+    "difficulty": "CACES 2022",
+    "reason": "El original perdió la característica que se pregunta; se explicita la categoría bacteriana viva atenuada.",
+    "sources": [
+      "https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+    ],
+    "patch": {
+      "question_text": "Al organizar las vacunas según su composición, el profesional de enfermería debe identificar una vacuna bacteriana viva atenuada. ¿Cuál de las siguientes corresponde a esa característica?",
+      "explanation": "Revisión editorial del 28/10/2026. BCG es una vacuna bacteriana viva atenuada. SRP es viral viva atenuada; las vacunas de hepatitis A de uso habitual son inactivadas y hepatitis B es recombinante. Se restituyó una categoría explícita porque el enunciado original no indicaba qué característica debía identificarse; no se presenta esta redacción como transcripción recuperada del PDF. Fuente: https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+    }
+  },
+  {
+    "id": "local-enfermeria-1176-2da4819747ee",
+    "original_text": "En la institución de salud donde usted labora es la responsable del manejo y distribución de las vacunas, para lo cual debe organizarlas según sus características. siguientes vacunas corresponden a esta caracteristica?",
+    "difficulty": "CACES 2022",
+    "reason": "El original no especifica la característica solicitada; se explicita viral viva atenuada.",
+    "sources": [
+      "https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+    ],
+    "patch": {
+      "question_text": "Al clasificar las vacunas según su composición, el profesional de enfermería identifica el grupo de vacunas virales vivas atenuadas. ¿Qué grupo corresponde a esta característica?",
+      "explanation": "Revisión editorial del 28/10/2026. SRP, varicela y fiebre amarilla son vacunas virales vivas atenuadas. Los demás grupos incluyen toxoides, vacunas inactivadas o de subunidades. La característica se añadió explícitamente para corregir un enunciado incompleto; no es una transcripción recuperada de la fuente original. Fuente: https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+    }
+  }
+]

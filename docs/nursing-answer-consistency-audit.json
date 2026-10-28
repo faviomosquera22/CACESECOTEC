@@ -1,0 +1,615 @@
+{
+  "date": "2026-10-28",
+  "scope": "Repository nursing JSON banks, including historical/retired source banks; no live teacher overrides or imported database-only items were queried.",
+  "limits": "Targeted coherence audit and clinical review of flagged cases, not clinical certification of every answer. Similarity flags do not imply an error.",
+  "source_records": 4926,
+  "source_files": 8,
+  "source_sha256": {
+    "enfermeriaComponenteIntegralQuestions.json": "482ab61c17f5c435a6602c08e9404f7c3aeca594e80d64a21ed4988f15a1a281",
+    "enfermeriaFundamentosDocumentoQuestions.json": "c959f38f7a094696ec5b5d8e3f28474b23c448745ee7c9dd78dbafd386caf987",
+    "enfermeriaIntegral18And19Questions.json": "4d9109f8e9118190cf1b37783ac349d97e37b8c4f8281d1e242877f3f15ce425",
+    "enfermeriaIntegralSeptiembreQuestions.json": "29b5977a1cdf1c235929b02d1b6405581a351f9933459fd3bd6adea0643121b9",
+    "enfermeriaOctubreDocumentoQuestions.json": "829b9359be450068962e8146e274f742bdb46afe50bf3f954625eb81c30d6b58",
+    "enfermeriaQuestions.json": "1883cbd0c65e1d29e9f661c8364b7c3e087f427e54aa890fa6a71d0734c56f71",
+    "enfermeriaTeorias1000DocenteQuestions.json": "d8d2b702d75a0c317196ec7958977713b3cacc22f396a2728c4bec5a3a4aa5dc",
+    "enfermeriaTeoriasDocenteQuestions.json": "8a7e4f5f530a6cc3884ef29aa759388d9166f5a23736957d7093b59bea808baf"
+  },
+  "missing_or_invalid_correct_answer": [],
+  "preexisting_explicit_partial_or_answer_only_formats": [
+    {
+      "id": "local-enfermeria-fundamentos-documento-005",
+      "source_format": "answer-only"
+    },
+    {
+      "id": "local-enfermeria-fundamentos-documento-014",
+      "source_format": "answer-only"
+    },
+    {
+      "id": "local-enfermeria-fundamentos-documento-015",
+      "source_format": "answer-only"
+    },
+    {
+      "id": "local-enfermeria-fundamentos-documento-022",
+      "source_format": "answer-only"
+    },
+    {
+      "id": "local-enfermeria-fundamentos-documento-026",
+      "source_format": "answer-only"
+    },
+    {
+      "id": "local-enfermeria-fundamentos-documento-036",
+      "source_format": "answer-only"
+    },
+    {
+      "id": "local-enfermeria-integral-septiembre-actualizado-012",
+      "source_format": "partial-options"
+    },
+    {
+      "id": "local-enfermeria-integral-septiembre-actualizado-016",
+      "source_format": "partial-options"
+    },
+    {
+      "id": "local-enfermeria-integral-septiembre-actualizado-017",
+      "source_format": "partial-options"
+    },
+    {
+      "id": "local-enfermeria-integral-septiembre-actualizado-018",
+      "source_format": "partial-options"
+    },
+    {
+      "id": "local-enfermeria-integral-septiembre-actualizado-019",
+      "source_format": "partial-options"
+    },
+    {
+      "id": "local-enfermeria-octubre-documento-009",
+      "source_format": "partial-options"
+    },
+    {
+      "id": "local-enfermeria-octubre-documento-026",
+      "source_format": "partial-options"
+    },
+    {
+      "id": "local-enfermeria-octubre-documento-029",
+      "source_format": "answer-only"
+    },
+    {
+      "id": "local-enfermeria-octubre-documento-037",
+      "source_format": "partial-options"
+    }
+  ],
+  "exact_stem_answer_candidates": [
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-18-005",
+        "local-enfermeria-0735-21e8f69adf1e",
+        "local-enfermeria-1509-588ab6d23e28"
+      ],
+      "answers": [
+        "conservar las muestras en caja de carton protegidas de la luz solar o calor excesivo",
+        "conservar las muestras en una caja de carton protegidas de la luz solar o calor excesivo"
+      ],
+      "review": "same meaning; spelling/spacing variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-19-008",
+        "local-enfermeria-0580-43196d4f7b4c"
+      ],
+      "answers": [
+        "atencion extramural atencion intramural atencion en unidades moviles y atencion pre hospitalaria",
+        "atencion extramural atencion intramural atencion en unidades moviles y atencion prehospitalaria"
+      ],
+      "review": "same meaning; spelling/spacing variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-19-095",
+        "local-enfermeria-0648-d44f3ebb5f0e"
+      ],
+      "answers": [
+        "hasta 3 000 ml",
+        "hasta 3000 ml"
+      ],
+      "review": "same meaning; spelling/spacing variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0459-308dd5dc6db3",
+        "local-enfermeria-1392-c7a42086591c"
+      ],
+      "answers": [
+        "reconocimento del paro cardiaco y activacion del sistema de respuesta a emergencias",
+        "reconocimiento del paro cardiaco y activacion del sistema de respuesta a emergencias"
+      ],
+      "review": "same meaning; spelling/spacing variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1967-54906d3d1be6",
+        "local-enfermeria-2045-ebb8b5ff0f4e"
+      ],
+      "answers": [
+        "administrar un diuretico antes de la transfusion",
+        "valorar al paciente antes de la transfusion"
+      ],
+      "review": "corrected"
+    }
+  ],
+  "long_shared_options_dissimilar_stem_candidates": [
+    {
+      "id": "local-enfermeria-fundamentos-documento-010",
+      "comparison_id": "local-enfermeria-mayo-2026-17bf30fd1fbf",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-mayo-2026-17bf30fd1fbf",
+      "comparison_id": "local-enfermeria-fundamentos-documento-010",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0049-6deee65808cf",
+      "comparison_id": "local-enfermeria-0625-38eeee64ecd8",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0625-38eeee64ecd8",
+      "comparison_id": "local-enfermeria-0049-6deee65808cf",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-1722-57d0620abc93",
+      "comparison_id": "local-enfermeria-0049-6deee65808cf",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0145-d6d3e35885c3",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0744-a02be3ecd425",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0745-b024aa64f2c0",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0773-4e3876294cba",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0791-d5b6338f400e",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0800-7f3bc28d0d10",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0832-4b543f07b207",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-1591-24ffb23c1c0a",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-1707-c3048cd48553",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-1732-1cc61143618c",
+      "comparison_id": "local-enfermeria-2248-a64f9f23d45f",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-2248-a64f9f23d45f",
+      "comparison_id": "local-enfermeria-0744-a02be3ecd425",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0646-a813aaef51e6",
+      "comparison_id": "local-enfermeria-1518-c068d1063ffa",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-1518-c068d1063ffa",
+      "comparison_id": "local-enfermeria-0646-a813aaef51e6",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-0916-6e0459779de3",
+      "comparison_id": "local-enfermeria-1623-8ce450f54e59",
+      "review": "mismatched options corrected"
+    },
+    {
+      "id": "local-enfermeria-1623-8ce450f54e59",
+      "comparison_id": "local-enfermeria-0916-6e0459779de3",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-2172-2ff4a1c6b349",
+      "comparison_id": "local-enfermeria-2312-0207124382da",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-2312-0207124382da",
+      "comparison_id": "local-enfermeria-2172-2ff4a1c6b349",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-gpc-rpmp-002-b7672ace2347",
+      "comparison_id": "local-enfermeria-gpc-rpmp-003-98d2958a2ca4",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    },
+    {
+      "id": "local-enfermeria-gpc-rpmp-003-98d2958a2ca4",
+      "comparison_id": "local-enfermeria-gpc-rpmp-002-b7672ace2347",
+      "review": "alternatives coherent with respective topic; shared set alone is not an error"
+    }
+  ],
+  "near_stem_answer_candidates": [
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-18-002",
+        "local-enfermeria-integral-18-19-18-040"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-18-002",
+        "local-enfermeria-0417-896964c102b8"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-18-002",
+        "local-enfermeria-1159-3435d81b82af"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-18-040",
+        "local-enfermeria-0634-21f74cf166ac"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-18-040",
+        "local-enfermeria-1159-3435d81b82af"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-18-063",
+        "local-enfermeria-1634-3401252075cc"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-integral-18-19-19-047",
+        "local-enfermeria-1924-d4103f781288"
+      ],
+      "review": "curated correction"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0037-3b6eb74c6585",
+        "local-enfermeria-1854-bae96089455d"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0192-cc93ab79cac8",
+        "local-enfermeria-1634-3401252075cc"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0199-4de4e3ac95c0",
+        "local-enfermeria-1094-133240afb4ad"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0211-f0f3e5a320e9",
+        "local-enfermeria-1176-2da4819747ee"
+      ],
+      "review": "curated correction"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0386-b92490c855de",
+        "local-enfermeria-0591-24b263cb8675"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0386-b92490c855de",
+        "local-enfermeria-1360-2d905a49defd"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0386-b92490c855de",
+        "local-enfermeria-1773-e57282ea899c"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0417-896964c102b8",
+        "local-enfermeria-0634-21f74cf166ac"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0417-896964c102b8",
+        "local-enfermeria-1159-3435d81b82af"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0519-14814d49a7ae",
+        "local-enfermeria-0838-ebcc073ed5e3"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0519-14814d49a7ae",
+        "local-enfermeria-1162-5b46b62e4f5f"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0519-14814d49a7ae",
+        "local-enfermeria-1718-f80e0f0dec94"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0591-24b263cb8675",
+        "local-enfermeria-1361-9a1ac29b526e"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0591-24b263cb8675",
+        "local-enfermeria-1773-e57282ea899c"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0634-21f74cf166ac",
+        "local-enfermeria-1159-3435d81b82af"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0749-83cf1e880fe3",
+        "local-enfermeria-0875-6be6362d7173"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0804-679160ae1e29",
+        "local-enfermeria-0931-b56e40b3e13b"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0838-ebcc073ed5e3",
+        "local-enfermeria-1163-f8421c68f704"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0864-bed57b96ffcf",
+        "local-enfermeria-1543-b4c85846a50a"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-0916-6e0459779de3",
+        "local-enfermeria-1322-c43b47b68eb5"
+      ],
+      "review": "curated correction"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1162-5b46b62e4f5f",
+        "local-enfermeria-1163-f8421c68f704"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1163-f8421c68f704",
+        "local-enfermeria-1718-f80e0f0dec94"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1176-2da4819747ee",
+        "local-enfermeria-1178-17346d7ce229"
+      ],
+      "review": "curated correction"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1360-2d905a49defd",
+        "local-enfermeria-1361-9a1ac29b526e"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1360-2d905a49defd",
+        "local-enfermeria-1773-e57282ea899c"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1361-9a1ac29b526e",
+        "local-enfermeria-1773-e57282ea899c"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1924-d4103f781288",
+        "local-enfermeria-2091-f02fc026d64f"
+      ],
+      "review": "curated correction"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1967-54906d3d1be6",
+        "local-enfermeria-2045-ebb8b5ff0f4e"
+      ],
+      "review": "curated correction"
+    },
+    {
+      "ids": [
+        "local-enfermeria-1999-c1e17c260e40",
+        "local-enfermeria-2060-b809f105138a"
+      ],
+      "review": "curated correction"
+    },
+    {
+      "ids": [
+        "local-enfermeria-gpc-hemorragia-posparto-071-0b5176e91ea4",
+        "local-enfermeria-gpc-hemorragia-posparto-072-a8b865293646"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    },
+    {
+      "ids": [
+        "local-enfermeria-teorias-1000-docente-0570",
+        "local-enfermeria-teorias-1000-docente-0641"
+      ],
+      "review": "reviewed in context; different numbers, concepts, wording or source variants"
+    }
+  ],
+  "corrected_records": [
+    {
+      "id": "local-enfermeria-0916-6e0459779de3",
+      "reason": "Opciones de otro tema en CACES 2023; clave 9 y criterios ambiguos en la copia de 2022.",
+      "sources": [
+        "https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+      ]
+    },
+    {
+      "id": "local-enfermeria-1322-c43b47b68eb5",
+      "reason": "Opciones de otro tema en CACES 2023; clave 9 y criterios ambiguos en la copia de 2022.",
+      "sources": [
+        "https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+      ]
+    },
+    {
+      "id": "local-enfermeria-0360-f3d1766a31ae",
+      "reason": "No indica presión basal ni si la saturación es al ambiente; reformulación explícita, sin convertir el puntaje en autorización automática de alta.",
+      "sources": [
+        "https://pedsanesthesia.org/wp-content/uploads/2024/05/Week-196-Modified-Aldrete-Score.pdf"
+      ]
+    },
+    {
+      "id": "local-enfermeria-1924-d4103f781288",
+      "reason": "No ofrece la apertura de la vía aérea entre las opciones y sus copias señalan prioridades diferentes.",
+      "sources": [
+        "https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+      ]
+    },
+    {
+      "id": "local-enfermeria-2091-f02fc026d64f",
+      "reason": "No ofrece la apertura de la vía aérea entre las opciones y sus copias señalan prioridades diferentes.",
+      "sources": [
+        "https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+      ]
+    },
+    {
+      "id": "local-enfermeria-integral-18-19-19-047",
+      "reason": "No ofrece la apertura de la vía aérea entre las opciones y sus copias señalan prioridades diferentes.",
+      "sources": [
+        "https://pie.med.utoronto.ca/anesthesiaqr/AnesthesiaQR_content/AnesthesiaQR_Postoperative_Complications_Respiratory.html"
+      ]
+    },
+    {
+      "id": "local-enfermeria-1967-54906d3d1be6",
+      "reason": "La copia del mismo caso marca diurético en vez de valoración previa; sin orden ni evaluación no debe convertirse en una intervención universal.",
+      "sources": [
+        "https://profedu.blood.ca/en/transfusion/clinical-guide/blood-administration"
+      ]
+    },
+    {
+      "id": "local-enfermeria-1999-c1e17c260e40",
+      "reason": "Dos copias con claves discordantes; se precisa el objetivo educativo para diferenciar expresión de entrenamiento de habilidades.",
+      "sources": [
+        "https://www.navarra.es/NR/rdonlyres/A7EBFCE1-89F0-4406-81A7-7786919A25F7/490341/MANUALEpS2013_sincruces1.pdf"
+      ]
+    },
+    {
+      "id": "local-enfermeria-2060-b809f105138a",
+      "reason": "Dos copias con claves discordantes; se precisa el objetivo educativo para diferenciar expresión de entrenamiento de habilidades.",
+      "sources": [
+        "https://www.navarra.es/NR/rdonlyres/A7EBFCE1-89F0-4406-81A7-7786919A25F7/490341/MANUALEpS2013_sincruces1.pdf"
+      ]
+    },
+    {
+      "id": "local-enfermeria-0211-f0f3e5a320e9",
+      "reason": "El original perdió la característica que se pregunta; se explicita la categoría bacteriana viva atenuada.",
+      "sources": [
+        "https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+      ]
+    },
+    {
+      "id": "local-enfermeria-1178-17346d7ce229",
+      "reason": "El original perdió la característica que se pregunta; se explicita la categoría bacteriana viva atenuada.",
+      "sources": [
+        "https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+      ]
+    },
+    {
+      "id": "local-enfermeria-1176-2da4819747ee",
+      "reason": "El original no especifica la característica solicitada; se explicita viral viva atenuada.",
+      "sources": [
+        "https://www2.cdc.gov/vaccines/ed/pinkbook/2024/PB1/PB1_POV.pdf"
+      ]
+    }
+  ],
+  "preservation": "Raw source JSON and historical attempt snapshots are not rewritten. Corrections apply only when original wording and identity/source match; teacher revisions take precedence."
+}

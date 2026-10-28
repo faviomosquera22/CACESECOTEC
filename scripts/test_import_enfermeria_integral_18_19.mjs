@@ -43,7 +43,16 @@ test('200 reactivos originales: 199 únicos, cuatro opciones y todas las claves 
     assert.equal(q.phase, 'componente-integral');
     assert.equal(q.component, 'Componente Integral');
     assert.ok(isUsableQuestion(q), q.id);
-    assert.deepEqual(repairQuestionText(q), q);
+    if (q.id === 'local-enfermeria-integral-18-19-19-047') {
+      // Keep the explicit PDF key as provenance, with the reviewed clinical
+      // correction applied only to new attempts (the original omits opening
+      // the airway and prioritizes monitoring an obstructed airway).
+      assert.equal(q.correct_option, 'D');
+      assert.equal(repairQuestionText(q).correct_option, 'A');
+      assert.ok(repairQuestionText(q).option_a.startsWith('Abrir la vía aérea'));
+    } else {
+      assert.deepEqual(repairQuestionText(q), q);
+    }
     const source = audit.items.find(item => item.id === q.id);
     assert.equal(source.status, 'imported');
     assert.equal(source.correct_option, q.correct_option);
