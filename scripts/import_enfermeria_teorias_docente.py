@@ -18,8 +18,8 @@ def text(node):
     return ''.join(node.itertext()) if node.tag.endswith('}t') else ''.join(t.text or '' for t in node.findall('.//w:t', NS))
 
 
-def build():
-    with ZipFile(SOURCE) as archive:
+def build(source=SOURCE, expected=306, id_prefix="local-enfermeria-teorias-docente-", width=3):
+    with ZipFile(source) as archive:
         body = ET.fromstring(archive.read('word/document.xml')).find('w:body', NS)
     paragraphs = [text(p).strip() for p in body.findall('w:p', NS)]
     keys = {}
@@ -29,7 +29,7 @@ def build():
             number = int(match[1])
             assert number not in keys, f'Duplicate summary key {number}'
             keys[number] = match[2]
-    assert sorted(keys) == list(range(1, 307))
+    assert sorted(keys) == list(range(1, expected + 1))
     questions = []
     for index, paragraph in enumerate(paragraphs):
         match = re.fullmatch(r'(\d+)\. (.+)', paragraph)
@@ -57,11 +57,11 @@ def build():
         assert reference.startswith('Referencia: Alligood (2023), cap. '), (number, reference)
         assert len(set(options.values())) == 4 and all(options.values())
         questions.append({
-            'id': f'local-enfermeria-teorias-docente-{number:03}',
+            'id': f'{id_prefix}{number:0{width}d}',
             'question_text': match[2],
             **{f'option_{letter.lower()}': value for letter, value in options.items()},
             'correct_option': key,
-            'explanation': f'{justification}\n{reference}\nFuente: {SOURCE.name}, pregunta {number}.',
+            'explanation': f'{justification}\n{reference}\nFuente: {source.name}, pregunta {number}.',
             'option_explanations': explanations,
             'category': 'Enfermería - Cuidado y Procedimientos Clínicos de Enfermería',
             'difficulty': 'Banco EHEP - Modelos y teorías de enfermería - Docente',
@@ -70,13 +70,13 @@ def build():
             'subcomponent': 'Modelos y teorías de enfermería',
             'created_at': None,
         })
-    assert len(questions) == 306
-    assert len({q['question_text'] for q in questions}) == 306
+    assert len(questions) == expected
+    assert len({q['question_text'] for q in questions}) == expected
     audit = {
-        'source': SOURCE.name,
-        'sha256': hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
-        'questions': 306, 'keys_matched_to_summary': 306,
-        'options': 1224, 'distractor_explanations': 918,
+        'source': source.name,
+        'sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+        'questions': expected, 'keys_matched_to_summary': expected,
+        'options': expected * 4, 'distractor_explanations': expected * 3,
         'component': 'fase-1',
         'answer_distribution': dict(sorted(Counter(q['correct_option'] for q in questions).items())),
         'verification': 'Transcripción contrastada con el DOCX y su tabla de claves; no es una revisión independiente del libro citado.',

@@ -331,7 +331,7 @@ export function isUsableQuestion(question: Question) {
   const isIntegral18And19 = /^local-enfermeria-integral-18-19-(18|19)-\d{3}$/.test(question.id);
   // These teacher items quote textbook tables in complete, self-contained cases.
   // Their four options and explicit keys are verified against the source DOCX.
-  const isTheoriesTeacher = /^local-enfermeria-teorias-docente-\d{3}$/.test(question.id);
+  const isTheoriesTeacher = /^local-enfermeria-teorias-(?:docente-\d{3}|1000-docente-\d{4})$/.test(question.id);
   if (isIntegral18And19 || isTheoriesTeacher || question.id.startsWith("local-pdf-") || /^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
     const supplied = [...options, question.option_e?.trim() ?? ""];
     const available = supplied.filter(Boolean);
@@ -677,10 +677,18 @@ export async function getLocalQuestionPoolForExam(examType: string): Promise<Que
       "@/data/enfermeriaTeoriasDocenteQuestions.json"
     );
 
+    const { default: theories1000Questions } = await import(
+      "@/data/enfermeriaTeorias1000DocenteQuestions.json"
+    );
+    // Prefer the newer document for overlapping cases, retaining old stable IDs
+    // for the 128 cases that do not appear in the new bank.
+    const newerTheoryStatements = new Set(theories1000Questions.map(q => q.question_text));
+
     return [
       ...nursingQuestions as Question[],
       ...octoberDocumentQuestions as Question[],
-      ...theoriesQuestions as Question[],
+      ...(theoriesQuestions as Question[]).filter(q => !newerTheoryStatements.has(q.question_text)),
+      ...theories1000Questions as Question[],
       ...await getIntegral18And19Questions(),
     ];
   }

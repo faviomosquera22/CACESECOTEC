@@ -1,0 +1,20 @@
+{
+  "source": "Banco_EHEP_Teorias_Enfermeria_1000_DOCENTE.docx",
+  "sha256": "663ac147d1b2e8f67088fe355b2e1538feeaa87d25b1c9b8cd9103efee8d6a23",
+  "questions": 1000,
+  "keys_matched_to_summary": 1000,
+  "options": 4000,
+  "distractor_explanations": 3000,
+  "component": "fase-1",
+  "answer_distribution": {
+    "A": 250,
+    "B": 250,
+    "C": 250,
+    "D": 250
+  },
+  "verification": "Transcripción contrastada con el DOCX y su tabla de claves; no es una revisión independiente del libro citado.",
+  "overlapping_statements_with_306_bank": 178,
+  "overlapping_correct_answers_matched": 178,
+  "previous_unique_questions_retained": 128,
+  "combined_theory_questions": 1128
+}

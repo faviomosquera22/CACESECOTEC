@@ -44,16 +44,20 @@ test('306 preguntas completas conservan clave, distractores y componente 1', () 
     assert.ok(q.explanation.startsWith(`Justificación: ${q.option_explanations[q.correct_option]}`));
   }
 });
-test('el banco local y el compartido incluyen las 306 preguntas sin alterar respuestas', async () => {
+test('conserva las 128 preguntas anteriores sin solapamiento y sus respuestas', async () => {
+  const newer = JSON.parse(fs.readFileSync(path.join(root, 'src/data/enfermeriaTeorias1000DocenteQuestions.json')));
+  const statements = new Set(newer.map(q => q.question_text));
+  const retained = bank.filter(q => !statements.has(q.question_text));
+  assert.equal(retained.length, 128);
   const pool = await getLocalQuestionPoolForExam('enfermeria');
-  assert.deepEqual(pool.filter(q => q.id.startsWith('local-enfermeria-teorias-docente-')), bank);
+  assert.deepEqual(pool.filter(q => q.id.startsWith('local-enfermeria-teorias-docente-')), retained);
   const query = { select() { return this; }, or() { return this; }, eq() { return this; }, order() { return this; }, async range() { return { data: [], error: null }; } };
   const shared = loader({
     '@/lib/supabaseAdmin': { getSupabaseAdminClient: () => ({ from: () => query }) },
     '@/lib/customComponentsServer': { getImportedQuestions: async () => [] },
   })('src/lib/questionBankServer.ts');
   const questions = await shared.getSharedBank('enfermeria');
-  assert.deepEqual(questions.filter(q => q.id.startsWith('local-enfermeria-teorias-docente-')), bank.map(q => ({ ...q, revision: null })));
+  assert.deepEqual(questions.filter(q => q.id.startsWith('local-enfermeria-teorias-docente-')), retained.map(q => ({ ...q, revision: null })));
 });
 test('cada reactivo puede seleccionarse y calificarse en el componente 1', () => {
   for (const q of bank) {
