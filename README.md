@@ -40,6 +40,16 @@ npm run lint
 npm run build
 ```
 
+El test dispone de 90 minutos. Al salir y regresar, recupera las respuestas y
+el tiempo restante guardado; las horas fuera del test no se descuentan.
+El navegador guarda el reloj cada segundo y la sincronización remota se actualiza
+también cada 15 segundos. En el mismo navegador se recupera el borrador más
+reciente. Un borrador vacío con tiempo agotado vuelve a iniciar con 90 minutos;
+los intentos con respuestas conservan el tiempo consumido.
+
+Pruebas del reloj, recuperación y finalización sin modificar datos reales:
+`node --test scripts/test_simulator_timer.mjs`.
+
 ## Tablas esperadas
 
 La app consume las tablas `profiles`, `questions`, `simulations`,

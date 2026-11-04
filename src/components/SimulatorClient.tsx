@@ -98,6 +98,8 @@ function getFirstUnansweredIndex(
 function getRemainingSeconds(startedAt: Date) {
   const elapsedSeconds = Math.floor((Date.now() - startedAt.getTime()) / 1000);
 
+  if (!Number.isFinite(elapsedSeconds)) return SIMULATION_SECONDS;
+
   return Math.min(
     SIMULATION_SECONDS,
     Math.max(0, SIMULATION_SECONDS - elapsedSeconds),
@@ -106,7 +108,8 @@ function getRemainingSeconds(startedAt: Date) {
 
 function normalizeDraftTimeLeft(draft: Partial<SimulationDraft>) {
   const previousSimulationSeconds =
-    typeof draft.simulationSeconds === "number" && draft.simulationSeconds > 0
+    typeof draft.simulationSeconds === "number" &&
+      Number.isFinite(draft.simulationSeconds) && draft.simulationSeconds > 0
       ? draft.simulationSeconds
       : draft.version === 2
         ? LEGACY_SIMULATION_SECONDS
@@ -114,7 +117,7 @@ function normalizeDraftTimeLeft(draft: Partial<SimulationDraft>) {
           ? INITIAL_SIMULATION_SECONDS
         : SIMULATION_SECONDS;
   const previousTimeLeft =
-    typeof draft.timeLeft === "number"
+    typeof draft.timeLeft === "number" && Number.isFinite(draft.timeLeft)
       ? Math.min(previousSimulationSeconds, Math.max(0, draft.timeLeft))
       : previousSimulationSeconds;
   const elapsedSeconds = Math.max(
@@ -124,7 +127,7 @@ function normalizeDraftTimeLeft(draft: Partial<SimulationDraft>) {
 
   return Math.min(
     SIMULATION_SECONDS,
-    Math.max(0, SIMULATION_SECONDS - elapsedSeconds),
+    Math.floor(Math.max(0, SIMULATION_SECONDS - elapsedSeconds)),
   );
 }
 
@@ -163,7 +166,8 @@ function parseLocalDraft(
       answers,
       writtenAnswers: parseWrittenAnswers(draft.writtenAnswers, questionIds),
       comments,
-      startedAt: draft.startedAt ? new Date(draft.startedAt) : new Date(),
+      updatedAt: Date.parse(draft.updatedAt) || 0,
+      startedAt: Number.isFinite(Date.parse(draft.startedAt)) ? new Date(draft.startedAt) : new Date(),
       timeLeft: normalizeDraftTimeLeft(draft),
     };
   } catch {
@@ -199,16 +203,20 @@ function parseStoredDraft(
     ),
   );
   const startedAt =
-    typeof draft.startedAt === "string" ? new Date(draft.startedAt) : new Date();
+    typeof draft.startedAt === "string" && Number.isFinite(Date.parse(draft.startedAt))
+      ? new Date(draft.startedAt) : new Date();
   const timeLeft =
-    typeof draft.timeLeft === "number"
+    typeof draft.timeLeft === "number" && Number.isFinite(draft.timeLeft)
       ? normalizeDraftTimeLeft(draft)
-      : getRemainingSeconds(startedAt);
+      : Math.max(0, SIMULATION_SECONDS - Math.max(0,
+          Math.floor(((Date.parse(draft.updatedAt ?? "") || startedAt.getTime()) - startedAt.getTime()) / 1000),
+        ));
 
   return {
     answers,
     writtenAnswers: parseWrittenAnswers(draft.writtenAnswers, questionIds),
     comments,
+    updatedAt: Date.parse(draft.updatedAt ?? "") || 0,
     startedAt,
     timeLeft,
   };
@@ -285,6 +293,9 @@ export function SimulatorClient({
 }: SimulatorClientProps) {
   const router = useRouter();
   const startedAtRef = useRef(new Date());
+  // The original start is historical metadata; this anchor counts only this visit.
+  const countdownStartedAtRef = useRef<Date | null>(null);
+  const pendingDraftSaveRef = useRef<Promise<void> | null>(null);
   const finishedRef = useRef(false);
   const activeSimulationIdRef = useRef<string | null>(null);
   const [hasHydratedDraft, setHasHydratedDraft] = useState(false);
@@ -310,6 +321,7 @@ export function SimulatorClient({
   const progressPercentage = ((currentIndex + 1) / questions.length) * 100;
   const timeAlert = getTimeAlert(timeLeft);
   const remoteDraftStatus = `in_progress:${examSlug}`;
+  const autoSaveTick = Math.floor(timeLeft / 15);
 
   const finishSimulation = useCallback(async () => {
     if (finishedRef.current || isSubmitting) {
@@ -321,6 +333,8 @@ export function SimulatorClient({
     setError("");
 
     try {
+      // An earlier save must finish before deleting the completed draft.
+      await pendingDraftSaveRef.current;
       const finishedAt = new Date();
       const totalQuestions = questions.length;
       const correctAnswers = questions.reduce((total, question) => {
@@ -372,6 +386,7 @@ export function SimulatorClient({
         if (!storedAttemptError && storedAttempt) {
           window.localStorage.removeItem(draftStorageKey);
           await deleteRemoteDraft(studentId, examSlug);
+          await markLegacyDraftDone(studentId, examSlug);
           activeSimulationIdRef.current = null;
           router.push(`/student/results/${storedAttempt.id}`);
           router.refresh();
@@ -586,8 +601,14 @@ export function SimulatorClient({
         setWrittenAnswers(restoredWrittenAnswers);
         setQuestionComments(restoredComments);
         setCurrentIndex(getFirstUnansweredIndex(questions, compatibleAnswers));
-        setTimeLeft(restoredTimeLeft);
-        startedAtRef.current = restoredStartedAt;
+        // Empty expired drafts can be left by an interrupted automatic submission.
+        const hasProgress = Object.keys(compatibleAnswers).length > 0 ||
+          Object.values(restoredWrittenAnswers).some((value) => value.trim());
+        const remaining = restoredTimeLeft <= 0 && !hasProgress
+          ? SIMULATION_SECONDS : restoredTimeLeft;
+        setTimeLeft(remaining);
+        startedAtRef.current = restoredTimeLeft <= 0 && !hasProgress ? new Date() : restoredStartedAt;
+        countdownStartedAtRef.current = new Date(Date.now() - (SIMULATION_SECONDS - remaining) * 1000);
       }
 
       try {
@@ -605,12 +626,14 @@ export function SimulatorClient({
         );
 
         if (parsedRemoteDraft) {
+          const restoredDraft = localDraft && localDraft.updatedAt > parsedRemoteDraft.updatedAt
+            ? localDraft : parsedRemoteDraft;
           applyDraft(
-            parsedRemoteDraft.answers,
-            parsedRemoteDraft.comments,
-            parsedRemoteDraft.startedAt,
-            getRemainingSeconds(parsedRemoteDraft.startedAt),
-            parsedRemoteDraft.writtenAnswers,
+            restoredDraft.answers,
+            restoredDraft.comments,
+            restoredDraft.startedAt,
+            restoredDraft.timeLeft,
+            restoredDraft.writtenAnswers,
           );
           setAutoSaveStatus("Progreso sincronizado");
 
@@ -677,12 +700,14 @@ export function SimulatorClient({
             : null;
 
         if (legacyDraft) {
+          const restoredDraft = localDraft && localDraft.updatedAt > legacyDraft.updatedAt
+            ? localDraft : legacyDraft;
           applyDraft(
-            legacyDraft.answers,
-            legacyDraft.comments,
-            legacyDraft.startedAt,
-            getRemainingSeconds(legacyDraft.startedAt),
-            legacyDraft.writtenAnswers,
+            restoredDraft.answers,
+            restoredDraft.comments,
+            restoredDraft.startedAt,
+            restoredDraft.timeLeft,
+            restoredDraft.writtenAnswers,
           );
           setAutoSaveStatus("Progreso sincronizado");
 
@@ -740,7 +765,7 @@ export function SimulatorClient({
           );
           const { data: answerRows, error: answerRowsError } = await supabase
             .from("simulation_answers")
-            .select("question_id, selected_option")
+            .select("question_id, selected_option, answered_at")
             .eq("simulation_id", activeSimulation.id);
 
           if (answerRowsError) {
@@ -755,12 +780,18 @@ export function SimulatorClient({
               )
               .map((answer) => [answer.question_id, answer.selected_option]),
           ) as Partial<Record<string, OptionLetter>>;
+          const lastActivityAt = Math.max(startedAt.getTime(), ...(answerRows ?? [])
+            .map((answer) => Date.parse(answer.answered_at ?? ""))
+            .filter(Number.isFinite));
+          const savedTimeLeft = Math.max(0, SIMULATION_SECONDS -
+            Math.floor((lastActivityAt - startedAt.getTime()) / 1000));
 
           applyDraft(
             restoredAnswers,
             localDraft?.comments ?? {},
             startedAt,
-            getRemainingSeconds(startedAt),
+            localDraft?.timeLeft ?? savedTimeLeft,
+            localDraft?.writtenAnswers,
           );
           setAutoSaveStatus("Progreso sincronizado");
           return;
@@ -887,7 +918,8 @@ export function SimulatorClient({
       return;
     }
 
-    const timer = window.setTimeout(async () => {
+    const saveDraft = async () => {
+      if (finishedRef.current) return;
       const persistedAnswers = Object.fromEntries(
         Object.entries(answers).filter(([, option]) => Boolean(option)),
       );
@@ -902,7 +934,7 @@ export function SimulatorClient({
         writtenAnswers,
         comments: persistedComments,
         currentIndex,
-        timeLeft: getRemainingSeconds(startedAtRef.current),
+        timeLeft: getRemainingSeconds(countdownStartedAtRef.current ?? new Date()),
         simulationSeconds: SIMULATION_SECONDS,
         startedAt: startedAtRef.current.toISOString(),
         updatedAt: new Date().toISOString(),
@@ -952,11 +984,15 @@ export function SimulatorClient({
       } catch {
         // Local draft remains available if remote persistence is unavailable.
       }
+    };
+    const timer = window.setTimeout(() => {
+      pendingDraftSaveRef.current = (pendingDraftSaveRef.current ?? Promise.resolve()).then(saveDraft);
     }, 500);
 
     return () => window.clearTimeout(timer);
   }, [
     answers,
+    autoSaveTick,
     writtenAnswers,
     attemptSeed,
     currentIndex,
@@ -972,18 +1008,20 @@ export function SimulatorClient({
       return;
     }
 
+    countdownStartedAtRef.current ??= new Date();
     const timer = window.setInterval(() => {
-      setTimeLeft((currentTime) => Math.max(0, currentTime - 1));
+      if (finishedRef.current) return;
+      setTimeLeft(getRemainingSeconds(countdownStartedAtRef.current!));
     }, 1000);
 
     return () => window.clearInterval(timer);
   }, [hasHydratedDraft]);
 
   useEffect(() => {
-    if (timeLeft === 0) {
+    if (hasHydratedDraft && timeLeft === 0) {
       void finishSimulation();
     }
-  }, [finishSimulation, timeLeft]);
+  }, [finishSimulation, hasHydratedDraft, timeLeft]);
 
   const answeredLabel = useMemo(
     () => `${selectedCount} de ${questions.length} respondidas`,
