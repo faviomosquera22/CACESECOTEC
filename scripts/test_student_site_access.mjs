@@ -37,9 +37,10 @@ function loader(mocks = {}, globals = {}) {
   return relative => load(path.join(root, relative));
 }
 const student = { id: 'student-one', role: 'student', full_name: 'Estudiante', career: 'Enfermería' };
-function context({ profile = student, enabled = true, error = null, signedIn = true } = {}) {
+function context({ profile = student, enabled = true, error = null, signedIn = true, sessionActive = true, sessionError = null } = {}) {
   const queried = [];
   const supabase = {
+    rpc: async name => { assert.equal(name, "current_session_is_active"); return { data: sessionActive, error: sessionError }; },
     auth: { getUser: async () => ({ data: { user: signedIn ? { id: profile?.id ?? 'missing' } : null }, error: null }), signOut: async () => {} },
     from(table) {
       queried.push(table);
@@ -166,7 +167,7 @@ test('restaurar pestaña revalida; sesión vencida sale al login; error de red n
     guard.events.get('pageshow')();
     await flush();
     assert.notEqual(guard.render(), 'PRIVATE REPORT');
-    assert.deepEqual(guard.destinations, status === 401 ? ['/login'] : []);
+    assert.deepEqual(guard.destinations, status === 401 ? ['/login?error=session-ended'] : []);
     if (status === 500) {
       guard.respond(() => Response.json({ enabled: true }));
       guard.tick();
@@ -209,5 +210,16 @@ test('login de estudiante bloqueado cierra sesión y muestra el motivo; estudian
       assert.ok(actions.includes(role === 'student' ? '/student/dashboard' : '/teacher/dashboard'));
       assert.ok(!actions.includes('signOut'));
     }
+  }
+});
+
+
+test('sesión reemplazada o error de verificación rechazan páginas y API sin cerrar la sesión nueva', async () => {
+  for (const state of [{ sessionActive: false }, { sessionError: { message: 'unavailable' } }]) {
+    const { load, queried } = context(state);
+    assert.equal(await load('src/lib/auth.ts').getCurrentAuthContext(), null);
+    assert.deepEqual(queried, []);
+    assert.equal((await load('src/app/api/student/simulator-access/route.ts').GET()).status, 401);
+    await assert.rejects(load('src/lib/auth.ts').requireProfile(), /REDIRECT:\/login$/);
   }
 });

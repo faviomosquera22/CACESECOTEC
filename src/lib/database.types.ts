@@ -326,6 +326,10 @@ export interface Database {
     };
     Views: Record<string, never>;
     Functions: {
+      current_session_is_active: {
+        Args: Record<string, never>;
+        Returns: boolean;
+      };
       complete_pdf_question_import: {
         Args: { p_import_id: string; p_teacher_id: string; p_phase: string; p_questions: Json };
         Returns: Json;

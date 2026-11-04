@@ -102,6 +102,35 @@ La prueba de RLS usa PostgreSQL en memoria con `@electric-sql/pglite`, sin tocar
 producción. Con el paquete instalado en una carpeta temporal, ejecutar
 `PGLITE_MODULE=/ruta/al/paquete/dist/index.js node scripts/test_student_site_access_rls.mjs`.
 
+## Una sesión por estudiante
+
+Aplicar `supabase/student_single_session.sql` después de `student_site_access.sql`
+y antes de publicar el código. El último inicio de sesión de un estudiante
+reemplaza al anterior, incluso cuando se inicia directamente mediante Supabase.
+Los docentes mantienen sus sesiones simultáneas. Las pestañas del mismo navegador
+comparten sesión; otro navegador o un perfil privado cuenta como otra sesión.
+
+El registro privado se actualiza al crear una sesión de Auth, no al refrescar
+tokens. RLS rechaza inmediatamente las operaciones nuevas de sesiones anteriores;
+la pestaña abierta se retira en su próxima comprobación (cada 15 segundos o al
+recuperar el foco). Cerrar la sesión ganadora no reactiva las anteriores. El cierre
+de sesión de la aplicación usa alcance local para no revocar otros dispositivos.
+El contenido ya enviado al navegador no puede retirarse retroactivamente.
+
+El servidor verifica la sesión mediante `current_session_is_active()` antes de
+consultar el perfil. Si la verificación falla, rechaza el acceso. La identidad
+propia sigue siendo legible en la base para diferenciar una sesión terminada de
+un perfil inexistente; las escrituras del perfil requieren la sesión vigente.
+Las nuevas tablas públicas deben tener RLS y la política restrictiva de sesión
+(volver a aplicar el script agrega la política a las tablas con RLS existentes).
+
+Verificación de base de datos: ejecutar `scripts/test_student_single_session.sql`
+después de la migración. Crea cuentas y sesiones de prueba dentro de una
+transacción y revierte todos sus cambios al terminar. Las pruebas cubren cambio
+de dispositivo, rechazo de JWT anterior por RLS, protección del registro privado,
+refresco, cierre de sesión, sesiones docentes y ausencia de la identificación de
+sesión. Pruebas de aplicación: `node --test scripts/test_student_site_access.mjs`.
+
 ## Traslado de estudiantes entre docentes
 
 En la lista de estudiantes, **Trasladar estudiantes** permite buscar y seleccionar

@@ -29,7 +29,7 @@ export function StudentAccessGuard({ children }: { children: ReactNode }) {
           leaving = true;
           setVerifiedPath(null);
           // A full navigation clears prefetched pages and client report state.
-          window.location.replace(response.status === 401 ? "/login" : STUDENT_BLOCKED_PATH);
+          window.location.replace(response.status === 401 ? "/login?error=session-ended" : STUDENT_BLOCKED_PATH);
           return;
         }
 

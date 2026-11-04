@@ -27,7 +27,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
   const resolvedSearchParams = searchParams ? await searchParams : {};
   const initialError =
-    resolvedSearchParams.error === "missing-profile"
+    resolvedSearchParams.error === "session-ended"
+      ? "Tu sesión terminó o iniciaste sesión en otro dispositivo. Vuelve a ingresar."
+      : resolvedSearchParams.error === "missing-profile"
       ? "Tu cuenta no tiene un perfil asignado. Contacta al administrador."
       : resolvedSearchParams.error === "session-too-large"
         ? "La sesión anterior estaba demasiado pesada. Vuelve a iniciar sesión."

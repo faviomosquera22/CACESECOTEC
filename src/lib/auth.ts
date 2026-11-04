@@ -49,6 +49,13 @@ export const getCurrentAuthContext = cache(
       return null;
     }
 
+    const { data: sessionActive, error: sessionError } = await supabase.rpc(
+      "current_session_is_active",
+    );
+    if (sessionError || sessionActive !== true) {
+      return null;
+    }
+
     const { data: profile } = await supabase
       .from("profiles")
       .select(
@@ -71,7 +78,7 @@ export async function requireProfile(
   }
 
   if (!context.profile) {
-    await context.supabase.auth.signOut();
+    await context.supabase.auth.signOut({ scope: "local" });
     redirect("/login?error=missing-profile");
   }
 

@@ -62,14 +62,14 @@ export function LoginForm({ initialError }: LoginFormProps) {
         .maybeSingle();
 
       if (profileError || !profile) {
-        await supabase.auth.signOut();
+        await supabase.auth.signOut({ scope: "local" });
         throw new Error(
           "Tu cuenta no tiene un perfil asignado. Contacta al administrador.",
         );
       }
 
       if (profile.role !== "student" && profile.role !== "teacher") {
-        await supabase.auth.signOut();
+        await supabase.auth.signOut({ scope: "local" });
         throw new Error("El perfil no tiene un rol válido.");
       }
 
@@ -77,7 +77,7 @@ export function LoginForm({ initialError }: LoginFormProps) {
         profile.role === "student" &&
         !(await getStudentSiteAccess(supabase, profile.id))
       ) {
-        await supabase.auth.signOut();
+        await supabase.auth.signOut({ scope: "local" });
         throw new Error(STUDENT_BLOCKED_MESSAGE);
       }
 
@@ -150,6 +150,11 @@ export function LoginForm({ initialError }: LoginFormProps) {
           />
         </div>
       </div>
+
+      <p className="mt-4 text-sm leading-6 text-slate-500">
+        Estudiantes: solo se permite una sesión a la vez. Si ingresas en otro
+        dispositivo o navegador, la sesión anterior perderá el acceso.
+      </p>
 
       {error ? (
         <div className="mt-5 flex gap-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
