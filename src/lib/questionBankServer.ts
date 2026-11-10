@@ -20,12 +20,26 @@ export async function getBankOverrides(career: StudentCareerSlug): Promise<BankO
 }
 export async function getSharedBank(career: StudentCareerSlug, includeRemoved = false): Promise<BankQuestion[]> {
   const source: Question[] = await getLocalQuestionPoolForExam(career);
-  const categoryFilter = (career === "enfermeria" ? ["enfermeria", "enfermería", "nursing"] : ["psicologia", "psicología", "psychology", "clinica"]).map(word => `category.ilike.%${word}%`).join(",");
-  for (let offset = 0; ; offset += 500) {
-    const { data, error } = await getSupabaseAdminClient().from("questions").select("*").or(categoryFilter).order("id").range(offset, offset + 499);
-    if (error) throw new Error("No se pudo consultar el banco completo.");
-    source.push(...data);
-    if (data.length < 500) break;
+  if (career === "psicologia") {
+    for (let offset = 0; ; offset += 500) {
+      const { data, error } = await getSupabaseAdminClient()
+        .from("psychology_ehep_questions")
+        .select("question")
+        .order("id")
+        .range(offset, offset + 499);
+      if (error) throw new Error("No se pudo consultar el banco de Psicología.");
+      source.push(...data.map(row => row.question as unknown as Question));
+      if (data.length < 500) break;
+    }
+  } else {
+    const categoryFilter = ["enfermeria", "enfermería", "nursing"]
+      .map(word => `category.ilike.%${word}%`).join(",");
+    for (let offset = 0; ; offset += 500) {
+      const { data, error } = await getSupabaseAdminClient().from("questions").select("*").or(categoryFilter).order("id").range(offset, offset + 499);
+      if (error) throw new Error("No se pudo consultar el banco completo.");
+      source.push(...data);
+      if (data.length < 500) break;
+    }
   }
   source.push(...await getImportedQuestions(career));
   const unique = [...new Map(source.map(q => [q.id, repairQuestionText(q)])).values()];

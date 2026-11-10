@@ -6,10 +6,14 @@ import nursingQuestionRepairs from "@/data/enfermeriaQuestionRepairs.json";
 import october2023QuestionTextRepairs from "@/data/enfermeriaQuestionTextRepairs.json";
 import {
   filterQuestionsForSimulatorSettings,
+  getPhaseKey,
+  psychologyComponentWeights,
   isRetiredQuestion,
   type SimulatorSettings,
 } from "@/lib/simulatorSettingsCatalog";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
+
+export const psychologyAttemptSeedPrefix = "ehep-2026-";
 
 export const legacyFixedPsychologyAttemptSeed =
   "00000000-0000-4000-8000-000000000000";
@@ -42,13 +46,9 @@ export const nursingExamDistribution = [
   },
 ];
 
-export const psychologyExamDistribution = [
-  {
-    area: "Muestra rotativa del banco de Psicología",
-    percent: 100,
-    count: 100,
-  },
-];
+export const psychologyExamDistribution = psychologyComponentWeights.map(
+  ({ key, label, percent }) => ({ key, area: label, percent, count: percent }),
+);
 
 export const examDistributionBySlug = {
   enfermeria: nursingExamDistribution,
@@ -247,7 +247,7 @@ export function repairQuestionText(question: Question): Question {
   if (/^local-enfermeria-integral-18-19-(18|19)-\d{3}$/.test(question.id)) return question;
   const correction = (reviewedCorrections as Record<string, { correct_option: Question["correct_option"]; explanation: string }>)[question.id];
   if (correction) return { ...question, correct_option: correction.correct_option, explanation: correction.explanation, option_explanations: undefined };
-  if (question.id.startsWith("local-pdf-")) return question;
+  if (question.id.startsWith("local-pdf-") || question.id.startsWith("local-psicologia-ehep-2026-")) return question;
   // These documents must retain their wording and source answers verbatim.
   if (/^local-enfermeria-(octubre|fundamentos)-documento-/.test(question.id)) return question;
   const sourceText = question.question_text.trim();
@@ -335,7 +335,7 @@ export function isUsableQuestion(question: Question) {
   // These teacher items quote textbook tables in complete, self-contained cases.
   // Their four options and explicit keys are verified against the source DOCX.
   const isTheoriesTeacher = /^local-enfermeria-teorias-(?:docente-\d{3}|1000-docente-\d{4})$/.test(question.id);
-  if (isIntegral18And19 || isTheoriesTeacher || question.id.startsWith("local-pdf-") || /^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
+  if (isIntegral18And19 || isTheoriesTeacher || question.id.startsWith("local-psicologia-ehep-2026-") || question.id.startsWith("local-pdf-") || /^local-enfermeria-integral-septiembre-(actualizado|cac|ehep)-\d{3}$/.test(question.id)) {
     const supplied = [...options, question.option_e?.trim() ?? ""];
     const available = supplied.filter(Boolean);
     const key = ["A", "B", "C", "D", "E"].indexOf(question.correct_option);
@@ -604,6 +604,18 @@ export function selectPsychologyExamQuestions(
   questions: Question[],
   attemptSeed?: string,
 ) {
+  if (attemptSeed?.startsWith(psychologyAttemptSeedPrefix) || !attemptSeed) {
+    const random = getRandomSource(attemptSeed);
+    const pool = shuffleQuestions(dedupeQuestions(questions.filter(isUsableQuestion)), random);
+    const selected = psychologyExamDistribution.flatMap(({ key, count }) =>
+      pool.filter(question => getPhaseKey("psicologia", question) === key).slice(0, count),
+    );
+    const selectedIds = new Set(selected.map(question => question.id));
+    selected.push(...pool.filter(question => !selectedIds.has(question.id))
+      .slice(0, psychologyExamQuestionCount - selected.length));
+    return shuffleQuestions(selected, random);
+  }
+
   const qualityPool = questions.filter(question =>
     (question.id.startsWith("local-manual-") || question.id.startsWith("local-pdf-")) ? isUsableQuestion(question) : isBalancedPsychologyQuestion(question),
   );
@@ -669,7 +681,7 @@ export async function getIntegral18And19Questions(): Promise<Question[]> {
   return questions as Question[];
 }
 
-export async function getLocalQuestionPoolForExam(examType: string): Promise<Question[]> {
+export async function getLocalQuestionPoolForExam(examType: string, resumeLegacyPsychology = false): Promise<Question[]> {
   if (examType === "enfermeria") {
     const [{ default: nursingQuestions }, { default: octoberDocumentQuestions }] =
       await Promise.all([
@@ -696,10 +708,8 @@ export async function getLocalQuestionPoolForExam(examType: string): Promise<Que
     ];
   }
 
-  if (examType === "psicologia") {
-    const { default: psychologyQuestions } = await import(
-      "@/data/psicologiaQuestions.json"
-    );
+  if (examType === "psicologia" && resumeLegacyPsychology) {
+    const { default: psychologyQuestions } = await import("@/data/psicologiaQuestions.json");
 
     return psychologyQuestions as Question[];
   }
@@ -714,9 +724,12 @@ export async function getLocalQuestionsForExam(
   additionalQuestions: Question[] = [],
   transform: (questions: Question[]) => Question[] = questions => questions,
 ) {
+  const resumeLegacyPsychology = examType === "psicologia" &&
+    Boolean(attemptSeed && !attemptSeed.startsWith(psychologyAttemptSeedPrefix));
+  const pool = await getLocalQuestionPoolForExam(examType, resumeLegacyPsychology);
   return selectQuestionsForExam(
     examType,
-    transform([...await getLocalQuestionPoolForExam(examType), ...additionalQuestions]),
+    transform([...pool, ...additionalQuestions]),
     attemptSeed,
     settings,
   );

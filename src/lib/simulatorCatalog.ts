@@ -35,9 +35,9 @@ export const simulatorExams: SimulatorExamConfig[] = [
     description:
       "Práctica con una selección rotativa de 100 preguntas del banco de Psicología para que cada intento sea diferente.",
     structure: [
-      "Intervenciones clínicas individuales y grupales, asesoramiento e intervención en crisis.",
+      "Cinco componentes de Psicología Clínica organizados en 12 subcomponentes.",
       "Preguntas de opción múltiple con una sola respuesta correcta.",
-      "100 preguntas seleccionadas aleatoriamente de un banco de 200, con temporizador de 90 minutos.",
+      "Hasta 100 preguntas de un banco base de 264, con temporizador de 90 minutos.",
     ],
     categoryKeywords: ["psicologia", "psicología", "psychology", "clinica"],
     icon: Brain,

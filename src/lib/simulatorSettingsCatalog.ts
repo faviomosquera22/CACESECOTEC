@@ -85,19 +85,37 @@ const nursingComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
     },
   ];
 
+export const psychologyComponentWeights = [
+  { key: "fase-1", label: "1. Intervenciones clínicas y fundamentos de psicoterapia", percent: 32, subcomponents: [
+    "1.1 Intervenciones clínicas individuales",
+    "1.2 Intervenciones clínicas grupales",
+    "1.3 Proceso psicoterapéutico: fases",
+    "1.4 Proceso psicoterapéutico: elementos",
+  ] },
+  { key: "fase-2", label: "2. Evaluación psicológica y psicodiagnóstico", percent: 23, subcomponents: [
+    "2.1 Psicodiagnóstico: etapas",
+    "2.2 Formulación de caso",
+  ] },
+  { key: "fase-3", label: "3. Fundamentos de psicopatología en la psicología", percent: 20, subcomponents: [
+    "3.1 Psicopatología general",
+    "3.2 Psicofarmacología básica y sus implicaciones psicológicas",
+  ] },
+  { key: "fase-4", label: "4. Intervenciones psicosociales desde la Psicología", percent: 16, subcomponents: [
+    "4.1 Promoción y prevención comunitaria en salud mental: fases y alcances",
+    "4.2 Problemáticas contemporáneas en el campo psicosocial",
+  ] },
+  { key: "fase-5", label: "5. Ética, deontología y marco legal", percent: 9, subcomponents: [
+    "5.1 Fundamentos éticos",
+    "5.2 Ética en intervenciones clínicas y en investigación",
+  ] },
+] as const;
+
 const psychologyComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
-  [
-    {
-      key: "fase-1",
-      label: "Componente 1: Intervenciones clínicas y psicoterapia",
-      description: "Intervenciones individuales, grupales, crisis y proceso terapéutico.",
-    },
-    {
-      key: "fase-2",
-      label: "Componente 2: Evaluación psicológica y psicodiagnóstico",
-      description: "Pruebas psicológicas, etapas diagnósticas y formulación de casos.",
-    },
-  ];
+  psychologyComponentWeights.map(({ key, label, subcomponents }) => ({
+    key,
+    label,
+    description: subcomponents.join(" · "),
+  }));
 
 const nursingCategoryOptions: SimulatorSettingOption[] = [
   {
@@ -127,56 +145,14 @@ const nursingCategoryOptions: SimulatorSettingOption[] = [
   },
 ];
 
-const psychologyCategoryOptions: SimulatorSettingOption[] = [
-  {
-    key: "crisis",
-    label: "Intervención en crisis y seguridad",
-    description: "Crisis, riesgo, primeros auxilios psicológicos y seguridad.",
-  },
-  {
-    key: "grupal",
-    label: "Intervenciones clínicas grupales",
-    description: "Facilitación, psicoeducación y procesos grupales.",
-  },
-  {
-    key: "asesoramiento",
-    label: "Asesoramiento psicológico",
-    description: "Acompañamiento, toma de decisiones y orientación.",
-  },
-  {
-    key: "proceso",
-    label: "Proceso psicoterapéutico",
-    description: "Fases, alianza, seguimiento, progreso y cierre.",
-  },
-  {
-    key: "encuadre",
-    label: "Encuadre, demanda, ética y objetivos",
-    description: "Consentimiento, confidencialidad, demanda y objetivos.",
-  },
-  {
-    key: "psicoterapia",
-    label: "Psicoterapia individual y formulación",
-    description: "Formulación clínica, técnicas y casos individuales.",
-  },
-  {
-    key: "pruebas-evaluacion-clinica",
-    label: "2.1 Pruebas psicológicas",
-    description:
-      "Pruebas psicológicas, psicometría e interpretación en la evaluación clínica.",
-  },
-  {
-    key: "psicodiagnostico-etapas",
-    label: "2.2 Psicodiagnóstico: etapas",
-    description:
-      "Entrevista, proceso evaluativo, devolución y consideraciones éticas.",
-  },
-  {
-    key: "formulacion-casos",
-    label: "2.3 Formulación de casos",
-    description:
-      "Hipótesis, integración diagnóstica y análisis funcional del caso.",
-  },
-];
+const psychologyCategoryOptions: SimulatorSettingOption[] =
+  psychologyComponentWeights.flatMap(({ subcomponents }) =>
+    Array.from(subcomponents, (label: string) => ({
+      key: label.split(" ")[0],
+      label,
+      description: label,
+    })),
+  );
 
 const settingsCatalogByCareer: Record<
   StudentCareerSlug,

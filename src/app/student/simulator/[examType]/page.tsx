@@ -16,6 +16,7 @@ import {
   getLocalQuestionsForExam,
   isLocalQuestionSet,
   legacyFixedPsychologyAttemptSeed,
+  psychologyAttemptSeedPrefix,
   selectQuestionsForExam,
 } from "@/lib/localQuestions";
 import { getSimulatorExam } from "@/lib/simulatorCatalog";
@@ -41,7 +42,7 @@ type StudentExamSimulatorPageProps = {
 export const dynamic = "force-dynamic";
 
 const attemptSeedPattern =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  /^(?:ehep-2026-)?[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function getStoredAttemptSeed(draft: Json | null | undefined) {
   if (!draft || typeof draft !== "object" || Array.isArray(draft)) {
@@ -91,11 +92,16 @@ export default async function StudentExamSimulatorPage({
     ),
   ]);
   const storedAttemptSeed = getStoredAttemptSeed(storedDraft?.draft);
-  const attemptSeed = storedAttemptSeed
-    ? storedAttemptSeed
-    : storedDraft && exam.slug === "psicologia"
-      ? legacyFixedPsychologyAttemptSeed
-      : requestedAttemptSeed ?? randomUUID();
+  const isPsychology = exam.slug === "psicologia";
+  const newAttemptSeed = isPsychology
+    ? requestedAttemptSeed?.startsWith(psychologyAttemptSeedPrefix)
+      ? requestedAttemptSeed
+      : `${psychologyAttemptSeedPrefix}${randomUUID()}`
+    : requestedAttemptSeed ?? randomUUID();
+  const attemptSeed = storedAttemptSeed ??
+    (storedDraft && isPsychology ? legacyFixedPsychologyAttemptSeed : newAttemptSeed);
+  const resumeLegacyPsychology = isPsychology &&
+    !attemptSeed.startsWith(psychologyAttemptSeedPrefix);
 
   if (requestedAttemptSeed !== attemptSeed) {
     redirect(
@@ -103,14 +109,14 @@ export default async function StudentExamSimulatorPage({
     );
   }
 
-  const examDistribution = examDistributionBySlug[exam.slug] ?? [];
+  const examDistribution = resumeLegacyPsychology ? [] : examDistributionBySlug[exam.slug] ?? [];
   const customComponents = await getCustomComponents(exam.slug);
   let manualQuestions: Question[] = [];
   try {
     const rows = await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);
     manualQuestions = [
       ...rows.map(manualQuestionForSimulator),
-      ...await getImportedQuestions(exam.slug, customComponents),
+      ...(resumeLegacyPsychology || !isPsychology ? await getImportedQuestions(exam.slug, customComponents) : []),
       ...(exam.slug === "enfermeria" ? await getIntegral18And19Questions() : []),
     ];
   } catch {
@@ -121,11 +127,10 @@ export default async function StudentExamSimulatorPage({
   try { [overrides, removals] = await Promise.all([getBankOverrides(exam.slug), getBankRemovals(exam.slug)]); }
   catch { return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudieron cargar las correcciones del banco. Recarga la página para iniciar con las respuestas actualizadas.</section>; }
   const applyCorrections = (pool: Question[]) => filterActiveBank(exam.slug, applyBankOverrides(pool, overrides), removals);
-  const shouldUsePsychiatryBank = exam.slug === "psicologia";
   let bankQuestions: Question[] = [];
   let questionLoadError = false;
 
-  if (!shouldUsePsychiatryBank) {
+  if (!resumeLegacyPsychology) {
     try {
       // Use the same complete shared bank as the teacher dashboard. The
       // student route used to query only recent Supabase rows, which omitted
@@ -136,7 +141,11 @@ export default async function StudentExamSimulatorPage({
     }
   }
 
-  const questions = shouldUsePsychiatryBank
+  if (isPsychology && questionLoadError) {
+    return <section role="alert" className="rounded-lg border border-red-200 bg-red-50 p-6 text-red-700">No se pudo cargar el banco de Psicología. Recarga la página para continuar.</section>;
+  }
+
+  const questions = resumeLegacyPsychology
     ? await getLocalQuestionsForExam(
         exam.slug,
         attemptSeed,
@@ -265,8 +274,8 @@ export default async function StudentExamSimulatorPage({
 
       {persistenceMode === "local" ? (
         <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-800">
-          {shouldUsePsychiatryBank
-            ? `Usando el banco local de Psicología: ${questions.length} preguntas seleccionadas según la configuración docente, con sus argumentaciones de respuesta.`
+          {isPsychology
+            ? `Banco de Psicología: ${questions.length} preguntas seleccionadas según la configuración docente, con sus argumentaciones de respuesta.`
             : `Usando banco local de ${exam.shortTitle} mientras Supabase no tenga la tabla de preguntas cargada.`}
         </div>
       ) : null}

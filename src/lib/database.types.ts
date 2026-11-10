@@ -50,6 +50,12 @@ export interface Database {
         Update: Partial<Omit<ManualQuestionRow, "id" | "created_at">>;
         Relationships: [];
       };
+      psychology_ehep_questions: {
+        Row: { id: string; question: Json };
+        Insert: { id: string; question: Json };
+        Update: { id?: string; question?: Json };
+        Relationships: [];
+      };
       profiles: {
         Row: {
           id: string;

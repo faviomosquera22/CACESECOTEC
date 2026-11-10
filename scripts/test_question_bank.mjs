@@ -101,3 +101,42 @@ test('corrección persistida prevalece al generar nuevos intentos y no muta snap
   const questions=await getLocalQuestionsForExam('enfermeria','test-bank',{...getDefaultSimulatorSettings('enfermeria'),enabledPhases:['fase-1']},[active],pool=>applyBankOverrides(pool.filter(item=>item.id===active.id),overrides));
   assert.equal(questions.find(item=>item.id===active.id).correct_option,'D');assert.deepEqual(q,before);
 });
+
+test('Psicología reparte los 100 reactivos y respeta los componentes habilitados', async () => {
+  const { selectQuestionsForExam, psychologyAttemptSeedPrefix } = load('src/lib/localQuestions.ts');
+  const { getDefaultSimulatorSettings, psychologyComponentWeights } = load('src/lib/simulatorSettingsCatalog.ts');
+  const settings = getDefaultSimulatorSettings('psicologia');
+  const sample = psychologyComponentWeights.flatMap(({ key, label, percent }) =>
+    Array.from({ length: percent + 4 }, (_, i) => ({
+      ...q,
+      option_a: 'Alternativa uno',
+      option_b: 'Alternativa dos',
+      option_c: 'Alternativa tres',
+      option_d: 'Alternativa cuatro',
+      option_e: undefined,
+      correct_option: 'A',
+      id: `local-psicologia-ehep-2026-${key}-${i}`,
+      phase: key,
+      component: label,
+      category: `Psicología - ${label}`,
+      question_text: `Pregunta de prueba ${key} número ${i}`,
+    })),
+  );
+  const seed = psychologyAttemptSeedPrefix + '00000000-0000-4000-8000-000000000001';
+  const selected = selectQuestionsForExam('psicologia', sample, seed, settings);
+  assert.equal(selected.length, 100);
+  assert.deepEqual(selected, selectQuestionsForExam('psicologia', sample, seed, settings));
+  for (const { key, percent } of psychologyComponentWeights) {
+    assert.equal(selected.filter(question => question.phase === key).length, percent);
+  }
+  const limited = selectQuestionsForExam('psicologia', sample, seed, {
+    ...settings,
+    enabledPhases: ['fase-5'],
+  });
+  assert.equal(limited.length, 13);
+  assert.ok(limited.every(question => question.phase === 'fase-5'));
+
+  const oldDraft = await getLocalQuestionsForExam('psicologia', '00000000-0000-4000-8000-000000000000');
+  assert.equal(oldDraft.length, 100);
+  assert.ok(oldDraft.every(question => !question.id.startsWith('local-psicologia-ehep-2026-')));
+});

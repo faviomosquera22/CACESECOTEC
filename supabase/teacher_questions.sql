@@ -18,7 +18,7 @@ create table if not exists public.teacher_questions (
   updated_at timestamptz not null default now(),
   check (
     (career_slug = 'enfermeria' and phase in ('fase-1','fase-2','fase-3','fase-4','fase-5','componente-integral'))
-    or (career_slug = 'psicologia' and phase in ('fase-1','fase-2'))
+    or (career_slug = 'psicologia' and phase in ('fase-1','fase-2','fase-3','fase-4','fase-5'))
   )
 );
 create index if not exists teacher_questions_owner_idx

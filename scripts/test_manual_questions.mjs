@@ -40,7 +40,8 @@ test('valida pregunta completa y elimina campos de propiedad inyectados', () => 
 });
 test('rechaza claves ausentes, opciones repetidas, textos vacíos y componente ajeno', () => {
   for (const values of [{ correct_option: '' }, { option_d: '  PRIMERA alternativa. ' }, { explanation: ' ' }, { published: 'true' }, { question_text: 'x'.repeat(12001) }]) assert.throws(() => validateManualQuestion({ ...valid, ...values }, 'enfermeria'));
-  assert.throws(() => validateManualQuestion(valid, 'psicologia'));
+  assert.throws(() => validateManualQuestion({ ...valid, phase: 'componente-integral' }, 'psicologia'));
+  assert.deepEqual(validateManualQuestion(valid, 'psicologia'), valid);
 });
 test('conserva letra y texto correctos al transformar la pregunta', () => {
   const question = manualQuestionForSimulator(row());

@@ -49,7 +49,7 @@ begin
   if not exists (select 1 from public.profiles where id=p_teacher_id and role='teacher' and translate(lower(trim(career)), 'íé', 'ie')=batch.career_slug) then raise exception 'Docente no autorizado'; end if;
   if batch.status='completed' then return batch.result; end if;
   if batch.created_at < now()-interval '24 hours' then raise exception 'Vista previa vencida'; end if;
-  if not ((batch.career_slug='enfermeria' and p_phase in ('fase-1','fase-2','fase-3','fase-4','fase-5')) or (batch.career_slug='psicologia' and p_phase in ('fase-1','fase-2')) or exists (select 1 from public.question_components where key=p_phase and career_slug=batch.career_slug)) then raise exception 'Componente inválido'; end if;
+  if not ((batch.career_slug='enfermeria' and p_phase in ('fase-1','fase-2','fase-3','fase-4','fase-5')) or (batch.career_slug='psicologia' and p_phase in ('fase-1','fase-2','fase-3','fase-4','fase-5')) or exists (select 1 from public.question_components where key=p_phase and career_slug=batch.career_slug)) then raise exception 'Componente inválido'; end if;
   if jsonb_typeof(p_questions) <> 'array' or jsonb_array_length(p_questions)>300 then raise exception 'Preguntas inválidas'; end if;
   insert into public.imported_questions(career_slug, phase, question, fingerprint, import_id, created_by)
   select batch.career_slug,p_phase,item->'question',item->>'fingerprint',batch.id,p_teacher_id from jsonb_array_elements(p_questions) item
