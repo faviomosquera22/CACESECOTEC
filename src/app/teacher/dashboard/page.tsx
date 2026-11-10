@@ -5,7 +5,6 @@ import { getCustomComponents } from "@/lib/customComponentsServer";
 import { TeacherDashboardClient } from "@/components/TeacherDashboardClient";
 import { TeacherSimulatorSettings } from "@/components/TeacherSimulatorSettings";
 import { getCareerSimulatorSettings } from "@/lib/simulatorSettings";
-import { psychologyComponentWeights } from "@/lib/simulatorSettingsCatalog";
 import { requireTeacherCareerScope } from "@/lib/teacherCareerScope";
 import { getTeacherStudentCards } from "@/lib/teacherStudents";
 
@@ -35,30 +34,15 @@ export default async function TeacherDashboardPage() {
         </p>
       </section>
 
-      {teacherCareerScope === "psicologia" ? (
-        <section className="rounded-lg border border-slate-200 bg-white p-5">
-          <h3 className="font-semibold text-slate-950">Distribución fija de Psicología</h3>
-          <p className="mt-2 text-sm text-slate-600">Cada intento nuevo incluye 100 preguntas repartidas en los cinco componentes y cubre los 44 temas.</p>
-          <ul className="mt-4 grid gap-3 md:grid-cols-2">
-            {psychologyComponentWeights.map(({ key, label, percent, subcomponents, topicCount }) => (
-              <li key={key} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-                <p className="text-sm font-semibold text-slate-950">{label}</p>
-                <p className="mt-1 text-xs text-slate-600">
-                  {percent} preguntas por intento · {subcomponents.length} subcomponentes · {topicCount} temas
-                </p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : (
-        <TeacherSimulatorSettings
-          career={teacherCareerScope}
-          initialSettings={simulatorSettings}
-          totalQuestionCount={sharedQuestions.length}
-          removedComponents={removedComponentIds(removals)}
-          customComponents={customComponents}
-        />
-      )}
+      <TeacherSimulatorSettings
+        career={teacherCareerScope}
+        initialSettings={simulatorSettings}
+        totalQuestionCount={teacherCareerScope === "psicologia"
+          ? sharedQuestions.filter(question => question.id.startsWith("local-psicologia-ehep-2026-")).length
+          : sharedQuestions.length}
+        removedComponents={removedComponentIds(removals)}
+        customComponents={customComponents}
+      />
 
       <TeacherDashboardClient
         students={studentCards}

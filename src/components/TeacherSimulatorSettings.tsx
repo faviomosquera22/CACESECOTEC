@@ -13,6 +13,7 @@ import {
 import type { StudentCareerSlug } from "@/lib/studentCareer";
 import {
   getSimulatorSettingsCatalog,
+  psychologyComponentWeights,
   sanitizeSimulatorSettings,
   type SimulatorPhaseKey,
   type SimulatorSettings,
@@ -39,12 +40,14 @@ type SettingsResponse = {
 function SwitchControl({
   checked,
   disabled,
+  readOnly,
   label,
   description,
   onChange,
 }: {
   checked: boolean;
   disabled?: boolean;
+  readOnly?: boolean;
   label: string;
   description: string;
   onChange: () => void;
@@ -54,9 +57,9 @@ function SwitchControl({
       type="button"
       role="switch"
       aria-checked={checked}
-      disabled={disabled}
+      disabled={disabled || readOnly}
       onClick={onChange}
-      className={`flex w-full items-center justify-between gap-4 rounded-lg border p-4 text-left transition disabled:cursor-not-allowed disabled:opacity-60 ${
+      className={`flex w-full items-center justify-between gap-4 rounded-lg border p-4 text-left transition disabled:cursor-not-allowed ${disabled ? "opacity-60" : ""} ${
         checked
           ? "border-sky-200 bg-sky-50"
           : "border-slate-200 bg-white hover:bg-slate-50"
@@ -97,7 +100,14 @@ export function TeacherSimulatorSettings({
   removedComponents = [],
   totalQuestionCount,
 }: TeacherSimulatorSettingsProps) {
-  const catalog = getSimulatorSettingsCatalog(career, customComponents, removedComponents);
+  const fixedDistribution = career === "psicologia";
+  const phases = fixedDistribution
+    ? psychologyComponentWeights.map(({ key, label, percent, subcomponents, topicCount }, index) => ({
+        key,
+        label: label.replace(/^\d+\. /, `Componente ${index + 1}: `),
+        description: `${percent} preguntas por intento · ${subcomponents.length} subcomponentes · ${topicCount} temas`,
+      }))
+    : getSimulatorSettingsCatalog(career, customComponents, removedComponents).phases;
   const sanitizedInitialSettings = useMemo(
     () => sanitizeSimulatorSettings(career, initialSettings, customComponents, removedComponents),
     [career, initialSettings, customComponents, removedComponents],
@@ -113,7 +123,8 @@ export function TeacherSimulatorSettings({
   const hasUnsavedChanges =
     [...enabledPhases].sort().join("|") !==
       [...savedSettings.enabledPhases].sort().join("|");
-  const hasValidSelection = enabledPhases.length > 0;
+  const activeCount = fixedDistribution ? phases.length : enabledPhases.length;
+  const hasValidSelection = activeCount > 0;
 
   function togglePhase(phase: SimulatorPhaseKey) {
     setEnabledPhases((current) =>
@@ -126,7 +137,7 @@ export function TeacherSimulatorSettings({
   }
 
   async function saveSettings() {
-    if (!hasValidSelection || isSaving) {
+    if (fixedDistribution || !hasValidSelection || isSaving) {
       return;
     }
 
@@ -189,8 +200,9 @@ export function TeacherSimulatorSettings({
               Preguntas del simulador
             </h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
-              Define qué preguntas estarán disponibles en los próximos intentos
-              de los estudiantes de tu carrera.
+              {fixedDistribution
+                ? "Cada intento incluye 100 preguntas de los cinco componentes del EHEP."
+                : "Define qué preguntas estarán disponibles en los próximos intentos de los estudiantes de tu carrera."}
             </p>
           </div>
         </div>
@@ -199,7 +211,7 @@ export function TeacherSimulatorSettings({
           <span className="mx-1 text-slate-300" aria-hidden="true">
             ·
           </span>
-          {` · ${enabledPhases.length} de ${catalog.phases.length} componentes`}
+          {`${activeCount} de ${phases.length} componentes`}
 
         </div>
       </div>
@@ -213,14 +225,16 @@ export function TeacherSimulatorSettings({
             </h3>
           </div>
           <p className="mt-1 text-xs leading-5 text-slate-500">
-            Las preguntas del simulador se seleccionan únicamente de los
-            componentes que mantengas activos.
+            {fixedDistribution
+              ? "Los cinco componentes están activos para cumplir la distribución fija de Psicología."
+              : "Las preguntas del simulador se seleccionan únicamente de los componentes que mantengas activos."}
           </p>
           <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
-            {catalog.phases.map((phase) => (
+            {phases.map((phase) => (
               <SwitchControl
                 key={phase.key}
-                checked={enabledPhases.includes(phase.key)}
+                checked={fixedDistribution || enabledPhases.includes(phase.key)}
+                readOnly={fixedDistribution}
                 disabled={isSaving}
                 label={phase.label}
                 description={phase.description}
@@ -263,7 +277,7 @@ export function TeacherSimulatorSettings({
         <button
           type="button"
           onClick={() => void saveSettings()}
-          disabled={!hasValidSelection || !hasUnsavedChanges || isSaving}
+          disabled={fixedDistribution || !hasValidSelection || !hasUnsavedChanges || isSaving}
           className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-slate-950 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isSaving ? (
