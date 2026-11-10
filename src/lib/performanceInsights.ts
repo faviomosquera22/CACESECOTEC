@@ -1,10 +1,11 @@
 import type { Question, SimulationAnswerWithQuestion } from "@/lib/database.types";
+import { psychologyComponentWeights } from "@/lib/simulatorSettingsCatalog";
 
 export type PerformanceAnswerInput = Pick<
   SimulationAnswerWithQuestion,
   "selected_option" | "is_correct"
 > & {
-  questions: Pick<Question, "category" | "question_text"> | null;
+  questions: (Pick<Question, "category" | "question_text"> & Partial<Pick<Question, "id">>) | null;
 };
 
 export type PerformanceCategoryInsight = {
@@ -191,6 +192,18 @@ function getPsychologyPerformanceArea(answer: PerformanceAnswerInput) {
 }
 
 function getPerformanceArea(answer: PerformanceAnswerInput) {
+  const componentNumber = /^local-psicologia-ehep-2026-(\d+)\./.exec(answer.questions?.id ?? "")?.[1];
+  const component = psychologyComponentWeights.find(item => item.key === `fase-${componentNumber}`);
+  if (component) {
+    const subcomponents = component.subcomponents.map(label => label.replace(/^\d+\.\d+ /, ""));
+    return {
+      key: `psicologia-${component.key}`,
+      category: component.label,
+      description: component.subcomponents.join(" · "),
+      focus: subcomponents.join(" · "),
+    };
+  }
+
   const rawCategory = answer.questions?.category?.trim();
 
   if (!rawCategory) {

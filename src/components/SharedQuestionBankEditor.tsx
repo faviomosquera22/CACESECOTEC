@@ -12,6 +12,7 @@ export function SharedQuestionBankEditor({ initialQuestions, career, customCompo
   const [questions, setQuestions] = useState(initialQuestions);
   const [search, setSearch] = useState("");
   const [phase, setPhase] = useState("");
+  const [subcomponent, setSubcomponent] = useState("");
   const [page, setPage] = useState(0);
   const [editing, setEditing] = useState<BankQuestion | null>(null);
   const [busy, setBusy] = useState(false);
@@ -19,7 +20,15 @@ export function SharedQuestionBankEditor({ initialQuestions, career, customCompo
   const [notice, setNotice] = useState("");
   const catalog = getSimulatorSettingsCatalog(career, customComponents, removedComponentIds(removals));
   const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es");
-  const visible = questions.filter(q => (!phase || getPhaseKey(career, q) === phase) && normalize(`${q.question_text} ${q.id}`).includes(normalize(search)));
+  const componentQuestions = questions.filter(question => !phase || getPhaseKey(career, question) === phase);
+  const subcomponents = career === "psicologia"
+    ? [...new Set(componentQuestions.flatMap(question => question.subcomponent ? [question.subcomponent] : []))]
+        .sort((left, right) => left.localeCompare(right, "es", { numeric: true }))
+    : [];
+  const visible = componentQuestions.filter(question =>
+    (!subcomponent || question.subcomponent === subcomponent) &&
+    normalize(`${question.question_text} ${question.id} ${career === "psicologia" ? question.category ?? "" : ""}`).includes(normalize(search)),
+  );
   async function save(event: FormEvent) {
     event.preventDefault(); if (!editing) return;
     setError(""); setNotice("");
@@ -39,9 +48,21 @@ export function SharedQuestionBankEditor({ initialQuestions, career, customCompo
     <div className="rounded-xl border border-sky-200 bg-sky-50 p-5">
       <h3 className="text-xl font-semibold">Banco compartido por componentes</h3>
       <p className="mt-2 text-sm text-slate-700">Consulta y corrige el banco de tu carrera. Los cambios se guardan para todos los docentes y se aplican en nuevos intentos. Los resultados de intentos anteriores conservan su versión original.</p>
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
-        <label className="text-sm font-semibold">Componente<select className={field} value={phase} disabled={busy} onChange={e => { setPhase(e.target.value); setPage(0); }}><option value="">Todos los componentes</option>{catalog.phases.map(item => <option key={item.key} value={item.key}>{item.label} ({questions.filter(q => getPhaseKey(career, q) === item.key).length})</option>)}</select></label>
-        <label className="text-sm font-semibold">Buscar pregunta<input type="search" className={field} value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} placeholder="Texto del enunciado o identificador" /></label>
+      <div className={`mt-4 grid gap-4 ${subcomponents.length ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
+        <label className="text-sm font-semibold">Componente<select className={field} value={phase} disabled={busy} onChange={e => { setPhase(e.target.value); setSubcomponent(""); setPage(0); }}><option value="">Todos los componentes</option>{catalog.phases.map(item => <option key={item.key} value={item.key}>{item.label} ({questions.filter(q => getPhaseKey(career, q) === item.key).length})</option>)}</select></label>
+        {subcomponents.length > 0 && (
+          <label className="text-sm font-semibold">
+            Subcomponente
+            <select className={field} value={subcomponent} disabled={busy} onChange={event => {
+              setSubcomponent(event.target.value);
+              setPage(0);
+            }}>
+              <option value="">Todos los subcomponentes</option>
+              {subcomponents.map(label => <option key={label} value={label}>{label}</option>)}
+            </select>
+          </label>
+        )}
+        <label className="text-sm font-semibold">Buscar pregunta<input type="search" className={field} value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} placeholder={career === "psicologia" ? "Enunciado, tema o identificador" : "Texto del enunciado o identificador"} /></label>
       </div>
       <p className="mt-3 text-sm">{visible.length} de {questions.length} preguntas</p>
     </div>
@@ -61,6 +82,14 @@ export function SharedQuestionBankEditor({ initialQuestions, career, customCompo
     </form>}
     {visible.slice(page * 30, (page + 1) * 30).map(q => <article key={q.id} className="space-y-3 rounded-xl border border-slate-200 bg-white p-5">
       <div className="flex items-start justify-between gap-3"><p className="text-xs text-slate-500">{catalog.phases.find(item => item.key === getPhaseKey(career, q))?.label} · {q.revision ? "Corregida por docente" : "Banco base"}</p><button disabled={busy} className="font-semibold text-sky-700" onClick={() => { setEditing({ ...q }); setError(""); setNotice(""); window.scrollTo({ top: 0, behavior: "smooth" }); }}>Corregir</button></div>
+      {career === "psicologia" && q.subcomponent && (
+        <div className="flex flex-wrap gap-2 text-xs font-semibold">
+          <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-800">{q.subcomponent}</span>
+          {q.category?.split(" · ")[2] && (
+            <span className="rounded-full bg-sky-50 px-3 py-1 text-sky-800">{q.category.split(" · ")[2]}</span>
+          )}
+        </div>
+      )}
       <p className="whitespace-pre-wrap text-sm font-medium">{q.question_text}</p>
       <BankRemovalButton kind="question" id={q.id} label={q.question_text} revision={q.revision} version={removals.find(row => row.kind === "question" && row.target_id === q.id)?.updated_at ?? null} />
       <details><summary className="cursor-pointer text-sm text-sky-700">Ver opciones, respuesta y explicación</summary><ul className="mt-3 space-y-2 text-sm">{letters.filter(letter => q[`option_${letter}`]).map(letter => <li key={letter} className={q.correct_option === letter.toUpperCase() ? "font-semibold text-emerald-700" : "text-slate-600"}>{letter.toUpperCase()}. {q[`option_${letter}`]}{q.correct_option === letter.toUpperCase() ? " ✓ Correcta" : ""}</li>)}</ul><p className="mt-3 whitespace-pre-wrap text-sm">{q.explanation || "Sin explicación en el banco original."}</p><p className="mt-3 break-all text-xs text-slate-500">{q.id}</p></details>

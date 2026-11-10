@@ -175,3 +175,28 @@ test('Psicología exige las cinco cuotas y los 44 temas en cada intento nuevo', 
   const belowQuota = sample.filter(question => question.phase !== 'fase-2' || /-[123]$/.test(question.id));
   assert.deepEqual(selectQuestionsForExam('psicologia', belowQuota, seed, settings), []);
 });
+
+test('los resultados de Psicología agrupan por los cinco componentes del banco EHEP', () => {
+  const { buildPerformanceCategoryInsights } = load('src/lib/performanceInsights.ts');
+  const { psychologyComponentWeights } = load('src/lib/simulatorSettingsCatalog.ts');
+  const answers = psychologyComponentWeights.flatMap(({ label, percent }, index) =>
+    Array.from({ length: percent }, (_, number) => ({
+      selected_option: 'A',
+      is_correct: number === 0,
+      questions: {
+        id: `local-psicologia-ehep-2026-${index + 1}.1.1-${number + 1}`,
+        category: `Psicología - ${label} · 1.1 Subcomponente · 1.1.1 Tema`,
+        question_text: 'Caso de crisis y confidencialidad',
+      },
+    })),
+  );
+  const insights = buildPerformanceCategoryInsights(answers);
+  assert.equal(insights.length, 5);
+  for (const { label, percent } of psychologyComponentWeights) {
+    const component = insights.find(insight => insight.category === label);
+    assert.equal(component.total, percent);
+    assert.equal(component.correct, 1);
+  }
+  const historical = { ...answers[0], questions: { ...answers[0].questions, id: 'local-psicologia-legacy' } };
+  assert.equal(buildPerformanceCategoryInsights([historical])[0].category, 'Intervención en crisis y seguridad');
+});
