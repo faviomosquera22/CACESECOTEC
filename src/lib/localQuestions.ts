@@ -14,6 +14,7 @@ import {
 import type { StudentCareerSlug } from "@/lib/studentCareer";
 
 export const psychologyAttemptSeedPrefix = "ehep-2026-";
+export const fixedPsychologyAttemptSeedPrefix = `${psychologyAttemptSeedPrefix}fixed-`;
 
 export const legacyFixedPsychologyAttemptSeed =
   "00000000-0000-4000-8000-000000000000";
@@ -47,7 +48,9 @@ export const nursingExamDistribution = [
 ];
 
 export const psychologyExamDistribution = psychologyComponentWeights.map(
-  ({ key, label, percent }) => ({ key, area: label, percent, count: percent }),
+  ({ key, label, percent, topicCount, subcomponents }) => ({
+    key, area: label, percent, count: percent, topicCount, subcomponentCount: subcomponents.length,
+  }),
 );
 
 export const examDistributionBySlug = {
@@ -600,11 +603,47 @@ export function selectNursingExamQuestions(
   );
 }
 
+function selectFixedPsychologyExamQuestions(questions: Question[], attemptSeed?: string) {
+  const random = getRandomSource(attemptSeed);
+  const topicsByPhase = new Map<string, Map<string, Question[]>>();
+  const sourceId = /^local-psicologia-ehep-2026-((\d+)\.\d+\.\d+)-\d+$/;
+  const officialQuestions = questions.filter(question => sourceId.test(question.id) && isUsableQuestion(question));
+
+  for (const question of shuffleQuestions(dedupeQuestions(officialQuestions), random)) {
+    const [, topic, componentNumber] = sourceId.exec(question.id)!;
+    const phase = `fase-${componentNumber}`;
+    if (question.phase !== phase) continue;
+    const topics = topicsByPhase.get(phase) ?? new Map<string, Question[]>();
+    const group = topics.get(topic) ?? [];
+    group.push(question);
+    topics.set(topic, group);
+    topicsByPhase.set(phase, topics);
+  }
+
+  const selected: Question[] = [];
+  for (const { key, count, topicCount } of psychologyExamDistribution) {
+    const topics = [...(topicsByPhase.get(key)?.values() ?? [])];
+    if (topics.length !== topicCount) return [];
+
+    const required = topics.map(group => group[0]);
+    const remaining = shuffleQuestions(topics.flatMap(group => group.slice(1)), random);
+    if (required.length + remaining.length < count) return [];
+
+    selected.push(...required, ...remaining.slice(0, count - required.length));
+  }
+  return shuffleQuestions(selected, random);
+}
+
 export function selectPsychologyExamQuestions(
   questions: Question[],
   attemptSeed?: string,
 ) {
-  if (attemptSeed?.startsWith(psychologyAttemptSeedPrefix) || !attemptSeed) {
+  if (!attemptSeed || attemptSeed.startsWith(fixedPsychologyAttemptSeedPrefix)) {
+    return selectFixedPsychologyExamQuestions(questions, attemptSeed);
+  }
+
+  // Preserve the question selection of drafts started before quotas became mandatory.
+  if (attemptSeed.startsWith(psychologyAttemptSeedPrefix)) {
     const random = getRandomSource(attemptSeed);
     const pool = shuffleQuestions(dedupeQuestions(questions.filter(isUsableQuestion)), random);
     const selected = psychologyExamDistribution.flatMap(({ key, count }) =>
@@ -644,6 +683,9 @@ export function selectQuestionsForExam(
   settings?: SimulatorSettings,
 ) {
   questions = questions.filter(question => !isRetiredQuestion(question));
+  if (examType === "psicologia" && (!attemptSeed || attemptSeed.startsWith(fixedPsychologyAttemptSeedPrefix))) {
+    return selectPsychologyExamQuestions(questions, attemptSeed);
+  }
   let filteredQuestions =
     settings && (examType === "enfermeria" || examType === "psicologia")
       ? filterQuestionsForSimulatorSettings(

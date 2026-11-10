@@ -86,25 +86,25 @@ const nursingComponentOptions: SimulatorSettingOption<SimulatorPhaseKey>[] =
   ];
 
 export const psychologyComponentWeights = [
-  { key: "fase-1", label: "1. Intervenciones clínicas y fundamentos de psicoterapia", percent: 32, subcomponents: [
+  { key: "fase-1", label: "1. Intervenciones clínicas y fundamentos de psicoterapia", percent: 32, topicCount: 13, subcomponents: [
     "1.1 Intervenciones clínicas individuales",
     "1.2 Intervenciones clínicas grupales",
     "1.3 Proceso psicoterapéutico: fases",
     "1.4 Proceso psicoterapéutico: elementos",
   ] },
-  { key: "fase-2", label: "2. Evaluación psicológica y psicodiagnóstico", percent: 23, subcomponents: [
+  { key: "fase-2", label: "2. Evaluación psicológica y psicodiagnóstico", percent: 23, topicCount: 6, subcomponents: [
     "2.1 Psicodiagnóstico: etapas",
     "2.2 Formulación de caso",
   ] },
-  { key: "fase-3", label: "3. Fundamentos de psicopatología en la psicología", percent: 20, subcomponents: [
+  { key: "fase-3", label: "3. Fundamentos de psicopatología en la psicología", percent: 20, topicCount: 13, subcomponents: [
     "3.1 Psicopatología general",
     "3.2 Psicofarmacología básica y sus implicaciones psicológicas",
   ] },
-  { key: "fase-4", label: "4. Intervenciones psicosociales desde la Psicología", percent: 16, subcomponents: [
+  { key: "fase-4", label: "4. Intervenciones psicosociales desde la Psicología", percent: 16, topicCount: 5, subcomponents: [
     "4.1 Promoción y prevención comunitaria en salud mental: fases y alcances",
     "4.2 Problemáticas contemporáneas en el campo psicosocial",
   ] },
-  { key: "fase-5", label: "5. Ética, deontología y marco legal", percent: 9, subcomponents: [
+  { key: "fase-5", label: "5. Ética, deontología y marco legal", percent: 9, topicCount: 7, subcomponents: [
     "5.1 Fundamentos éticos",
     "5.2 Ética en intervenciones clínicas y en investigación",
   ] },

@@ -37,7 +37,7 @@ export const simulatorExams: SimulatorExamConfig[] = [
     structure: [
       "Cinco componentes de Psicología Clínica organizados en 12 subcomponentes.",
       "Preguntas de opción múltiple con una sola respuesta correcta.",
-      "Hasta 100 preguntas de un banco base de 264, con temporizador de 90 minutos.",
+      "100 preguntas de los 44 temas, con temporizador de 90 minutos.",
     ],
     categoryKeywords: ["psicologia", "psicología", "psychology", "clinica"],
     icon: Brain,

@@ -140,3 +140,38 @@ test('Psicología reparte los 100 reactivos y respeta los componentes habilitado
   assert.equal(oldDraft.length, 100);
   assert.ok(oldDraft.every(question => !question.id.startsWith('local-psicologia-ehep-2026-')));
 });
+
+test('Psicología exige las cinco cuotas y los 44 temas en cada intento nuevo', () => {
+  const { selectQuestionsForExam, fixedPsychologyAttemptSeedPrefix } = load('src/lib/localQuestions.ts');
+  const { getDefaultSimulatorSettings, psychologyComponentWeights } = load('src/lib/simulatorSettingsCatalog.ts');
+  const settings = { ...getDefaultSimulatorSettings('psicologia'), enabledPhases: ['fase-2'] };
+  const sample = psychologyComponentWeights.flatMap(({ key, label, topicCount }, component) =>
+    Array.from({ length: topicCount * 6 }, (_, index) => ({
+      id: `local-psicologia-ehep-2026-${component + 1}.1.${Math.floor(index / 6) + 1}-${index % 6 + 1}`,
+      phase: key,
+      category: `Psicología - ${label}`,
+      question_text: `Pregunta de prueba ${key} número ${index}`,
+      option_a: 'Alternativa uno',
+      option_b: 'Alternativa dos',
+      option_c: 'Alternativa tres',
+      option_d: 'Alternativa cuatro',
+      correct_option: 'A',
+    })),
+  );
+  const seed = fixedPsychologyAttemptSeedPrefix + '00000000-0000-4000-8000-000000000001';
+  const selected = selectQuestionsForExam('psicologia', sample, seed, settings);
+  assert.equal(selected.length, 100);
+  assert.equal(new Set(selected.map(question => question.id)).size, 100);
+  assert.deepEqual(selected, selectQuestionsForExam('psicologia', sample, seed, settings));
+  assert.notDeepEqual(selected, selectQuestionsForExam('psicologia', sample, seed.replace(/1$/, '2'), settings));
+  for (const { key, percent, topicCount } of psychologyComponentWeights) {
+    const component = selected.filter(question => question.phase === key);
+    assert.equal(component.length, percent);
+    assert.equal(new Set(component.map(question => question.id.split('-').at(-2))).size, topicCount);
+  }
+
+  const withoutTopic = sample.filter(question => !question.id.includes('-5.1.1-'));
+  assert.deepEqual(selectQuestionsForExam('psicologia', withoutTopic, seed, settings), []);
+  const belowQuota = sample.filter(question => question.phase !== 'fase-2' || /-[123]$/.test(question.id));
+  assert.deepEqual(selectQuestionsForExam('psicologia', belowQuota, seed, settings), []);
+});

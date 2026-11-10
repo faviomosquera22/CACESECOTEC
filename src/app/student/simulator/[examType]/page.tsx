@@ -12,6 +12,8 @@ import { SimulatorClient } from "@/components/SimulatorClient";
 import type { Json, Question } from "@/lib/database.types";
 import {
   examDistributionBySlug,
+  fixedPsychologyAttemptSeedPrefix,
+  psychologyExamDistribution,
   getIntegral18And19Questions,
   getLocalQuestionsForExam,
   isLocalQuestionSet,
@@ -42,7 +44,7 @@ type StudentExamSimulatorPageProps = {
 export const dynamic = "force-dynamic";
 
 const attemptSeedPattern =
-  /^(?:ehep-2026-)?[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  /^(?:ehep-2026-(?:fixed-)?)?[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function getStoredAttemptSeed(draft: Json | null | undefined) {
   if (!draft || typeof draft !== "object" || Array.isArray(draft)) {
@@ -78,28 +80,22 @@ export default async function StudentExamSimulatorPage({
     typeof query.attempt === "string" && attemptSeedPattern.test(query.attempt)
       ? query.attempt
       : null;
-  const [{ data: storedDraft }, simulatorSettings] = await Promise.all([
-    supabase
-      .from("simulation_drafts")
-      .select("draft")
-      .eq("student_id", profile.id)
-      .eq("exam_slug", exam.slug)
-      .maybeSingle<{ draft: Json }>(),
-    getCareerSimulatorSettings(
-      supabase,
-      exam.slug,
-      profile.created_by_teacher_id,
-    ),
-  ]);
+  const { data: storedDraft } = await supabase
+    .from("simulation_drafts")
+    .select("draft")
+    .eq("student_id", profile.id)
+    .eq("exam_slug", exam.slug)
+    .maybeSingle<{ draft: Json }>();
   const storedAttemptSeed = getStoredAttemptSeed(storedDraft?.draft);
   const isPsychology = exam.slug === "psicologia";
   const newAttemptSeed = isPsychology
-    ? requestedAttemptSeed?.startsWith(psychologyAttemptSeedPrefix)
+    ? requestedAttemptSeed?.startsWith(fixedPsychologyAttemptSeedPrefix)
       ? requestedAttemptSeed
-      : `${psychologyAttemptSeedPrefix}${randomUUID()}`
+      : `${fixedPsychologyAttemptSeedPrefix}${randomUUID()}`
     : requestedAttemptSeed ?? randomUUID();
   const attemptSeed = storedAttemptSeed ??
     (storedDraft && isPsychology ? legacyFixedPsychologyAttemptSeed : newAttemptSeed);
+  const fixedPsychology = isPsychology && attemptSeed.startsWith(fixedPsychologyAttemptSeedPrefix);
   const resumeLegacyPsychology = isPsychology &&
     !attemptSeed.startsWith(psychologyAttemptSeedPrefix);
 
@@ -109,11 +105,20 @@ export default async function StudentExamSimulatorPage({
     );
   }
 
-  const examDistribution = resumeLegacyPsychology ? [] : examDistributionBySlug[exam.slug] ?? [];
+  const simulatorSettings = fixedPsychology
+    ? getDefaultSimulatorSettings(exam.slug)
+    : await getCareerSimulatorSettings(supabase, exam.slug, profile.created_by_teacher_id);
+  const examDistribution: Array<{
+    area: string;
+    percent: number;
+    count: number;
+    topicCount?: number;
+    subcomponentCount?: number;
+  }> = fixedPsychology ? psychologyExamDistribution : isPsychology ? [] : examDistributionBySlug.enfermeria;
   const customComponents = await getCustomComponents(exam.slug, resumeLegacyPsychology);
   let manualQuestions: Question[] = [];
   try {
-    const rows = await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);
+    const rows = fixedPsychology ? [] : await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);
     manualQuestions = [
       ...rows.map(manualQuestionForSimulator),
       ...(resumeLegacyPsychology || !isPsychology ? await getImportedQuestions(exam.slug, customComponents) : []),
@@ -171,7 +176,7 @@ export default async function StudentExamSimulatorPage({
   const Icon = exam.icon;
   const settingsCatalog = getSimulatorSettingsCatalog(exam.slug, customComponents, removedComponentIds(removals));
   const defaultSettings = getDefaultSimulatorSettings(exam.slug);
-  const hasCustomSettings =
+  const hasCustomSettings = !fixedPsychology &&
     [...simulatorSettings.enabledPhases].sort().join("|") !==
     [...defaultSettings.enabledPhases].sort().join("|");
   const activePhaseLabels = settingsCatalog.phases
@@ -196,9 +201,9 @@ export default async function StudentExamSimulatorPage({
           No hay preguntas para {exam.shortTitle}
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500">
-          La configuración docente actual no coincide con preguntas disponibles
-          del banco de {exam.shortTitle}. Pide a tu docente que habilite otro
-          componente.
+          {fixedPsychology
+            ? "El banco debe cubrir las 100 preguntas y los 44 temas antes de iniciar el intento. Comunícalo a tu docente."
+            : `La configuración docente actual no coincide con preguntas disponibles del banco de ${exam.shortTitle}. Pide a tu docente que habilite otro componente.`}
         </p>
         <Link
           href="/student/dashboard"
@@ -246,7 +251,10 @@ export default async function StudentExamSimulatorPage({
                     <span className="font-semibold text-slate-950">
                       {item.count} preguntas
                     </span>{" "}
-                    ({item.percent}%): {item.area}
+                    ({item.percent}%) · {item.area}
+                    {item.topicCount !== undefined && (
+                      <p className="mt-1 text-xs">{item.subcomponentCount} subcomponentes · {item.topicCount} temas</p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -255,27 +263,31 @@ export default async function StudentExamSimulatorPage({
         </div>
       </section>
 
-      <section className="rounded-lg border border-violet-200 bg-violet-50 p-4 text-violet-950">
-        <div className="flex items-start gap-3">
-          <SlidersHorizontal
-            className="mt-0.5 h-5 w-5 shrink-0 text-violet-700"
-            aria-hidden="true"
-          />
-          <div>
-            <p className="text-sm font-semibold">Configuración del docente</p>
-            <p className="mt-1 text-sm leading-6 text-violet-800">
-              Este intento tiene {questions.length} pregunta
-              {questions.length === 1 ? "" : "s"}.
-              {` Componentes activos: ${activePhaseLabels.join(", ")}.`}
-            </p>
+      {!fixedPsychology && (
+        <section className="rounded-lg border border-violet-200 bg-violet-50 p-4 text-violet-950">
+          <div className="flex items-start gap-3">
+            <SlidersHorizontal
+              className="mt-0.5 h-5 w-5 shrink-0 text-violet-700"
+              aria-hidden="true"
+            />
+            <div>
+              <p className="text-sm font-semibold">Configuración del docente</p>
+              <p className="mt-1 text-sm leading-6 text-violet-800">
+                Este intento tiene {questions.length} pregunta
+                {questions.length === 1 ? "" : "s"}.
+                {` Componentes activos: ${activePhaseLabels.join(", ")}.`}
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {persistenceMode === "local" ? (
         <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-800">
           {isPsychology
-            ? `Banco de Psicología: ${questions.length} preguntas seleccionadas según la configuración docente, con sus argumentaciones de respuesta.`
+            ? fixedPsychology
+              ? "Banco de Psicología: 100 preguntas de los 5 componentes con cobertura de los 44 temas."
+              : `Banco de Psicología: ${questions.length} preguntas seleccionadas para el borrador en curso.`
             : `Usando banco local de ${exam.shortTitle} mientras Supabase no tenga la tabla de preguntas cargada.`}
         </div>
       ) : null}

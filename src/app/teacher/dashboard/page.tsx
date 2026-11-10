@@ -34,13 +34,20 @@ export default async function TeacherDashboardPage() {
         </p>
       </section>
 
-      <TeacherSimulatorSettings
-        career={teacherCareerScope}
-        initialSettings={simulatorSettings}
-        totalQuestionCount={sharedQuestions.length}
-        removedComponents={removedComponentIds(removals)}
-        customComponents={customComponents}
-      />
+      {teacherCareerScope === "psicologia" ? (
+        <section className="rounded-lg border border-slate-200 bg-white p-5">
+          <h3 className="font-semibold text-slate-950">Distribución fija de Psicología</h3>
+          <p className="mt-2 text-sm text-slate-600">Cada intento nuevo incluye 100 preguntas repartidas en los cinco componentes y cubre los 44 temas.</p>
+        </section>
+      ) : (
+        <TeacherSimulatorSettings
+          career={teacherCareerScope}
+          initialSettings={simulatorSettings}
+          totalQuestionCount={sharedQuestions.length}
+          removedComponents={removedComponentIds(removals)}
+          customComponents={customComponents}
+        />
+      )}
 
       <TeacherDashboardClient
         students={studentCards}
