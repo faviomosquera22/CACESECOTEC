@@ -21,9 +21,9 @@ export interface Database {
         Relationships: [];
       };
       question_components: {
-        Row: { key: string; career_slug: string; label: string; description: string; created_by: string; created_at: string };
-        Insert: { key?: string; career_slug: string; label: string; description?: string; created_by: string; created_at?: string };
-        Update: { label?: string; description?: string };
+        Row: { archived_at: string | null; key: string; career_slug: string; label: string; description: string; created_by: string; created_at: string };
+        Insert: { archived_at?: string | null; key?: string; career_slug: string; label: string; description?: string; created_by: string; created_at?: string };
+        Update: { archived_at?: string | null; label?: string; description?: string };
         Relationships: [];
       };
       imported_questions: {

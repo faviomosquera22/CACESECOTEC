@@ -110,7 +110,7 @@ export default async function StudentExamSimulatorPage({
   }
 
   const examDistribution = resumeLegacyPsychology ? [] : examDistributionBySlug[exam.slug] ?? [];
-  const customComponents = await getCustomComponents(exam.slug);
+  const customComponents = await getCustomComponents(exam.slug, resumeLegacyPsychology);
   let manualQuestions: Question[] = [];
   try {
     const rows = await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);

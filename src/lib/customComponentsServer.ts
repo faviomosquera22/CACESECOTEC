@@ -5,10 +5,13 @@ import type { CustomComponent } from "@/lib/customComponents";
 import { getSimulatorSettingsCatalog } from "@/lib/simulatorSettingsCatalog";
 import type { Question } from "@/lib/database.types";
 
-export async function getCustomComponents(career: StudentCareerSlug): Promise<CustomComponent[]> {
+export async function getCustomComponents(career: StudentCareerSlug, includeArchived = false): Promise<CustomComponent[]> {
   const result: CustomComponent[] = [];
   for (let offset = 0; ; offset += 500) {
-    const { data, error } = await getSupabaseAdminClient().from("question_components").select("key,label,description").eq("career_slug", career).order("created_at").order("key").range(offset, offset + 499);
+    const query = getSupabaseAdminClient().from("question_components")
+      .select("key,label,description").eq("career_slug", career);
+    if (!includeArchived) query.is("archived_at", null);
+    const { data, error } = await query.order("created_at").order("key").range(offset, offset + 499);
     if (error) throw new Error("No se pudieron cargar los componentes. Reintenta.");
     result.push(...data as CustomComponent[]);
     if (data.length < 500) return result;
