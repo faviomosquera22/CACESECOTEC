@@ -142,7 +142,7 @@ test('Psicología reparte los 100 reactivos y respeta los componentes habilitado
 });
 
 test('Psicología exige las cinco cuotas y los 44 temas en cada intento nuevo', () => {
-  const { selectQuestionsForExam, fixedPsychologyAttemptSeedPrefix } = load('src/lib/localQuestions.ts');
+  const { selectQuestionsForExam, fixedPsychologyAttemptSeedPrefix, getPsychologyAttemptPrefix } = load('src/lib/localQuestions.ts');
   const { getDefaultSimulatorSettings, psychologyComponentWeights } = load('src/lib/simulatorSettingsCatalog.ts');
   const settings = { ...getDefaultSimulatorSettings('psicologia'), enabledPhases: ['fase-2'] };
   const sample = psychologyComponentWeights.flatMap(({ key, label, topicCount }, component) =>
@@ -169,6 +169,18 @@ test('Psicología exige las cinco cuotas y los 44 temas en cada intento nuevo', 
     assert.equal(component.length, percent);
     assert.equal(new Set(component.map(question => question.id.split('-').at(-2))).size, topicCount);
   }
+
+  const singlePrefix = getPsychologyAttemptPrefix(['fase-2']);
+  const singleSeed = singlePrefix + '00000000-0000-4000-8000-000000000001';
+  const single = selectQuestionsForExam('psicologia', sample, singleSeed, { ...settings, enabledPhases: ['fase-5'] });
+  assert.equal(single.length, 36);
+  assert.ok(single.every(question => question.phase === 'fase-2'));
+
+  const multiplePrefix = getPsychologyAttemptPrefix(['fase-3', 'fase-1']);
+  const multiple = selectQuestionsForExam('psicologia', sample, multiplePrefix + '00000000-0000-4000-8000-000000000001', settings);
+  assert.equal(multiple.length, 100);
+  assert.deepEqual([...new Set(multiple.map(question => question.phase))].sort(), ['fase-1', 'fase-3']);
+  assert.equal(getPsychologyAttemptPrefix(psychologyComponentWeights.map(({ key }) => key)), fixedPsychologyAttemptSeedPrefix);
 
   const withoutTopic = sample.filter(question => !question.id.includes('-5.1.1-'));
   assert.deepEqual(selectQuestionsForExam('psicologia', withoutTopic, seed, settings), []);

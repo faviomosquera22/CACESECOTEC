@@ -40,14 +40,12 @@ type SettingsResponse = {
 function SwitchControl({
   checked,
   disabled,
-  readOnly,
   label,
   description,
   onChange,
 }: {
   checked: boolean;
   disabled?: boolean;
-  readOnly?: boolean;
   label: string;
   description: string;
   onChange: () => void;
@@ -57,9 +55,9 @@ function SwitchControl({
       type="button"
       role="switch"
       aria-checked={checked}
-      disabled={disabled || readOnly}
+      disabled={disabled}
       onClick={onChange}
-      className={`flex w-full items-center justify-between gap-4 rounded-lg border p-4 text-left transition disabled:cursor-not-allowed ${disabled ? "opacity-60" : ""} ${
+      className={`flex w-full items-center justify-between gap-4 rounded-lg border p-4 text-left transition disabled:cursor-not-allowed disabled:opacity-60 ${
         checked
           ? "border-sky-200 bg-sky-50"
           : "border-slate-200 bg-white hover:bg-slate-50"
@@ -100,13 +98,13 @@ export function TeacherSimulatorSettings({
   removedComponents = [],
   totalQuestionCount,
 }: TeacherSimulatorSettingsProps) {
-  const fixedDistribution = career === "psicologia";
-  const phases = fixedDistribution
+  const isPsychology = career === "psicologia";
+  const phases = isPsychology
     ? psychologyComponentWeights.map(({ key, label, percent, subcomponents, topicCount }, index) => ({
         key,
         label: label.replace(/^\d+\. /, `Componente ${index + 1}: `),
-        description: `${percent} preguntas por intento · ${subcomponents.length} subcomponentes · ${topicCount} temas`,
-      }))
+        description: `${percent} preguntas con los cinco activos · ${subcomponents.length} subcomponentes · ${topicCount} temas`,
+      })).filter(phase => !removedComponents.includes(phase.key))
     : getSimulatorSettingsCatalog(career, customComponents, removedComponents).phases;
   const sanitizedInitialSettings = useMemo(
     () => sanitizeSimulatorSettings(career, initialSettings, customComponents, removedComponents),
@@ -123,7 +121,7 @@ export function TeacherSimulatorSettings({
   const hasUnsavedChanges =
     [...enabledPhases].sort().join("|") !==
       [...savedSettings.enabledPhases].sort().join("|");
-  const activeCount = fixedDistribution ? phases.length : enabledPhases.length;
+  const activeCount = phases.filter(phase => enabledPhases.includes(phase.key)).length;
   const hasValidSelection = activeCount > 0;
 
   function togglePhase(phase: SimulatorPhaseKey) {
@@ -137,7 +135,7 @@ export function TeacherSimulatorSettings({
   }
 
   async function saveSettings() {
-    if (fixedDistribution || !hasValidSelection || isSaving) {
+    if (!hasValidSelection || isSaving) {
       return;
     }
 
@@ -200,8 +198,8 @@ export function TeacherSimulatorSettings({
               Preguntas del simulador
             </h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
-              {fixedDistribution
-                ? "Cada intento incluye 100 preguntas de los cinco componentes del EHEP."
+              {isPsychology
+                ? "Elige los componentes que estarán disponibles para tus estudiantes en los próximos intentos."
                 : "Define qué preguntas estarán disponibles en los próximos intentos de los estudiantes de tu carrera."}
             </p>
           </div>
@@ -225,16 +223,15 @@ export function TeacherSimulatorSettings({
             </h3>
           </div>
           <p className="mt-1 text-xs leading-5 text-slate-500">
-            {fixedDistribution
-              ? "Los cinco componentes están activos para cumplir la distribución fija de Psicología."
+            {isPsychology
+              ? "Con los cinco activos se aplica el reparto de 100 preguntas del EHEP. Con menos componentes, se usan hasta 100 preguntas de los seleccionados."
               : "Las preguntas del simulador se seleccionan únicamente de los componentes que mantengas activos."}
           </p>
           <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
             {phases.map((phase) => (
               <SwitchControl
                 key={phase.key}
-                checked={fixedDistribution || enabledPhases.includes(phase.key)}
-                readOnly={fixedDistribution}
+                checked={enabledPhases.includes(phase.key)}
                 disabled={isSaving}
                 label={phase.label}
                 description={phase.description}
@@ -277,7 +274,7 @@ export function TeacherSimulatorSettings({
         <button
           type="button"
           onClick={() => void saveSettings()}
-          disabled={fixedDistribution || !hasValidSelection || !hasUnsavedChanges || isSaving}
+          disabled={!hasValidSelection || !hasUnsavedChanges || isSaving}
           className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-slate-950 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isSaving ? (

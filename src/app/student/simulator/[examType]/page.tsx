@@ -13,6 +13,8 @@ import type { Json, Question } from "@/lib/database.types";
 import {
   examDistributionBySlug,
   fixedPsychologyAttemptSeedPrefix,
+  getPsychologyAttemptPrefix,
+  getSelectedPsychologyPhases,
   psychologyExamDistribution,
   getIntegral18And19Questions,
   getLocalQuestionsForExam,
@@ -44,7 +46,7 @@ type StudentExamSimulatorPageProps = {
 export const dynamic = "force-dynamic";
 
 const attemptSeedPattern =
-  /^(?:ehep-2026-(?:fixed-)?)?[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  /^(?:ehep-2026-(?:fixed-|select-(?:0|[1-5]{1,5})-)?)?[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function getStoredAttemptSeed(draft: Json | null | undefined) {
   if (!draft || typeof draft !== "object" || Array.isArray(draft)) {
@@ -88,14 +90,23 @@ export default async function StudentExamSimulatorPage({
     .maybeSingle<{ draft: Json }>();
   const storedAttemptSeed = getStoredAttemptSeed(storedDraft?.draft);
   const isPsychology = exam.slug === "psicologia";
-  const newAttemptSeed = isPsychology
-    ? requestedAttemptSeed?.startsWith(fixedPsychologyAttemptSeedPrefix)
-      ? requestedAttemptSeed
-      : `${fixedPsychologyAttemptSeedPrefix}${randomUUID()}`
-    : requestedAttemptSeed ?? randomUUID();
-  const attemptSeed = storedAttemptSeed ??
-    (storedDraft && isPsychology ? legacyFixedPsychologyAttemptSeed : newAttemptSeed);
+  let attemptSeed = storedAttemptSeed;
+  if (!attemptSeed && isPsychology) {
+    if (storedDraft) {
+      attemptSeed = legacyFixedPsychologyAttemptSeed;
+    } else {
+      const settings = await getCareerSimulatorSettings(supabase, exam.slug, profile.created_by_teacher_id);
+      const prefix = getPsychologyAttemptPrefix(settings.enabledPhases);
+      attemptSeed = requestedAttemptSeed?.startsWith(prefix)
+        ? requestedAttemptSeed
+        : `${prefix}${randomUUID()}`;
+    }
+  }
+  attemptSeed ??= requestedAttemptSeed ?? randomUUID();
+
   const fixedPsychology = isPsychology && attemptSeed.startsWith(fixedPsychologyAttemptSeedPrefix);
+  const selectedPsychologyPhases = isPsychology ? getSelectedPsychologyPhases(attemptSeed) : null;
+  const usesOfficialPsychologyBank = fixedPsychology || selectedPsychologyPhases !== null;
   const resumeLegacyPsychology = isPsychology &&
     !attemptSeed.startsWith(psychologyAttemptSeedPrefix);
 
@@ -105,8 +116,11 @@ export default async function StudentExamSimulatorPage({
     );
   }
 
-  const simulatorSettings = fixedPsychology
-    ? getDefaultSimulatorSettings(exam.slug)
+  const simulatorSettings = usesOfficialPsychologyBank
+    ? {
+        ...getDefaultSimulatorSettings(exam.slug),
+        ...(selectedPsychologyPhases ? { enabledPhases: selectedPsychologyPhases } : {}),
+      }
     : await getCareerSimulatorSettings(supabase, exam.slug, profile.created_by_teacher_id);
   const examDistribution: Array<{
     area: string;
@@ -118,7 +132,7 @@ export default async function StudentExamSimulatorPage({
   const customComponents = await getCustomComponents(exam.slug, resumeLegacyPsychology);
   let manualQuestions: Question[] = [];
   try {
-    const rows = fixedPsychology ? [] : await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);
+    const rows = usesOfficialPsychologyBank ? [] : await getManualQuestions(supabase, profile.created_by_teacher_id, exam.slug, true);
     manualQuestions = [
       ...rows.map(manualQuestionForSimulator),
       ...(resumeLegacyPsychology || !isPsychology ? await getImportedQuestions(exam.slug, customComponents) : []),
@@ -287,7 +301,7 @@ export default async function StudentExamSimulatorPage({
           {isPsychology
             ? fixedPsychology
               ? "Banco de Psicología: 100 preguntas de los 5 componentes con cobertura de los 44 temas."
-              : `Banco de Psicología: ${questions.length} preguntas seleccionadas para el borrador en curso.`
+              : `Banco de Psicología: ${questions.length} preguntas de los componentes seleccionados para este intento.`
             : `Usando banco local de ${exam.shortTitle} mientras Supabase no tenga la tabla de preguntas cargada.`}
         </div>
       ) : null}

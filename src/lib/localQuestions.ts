@@ -16,6 +16,21 @@ import type { StudentCareerSlug } from "@/lib/studentCareer";
 export const psychologyAttemptSeedPrefix = "ehep-2026-";
 export const fixedPsychologyAttemptSeedPrefix = `${psychologyAttemptSeedPrefix}fixed-`;
 
+const selectedPsychologyAttemptSeedPrefix = `${psychologyAttemptSeedPrefix}select-`;
+
+export function getPsychologyAttemptPrefix(enabledPhases: SimulatorSettings["enabledPhases"]) {
+  const selected = psychologyComponentWeights.filter(({ key }) => enabledPhases.includes(key));
+  return selected.length === psychologyComponentWeights.length
+    ? fixedPsychologyAttemptSeedPrefix
+    : `${selectedPsychologyAttemptSeedPrefix}${selected.map(({ key }) => key.slice(-1)).join("") || "0"}-`;
+}
+
+export function getSelectedPsychologyPhases(attemptSeed?: string) {
+  if (!attemptSeed?.startsWith(selectedPsychologyAttemptSeedPrefix)) return null;
+  const selected = attemptSeed.slice(selectedPsychologyAttemptSeedPrefix.length).split("-")[0];
+  return psychologyComponentWeights.filter(({ key }) => selected.includes(key.slice(-1))).map(({ key }) => key);
+}
+
 export const legacyFixedPsychologyAttemptSeed =
   "00000000-0000-4000-8000-000000000000";
 
@@ -638,6 +653,16 @@ export function selectPsychologyExamQuestions(
   questions: Question[],
   attemptSeed?: string,
 ) {
+  const selectedPhases = getSelectedPsychologyPhases(attemptSeed);
+  if (selectedPhases) {
+    const eligible = questions.filter(question =>
+      question.id.startsWith("local-psicologia-ehep-2026-") &&
+      selectedPhases.some(phase => question.phase === phase) &&
+      isUsableQuestion(question),
+    );
+    return shuffleQuestions(dedupeQuestions(eligible), getRandomSource(attemptSeed)).slice(0, psychologyExamQuestionCount);
+  }
+
   if (!attemptSeed || attemptSeed.startsWith(fixedPsychologyAttemptSeedPrefix)) {
     return selectFixedPsychologyExamQuestions(questions, attemptSeed);
   }
@@ -683,7 +708,8 @@ export function selectQuestionsForExam(
   settings?: SimulatorSettings,
 ) {
   questions = questions.filter(question => !isRetiredQuestion(question));
-  if (examType === "psicologia" && (!attemptSeed || attemptSeed.startsWith(fixedPsychologyAttemptSeedPrefix))) {
+  if (examType === "psicologia" &&
+      (!attemptSeed || attemptSeed.startsWith(fixedPsychologyAttemptSeedPrefix) || getSelectedPsychologyPhases(attemptSeed))) {
     return selectPsychologyExamQuestions(questions, attemptSeed);
   }
   let filteredQuestions =
