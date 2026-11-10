@@ -178,7 +178,10 @@ test('Psicología exige las cinco cuotas y los 44 temas en cada intento nuevo', 
 
   const multiplePrefix = getPsychologyAttemptPrefix(['fase-3', 'fase-1']);
   const multiple = selectQuestionsForExam('psicologia', sample, multiplePrefix + '00000000-0000-4000-8000-000000000001', settings);
-  assert.equal(multiple.length, 100);
+  assert.equal(multiple.length, 156);
+  assert.equal(new Set(multiple.map(question => question.id)).size, 156);
+  const cappedSeed = multiplePrefix.replace("all-", "select-") + '00000000-0000-4000-8000-000000000001';
+  assert.equal(selectQuestionsForExam('psicologia', sample, cappedSeed, settings).length, 100);
   assert.deepEqual([...new Set(multiple.map(question => question.phase))].sort(), ['fase-1', 'fase-3']);
   assert.equal(getPsychologyAttemptPrefix(psychologyComponentWeights.map(({ key }) => key)), fixedPsychologyAttemptSeedPrefix);
 

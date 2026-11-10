@@ -16,7 +16,8 @@ import type { StudentCareerSlug } from "@/lib/studentCareer";
 export const psychologyAttemptSeedPrefix = "ehep-2026-";
 export const fixedPsychologyAttemptSeedPrefix = `${psychologyAttemptSeedPrefix}fixed-`;
 
-const selectedPsychologyAttemptSeedPrefix = `${psychologyAttemptSeedPrefix}select-`;
+const selectedPsychologyAttemptSeedPrefix = `${psychologyAttemptSeedPrefix}all-`;
+const cappedPsychologyAttemptSeedPrefix = `${psychologyAttemptSeedPrefix}select-`;
 
 export function getPsychologyAttemptPrefix(enabledPhases: SimulatorSettings["enabledPhases"]) {
   const selected = psychologyComponentWeights.filter(({ key }) => enabledPhases.includes(key));
@@ -26,8 +27,10 @@ export function getPsychologyAttemptPrefix(enabledPhases: SimulatorSettings["ena
 }
 
 export function getSelectedPsychologyPhases(attemptSeed?: string) {
-  if (!attemptSeed?.startsWith(selectedPsychologyAttemptSeedPrefix)) return null;
-  const selected = attemptSeed.slice(selectedPsychologyAttemptSeedPrefix.length).split("-")[0];
+  const prefix = [selectedPsychologyAttemptSeedPrefix, cappedPsychologyAttemptSeedPrefix]
+    .find(value => attemptSeed?.startsWith(value));
+  if (!prefix || !attemptSeed) return null;
+  const selected = attemptSeed.slice(prefix.length).split("-")[0];
   return psychologyComponentWeights.filter(({ key }) => selected.includes(key.slice(-1))).map(({ key }) => key);
 }
 
@@ -660,7 +663,10 @@ export function selectPsychologyExamQuestions(
       selectedPhases.some(phase => question.phase === phase) &&
       isUsableQuestion(question),
     );
-    return shuffleQuestions(dedupeQuestions(eligible), getRandomSource(attemptSeed)).slice(0, psychologyExamQuestionCount);
+    const shuffled = shuffleQuestions(dedupeQuestions(eligible), getRandomSource(attemptSeed));
+    return attemptSeed?.startsWith(cappedPsychologyAttemptSeedPrefix)
+      ? shuffled.slice(0, psychologyExamQuestionCount)
+      : shuffled;
   }
 
   if (!attemptSeed || attemptSeed.startsWith(fixedPsychologyAttemptSeedPrefix)) {

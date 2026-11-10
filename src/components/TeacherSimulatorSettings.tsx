@@ -224,7 +224,7 @@ export function TeacherSimulatorSettings({
           </div>
           <p className="mt-1 text-xs leading-5 text-slate-500">
             {isPsychology
-              ? "Con los cinco activos se aplica el reparto de 100 preguntas del EHEP. Con menos componentes, se usan hasta 100 preguntas de los seleccionados."
+              ? "Con los cinco activos se aplica el reparto de 100 preguntas del EHEP. Con menos componentes, se incluyen todas las preguntas disponibles de los seleccionados."
               : "Las preguntas del simulador se seleccionan únicamente de los componentes que mantengas activos."}
           </p>
           <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
