@@ -30,6 +30,7 @@ import { StatCard } from "@/components/StatCard";
 import { StudentTransfer } from "@/components/StudentTransfer";
 import type { SimulationHistoryRecord } from "@/components/SimulationHistoryTable";
 import { average, formatDate, formatScore } from "@/lib/format";
+import { mergeSimulationRecords } from "@/lib/cloudSimulationStorage";
 import {
   getLocalSimulationIndexKey,
   subscribeToLocalSimulationChanges,
@@ -48,7 +49,7 @@ type TeacherDashboardClientProps = {
 type CareerFilter = "all" | StudentCareerSlug;
 type ActivityFilter = "all" | "active" | "inactive" | "low-score";
 type AccessFilter = "all" | "enabled" | "disabled";
-type SortKey = "name" | "average" | "lastActivity" | "simulations";
+type SortKey = "name" | "latestScore" | "lastActivity" | "simulations";
 type CareerOverride = {
   careerSlug: StudentCareerSlug;
   careerLabel: string;
@@ -258,7 +259,13 @@ export function TeacherDashboardClient({
         0,
         ...localSimulations.map((simulation) => simulation.score ?? 0),
       );
-      const latestLocalSimulation = localSimulations[0] ?? null;
+      const latestLocalSimulation = mergeSimulationRecords(localSimulations)[0];
+      const latestLocalDate =
+        latestLocalSimulation?.finished_at ?? latestLocalSimulation?.created_at;
+      const useLocalScore =
+        latestLocalSimulation &&
+        (!student.lastActivity ||
+          getDateTime(latestLocalDate ?? null) > getDateTime(student.lastActivity));
 
       return {
         ...student,
@@ -268,10 +275,12 @@ export function TeacherDashboardClient({
             ? (serverScoreTotal + localScoreTotal) / totalSimulations
             : 0,
         bestScore: Math.max(student.bestScore, localBestScore),
+        latestScore: useLocalScore
+          ? latestLocalSimulation.score ?? null
+          : student.latestScore,
         lastActivity: getLatestDate([
           student.lastActivity,
-          latestLocalSimulation?.finished_at,
-          latestLocalSimulation?.created_at,
+          latestLocalDate,
         ]),
       };
     });
@@ -344,8 +353,8 @@ export function TeacherDashboardClient({
 
   const sortedStudents = useMemo(() => {
     return [...filteredStudents].sort((left, right) => {
-      if (sortKey === "average") {
-        return right.averageScore - left.averageScore;
+      if (sortKey === "latestScore") {
+        return (right.latestScore ?? -1) - (left.latestScore ?? -1);
       }
 
       if (sortKey === "simulations") {
@@ -962,7 +971,7 @@ export function TeacherDashboardClient({
                   className="h-full w-full bg-transparent text-sm font-semibold text-slate-700 outline-none"
                 >
                   <option value="lastActivity">Última actividad</option>
-                  <option value="average">Promedio</option>
+                  <option value="latestScore">Última nota</option>
                   <option value="simulations">Simulaciones</option>
                   <option value="name">Nombre</option>
                 </select>
@@ -1022,7 +1031,7 @@ export function TeacherDashboardClient({
                   <th className="px-4 py-3">Estado</th>
                   <th className="px-4 py-3">Acceso al sitio</th>
                   <th className="px-4 py-3 text-right">Simulaciones</th>
-                  <th className="px-4 py-3 text-right">Promedio</th>
+                  <th className="px-4 py-3 text-right">Última nota</th>
                   <th className="px-4 py-3 text-right">Mejor</th>
                   <th className="px-4 py-3">Última actividad</th>
                   <th className="px-4 py-3 text-right">Acción</th>
@@ -1111,7 +1120,9 @@ export function TeacherDashboardClient({
                         {student.simulationsCount}
                       </td>
                       <td className="px-4 py-4 text-right font-semibold text-slate-950">
-                        {formatScore(student.averageScore)}
+                        {student.latestScore == null
+                          ? "—"
+                          : formatScore(student.latestScore)}
                       </td>
                       <td className="px-4 py-4 text-right font-semibold text-slate-950">
                         {formatScore(student.bestScore)}

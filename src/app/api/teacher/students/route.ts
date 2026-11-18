@@ -212,6 +212,7 @@ export async function POST(request: Request) {
         careerLabel: profileCareer?.label ?? career.label,
         simulationsCount: 0,
         averageScore: 0,
+        latestScore: null,
         bestScore: 0,
         lastActivity: null,
         simulatorAccessEnabled: false,

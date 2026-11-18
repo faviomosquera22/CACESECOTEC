@@ -118,6 +118,7 @@ export async function getTeacherStudentCards(
       averageScore: average(
         studentSimulations.map((simulation) => simulation.score),
       ),
+      latestScore: latestSimulation?.score ?? null,
       bestScore: getBestScore(studentSimulations),
       lastActivity: latestSimulation ? getSimulationDate(latestSimulation) : null,
       simulatorAccessEnabled: accessByStudent.get(student.id) ?? false,

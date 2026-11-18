@@ -20,6 +20,7 @@ export type StudentCardData = {
   careerLabel: string;
   simulationsCount: number;
   averageScore: number;
+  latestScore: number | null;
   bestScore: number;
   lastActivity: string | null;
   simulatorAccessEnabled: boolean;
@@ -66,10 +67,10 @@ export function StudentCard({ student }: StudentCardProps) {
         <div className="rounded-lg bg-slate-50 p-3">
           <dt className="flex items-center gap-2 text-slate-500">
             <TrendingUp className="h-4 w-4" aria-hidden="true" />
-            Promedio
+            Última nota
           </dt>
           <dd className="mt-2 text-xl font-semibold text-slate-950">
-            {formatScore(student.averageScore)}
+            {student.latestScore == null ? "—" : formatScore(student.latestScore)}
           </dd>
         </div>
         <div className="rounded-lg bg-slate-50 p-3">
