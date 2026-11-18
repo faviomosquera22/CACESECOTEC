@@ -111,6 +111,7 @@ export interface Database {
         Row: {
           teacher_id: string;
           career_slug: string;
+          duration_minutes: number | null;
           enabled_difficulties: string[];
           enabled_categories: string[];
           enabled_phases: string[];
@@ -120,6 +121,7 @@ export interface Database {
         Insert: {
           teacher_id: string;
           career_slug: string;
+          duration_minutes?: number | null;
           enabled_difficulties?: string[];
           enabled_categories?: string[];
           enabled_phases?: string[];
@@ -129,6 +131,7 @@ export interface Database {
         Update: {
           teacher_id?: string;
           career_slug?: string;
+          duration_minutes?: number | null;
           enabled_difficulties?: string[];
           enabled_categories?: string[];
           enabled_phases?: string[];

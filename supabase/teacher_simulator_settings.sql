@@ -124,3 +124,11 @@ using (
 );
 
 notify pgrst, 'reload schema';
+
+-- Duración configurable de Psicología. NULL utiliza el valor por carrera
+-- (Psicología: 140 minutos; Enfermería: 90 minutos).
+alter table public.teacher_simulator_settings
+add column if not exists duration_minutes integer
+check (duration_minutes between 60 and 150 and duration_minutes % 10 = 0);
+
+notify pgrst, 'reload schema';

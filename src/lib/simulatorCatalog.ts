@@ -36,7 +36,7 @@ export const simulatorExams: SimulatorExamConfig[] = [
       "Práctica con una selección rotativa del banco de Psicología según los componentes habilitados por tu docente.",
     structure: [
       "Cinco componentes de Psicología Clínica organizados en 12 subcomponentes.",
-      "Preguntas de opción múltiple con una sola respuesta correcta y temporizador de 90 minutos.",
+      "Preguntas de opción múltiple con una sola respuesta correcta. Tiempo configurable por tu docente de 60 a 150 minutos (2 h 20 min por defecto).",
       "Con los cinco componentes activos son 100 preguntas. Con menos, se incluyen todas las disponibles de los seleccionados.",
     ],
     categoryKeywords: ["psicologia", "psicología", "psychology", "clinica"],

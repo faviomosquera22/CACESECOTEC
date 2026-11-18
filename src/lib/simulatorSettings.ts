@@ -15,6 +15,7 @@ import {
 type SimulatorSettingsRow = {
   teacher_id: string;
   career_slug: StudentCareerSlug;
+  duration_minutes: number | null;
   enabled_difficulties: SimulatorDifficultyKey[];
   enabled_categories: string[];
   enabled_phases: SimulatorPhaseKey[];
@@ -35,7 +36,7 @@ export async function getCareerSimulatorSettings(
   const { data, error } = await supabase
     .from("teacher_simulator_settings")
     .select(
-      "teacher_id, career_slug, enabled_difficulties, enabled_categories, enabled_phases, updated_at",
+      "teacher_id, career_slug, duration_minutes, enabled_difficulties, enabled_categories, enabled_phases, updated_at",
     )
     .eq("career_slug", career)
     .eq("teacher_id", teacherId)
@@ -66,6 +67,7 @@ export async function getCareerSimulatorSettings(
   }
 
   return sanitizeSimulatorSettings(career, {
+    durationMinutes: data.duration_minutes,
     enabledDifficulties: data.enabled_difficulties,
     enabledCategories: data.enabled_categories,
     enabledPhases: data.enabled_phases,

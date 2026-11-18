@@ -5,12 +5,14 @@ import { useMemo, useState } from "react";
 import {
   AlertCircle,
   CheckCircle2,
+  Clock3,
   Flag,
   Loader2,
   Save,
   SlidersHorizontal,
 } from "lucide-react";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
+import { formatSimulatorDuration, simulatorDurationOptions } from "@/lib/simulatorDuration";
 import {
   getSimulatorSettingsCatalog,
   psychologyComponentWeights,
@@ -29,6 +31,7 @@ type TeacherSimulatorSettingsProps = {
 
 type SettingsResponse = {
   settings?: {
+    durationMinutes?: unknown;
     enabledDifficulties?: unknown;
     enabledCategories?: unknown;
     enabledPhases?: unknown;
@@ -114,11 +117,13 @@ export function TeacherSimulatorSettings({
     sanitizedInitialSettings.enabledPhases,
   );
   const [savedSettings, setSavedSettings] = useState(sanitizedInitialSettings);
+  const [durationMinutes, setDurationMinutes] = useState(sanitizedInitialSettings.durationMinutes);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
   const hasUnsavedChanges =
+    durationMinutes !== savedSettings.durationMinutes ||
     [...enabledPhases].sort().join("|") !==
       [...savedSettings.enabledPhases].sort().join("|");
   const activeCount = phases.filter(phase => enabledPhases.includes(phase.key)).length;
@@ -149,6 +154,7 @@ export function TeacherSimulatorSettings({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           enabledPhases,
+          durationMinutes,
         }),
       });
       const payload = (await response
@@ -168,6 +174,7 @@ export function TeacherSimulatorSettings({
         removedComponents,
       );
       setEnabledPhases(nextSettings.enabledPhases);
+      setDurationMinutes(nextSettings.durationMinutes);
       setSavedSettings(nextSettings);
       setMessage(
         "Configuración guardada. Se aplicará a los próximos intentos de los estudiantes.",
@@ -195,7 +202,7 @@ export function TeacherSimulatorSettings({
               Configuración previa
             </p>
             <h2 className="mt-1 text-xl font-semibold tracking-normal text-slate-950">
-              Preguntas del simulador
+              Configuración del simulador
             </h2>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
               {isPsychology
@@ -215,6 +222,25 @@ export function TeacherSimulatorSettings({
       </div>
 
       <div className="mt-6 space-y-6">
+        {isPsychology ? (
+          <div>
+            <label htmlFor="simulator-duration" className="flex items-center gap-2 text-sm font-semibold text-slate-950">
+              <Clock3 className="h-4 w-4 text-sky-700" aria-hidden="true" />
+              Tiempo del simulador
+            </label>
+            <p id="simulator-duration-help" className="mt-1 text-xs leading-5 text-slate-500">
+              Elige entre 60 y 150 minutos. Se aplicará a los próximos intentos.
+            </p>
+            <select id="simulator-duration" aria-describedby="simulator-duration-help"
+              value={durationMinutes} disabled={isSaving}
+              onChange={event => { setDurationMinutes(Number(event.target.value)); setMessage(""); setError(""); }}
+              className="mt-3 h-11 w-full max-w-xs rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 disabled:opacity-60">
+              {simulatorDurationOptions.map(minutes => (
+                <option key={minutes} value={minutes}>{formatSimulatorDuration(minutes)} ({minutes} min)</option>
+              ))}
+            </select>
+          </div>
+        ) : null}
         <div>
           <div className="flex items-center gap-2">
             <Flag className="h-4 w-4 text-sky-700" aria-hidden="true" />

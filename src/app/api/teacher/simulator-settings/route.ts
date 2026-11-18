@@ -4,12 +4,14 @@ import { getCustomComponents } from "@/lib/customComponentsServer";
 import { getCurrentAuthContext } from "@/lib/auth";
 import { getSupabaseAdminClient } from "@/lib/supabaseAdmin";
 import { getTeacherCareerScope } from "@/lib/teacherCareerScope";
+import { getDefaultSimulatorDurationMinutes, isSimulatorDurationMinutes } from "@/lib/simulatorDuration";
 import {
   getSimulatorSettingsCatalog,
   type SimulatorPhaseKey,
 } from "@/lib/simulatorSettingsCatalog";
 
 type UpdateSimulatorSettingsBody = {
+  durationMinutes?: unknown;
   enabledPhases?: unknown;
 };
 
@@ -62,6 +64,12 @@ export async function PATCH(request: Request) {
 
   const enabledPhases = Array.from(new Set(body.enabledPhases));
 
+  if (body.durationMinutes !== undefined && !isSimulatorDurationMinutes(body.durationMinutes)) {
+    return Response.json({ error: "Selecciona una duración entre 60 y 150 minutos, en intervalos de 10 minutos." }, { status: 400 });
+  }
+  let durationMinutes = teacherCareerScope === "psicologia" && isSimulatorDurationMinutes(body.durationMinutes)
+    ? body.durationMinutes : getDefaultSimulatorDurationMinutes(teacherCareerScope);
+
   if (enabledPhases.length === 0) {
     return Response.json(
       { error: "Selecciona al menos un componente antes de guardar." },
@@ -89,12 +97,28 @@ export async function PATCH(request: Request) {
     );
   }
 
+  if (teacherCareerScope === "psicologia" && body.durationMinutes === undefined) {
+    const { data: currentSettings, error: readError } = await adminClient
+      .from("teacher_simulator_settings")
+      .select("duration_minutes")
+      .eq("teacher_id", authContext.profile.id)
+      .eq("career_slug", teacherCareerScope)
+      .maybeSingle<{ duration_minutes: number | null }>();
+    if (readError) {
+      return Response.json({ error: "No se pudo consultar la duración guardada. Intenta nuevamente." }, { status: 500 });
+    }
+    if (isSimulatorDurationMinutes(currentSettings?.duration_minutes)) {
+      durationMinutes = currentSettings.duration_minutes;
+    }
+  }
+
   const { error } = await adminClient
     .from("teacher_simulator_settings")
     .upsert(
       {
         teacher_id: authContext.profile.id,
         career_slug: teacherCareerScope,
+        duration_minutes: durationMinutes,
         enabled_difficulties: savedDifficulties,
         enabled_categories: savedCategories,
         enabled_phases: enabledPhases,
@@ -117,6 +141,7 @@ export async function PATCH(request: Request) {
 
   return Response.json({
     settings: {
+      durationMinutes,
       enabledDifficulties: savedDifficulties,
       enabledCategories: savedCategories,
       enabledPhases,

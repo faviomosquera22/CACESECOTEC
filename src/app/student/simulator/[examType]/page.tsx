@@ -89,14 +89,14 @@ export default async function StudentExamSimulatorPage({
     .eq("exam_slug", exam.slug)
     .maybeSingle<{ draft: Json }>();
   const storedAttemptSeed = getStoredAttemptSeed(storedDraft?.draft);
+  const teacherSettings = await getCareerSimulatorSettings(supabase, exam.slug, profile.created_by_teacher_id);
   const isPsychology = exam.slug === "psicologia";
   let attemptSeed = storedAttemptSeed;
   if (!attemptSeed && isPsychology) {
     if (storedDraft) {
       attemptSeed = legacyFixedPsychologyAttemptSeed;
     } else {
-      const settings = await getCareerSimulatorSettings(supabase, exam.slug, profile.created_by_teacher_id);
-      const prefix = getPsychologyAttemptPrefix(settings.enabledPhases);
+      const prefix = getPsychologyAttemptPrefix(teacherSettings.enabledPhases);
       attemptSeed = requestedAttemptSeed?.startsWith(prefix)
         ? requestedAttemptSeed
         : `${prefix}${randomUUID()}`;
@@ -121,7 +121,7 @@ export default async function StudentExamSimulatorPage({
         ...getDefaultSimulatorSettings(exam.slug),
         ...(selectedPsychologyPhases ? { enabledPhases: selectedPsychologyPhases } : {}),
       }
-    : await getCareerSimulatorSettings(supabase, exam.slug, profile.created_by_teacher_id);
+    : teacherSettings;
   const examDistribution: Array<{
     area: string;
     percent: number;
@@ -311,6 +311,7 @@ export default async function StudentExamSimulatorPage({
         studentId={profile.id}
         examSlug={exam.slug}
         attemptSeed={attemptSeed}
+        durationMinutes={teacherSettings.durationMinutes}
         persistenceMode={persistenceMode}
         draftStorageKey={`simulation-draft:${profile.id}:${exam.slug}`}
       />

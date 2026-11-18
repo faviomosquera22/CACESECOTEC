@@ -12,13 +12,13 @@ const draft = (values = {}) => ({ version: 4, simulationSeconds: 5400, timeLeft:
   answers: { q1: 'A' }, comments: {}, attemptSeed: 'attempt-one', ...values });
 
 // Exercise the component's effects with a controlled clock and persistence, without a database.
-function session({ remote = null, local = null, legacy = null, deferSave = false } = {}) {
+function session({ remote = null, local = null, legacy = null, deferSave = false, examSlug = 'enfermeria', durationMinutes, persistenceMode = 'local' } = {}) {
   let now = Date.parse('2026-11-04T12:00:00Z');
   let cursor = 0, dirty = true, tree, nextTimer = 0, releaseSave;
   const hooks = [], effects = [], jobs = [], timers = new Map(), events = [];
   const storage = new Map(local ? [['test-draft', JSON.stringify(local)]] : []);
-  const props = { studentId: 'student', examSlug: 'enfermeria', attemptSeed: 'attempt-one',
-    persistenceMode: 'local', draftStorageKey: 'test-draft',
+  const props = { studentId: 'student', examSlug, durationMinutes, attemptSeed: 'attempt-one',
+    persistenceMode, draftStorageKey: 'test-draft',
     questions: [{ id: 'q1', correct_option: 'A' }, { id: 'q2', correct_option: 'B' }] };
   const react = {
     useState(initial) {
@@ -60,7 +60,7 @@ function session({ remote = null, local = null, legacy = null, deferSave = false
       },
       then(resolve, reject) {
         if (operation === 'delete') { events.push(['delete', table]); remote = null; }
-        return Promise.resolve({ data: legacy ? [{ status: 'draft:enfermeria:' + Buffer.from(JSON.stringify(legacy)).toString('base64'), created_at: legacy.updatedAt }] : [], error: null }).then(resolve, reject);
+        return Promise.resolve({ data: legacy ? [{ status: 'draft:' + examSlug + ':' + Buffer.from(JSON.stringify(legacy)).toString('base64'), created_at: legacy.updatedAt }] : [], error: null }).then(resolve, reject);
       },
     };
     return query;
@@ -68,6 +68,7 @@ function session({ remote = null, local = null, legacy = null, deferSave = false
   const mocks = {
     react, 'next/navigation': { useRouter: () => ({ push: url => events.push(['navigate', url]), refresh() {} }) },
     '@/lib/supabaseClient': { getSupabaseBrowserClient: () => supabase },
+    '@/lib/simulatorDuration': require('../src/lib/simulatorDuration.ts'),
     '@/lib/writtenAnswers': { parseWrittenAnswers: value => value ?? {} },
     '@/lib/supabaseSimulationAttempts': { buildSimulationAttemptInsert: value => value },
     '@/lib/localSimulationStorage': { writeLocalSimulationSummary() {} },
@@ -169,4 +170,59 @@ test('finalizar espera al guardado pendiente antes de eliminar el borrador', asy
   assert.ok(app.events.findIndex(e => e[0] === 'delete') > app.events.findIndex(e => e[0] === 'save-end'));
   assert.equal(app.events.filter(e => e[0] === 'save-start').length, 1);
   assert.ok(app.events.some(e => e[0] === 'navigate'));
+});
+
+
+test('Psicología inicia por defecto con 140 minutos y acepta todas las opciones docentes', async () => {
+  const app = session({ examSlug: 'psicologia' }); await app.flush();
+  assert.equal(app.saved().simulationSeconds, 8400);
+  assert.equal(app.saved().timeLeft, 8400);
+  for (const durationMinutes of [60,70,80,90,100,110,120,130,140,150]) {
+    const app = session({ examSlug: 'psicologia', durationMinutes }); await app.flush();
+    assert.equal(app.saved().simulationSeconds, durationMinutes * 60);
+    await app.tick(13); await app.save();
+    assert.equal(app.events.findLast(e => e[0] === 'save-end')[1].draft.timeLeft, durationMinutes * 60 - 13);
+  }
+});
+
+test('Psicología amplía borradores antiguos conservando respuestas y minutos consumidos', async () => {
+  const app = session({ examSlug: 'psicologia', remote: draft() }); await app.flush();
+  assert.equal(app.saved().timeLeft, 7800);
+  assert.equal(app.saved().answers.q1, 'A');
+  await app.tick(10); assert.equal(app.saved().timeLeft, 7790);
+});
+
+test('un intento nuevo conserva su duración al retomar aunque cambie la configuración docente', async () => {
+  for (const minutes of [60, 150]) {
+    const app = session({ examSlug: 'psicologia', durationMinutes: 140,
+      remote: draft({ version: 5, simulationSeconds: minutes * 60, timeLeft: minutes * 60 - 600 }) });
+    await app.flush(); await app.tick(12); await app.save();
+    assert.equal(app.saved().simulationSeconds, minutes * 60);
+    assert.equal(app.saved().timeLeft, minutes * 60 - 612);
+    assert.equal(app.events.findLast(e => e[0] === 'save-end')[1].draft.simulationSeconds, minutes * 60);
+  }
+});
+
+test('el vencimiento usa la duración elegida y registra el tiempo utilizado', async () => {
+  const app = session({ examSlug: 'psicologia', durationMinutes: 60,
+    remote: draft({ version: 5, simulationSeconds: 3600, timeLeft: 2 }) });
+  await app.flush(); await app.tick(2);
+  const result = app.events.find(e => e[0] === 'insert' && e[1] === 'simulation_attempts');
+  assert.equal(result[2].timeUsedSeconds, 3600);
+  assert.ok(app.events.some(e => e[0] === 'navigate'));
+});
+
+test('Enfermería conserva sus 90 minutos aunque reciba otra duración', async () => {
+  const app = session({ durationMinutes: 150 }); await app.flush();
+  assert.equal(app.saved().timeLeft, 5400);
+});
+
+
+test('migración de borrador local a persistencia remota conserva duración y respuestas', async () => {
+  const app = session({ examSlug: 'psicologia', durationMinutes: 140, persistenceMode: 'supabase',
+    local: draft({ version: 5, simulationSeconds: 3600, timeLeft: 3000 }) });
+  await app.flush(); await app.tick(12); await app.save();
+  assert.equal(app.saved().simulationSeconds, 3600);
+  assert.equal(app.saved().timeLeft, 2988);
+  assert.equal(app.saved().answers.q1, 'A');
 });

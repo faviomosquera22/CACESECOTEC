@@ -1,6 +1,7 @@
 import type { CustomComponent } from "@/lib/customComponents";
 import type { Question } from "@/lib/database.types";
 import type { StudentCareerSlug } from "@/lib/studentCareer";
+import { getDefaultSimulatorDurationMinutes, isSimulatorDurationMinutes } from "@/lib/simulatorDuration";
 
 export type SimulatorDifficultyKey = "facil" | "media" | "dificil";
 export type SimulatorPhaseKey =
@@ -13,6 +14,7 @@ export type SimulatorPhaseKey =
   | `custom-${string}`;
 
 export type SimulatorSettings = {
+  durationMinutes: number;
   enabledDifficulties: SimulatorDifficultyKey[];
   enabledCategories: string[];
   enabledPhases: SimulatorPhaseKey[];
@@ -259,6 +261,7 @@ export function getDefaultSimulatorSettings(
   const catalog = getSimulatorSettingsCatalog(career);
 
   return {
+    durationMinutes: getDefaultSimulatorDurationMinutes(career),
     enabledDifficulties: catalog.difficulties.map((option) => option.key),
     enabledCategories: catalog.categories.map((option) => option.key),
     enabledPhases: catalog.phases.map((option) => option.key),
@@ -270,6 +273,7 @@ export function sanitizeSimulatorSettings(
   career: StudentCareerSlug,
   value:
     | {
+        durationMinutes?: unknown;
         enabledDifficulties?: unknown;
         enabledCategories?: unknown;
         enabledPhases?: unknown;
@@ -313,6 +317,8 @@ export function sanitizeSimulatorSettings(
     : [];
 
   return {
+    durationMinutes: career === "psicologia" && isSimulatorDurationMinutes(value?.durationMinutes)
+      ? value.durationMinutes : defaults.durationMinutes,
     enabledDifficulties:
       enabledDifficulties.length > 0
         ? enabledDifficulties

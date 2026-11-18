@@ -18,6 +18,7 @@ import { writeLocalSimulationSummary } from "@/lib/localSimulationStorage";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import { buildSimulationAttemptInsert } from "@/lib/supabaseSimulationAttempts";
 import { gradeWrittenAnswer, parseWrittenAnswers } from "@/lib/writtenAnswers";
+import { getDefaultSimulatorDurationMinutes, isSimulatorDurationMinutes } from "@/lib/simulatorDuration";
 import { SimulationQuestion } from "@/components/SimulationQuestion";
 
 type SimulatorClientProps = {
@@ -25,6 +26,7 @@ type SimulatorClientProps = {
   studentId: string;
   examSlug: string;
   attemptSeed: string;
+  durationMinutes?: number;
   persistenceMode?: "supabase" | "local";
   draftStorageKey?: string;
 };
@@ -32,7 +34,7 @@ type SimulatorClientProps = {
 const LEGACY_SIMULATION_SECONDS = 120 * 60;
 const INITIAL_SIMULATION_SECONDS = 60 * 60;
 const SIMULATION_SECONDS = 90 * 60;
-const DRAFT_VERSION = 4;
+const DRAFT_VERSION = 5;
 const LEGACY_DRAFT_PREFIX = "draft";
 const LEGACY_DRAFT_DONE_PREFIX = "draft_done";
 
@@ -95,18 +97,23 @@ function getFirstUnansweredIndex(
     : firstUnansweredIndex;
 }
 
-function getRemainingSeconds(startedAt: Date) {
+function getRemainingSeconds(startedAt: Date, simulationSeconds: number) {
   const elapsedSeconds = Math.floor((Date.now() - startedAt.getTime()) / 1000);
 
-  if (!Number.isFinite(elapsedSeconds)) return SIMULATION_SECONDS;
+  if (!Number.isFinite(elapsedSeconds)) return simulationSeconds;
 
   return Math.min(
-    SIMULATION_SECONDS,
-    Math.max(0, SIMULATION_SECONDS - elapsedSeconds),
+    simulationSeconds,
+    Math.max(0, simulationSeconds - elapsedSeconds),
   );
 }
 
-function normalizeDraftTimeLeft(draft: Partial<SimulationDraft>) {
+function getDraftSimulationSeconds(draft: Partial<SimulationDraft>, configuredSeconds: number) {
+  return draft.version === DRAFT_VERSION && isSimulatorDurationMinutes((draft.simulationSeconds ?? 0) / 60)
+    ? draft.simulationSeconds! : configuredSeconds;
+}
+
+function normalizeDraftTimeLeft(draft: Partial<SimulationDraft>, simulationSeconds: number) {
   const previousSimulationSeconds =
     typeof draft.simulationSeconds === "number" &&
       Number.isFinite(draft.simulationSeconds) && draft.simulationSeconds > 0
@@ -126,8 +133,8 @@ function normalizeDraftTimeLeft(draft: Partial<SimulationDraft>) {
   );
 
   return Math.min(
-    SIMULATION_SECONDS,
-    Math.floor(Math.max(0, SIMULATION_SECONDS - elapsedSeconds)),
+    simulationSeconds,
+    Math.floor(Math.max(0, simulationSeconds - elapsedSeconds)),
   );
 }
 
@@ -135,6 +142,7 @@ function parseLocalDraft(
   rawDraft: string | null,
   questionIds: Set<string>,
   expectedAttemptSeed: string,
+  configuredSeconds: number,
 ) {
   if (!rawDraft) {
     return null;
@@ -143,7 +151,7 @@ function parseLocalDraft(
   try {
     const draft = JSON.parse(rawDraft) as SimulationDraft;
 
-    if (![1, 2, 3, DRAFT_VERSION].includes(draft.version)) {
+    if (![1, 2, 3, 4, DRAFT_VERSION].includes(draft.version)) {
       return null;
     }
 
@@ -168,7 +176,8 @@ function parseLocalDraft(
       comments,
       updatedAt: Date.parse(draft.updatedAt) || 0,
       startedAt: Number.isFinite(Date.parse(draft.startedAt)) ? new Date(draft.startedAt) : new Date(),
-      timeLeft: normalizeDraftTimeLeft(draft),
+      simulationSeconds: getDraftSimulationSeconds(draft, configuredSeconds),
+      timeLeft: normalizeDraftTimeLeft(draft, getDraftSimulationSeconds(draft, configuredSeconds)),
     };
   } catch {
     return null;
@@ -179,6 +188,7 @@ function parseStoredDraft(
   value: unknown,
   questionIds: Set<string>,
   expectedAttemptSeed: string,
+  configuredSeconds: number,
 ) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return null;
@@ -205,10 +215,11 @@ function parseStoredDraft(
   const startedAt =
     typeof draft.startedAt === "string" && Number.isFinite(Date.parse(draft.startedAt))
       ? new Date(draft.startedAt) : new Date();
+  const simulationSeconds = getDraftSimulationSeconds(draft, configuredSeconds);
   const timeLeft =
     typeof draft.timeLeft === "number" && Number.isFinite(draft.timeLeft)
-      ? normalizeDraftTimeLeft(draft)
-      : Math.max(0, SIMULATION_SECONDS - Math.max(0,
+      ? normalizeDraftTimeLeft(draft, simulationSeconds)
+      : Math.max(0, simulationSeconds - Math.max(0,
           Math.floor(((Date.parse(draft.updatedAt ?? "") || startedAt.getTime()) - startedAt.getTime()) / 1000),
         ));
 
@@ -219,6 +230,7 @@ function parseStoredDraft(
     updatedAt: Date.parse(draft.updatedAt ?? "") || 0,
     startedAt,
     timeLeft,
+    simulationSeconds,
   };
 }
 
@@ -239,6 +251,7 @@ function parseDraftStatus(
   examSlug: string,
   questionIds: Set<string>,
   expectedAttemptSeed: string,
+  configuredSeconds: number,
 ) {
   const prefix = `${LEGACY_DRAFT_PREFIX}:${examSlug}:`;
 
@@ -251,7 +264,7 @@ function parseDraftStatus(
     const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
     const json = new TextDecoder().decode(bytes);
 
-    return parseStoredDraft(JSON.parse(json), questionIds, expectedAttemptSeed);
+    return parseStoredDraft(JSON.parse(json), questionIds, expectedAttemptSeed, configuredSeconds);
   } catch {
     return null;
   }
@@ -288,9 +301,13 @@ export function SimulatorClient({
   studentId,
   examSlug,
   attemptSeed,
+  durationMinutes,
   persistenceMode = "supabase",
   draftStorageKey = `simulation-draft:${studentId}`,
 }: SimulatorClientProps) {
+  const configuredSeconds = (examSlug === "psicologia" && isSimulatorDurationMinutes(durationMinutes)
+    ? durationMinutes : getDefaultSimulatorDurationMinutes(examSlug)) * 60;
+  const [simulationSeconds, setSimulationSeconds] = useState(configuredSeconds);
   const router = useRouter();
   const startedAtRef = useRef(new Date());
   // The original start is historical metadata; this anchor counts only this visit.
@@ -307,7 +324,7 @@ export function SimulatorClient({
   const [questionComments, setQuestionComments] = useState<
     Record<string, string>
   >({});
-  const [timeLeft, setTimeLeft] = useState(SIMULATION_SECONDS);
+  const [timeLeft, setTimeLeft] = useState(simulationSeconds);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [showFinishDialog, setShowFinishDialog] = useState(false);
@@ -352,7 +369,7 @@ export function SimulatorClient({
         totalQuestions > 0
           ? Math.round((correctAnswers / totalQuestions) * 10000) / 100
           : 0;
-      const timeUsedSeconds = Math.max(0, SIMULATION_SECONDS - timeLeft);
+      const timeUsedSeconds = Math.max(0, simulationSeconds - timeLeft);
       const comments = Object.fromEntries(
         Object.entries(questionComments)
           .map(([questionId, comment]) => [questionId, comment.trim()])
@@ -570,6 +587,7 @@ export function SimulatorClient({
     examSlug,
     studentId,
     timeLeft,
+    simulationSeconds,
   ]);
 
   useEffect(() => {
@@ -578,7 +596,7 @@ export function SimulatorClient({
     queueMicrotask(async () => {
       const questionIds = new Set(questions.map((question) => question.id));
       const rawDraft = window.localStorage.getItem(draftStorageKey);
-      const localDraft = parseLocalDraft(rawDraft, questionIds, attemptSeed);
+      const localDraft = parseLocalDraft(rawDraft, questionIds, attemptSeed, configuredSeconds);
 
       function applyDraft(
         restoredAnswers: Partial<Record<string, OptionLetter>>,
@@ -586,6 +604,7 @@ export function SimulatorClient({
         restoredStartedAt: Date,
         restoredTimeLeft: number,
         restoredWrittenAnswers: Record<string, string> = {},
+        restoredSimulationSeconds: number = configuredSeconds,
       ) {
         if (!isMounted) {
           return;
@@ -605,10 +624,11 @@ export function SimulatorClient({
         const hasProgress = Object.keys(compatibleAnswers).length > 0 ||
           Object.values(restoredWrittenAnswers).some((value) => value.trim());
         const remaining = restoredTimeLeft <= 0 && !hasProgress
-          ? SIMULATION_SECONDS : restoredTimeLeft;
+          ? restoredSimulationSeconds : restoredTimeLeft;
+        setSimulationSeconds(restoredSimulationSeconds);
         setTimeLeft(remaining);
         startedAtRef.current = restoredTimeLeft <= 0 && !hasProgress ? new Date() : restoredStartedAt;
-        countdownStartedAtRef.current = new Date(Date.now() - (SIMULATION_SECONDS - remaining) * 1000);
+        countdownStartedAtRef.current = new Date(Date.now() - (restoredSimulationSeconds - remaining) * 1000);
       }
 
       try {
@@ -623,6 +643,7 @@ export function SimulatorClient({
           remoteDraft?.draft,
           questionIds,
           attemptSeed,
+          configuredSeconds,
         );
 
         if (parsedRemoteDraft) {
@@ -634,6 +655,7 @@ export function SimulatorClient({
             restoredDraft.startedAt,
             restoredDraft.timeLeft,
             restoredDraft.writtenAnswers,
+            restoredDraft.simulationSeconds,
           );
           setAutoSaveStatus("Progreso sincronizado");
 
@@ -696,6 +718,7 @@ export function SimulatorClient({
                 examSlug,
                 questionIds,
                 attemptSeed,
+                configuredSeconds,
               )
             : null;
 
@@ -708,6 +731,7 @@ export function SimulatorClient({
             restoredDraft.startedAt,
             restoredDraft.timeLeft,
             restoredDraft.writtenAnswers,
+            restoredDraft.simulationSeconds,
           );
           setAutoSaveStatus("Progreso sincronizado");
 
@@ -728,6 +752,7 @@ export function SimulatorClient({
             localDraft.startedAt,
             localDraft.timeLeft,
             localDraft.writtenAnswers,
+            localDraft.simulationSeconds,
           );
           setAutoSaveStatus("Borrador recuperado");
         } else if (rawDraft) {
@@ -783,7 +808,7 @@ export function SimulatorClient({
           const lastActivityAt = Math.max(startedAt.getTime(), ...(answerRows ?? [])
             .map((answer) => Date.parse(answer.answered_at ?? ""))
             .filter(Number.isFinite));
-          const savedTimeLeft = Math.max(0, SIMULATION_SECONDS -
+          const savedTimeLeft = Math.max(0, configuredSeconds -
             Math.floor((lastActivityAt - startedAt.getTime()) / 1000));
 
           applyDraft(
@@ -792,15 +817,17 @@ export function SimulatorClient({
             startedAt,
             localDraft?.timeLeft ?? savedTimeLeft,
             localDraft?.writtenAnswers,
+            localDraft?.simulationSeconds,
           );
           setAutoSaveStatus("Progreso sincronizado");
           return;
         }
 
         const migratedAnswers = localDraft?.answers ?? {};
-        const migratedTimeLeft = localDraft?.timeLeft ?? SIMULATION_SECONDS;
+        const migratedSeconds = localDraft?.simulationSeconds ?? configuredSeconds;
+        const migratedTimeLeft = localDraft?.timeLeft ?? configuredSeconds;
         const migratedStartedAt = new Date(
-          Date.now() - (SIMULATION_SECONDS - migratedTimeLeft) * 1000,
+          Date.now() - (migratedSeconds - migratedTimeLeft) * 1000,
         );
         const { data: newSimulation, error: newSimulationError } =
           await supabase
@@ -846,6 +873,7 @@ export function SimulatorClient({
           migratedStartedAt,
           migratedTimeLeft,
           localDraft?.writtenAnswers,
+          migratedSeconds,
         );
         setAutoSaveStatus(
           localDraft ? "Borrador sincronizado" : "Progreso sincronizado",
@@ -858,6 +886,7 @@ export function SimulatorClient({
             localDraft.startedAt,
             localDraft.timeLeft,
             localDraft.writtenAnswers,
+            localDraft.simulationSeconds,
           );
           setAutoSaveStatus("Borrador local recuperado");
         } else if (rawDraft) {
@@ -874,6 +903,7 @@ export function SimulatorClient({
       isMounted = false;
     };
   }, [
+    configuredSeconds,
     attemptSeed,
     draftStorageKey,
     examSlug,
@@ -895,7 +925,7 @@ export function SimulatorClient({
       comments: questionComments,
       currentIndex,
       timeLeft,
-      simulationSeconds: SIMULATION_SECONDS,
+      simulationSeconds,
       startedAt: startedAtRef.current.toISOString(),
       updatedAt: new Date().toISOString(),
       attemptSeed,
@@ -911,6 +941,7 @@ export function SimulatorClient({
     hasHydratedDraft,
     questionComments,
     timeLeft,
+    simulationSeconds,
   ]);
 
   useEffect(() => {
@@ -934,8 +965,8 @@ export function SimulatorClient({
         writtenAnswers,
         comments: persistedComments,
         currentIndex,
-        timeLeft: getRemainingSeconds(countdownStartedAtRef.current ?? new Date()),
-        simulationSeconds: SIMULATION_SECONDS,
+        timeLeft: getRemainingSeconds(countdownStartedAtRef.current ?? new Date(), simulationSeconds),
+        simulationSeconds,
         startedAt: startedAtRef.current.toISOString(),
         updatedAt: new Date().toISOString(),
         attemptSeed,
@@ -1001,6 +1032,7 @@ export function SimulatorClient({
     questionComments,
     questions.length,
     studentId,
+    simulationSeconds,
   ]);
 
   useEffect(() => {
@@ -1011,11 +1043,11 @@ export function SimulatorClient({
     countdownStartedAtRef.current ??= new Date();
     const timer = window.setInterval(() => {
       if (finishedRef.current) return;
-      setTimeLeft(getRemainingSeconds(countdownStartedAtRef.current!));
+      setTimeLeft(getRemainingSeconds(countdownStartedAtRef.current!, simulationSeconds));
     }, 1000);
 
     return () => window.clearInterval(timer);
-  }, [hasHydratedDraft]);
+  }, [hasHydratedDraft, simulationSeconds]);
 
   useEffect(() => {
     if (hasHydratedDraft && timeLeft === 0) {
